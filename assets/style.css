@@ -173,32 +173,26 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
 .hero-stage { position: relative; }
-.hero-visual { position: relative; padding: 22px 22px 16px; }
+.hero-visual { position: relative; padding: 18px 20px 14px; }
 .chart-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .chart-title { font-size: 14px; font-weight: 500; color: var(--ink-2); }
 .chart-tag {
   font-family: var(--mono); font-size: 11px; color: var(--ink-3);
   padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line);
 }
-.curves { display: block; width: 100%; height: auto; aspect-ratio: 400 / 260; overflow: visible; }
+.curves { display: block; width: 100%; height: auto; aspect-ratio: 400 / 150; overflow: visible; }
 .gridlines line { stroke: var(--line); stroke-width: 1; }
-.curve { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke; }
+/* each curve: the whole path faint; the stretch a runner has passed lit with a gradient that peaks at the runner (main.js) */
+.curve { fill: none; stroke-width: 2; stroke-linecap: round; opacity: 0.26; }
+.curve-lit { fill: none; stroke-width: 2.8; stroke-linecap: round; opacity: 0; }
 .c1 { stroke: var(--accent-1); }
 .c2 { stroke: #c9c1bd; }
 .c3 { stroke: #e2dcd9; }
-.area { fill: url(#fill-a); opacity: 0; }
-.tip { opacity: 0; }
-.t1 { fill: var(--accent-1); } .t2 { fill: #c9c1bd; } .t3 { fill: #e2dcd9; }
-.in .curve { animation: draw 2.6s var(--ease) forwards; }
-.in .c2 { animation-delay: 0.25s; }
-.in .c3 { animation-delay: 0.5s; }
-.in .area { animation: fade 1.4s var(--ease) 1.6s forwards; }
-.in .tip { animation: tip-in 0.6s var(--ease) forwards, glow 2.8s ease-in-out 3.4s infinite; transform-box: fill-box; transform-origin: center; }
-.in .t1 { animation-delay: 2.4s, 3.4s; } .in .t2 { animation-delay: 2.6s, 3.6s; } .in .t3 { animation-delay: 2.8s, 3.8s; }
-@keyframes draw { to { stroke-dashoffset: 0; } }
-@keyframes fade { to { opacity: 1; } }
-@keyframes tip-in { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: scale(1); } }
-@keyframes glow { 50% { transform: scale(1.6); opacity: 0.55; } }
+.g1 stop { stop-color: var(--accent-line, var(--accent-1)); }
+.g2 stop { stop-color: var(--ink); }
+.g3 stop { stop-color: var(--ink-3); }
+.runner, .halo { opacity: 0; }
+.t1, .h1 { fill: var(--accent-1); } .t2, .h2 { fill: #c9c1bd; } .t3, .h3 { fill: #e2dcd9; }
 .chart-axis {
   display: flex; justify-content: space-between; margin-top: 8px;
   font-family: var(--mono); font-size: 11px; color: var(--ink-3);
@@ -206,7 +200,7 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 /* the tracks as a numbered index under the chart; live ones (with tasks) are filled in by results.js */
 .hero-index { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: -1px; border: 1px solid var(--glass-edge); }
 .hero-index a {
-  display: flex; align-items: baseline; gap: 12px; min-width: 0; padding: 11px 14px;
+  display: flex; align-items: baseline; gap: 12px; min-width: 0; padding: 9px 14px;
   border-bottom: 1px solid var(--glass-edge);
   color: var(--ink-3); transition: background 0.3s var(--ease), color 0.3s var(--ease);
 }

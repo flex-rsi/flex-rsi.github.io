@@ -64,24 +64,40 @@
             <span class="chart-title">Score over rounds</span>
             <span class="chart-tag">illustrative</span>
           </div>
-          <svg class="curves" viewBox="0 0 400 260" preserveAspectRatio="none">
+          <svg class="curves" viewBox="0 0 400 150">
             <defs>
-              <linearGradient id="fill-a" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="var(--accent-1)" stop-opacity="0.28"/>
-                <stop offset="1" stop-color="var(--accent-1)" stop-opacity="0"/>
+              <linearGradient id="lit-1" class="lit-grad g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="11" y2="0">
+                <stop offset="0" stop-opacity="0.1"/><stop offset="0.65" stop-opacity="0.5"/><stop offset="1" stop-opacity="1"/>
               </linearGradient>
+              <clipPath id="lit-clip-1"><rect x="0" y="-20" width="0" height="190"/></clipPath>
+              <linearGradient id="lit-2" class="lit-grad g2" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="11" y2="0">
+                <stop offset="0" stop-opacity="0.1"/><stop offset="0.65" stop-opacity="0.5"/><stop offset="1" stop-opacity="1"/>
+              </linearGradient>
+              <clipPath id="lit-clip-2"><rect x="0" y="-20" width="0" height="190"/></clipPath>
+              <linearGradient id="lit-3" class="lit-grad g3" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="11" y2="0">
+                <stop offset="0" stop-opacity="0.1"/><stop offset="0.65" stop-opacity="0.5"/><stop offset="1" stop-opacity="1"/>
+              </linearGradient>
+              <clipPath id="lit-clip-3"><rect x="0" y="-20" width="0" height="190"/></clipPath>
             </defs>
-            <g class="gridlines">
-              <line x1="0" y1="52" x2="400" y2="52"/><line x1="0" y1="104" x2="400" y2="104"/>
-              <line x1="0" y1="156" x2="400" y2="156"/><line x1="0" y1="208" x2="400" y2="208"/>
+            <g class="gridlines"><line x1="0" y1="30" x2="400" y2="30"/><line x1="0" y1="60" x2="400" y2="60"/><line x1="0" y1="90" x2="400" y2="90"/><line x1="0" y1="120" x2="400" y2="120"/></g>
+            <g class="track k1">
+              <path class="curve c1" d="M 10 136.2 C 70 133.8 92 113.1 132 105 S 214 73.8 256 63.5 S 338 36.9 390 25.4"/>
+              <path class="curve-lit" d="M 10 136.2 C 70 133.8 92 113.1 132 105 S 214 73.8 256 63.5 S 338 36.9 390 25.4" stroke="url(#lit-1)" clip-path="url(#lit-clip-1)"/>
+              <circle class="halo h1" r="9" cx="10" cy="136.2"/>
+              <circle class="runner t1" r="4.5" cx="10" cy="136.2"/>
             </g>
-            <path class="area" d="M10 236 C 70 232, 92 196, 132 182 S 214 128, 256 110 S 338 64, 390 44 L390 260 L10 260 Z"/>
-            <path class="curve c1" pathLength="1" d="M10 236 C 70 232, 92 196, 132 182 S 214 128, 256 110 S 338 64, 390 44"/>
-            <path class="curve c2" pathLength="1" d="M10 244 C 80 242, 116 222, 168 206 S 250 178, 300 160 S 362 140, 390 132"/>
-            <path class="curve c3" pathLength="1" d="M10 250 C 100 249, 150 238, 200 230 S 300 214, 390 202"/>
-            <circle class="tip t1" cx="390" cy="44" r="5"/>
-            <circle class="tip t2" cx="390" cy="132" r="4.5"/>
-            <circle class="tip t3" cx="390" cy="202" r="4"/>
+            <g class="track k2">
+              <path class="curve c2" d="M 10 140.8 C 80 139.6 116 128.1 168 118.8 S 250 102.7 300 92.3 S 362 80.8 390 76.2"/>
+              <path class="curve-lit" d="M 10 140.8 C 80 139.6 116 128.1 168 118.8 S 250 102.7 300 92.3 S 362 80.8 390 76.2" stroke="url(#lit-2)" clip-path="url(#lit-clip-2)"/>
+              <circle class="halo h2" r="9" cx="10" cy="140.8"/>
+              <circle class="runner t2" r="4.5" cx="10" cy="140.8"/>
+            </g>
+            <g class="track k3">
+              <path class="curve c3" d="M 10 144.2 C 100 143.7 150 137.3 200 132.7 S 300 123.5 390 116.5"/>
+              <path class="curve-lit" d="M 10 144.2 C 100 143.7 150 137.3 200 132.7 S 300 123.5 390 116.5" stroke="url(#lit-3)" clip-path="url(#lit-clip-3)"/>
+              <circle class="halo h3" r="9" cx="10" cy="144.2"/>
+              <circle class="runner t3" r="4.5" cx="10" cy="144.2"/>
+            </g>
           </svg>
           <div class="chart-axis"><span>start</span><span>rounds →</span><span>budget spent</span></div>
         </div>
@@ -92,7 +108,7 @@
           <a href="#tracks" data-cat="reconstruction"><span class="hi-n">04</span><span class="hi-name">Reconstruction</span><span class="hi-meta">soon</span></a>
           <a href="#tracks" data-cat="creation"><span class="hi-n">05</span><span class="hi-name">Creation</span><span class="hi-meta">soon</span></a>
           <a href="#tracks" data-cat="bio"><span class="hi-n">06</span><span class="hi-name">Bio</span><span class="hi-meta">soon</span></a>
-          <a href="#tracks" data-cat="guard"><span class="hi-n">07</span><span class="hi-name">Guard</span><span class="hi-meta">soon</span></a>
+          <a href="#tracks" data-cat="safety"><span class="hi-n">07</span><span class="hi-name">Safety</span><span class="hi-meta">soon</span></a>
           <a href="#tracks" class="more"><span class="hi-n">08</span><span class="hi-name">&hellip;</span><span class="hi-meta">more</span></a>
         </nav>
       </div>
@@ -134,7 +150,7 @@
         <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg><h3>Reconstruction</h3><p>Recovering the structure of the world: 3D and 4D geometry, correspondence and motion from images and video.</p></article>
         <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></svg><h3>Creation</h3><p>Making and editing content: images, scenes and other media produced to precise instructions.</p></article>
         <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3c0 6 8 6 8 12s-8 6-8 6M16 3c0 6-8 6-8 12M9 7h6M9 17h6"/></svg><h3>Bio</h3><p>Scientific problems in the life sciences, from sequences and molecules to cells and experiments.</p></article>
-        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4"/></svg><h3>Guard</h3><p>Safety and integrity: improving without breaking the rules, budgets and boundaries an agent is given.</p></article>
+        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4"/></svg><h3>Safety</h3><p>Staying safe and within bounds: improving without breaking the rules, budgets and boundaries an agent is given.</p></article>
         <article class="glass card track more reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg><h3>…</h3><p>More domains as the benchmark grows.</p></article>
       </div>
     </section>

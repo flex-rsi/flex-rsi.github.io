@@ -49,14 +49,12 @@
 .hero-index a { border-color: var(--ink); border-bottom-width: 1.5px; }
 .hero-index a:nth-child(odd) { border-right-width: 1.5px; }
 @media (max-width: 560px), (min-width: 821px) and (max-width: 1000px) { .hero-index a:nth-child(n + 7) { border-bottom: 1.5px solid var(--ink); } .hero-index a:last-child { border-bottom: 0; } }
-.hero-index a { gap: 10px; padding: 11px 12px; }
+.hero-index a { gap: 10px; padding: 9px 12px; }
 .hero-index .hi-name { font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; font-size: 12.5px; }
 .chart-tag { border-radius: 0; border-color: var(--ink); color: var(--ink); }
-.curve { stroke-width: 2.8; }
-.c1 { stroke: var(--accent-line, var(--accent-1)); } .t1 { fill: var(--accent-line, var(--accent-1)); }
-.c2 { stroke: var(--ink); } .t2 { fill: var(--ink); }
-.c3 { stroke: var(--accent-3); } .t3 { fill: var(--accent-3); }
-.area { display: none; }
+.c1 { stroke: var(--accent-line, var(--accent-1)); } .t1, .h1 { fill: var(--accent-line, var(--accent-1)); }
+.c2 { stroke: var(--ink); } .t2, .h2 { fill: var(--ink); }
+.c3 { stroke: var(--ink-3); } .t3, .h3 { fill: var(--ink-3); }
 .gridlines line { stroke: var(--line); }
 
 main { counter-reset: sec; }
