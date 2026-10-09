@@ -381,7 +381,41 @@
    "case": "standard-6",
    "clip_success": true,
    "video": "assets/demo/robo/opus-final.mp4",
-   "poster": "assets/demo/robo/opus-final.jpg"
+   "poster": "assets/demo/robo/opus-final.jpg",
+   "rounds": [
+    {
+     "id": "R2", "successRate": 0.0, "successes": 0, "episodes": 5,
+     "case": "standard-1", "caseScore": 40, "caseSuccess": false,
+     "video": "assets/demo/robo/opus-r2-standard1-t12-20.mp4",
+     "poster": "assets/demo/robo/opus-r2-standard1-t12-20.jpg",
+     "summary": "R2 repeatedly misses the upright small bottle; the gripper never secures it."
+    },
+    {
+     "id": "R5", "successRate": 0.2, "successes": 1, "episodes": 5,
+     "case": "standard-1", "caseScore": 100, "caseSuccess": true,
+     "video": "assets/demo/robo/opus-r5-standard1-t04-12.mp4",
+     "poster": "assets/demo/robo/opus-r5-standard1-t04-12.jpg",
+     "summary": "On the same standard-1 setup, R5 reaches and picks up the upright small bottle successfully."
+    },
+    {
+     "id": "R8", "successRate": 0.4, "successes": 2, "episodes": 5,
+     "case": "standard-4", "caseScore": 40, "caseSuccess": false,
+     "video": "assets/demo/robo/opus-r8-standard4-t04-12.mp4",
+     "poster": "assets/demo/robo/opus-r8-standard4-t04-12.jpg",
+     "summary": "On standard-4, the arm knocks the target bottle off the table and it falls below the tabletop."
+    },
+    {
+     "id": "R9", "successRate": 0.6, "successes": 3, "episodes": 5,
+     "case": "standard-4", "caseScore": 100, "caseSuccess": true,
+     "video": "assets/demo/robo/opus-r9-standard4-t04-12.mp4",
+     "poster": "assets/demo/robo/opus-r9-standard4-t04-12.jpg",
+     "summary": "On the same standard-4 setup, R9 approaches with the arm higher. After contact, the bottle tips over but stays on the tabletop, unlike R8."
+    }
+   ],
+   "comparisons": [
+    {"case": "standard-1", "before": "R2", "after": "R5"},
+    {"case": "standard-4", "before": "R8", "after": "R9"}
+   ]
   },
   {
    "id": "3d-tracking",

@@ -112,24 +112,24 @@
   }
 
   function robotControl(p) {
-    const ok = Math.round(p.success_rate * p.episodes);
-    stage.innerHTML = `<div class="clip">
-        <div class="clip-video">${video(p.video, p.poster, ' aria-label="Self-improved policy on a test case"')}</div>
-        <div class="clip-facts">
-          <p class="clip-big">${fmtScore(p, p.before)}<span class="to">→</span><span class="after">${fmtScore(p, p.after)}</span>
-            <small>Starting solution (round 0, validation) → self-improved solution (test)</small></p>
-          <dl>
-            <dt>Task</dt><dd>Pick up the bottles and throw them into the dustbin, using handover when needed.</dd>
-            <dt>Test</dt><dd>${ok} of ${p.episodes} held-out cases fully solved</dd>
-            <dt>Clip</dt><dd>Self-improved policy on a held-out test case${p.clip_success ? ", solved" : ""}.</dd>
-          </dl>
-        </div>
-      </div>
-      <p class="demo-note">Each case scores 10, 25 or 40 for one, two or three bottles in the dustbin, and 100 when all four are in and the robot is back at its start pose. Rollouts of the starting solution were not recorded, so only its score is shown.</p>`;
-    const v = stage.querySelector("video");
-    loop(v);
-    active = [v];
-    v.readyState >= 3 ? playAll() : v.addEventListener("canplay", playAll, { once: true });
+    const rounds = Object.fromEntries(p.rounds.map((r) => [r.id, r]));
+    stage.innerHTML = `<div class="robot-pairs">${p.comparisons.map((pair) => {
+      const before = rounds[pair.before], after = rounds[pair.after];
+      const item = (r, label) => `<article class="robot-round">
+        <div class="robot-round-head"><span class="robot-round-name">${esc(r.id)} <small>${label}</small></span>
+          <span class="robot-round-rate ${r.successRate > 0 ? "ok" : "no"}">${Math.round(100 * r.successRate)}% <small>· ${r.successes}/${r.episodes} full successes</small></span></div>
+        <figure class="robot-round-video">${video(r.video, r.poster, ` controls aria-label="${esc(r.id)} validation rollout, ${Math.round(100 * r.successRate)} percent full success"`)}</figure>
+        <p class="robot-round-score">${esc(r.case)} · ${r.caseScore}/100 · ${r.caseSuccess ? "complete" : "partial"}</p>
+        <p class="robot-round-summary">${esc(r.summary)}</p>
+      </article>`;
+      return `<section class="robot-pair">
+        <div class="robot-pair-head"><span>Same validation case · ${esc(pair.case)}</span>
+          <strong>${before.caseScore} <i>→</i> ${after.caseScore}</strong></div>
+        <div class="robot-pair-clips">${item(before, "Before")} ${item(after, "After")}</div>
+      </section>`;
+    }).join("")}</div>
+    <p class="demo-note"><b>Full success</b> means all four bottles are in the bin and the robot returns to its start pose. Each card shows the round-wide validation success rate and the score for the specific clip.</p>`;
+    active = Array.from(stage.querySelectorAll("video"));
   }
 
   function tracking(p) {
@@ -159,8 +159,13 @@
     tabsEl.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.id === id)));
     $(".demo-title").textContent = p.name;
     $(".demo-sub").textContent = ABOUT[p.id] || "";
-    const what = p.id === "robot-control" ? "Score · start (val) → final (test)" : `Test ${p.metric} · start → final`;
-    $(".demo-score").innerHTML = `${esc(d.model)} <b>${fmtScore(p, p.before)}</b><span class="to">→</span><span class="after">${fmtScore(p, p.after)}</span><span class="what">${esc(what)}</span>`;
+    if (p.id === "robot-control" && p.rounds?.length) {
+      const first = p.rounds[0], last = p.rounds[p.rounds.length - 1];
+      $(".demo-score").innerHTML = `${esc(d.model)} <b>${Math.round(100 * first.successRate)}%</b><span class="to">→</span><span class="after">${Math.round(100 * last.successRate)}%</span><span class="what">Validation full-success rate · ${esc(first.id)} → ${esc(last.id)}</span>`;
+    } else {
+      const what = `Test ${p.metric} · start → final`;
+      $(".demo-score").innerHTML = `${esc(d.model)} <b>${fmtScore(p, p.before)}</b><span class="to">→</span><span class="after">${fmtScore(p, p.after)}</span><span class="what">${esc(what)}</span>`;
+    }
     RENDER[p.id](p);
     card.classList.remove("swap");
     void card.offsetWidth;

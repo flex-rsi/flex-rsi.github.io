@@ -46,14 +46,15 @@
     <!-- Hero -->
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow reveal">Benchmark · 2026</p>
+        <p class="eyebrow reveal">Community research initiative · 2026</p>
         <h1 class="title reveal"><span class="title-flex">Flex</span><span class="title-dash">-</span><span class="title-rsi">RSI</span></h1>
         <p class="subtitle reveal">A Flexible Benchmark for <strong>Recursive Self&#8209;Improvement</strong> of Frontier Agents</p>
-        <p class="authors reveal">Authors and affiliations to be announced</p>
+        <p class="hero-description reveal">Study how agents improve across rounds with a flexible, budget-aware benchmark designed to be practical to run and easy to extend.</p>
         <div class="actions reveal">
           <a class="pill pill-solid" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5"/></svg>Report <span class="soon">soon</span></a>
           <a class="pill pill-glass" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg>Code <span class="soon">soon</span></a>
           <a class="pill pill-glass" href="#leaderboard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Leaderboard</a>
+          <a class="pill pill-glass" href="#get-involved">Get involved</a>
         </div>
       </div>
 
@@ -101,17 +102,20 @@
       </div>
       <div class="glass card overview reveal">
         <p class="lead">
-          Given a task, a fixed budget and a general-purpose starting harness, Flex-RSI measures how far a frontier
-          agent can improve on its own: its solution, and the tools and prompts it works with. A frozen protocol
-          runs every round, scores candidates on hidden splits, meters the budget and records each step, so results
-          are comparable across models, tasks and domains.
+          Recursive self-improvement (RSI) asks whether an agent can use feedback from its own attempts to build a better next solution. Flex-RSI makes that question a repeatable experiment: start from a shared baseline, let an agent revise its solution, tools, or prompts over multiple rounds, and measure progress under a declared budget.
         </p>
-        <p class="placeholder-note">Abstract placeholder. Final text to be written.</p>
+        <p class="mission">
+          Our goal is to make RSI evaluation flexible and practical to run. Tasks and models can vary; budgets stay explicit, validation guides iteration, and held-out test data measures the final result.
+        </p>
         <div class="features">
-          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><h4>One starting point</h4><p>Every agent begins from the same general-purpose harness and a weak starter solution.</p></div>
-          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 3h6"/></svg></span><h4>Fixed budgets</h4><p>Wall time, GPU hours, cost and tokens are metered; queueing is not charged.</p></div>
-          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><h4>Hidden splits</h4><p>Candidates are scored on validation and test data the agent never sees.</p></div>
-          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6"/></svg></span><h4>Every step logged</h4><p>Each edit, experiment and model call is recorded and can be audited.</p></div>
+          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><h4>Shared starting point</h4><p>Begin from a documented task setup and starter solution, then let the agent improve its own approach.</p></div>
+          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 3h6"/></svg></span><h4>Declared budgets</h4><p>Set limits for time, tokens, API spend or GPU hours, and report the budget with each run.</p></div>
+          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><h4>Held-out evaluation</h4><p>Use validation to guide iteration and reserve test data for the final score.</p></div>
+          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6"/></svg></span><h4>Traceable progress</h4><p>Record edits, experiments, model calls and outcomes so each run can be understood and repeated.</p></div>
+        </div>
+        <div class="community-invite" id="get-involved">
+          <h3>Help shape the benchmark</h3>
+          <p>Bring a task, a model baseline, an evaluation adapter, or feedback on the protocol. Small, reproducible contributions can make RSI experiments easier for more people to run and compare.</p>
         </div>
       </div>
     </section>
@@ -120,8 +124,9 @@
     <section class="section" id="tracks">
       <div class="section-head reveal">
         <p class="kicker">Tracks</p>
-        <h2>From visual and embodied intelligence to more</h2>
+        <h2>One protocol, many kinds of tasks</h2>
       </div>
+      <p class="section-lede reveal">The current examples span visual search, active search, 3D tracking, and robot control. Flex-RSI is designed to grow as contributors bring new tasks and domains.</p>
       <div class="grid grid-tracks">
         <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><h3>Perception</h3><p>Seeing and understanding: recognising objects, reading fine detail and making sense of whole scenes in images and video.</p></article>
         <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.2 7.3l2.6 8.4M15.8 7.3l-2.6 8.4M8.5 6h7"/></svg><h3>Reasoning</h3><p>Drawing conclusions over several steps: spatial, temporal and logical reasoning about what is observed and what is known.</p></article>
@@ -141,11 +146,11 @@
         <h2>How a run works</h2>
       </div>
       <ol class="timeline glass reveal">
-        <li><span class="dot"></span><h4>Start</h4><p>A released task, a budget and the shared starting harness.</p></li>
-        <li><span class="dot"></span><h4>Iterate</h4><p>The agent experiments, edits its solution and refines its own tools.</p></li>
-        <li><span class="dot"></span><h4>Accept</h4><p>Changes are kept only when hidden validation improves beyond noise.</p></li>
-        <li><span class="dot"></span><h4>Stop</h4><p>The run ends when its budget or round limit is used up.</p></li>
-        <li><span class="dot"></span><h4>Test</h4><p>The final solution is scored once on the hidden test split.</p></li>
+        <li><span class="dot"></span><h4>Start</h4><p>Choose a task and model, then declare the run budget.</p></li>
+        <li><span class="dot"></span><h4>Iterate</h4><p>The agent revises its solution, prompts, or tools over repeated rounds.</p></li>
+        <li><span class="dot"></span><h4>Accept</h4><p>Use validation to check whether a change improves on the starting point.</p></li>
+        <li><span class="dot"></span><h4>Stop</h4><p>End at the declared budget or round limit, and record resources used.</p></li>
+        <li><span class="dot"></span><h4>Test</h4><p>Score the selected final solution once on held-out test data.</p></li>
       </ol>
     </section>
 
@@ -155,6 +160,7 @@
         <p class="kicker">Leaderboard</p>
         <h2>Results</h2>
       </div>
+      <p class="section-lede reveal">Compare final test metrics by task and model. Open a task to follow its validation curve from the starting point through accepted improvements to the last recorded round.</p>
       <div class="board-tabs reveal" role="tablist" aria-label="Results by category"></div>
       <div class="glass card board reveal">
         <div class="board-head"><h3 class="board-title"></h3><p class="board-sub"></p></div>
@@ -173,9 +179,9 @@
     <section class="section" id="demos">
       <div class="section-head reveal">
         <p class="kicker">Demos</p>
-        <h2>Before and after self&#8209;improvement</h2>
+        <h2>From starting points to improved behavior</h2>
       </div>
-      <p class="demo-lede reveal">The same model on the same held-out cases: the starting solution every run begins from, and the solution the agent arrived at on its own.</p>
+      <p class="demo-lede reveal">Compare initial and self-improved solutions, then follow selected robot-control episodes across rounds. Each example is paired with its task metric and evaluation split.</p>
       <div class="demo-tabs reveal" role="tablist" aria-label="Demos by task"></div>
       <div class="glass card demo reveal">
         <div class="demo-head">
@@ -207,7 +213,7 @@
 
   <footer class="footer">
     <p>Flex-RSI · 2026</p>
-    <p class="muted">This page is a template. Content is in progress.</p>
+    <p class="muted">An evolving benchmark initiative. Contributions of tasks, baselines, evaluators, and reproducible results are welcome.</p>
   </footer>
 
   <script src="assets/main.js" defer></script>

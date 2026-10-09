@@ -169,6 +169,7 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 @keyframes hue-flow { to { background-position: 100% 0; } }
 .subtitle { font-size: clamp(19px, 2.2vw, 24px); line-height: 1.4; color: var(--ink-2); max-width: 46ch; text-wrap: balance; }
 .subtitle strong { font-weight: 600; color: var(--ink); white-space: nowrap; }
+.hero-description { max-width: 48ch; margin-top: 14px; color: var(--ink-2); font-size: clamp(16px, 1.45vw, 19px); line-height: 1.6; }
 .authors { margin-top: 18px; font-size: 15px; color: var(--ink-3); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
@@ -224,7 +225,11 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 
 /* ---------- overview ---------- */
 .overview .lead { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.7; color: var(--ink); max-width: 68ch; }
-.placeholder-note { margin-top: 14px; font-size: 13px; color: var(--ink-3); font-style: italic; }
+.overview .mission { margin-top: 16px; max-width: 68ch; color: var(--ink-2); line-height: 1.65; }
+.community-invite { margin-top: 28px; padding: 18px 20px; border-left: 2px solid var(--accent-1); background: var(--tint); }
+.community-invite h3 { margin: 0 0 6px; font-size: 16px; }
+.community-invite p { margin: 0; max-width: 68ch; color: var(--ink-2); line-height: 1.6; }
+.section-lede { max-width: 72ch; margin: -8px 0 24px; color: var(--ink-2); font-size: 16px; line-height: 1.65; }
 .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line); }
 .f-icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .feature h4 { font-size: 15px; margin: 10px 0 6px; }

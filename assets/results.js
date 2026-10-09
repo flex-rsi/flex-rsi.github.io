@@ -26,6 +26,38 @@
                   budget_tokens: "token budget", val_calls: "validation budget", idle: "no further progress" };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const tag = (w) => `<span class="wtag">${w === "open" ? "open" : "closed"}</span>`;
+
+  function modelMark(name) {
+    const n = name.toLowerCase();
+    let brand = "";
+    let logo = "";
+    if (/claude|sonnet|opus/.test(n)) { brand = "claude"; logo = "claude.png"; }
+    else if (/qwen/.test(n)) { brand = "qwen"; logo = "qwen.png"; }
+    else if (/gemini/.test(n)) { brand = "gemini"; logo = "gemini.png"; }
+    else if (/gemma/.test(n)) { brand = "gemma"; logo = "gemma.png"; }
+    else if (/gpt|openai/.test(n)) { brand = "gpt"; logo = "gpt.png"; }
+    else if (/minimax/.test(n)) { brand = "minimax"; logo = "minimax.png"; }
+    else if (/\bglm\b/.test(n)) { brand = "glm"; logo = "glm.png"; }
+    if (!logo) return "";
+    return `<span class="model-icon brand-${brand}" title="${esc(name)}" aria-hidden="true"><img src="assets/model-logos/${logo}" alt="" loading="lazy" decoding="async"></span>`;
+  }
+  function modelCell(model, weights) {
+    return `<td class="model">${modelMark(model)}<span class="model-name">${esc(model)}</span> ${tag(weights)}</td>`;
+  }
+  function rankBadge(rank) {
+    const medal = rank <= 3 ? ` medal medal-${rank}` : "";
+    return `<span class="rank-badge${medal}">${String(rank).padStart(2, "0")}</span>`;
+  }
+  function rankClass(i, partial = false) {
+    const classes = [];
+    if (i < 3) classes.push("podium", `podium-${i + 1}`);
+    if (partial) classes.push("partial");
+    return classes.join(" ");
+  }
+  function groupRow(title, meta, span, index) {
+    return `<tr class="group-row"><th colspan="${span}"><span class="group-code">${index}</span><span class="group-title">${esc(title)}</span><span class="group-meta">${esc(meta)}</span></th></tr>`;
+  }
+
   const COLORS = ["var(--accent-1)", "var(--ink)", "#c98b5e", "#9fb08f", "#8fa3b8", "#b59ac2", "#d98080", "#7fb3b0", "#a39a8e"];
 
   let data, cats, byCat, rankOf;   // rankOf[taskId][model] = 1-based rank on that task
@@ -47,45 +79,72 @@
   }
 
   // ---------- views ----------
+
   function overview() {
     const rows = aggregate(data.tasks);
     const total = data.tasks.length;
+    const full = rows.filter((r) => r.n === total).length;
+    const partial = rows.length - full;
+    const span = cats.length + 4;
     titleEl.textContent = "Overview";
-    leadEl.textContent = `${total} tasks in ${cats.length} categories. Each cell is a model's average rank over the category's tasks it was run on (lower is better); click a cell to open the category.`;
+    leadEl.textContent = "Rows are grouped by task coverage. Category cells show average rank among the tasks each model completed; lower is better.";
     subEl.hidden = true;
-    table.innerHTML = `<thead><tr><th>#</th><th>Model</th>${cats.map((c) => `<th>${esc(c.name)}<span class="th-sub">${byCat[c.id].length} task${byCat[c.id].length > 1 ? "s" : ""}</span></th>`).join("")}<th>Overall<span class="th-sub">avg. rank</span></th><th>Tasks</th></tr></thead>
-      <tbody>${rows.map((r, i) => {
-        const cells = cats.map((c) => {
-          const rs = byCat[c.id].filter((t) => t.id in r.ranks).map((t) => r.ranks[t.id]);
-          if (!rs.length) return `<td class="na">–</td>`;
-          const avg = rs.reduce((a, b) => a + b, 0) / rs.length;
-          const part = rs.length < byCat[c.id].length ? `<span class="th-sub">${rs.length}/${byCat[c.id].length}</span>` : "";
-          return `<td class="cell-link" data-cat="${c.id}">${avg.toFixed(1)}${part}</td>`;
-        }).join("");
-        return `<tr${r.n < total ? ' class="partial"' : ""}><td>${i + 1}</td><td class="model">${esc(r.model)} ${tag(r.weights)}</td>${cells}<td class="strong">${r.avg.toFixed(1)}</td><td>${r.n}/${total}</td></tr>`;
-      }).join("")}</tbody>`;
+    const heads = cats.map((c) => `<th>${esc(c.name)}<span class="th-sub">${byCat[c.id].length} task${byCat[c.id].length > 1 ? "s" : ""}</span></th>`).join("");
+    const body = rows.map((r, i) => {
+      let group = "";
+      if (i === 0) group = groupRow(full ? "Full benchmark coverage" : "Partial coverage", full ? `${full} of ${rows.length} methods completed every task` : `${partial} methods have measured results`, span, "01");
+      else if (r.n < total && rows[i - 1].n === total) group = groupRow("Partial coverage", `${partial} methods · fewer than ${total} tasks`, span, "02");
+      const cells = cats.map((c) => {
+        const rs = byCat[c.id].filter((t) => t.id in r.ranks).map((t) => r.ranks[t.id]);
+        if (!rs.length) return '<td class="na">–</td>';
+        const avg = rs.reduce((a, b) => a + b, 0) / rs.length;
+        const part = rs.length < byCat[c.id].length ? `<span class="th-sub">${rs.length}/${byCat[c.id].length}</span>` : "";
+        return `<td class="cell-link" data-cat="${c.id}">${avg.toFixed(1)}${part}</td>`;
+      }).join("");
+      return group + `<tr class="${rankClass(i, r.n < total)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${cells}<td class="strong">${r.avg.toFixed(1)}</td><td>${r.n}/${total}</td></tr>`;
+    }).join("");
+    table.innerHTML = `<thead><tr class="table-band"><th colspan="2">Methods</th><th colspan="${cats.length}">Average rank by category</th><th colspan="2">Overall standing</th></tr><tr><th>#</th><th>Model</th>${heads}<th>Overall<span class="th-sub">avg. rank</span></th><th>Coverage<span class="th-sub">tasks</span></th></tr></thead><tbody>${body}</tbody>`;
     fig.hidden = true;
     noteEl.textContent = `Ranks use each task's primary test metric. Updated ${data.updated}.`;
   }
 
+
   function categorySummary(c) {
     const tasks = byCat[c.id];
     const rows = aggregate(tasks);
+    const full = rows.filter((r) => r.n === tasks.length).length;
+    const partial = rows.length - full;
+    const span = tasks.length + 3;
     titleEl.textContent = c.name;
-    leadEl.textContent = `${c.about} Primary test metric of each task; models ordered by their average rank in this category.`;
-    table.innerHTML = `<thead><tr><th>#</th><th>Model</th>${tasks.map((t) => `<th class="cell-link" data-task="${t.id}">${esc(t.track)}<span class="th-sub">${esc(t.metrics[0].label)}</span></th>`).join("")}<th>Avg. rank</th></tr></thead>
-      <tbody>${rows.map((r, i) => `<tr${r.n < tasks.length ? ' class="partial"' : ""}><td>${i + 1}</td><td class="model">${esc(r.model)} ${tag(r.weights)}</td>${tasks
-        .map((t) => `<td>${t.id in r.values ? fmt(t.primary, r.values[t.id]) : "–"}</td>`).join("")}<td class="strong">${r.avg.toFixed(1)}${r.n < tasks.length ? `<span class="th-sub">${r.n}/${tasks.length} tasks</span>` : ""}</td></tr>`).join("")}</tbody>`;
+    leadEl.textContent = `${c.about} Rows are grouped by task coverage; complete submissions appear first.`;
+    const headers = tasks.map((t) => `<th class="cell-link" data-task="${t.id}">${esc(t.track)}<span class="th-sub">${esc(t.metrics[0].label)}</span></th>`).join("");
+    const body = rows.map((r, i) => {
+      let group = "";
+      if (i === 0) group = groupRow(full ? "Complete category runs" : "Partial coverage", full ? `${full} methods measured every task here` : `${partial} methods have measured results`, span, "01");
+      else if (r.n < tasks.length && rows[i - 1].n === tasks.length) group = groupRow("Partial category runs", `${partial} methods · missing at least one task`, span, "02");
+      const values = tasks.map((t) => `<td>${t.id in r.values ? fmt(t.primary, r.values[t.id]) : "–"}</td>`).join("");
+      const avg = `<td class="strong">${r.avg.toFixed(1)}${r.n < tasks.length ? `<span class="th-sub">${r.n}/${tasks.length} tasks</span>` : ""}</td>`;
+      return group + `<tr class="${rankClass(i, r.n < tasks.length)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${values}${avg}</tr>`;
+    }).join("");
+    table.innerHTML = `<thead><tr class="table-band"><th colspan="2">Methods</th><th colspan="${tasks.length}">Primary test metric by task</th><th>Category standing</th></tr><tr><th>#</th><th>Model</th>${headers}<th>Avg. rank</th></tr></thead><tbody>${body}</tbody>`;
     fig.hidden = true;
-    noteEl.textContent = "Open a task for all of its metrics and the improvement curves.";
+    noteEl.textContent = "Open a task for all test metrics and its improvement curve.";
   }
+
 
   function task(t) {
     titleEl.textContent = t.track;
     leadEl.textContent = `${t.task}. Ranked by ${t.metrics[0].label} on the hidden test split.`;
-    table.innerHTML = `<thead><tr><th>#</th><th>Model</th>${t.metrics.map((m) => `<th>${esc(m.label)}</th>`).join("")}<th>Gain<span class="th-sub">validation</span></th><th>Rounds<span class="th-sub">ended by</span></th></tr></thead>
-      <tbody>${t.rows.map((r, i) => `<tr data-i="${i}"><td>${i + 1}</td><td class="model"><span class="sw" style="background:${COLORS[i % COLORS.length]}"></span>${esc(r.model)} ${tag(r.weights)}</td>${t.metrics
-        .map((m, j) => `<td${j === 0 ? ' class="strong"' : ""}>${fmt(m.key, r.test[m.key])}</td>`).join("")}<td class="gain">${gain(r.gain_pct)}</td><td>${r.rounds ?? "–"}${r.ended ? `<span class="th-sub">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`).join("")}</tbody>`;
+    const span = t.metrics.length + 4;
+    const body = t.rows.map((r, i) => {
+      const group = i === 0
+        ? groupRow("Leading results", `Top three by ${t.metrics[0].label}`, span, "01")
+        : i === 3 ? groupRow("Other ranked methods", `${t.rows.length - 3} additional submissions`, span, "02") : "";
+      const values = t.metrics.map((m, j) => `<td${j === 0 ? ' class="strong"' : ""}>${fmt(m.key, r.test[m.key])}</td>`).join("");
+      return group + `<tr data-i="${i}" class="${rankClass(i)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${values}<td class="gain">${gain(r.gain_pct)}</td><td>${r.rounds ?? "–"}${r.ended ? `<span class="th-sub">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
+    }).join("");
+    const metricHeads = t.metrics.map((m) => `<th>${esc(m.label)}</th>`).join("");
+    table.innerHTML = `<thead><tr class="table-band"><th colspan="2">Methods</th><th colspan="${t.metrics.length}">Hidden test metrics</th><th>Validation change</th><th>Run depth</th></tr><tr><th>#</th><th>Model</th>${metricHeads}<th>Gain<span class="th-sub">validation</span></th><th>Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
     drawCurves(t);
     noteEl.textContent = `${data.notes.gain} Each line ends at the last round its run reached.`;
   }
@@ -145,7 +204,7 @@
     }).join("");
     svg.setAttribute("aria-label", `${t.track}: validation score over rounds`);
     svg.innerHTML = g + lines;
-    legend.innerHTML = series.map((s) => `<li data-i="${s.i}"><span class="sw" style="background:${COLORS[s.i % COLORS.length]}"></span>${esc(s.r.model)}</li>`).join("");
+    legend.innerHTML = series.map((s) => `<li data-i="${s.i}"><span class="legend-line" style="--legend-color:${COLORS[s.i % COLORS.length]}"></span>${modelMark(s.r.model)}<span>${esc(s.r.model)}</span></li>`).join("");
     fig.hidden = false;
     svg.classList.remove("drawn");
     requestAnimationFrame(() => svg.classList.add("drawn"));
