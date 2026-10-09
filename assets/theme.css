@@ -44,10 +44,13 @@
 .subtitle { color: var(--ink); }
 .subtitle strong { font-weight: 800; }
 
-.hero-stage { padding: 30px 22px; }
-.chip { border-radius: 0; box-shadow: none; border: 1.5px solid var(--ink); background: var(--bg); color: var(--ink);
-        -webkit-backdrop-filter: none; backdrop-filter: none; animation: none; font-family: var(--mono); font-size: 12px; text-transform: uppercase; }
-.chip::before { border-radius: 0; }
+.hero-stage { padding: 0; }
+.hero-index { border-width: 1.5px; border-color: var(--ink); }
+.hero-index a { border-color: var(--ink); border-bottom-width: 1.5px; }
+.hero-index a:nth-child(odd) { border-right-width: 1.5px; }
+@media (max-width: 560px), (min-width: 821px) and (max-width: 1000px) { .hero-index a:nth-child(n + 7) { border-bottom: 1.5px solid var(--ink); } .hero-index a:last-child { border-bottom: 0; } }
+.hero-index a { gap: 10px; padding: 11px 12px; }
+.hero-index .hi-name { font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; font-size: 12.5px; }
 .chart-tag { border-radius: 0; border-color: var(--ink); color: var(--ink); }
 .curve { stroke-width: 2.8; }
 .c1 { stroke: var(--accent-line, var(--accent-1)); } .t1 { fill: var(--accent-line, var(--accent-1)); }
@@ -79,8 +82,6 @@ th { color: var(--ink); font-family: var(--mono); }
 .copy { border-radius: 0; border: 1.5px solid var(--ink); background: var(--bg); }
 .footer { border-top: 1.5px solid var(--ink); font-family: var(--mono); text-transform: uppercase; font-size: 12px; }
 
-/* keep the Act chip clear of the chart tag */
-.chip-2 { top: 0; right: 18%; }
 
 /* the solid button is ink-coloured, so its offset shadow uses the accent */
 .pill-solid:hover { box-shadow: 4px 4px 0 var(--accent-1); }

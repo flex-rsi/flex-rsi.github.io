@@ -172,7 +172,7 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 .authors { margin-top: 18px; font-size: 15px; color: var(--ink-3); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
-.hero-stage { position: relative; padding: 34px 26px; }
+.hero-stage { position: relative; }
 .hero-visual { position: relative; padding: 22px 22px 16px; }
 .chart-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .chart-title { font-size: 14px; font-weight: 500; color: var(--ink-2); }
@@ -203,24 +203,22 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
   display: flex; justify-content: space-between; margin-top: 8px;
   font-family: var(--mono); font-size: 11px; color: var(--ink-3);
 }
-.chip {
-  position: absolute; z-index: 1;
-  font-size: 13px; font-weight: 500; color: var(--ink-2);
-  padding: 7px 14px; border-radius: 999px;
-  background: var(--glass-strong); border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow);
-  -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%);
-  animation: bob 7s ease-in-out infinite;
+/* the tracks as a numbered index under the chart; live ones (with tasks) are filled in by results.js */
+.hero-index { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: -1px; border: 1px solid var(--glass-edge); }
+.hero-index a {
+  display: flex; align-items: baseline; gap: 12px; min-width: 0; padding: 11px 14px;
+  border-bottom: 1px solid var(--glass-edge);
+  color: var(--ink-3); transition: background 0.3s var(--ease), color 0.3s var(--ease);
 }
-.chip::before {
-  content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 8px; vertical-align: 1px;
-  background: var(--accent-1);
-}
-.chip-1 { top: 0; left: 4%; }
-.chip-2 { top: 8%; right: 0; animation-delay: -2s; }
-.chip-3 { top: 46%; left: -26px; animation-delay: -4s; }
-.chip-4 { bottom: -2px; right: 12%; animation-delay: -1s; }
-.chip-5 { bottom: -2px; left: 22%; animation-delay: -5s; }
-@keyframes bob { 50% { transform: translateY(-9px); } }
+.hero-index a:nth-child(odd) { border-right: 1px solid var(--glass-edge); }
+.hero-index a:nth-child(n + 7) { border-bottom: 0; }
+.hero-index .hi-n { font: 500 11px var(--mono); letter-spacing: 0.06em; }
+.hero-index .hi-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hero-index .hi-meta { font: 500 10.5px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+.hero-index a.live .hi-n, .hero-index a.live .hi-meta { color: var(--accent-1); }
+.hero-index a.live .hi-name { color: var(--ink); }
+.hero-index a:hover { background: var(--ink); color: var(--bg); }
+.hero-index a:hover .hi-name, .hero-index a:hover .hi-n, .hero-index a:hover .hi-meta { color: var(--bg); }
 
 /* ---------- overview ---------- */
 .overview .lead { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.7; color: var(--ink); max-width: 68ch; }
@@ -340,11 +338,16 @@ pre { margin: 0; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; 
   .nav-links { display: none; }
   .nav-cta { margin-left: auto; }
 }
+@media (max-width: 560px), (min-width: 821px) and (max-width: 1000px) {
+  .hero-index { grid-template-columns: 1fr; }
+  .hero-index a:nth-child(odd) { border-right: 0; }
+  .hero-index a:nth-child(n + 7) { border-bottom: 1px solid var(--glass-edge); }
+  .hero-index a:last-child { border-bottom: 0; }
+}
 @media (max-width: 560px) {
   .grid-tracks { grid-template-columns: 1fr; }
   .timeline { grid-template-columns: 1fr 1fr; padding: 26px 20px; }
   .features { grid-template-columns: 1fr; }
-  .chip-5 { display: none; }
   .card { padding: 22px; }
   .section { padding-top: 72px; }
 }
