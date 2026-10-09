@@ -112,9 +112,9 @@
   }
 
   // Robot control: one validation case run by an earlier and a later round, laid out like active search.
-  // Each replay puts the decisive region, enlarged 2x, beside the full head camera (native 640x480) where it is boxed.
+  // Each replay shows the full head camera (native 640x480) with the decisive region boxed, and that region enlarged 2x beside it.
   const ROBOT_LEGEND = `<ul class="demo-legend">
-    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="4" y="3" width="14" height="8" fill="none" stroke="#f4f4f1" stroke-width="1.2" stroke-dasharray="3 2"/></svg>Region shown enlarged 2× on the left</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="4" y="3" width="14" height="8" fill="none" stroke="#f4f4f1" stroke-width="1.2" stroke-dasharray="3 2"/></svg>Region shown enlarged 2× on the right</li>
   </ul>`;
   function robotControl(p) {
     const rounds = Object.fromEntries(p.rounds.map((r) => [r.id, r]));
@@ -138,7 +138,7 @@
       [["before", before], ["after", after]].forEach(([w, r]) => {
         stage.querySelector(`[data-n="${w}"]`).textContent = `${roundName(r)} solution`;
         stage.querySelector(`[data-o="${w}"]`).innerHTML = outcomeOf(r);
-        stage.querySelector(`[data-v="${w}"]`).innerHTML = video(r.video, r.poster, ` aria-label="${esc(r.id)} on ${esc(c.case)}: enlarged region beside the head camera"`);
+        stage.querySelector(`[data-v="${w}"]`).innerHTML = video(r.video, r.poster, ` aria-label="${esc(r.id)} on ${esc(c.case)}: head camera with the region enlarged beside it"`);
       });
       stage.querySelector(".demo-note").innerHTML = `<b>What changed between rounds.</b> ${esc(before.summary)} ${esc(after.summary)}
         Across the five validation cases, full success went from ${before.successes}/${before.episodes} in ${esc(before.id)} to ${after.successes}/${after.episodes} in ${esc(after.id)};

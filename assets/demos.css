@@ -88,9 +88,9 @@
 .clip-big small { display: block; margin-top: 8px; font: 500 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
 
 /* ---- robot control: the active-search rows, legend and strip; its replays keep the camera's own 4:3
-   (enlarged region 640x480 | 6 px gap | full head camera 640x480) */
+   (full head camera 640x480 | 6 px gap | enlarged region 640x480) */
 .ab-video.robo { aspect-ratio: 1286 / 480; }
-.ep-strip button img[src*="/robo/"] { object-position: 100% 50%; aspect-ratio: 4 / 3; }
+.ep-strip button img[src*="/robo/"] { object-position: 0 50%; aspect-ratio: 4 / 3; }
 
 .quad { position: relative; border: 1.5px solid var(--line); background: #0b0d1a; }
 .clip-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; margin-top: 10px; }
