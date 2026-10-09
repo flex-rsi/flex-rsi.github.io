@@ -40,11 +40,11 @@
 
   // ---------------------------------------------------------------- panels
   const LEGEND = `<ul class="demo-legend">
-    <li><svg viewBox="0 0 22 14"><rect x="1" y="1" width="20" height="12" fill="rgba(0,47,167,.27)" stroke="#002fa7" stroke-width="1.5" stroke-dasharray="4 3"/></svg>Target zone (counts as success)</li>
-    <li><svg viewBox="0 0 22 14"><path d="M2 3q9-3 18 0v8q-9 3-18 0z" fill="none" stroke="#002fa7" stroke-width="2"/></svg>Current field of view</li>
-    <li><svg viewBox="0 0 22 14"><path d="M3 9L19 5" stroke="#0b0d1a" stroke-width="3"/><path d="M3 9L19 5" stroke="#f4f4f1" stroke-width="1.4"/><circle cx="3" cy="9" r="2.6" fill="#f4f4f1" stroke="#0b0d1a" stroke-width="1"/><circle cx="19" cy="5" r="2.6" fill="#f4f4f1" stroke="#0b0d1a" stroke-width="1"/></svg>Views so far</li>
-    <li><svg viewBox="0 0 22 14"><circle cx="11" cy="7" r="5" fill="none" stroke="#002fa7" stroke-width="2"/><circle cx="11" cy="7" r="1.8" fill="#002fa7"/></svg>Submitted, hit</li>
-    <li><svg viewBox="0 0 22 14"><path d="M6 2l10 10M16 2L6 12" stroke="#d23c2e" stroke-width="2"/></svg>Submitted, missed</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="4" y="3" width="14" height="8" fill="rgba(244,244,241,.18)" stroke="#f4f4f1" stroke-width="1.2" stroke-dasharray="3 2"/></svg>Target zone (counts as success)</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><path d="M4 3.5q7-2 14 0v7q-7 2-14 0z" fill="none" stroke="#f4f4f1" stroke-width="1.5"/></svg>Current field of view</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><path d="M5 9.5L17 4.5" stroke="#f4f4f1" stroke-width="1"/><circle cx="5" cy="9.5" r="1.8" fill="#f4f4f1"/><circle cx="17" cy="4.5" r="1.8" fill="#f4f4f1"/></svg>Views so far</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><circle cx="11" cy="7" r="4.2" fill="none" stroke="#f4f4f1" stroke-width="1.5"/><circle cx="11" cy="7" r="1.6" fill="#f4f4f1"/></svg>Submitted, hit</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><path d="M7.5 3.5l7 7M14.5 3.5l-7 7" stroke="#d23c2e" stroke-width="1.8"/></svg>Submitted, missed</li>
   </ul>`;
 
   const outcome = (r) => `<span class="${r.success ? "ok" : "no"}">${esc(r.outcome)} · ${r.steps} step${r.steps > 1 ? "s" : ""}</span>`;
