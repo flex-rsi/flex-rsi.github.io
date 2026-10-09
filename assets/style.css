@@ -297,6 +297,12 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 /* ---------- leaderboard ---------- */
 .board { position: relative; padding: 10px 10px 4px; overflow: hidden; }
 .board-scroll { overflow-x: auto; }
+/* scrollbars in the page's flat style: thin, square, a grey thumb on a clear track */
+* { scrollbar-width: thin; scrollbar-color: var(--ink-3) transparent; }
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 0; }
+*::-webkit-scrollbar-thumb:hover { background: var(--ink); }
 table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 640px; }
 th, td { text-align: left; padding: 15px 18px; border-bottom: 1px solid var(--line); }
 th { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
@@ -376,3 +382,6 @@ pre { margin: 0; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; 
   .reveal { opacity: 1; transform: none; filter: none; }
   html { scroll-behavior: auto; }
 }
+
+/* overview: the work-in-progress line in the accent */
+.overview .wip { color: var(--accent-1); font-weight: 600; }

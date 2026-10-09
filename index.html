@@ -9,16 +9,16 @@
   <meta property="og:description" content="Benchmarking Recursive Self-Improvement of Frontier Agents.">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#f4f4f1">
-  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg?v=20261009u" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261009t">
-  <link rel="stylesheet" href="assets/theme.css?v=20261009t">
-  <link rel="stylesheet" href="assets/palette.css?v=20261009t">
-  <link rel="stylesheet" href="assets/results.css?v=20261009t">
-  <link rel="stylesheet" href="assets/demos.css?v=20261009t">
-  <link rel="stylesheet" href="assets/reel.css?v=20261009t">
+  <link rel="stylesheet" href="assets/style.css?v=20261009u">
+  <link rel="stylesheet" href="assets/theme.css?v=20261009u">
+  <link rel="stylesheet" href="assets/palette.css?v=20261009u">
+  <link rel="stylesheet" href="assets/results.css?v=20261009u">
+  <link rel="stylesheet" href="assets/demos.css?v=20261009u">
+  <link rel="stylesheet" href="assets/reel.css?v=20261009u">
 </head>
 <body class="v-e">
   <!-- Ambient background: slow-drifting colour fields behind the glass -->
@@ -149,11 +149,11 @@
       </div>
       <div class="glass card overview reveal">
         <p class="lead">
-          Recursive self-improvement (RSI) asks whether an agent can use feedback from its own attempts to build a better next solution. Flex-RSI makes that question a repeatable experiment: start from a shared baseline, let an agent revise its solution, tools, or prompts over multiple rounds, and measure progress under a declared budget.
+          Flex-RSI measures how well today's frontier agent systems improve on their own: given a downstream task, the agent
+          iteratively refines its own harness, from its solution to its tools and prompts, to raise its score within a fixed budget.
+          Tasks span visual perception and reasoning, robot control, 3D reconstruction and more.
         </p>
-        <p class="mission">
-          Our goal is to make RSI evaluation flexible and practical to run. Tasks and models can vary; budgets stay explicit, validation guides iteration, and held-out test data measures the final result.
-        </p>
+        <p class="mission wip">We are actively expanding Flex-RSI with more tasks, tracks and models.</p>
         <div class="features">
           <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><h4>Shared starting point</h4><p>Begin from a documented task setup and starter solution, then let the agent improve its own approach.</p></div>
           <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 3h6"/></svg></span><h4>Declared budgets</h4><p>Set limits for time, tokens, API spend or GPU hours, and report the budget with each run.</p></div>
@@ -263,9 +263,9 @@
     <p class="muted">An evolving benchmark initiative. Contributions of tasks, baselines, evaluators, and reproducible results are welcome.</p>
   </footer>
 
-  <script src="assets/main.js?v=20261009t" defer></script>
-  <script src="assets/results.js?v=20261009t" defer></script>
-  <script src="assets/demos.js?v=20261009t" defer></script>
-  <script src="assets/reel.js?v=20261009t" defer></script>
+  <script src="assets/main.js?v=20261009u" defer></script>
+  <script src="assets/results.js?v=20261009u" defer></script>
+  <script src="assets/demos.js?v=20261009u" defer></script>
+  <script src="assets/reel.js?v=20261009u" defer></script>
 </body>
 </html>

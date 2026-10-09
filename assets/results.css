@@ -86,7 +86,7 @@ table.results td.na { color: var(--ink-3); }
    label centred over its columns with a rule beneath it (as in a booktabs table). Every row is
    the same height: secondary readings sit inline after the value, never on a second line. */
 table.results { border-collapse: separate; border-spacing: 0; }
-table.results th, table.results td { padding: 0 14px; height: 52px; text-align: center; vertical-align: middle; border-bottom: 1px solid var(--line); }
+table.results th, table.results td { padding: 0 10px; height: 52px; text-align: center; vertical-align: middle; border-bottom: 1px solid var(--line); }
 table.results th:first-child, table.results td:first-child { width: 44px; padding: 0 6px 0 12px; text-align: center; }
 table.results th.model, table.results td.model { text-align: left; padding-left: 10px; width: 1%; }
 table.results td.model { color: var(--ink); font-weight: 600; }
@@ -103,7 +103,7 @@ table.results thead tr.table-band th {
   background-size: calc(100% - 16px) 1px; background-position: center bottom; background-repeat: no-repeat;
 }
 table.results thead tr.table-band th.band-l { text-align: left; padding-left: 12px; background-image: none; }
-table.results thead tr:not(.table-band) th { padding: 10px 14px 10px; border-bottom: 1.5px solid var(--ink); vertical-align: bottom; }
+table.results thead tr:not(.table-band) th { padding: 10px 10px 10px; border-bottom: 1.5px solid var(--ink); vertical-align: bottom; }
 table.results thead tr:not(.table-band) th.model { padding-left: 10px; }
 table.results th .th-sub { display: block; margin-top: 3px; font-size: 10px; color: var(--ink-3); letter-spacing: 0.06em; text-transform: none; }
 
