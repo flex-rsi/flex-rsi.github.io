@@ -81,8 +81,8 @@
       const a = s[k - 1], b = s[k], f = (x - a.x) / (b.x - a.x || 1);
       return { x, y: a.y + (b.y - a.y) * f };
     };
-    // one step per round: speeding up over the first rounds, fast through the middle, slowing only for the last two
-    const dur = [1.0, 0.6, 0.35, 0.24, 0.22, 0.22, 0.38, 0.95].slice(0, ROUNDS);
+    // one step per round: a smooth speed-up from a brisk start, fast through the middle, slow only on the last
+    const dur = [0.6, 0.42, 0.3, 0.24, 0.2, 0.2, 0.2, 0.7].slice(0, ROUNDS);
     const RUN = dur.reduce((x, y) => x + y, 0), IN = 0.3, HOLD = 0.6, FADE = 0.5;
     const PERIOD = IN + RUN + HOLD + FADE;
     const starts = dur.reduce((acc, d, i) => (acc.push(acc[i] + d), acc), [0]);
