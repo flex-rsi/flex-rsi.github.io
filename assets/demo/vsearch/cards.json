@@ -1,0 +1,144 @@
+[
+ {
+  "id": "test-010",
+  "source": "V* Bench",
+  "question": "What is the color of the plastic stool?",
+  "options": [
+   "black",
+   "blue",
+   "white",
+   "red"
+  ],
+  "label": "C",
+  "before": "D",
+  "after": "C",
+  "image": [
+   2250,
+   1500
+  ],
+  "target": [
+   24,
+   21
+  ],
+  "fraction": 0.00014933333333333332,
+  "aspect": 1.5007
+ },
+ {
+  "id": "test-058",
+  "source": "V* Bench",
+  "question": "What is the color of the watch?",
+  "options": [
+   "blue",
+   "silver",
+   "white",
+   "black"
+  ],
+  "label": "C",
+  "before": "D",
+  "after": "C",
+  "image": [
+   2250,
+   1500
+  ],
+  "target": [
+   14,
+   30
+  ],
+  "fraction": 0.00012444444444444444,
+  "aspect": 1.5007
+ },
+ {
+  "id": "test-061",
+  "source": "V* Bench",
+  "question": "Is the red suitcase on the left or right side of the red stool?",
+  "options": [
+   "right",
+   "left"
+  ],
+  "label": "B",
+  "before": "A",
+  "after": "B",
+  "image": [
+   2394,
+   1500
+  ],
+  "target": [
+   121,
+   31
+  ],
+  "fraction": 0.0010445558340295182,
+  "aspect": 1.5965
+ },
+ {
+  "id": "test-091",
+  "source": "V* Bench",
+  "question": "What is the color of the handbag?",
+  "options": [
+   "brown",
+   "black",
+   "red",
+   "white"
+  ],
+  "label": "D",
+  "before": "B",
+  "after": "D",
+  "image": [
+   2250,
+   1500
+  ],
+  "target": [
+   20,
+   49
+  ],
+  "fraction": 0.00029037037037037036,
+  "aspect": 1.5007
+ },
+ {
+  "id": "test-018",
+  "source": "HR-Bench 8K",
+  "question": "What word is written on the hang glider?",
+  "options": [
+   "Sunny",
+   "Windy",
+   "Cloudy",
+   "Stormy"
+  ],
+  "label": "D",
+  "before": "A",
+  "after": "D",
+  "image": [
+   7680,
+   5046
+  ],
+  "target": [
+   200,
+   320
+  ],
+  "fraction": 0.0016514731140177038,
+  "aspect": 1.5214
+ },
+ {
+  "id": "test-051",
+  "source": "HR-Bench 8K",
+  "question": "Which president's face is highlighted in the red rectangle on Mount Rushmore?",
+  "options": [
+   "Thomas Jefferson",
+   "George Washington",
+   "Abraham Lincoln",
+   "Theodore Roosevelt"
+  ],
+  "label": "D",
+  "before": "C",
+  "after": "D",
+  "image": [
+   7680,
+   5120
+  ],
+  "target": [
+   345,
+   445
+  ],
+  "fraction": 0.0039043426513671875,
+  "aspect": 1.5007
+ }
+]

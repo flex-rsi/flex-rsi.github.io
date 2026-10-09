@@ -1,0 +1,410 @@
+{
+ "model": "Claude Opus 5.5",
+ "panels": [
+  {
+   "id": "active-search",
+   "name": "Active Search",
+   "metric": "SPL",
+   "before": 0.3105,
+   "after": 0.7417,
+   "episodes": [
+    {
+     "id": "wild-Gemini_intersection-1",
+     "split": "test",
+     "kind": "hos",
+     "task": "Find the ad 'BROADWAY SHOWS'.",
+     "fewest": 2,
+     "before": {
+      "outcome": "Missed",
+      "steps": 6,
+      "actions": [
+       "rotate(30,-10)",
+       "rotate(45,0)",
+       "rotate(45,0)",
+       "rotate(7,10)",
+       "rotate(3,4)",
+       "submit(40,4)"
+      ],
+      "success": false,
+      "video": "assets/demo/hstar/wild-Gemini_intersection-1-before.mp4",
+      "poster": "assets/demo/hstar/wild-Gemini_intersection-1-before.jpg"
+     },
+     "after": {
+      "outcome": "Found",
+      "steps": 2,
+      "actions": [
+       "rotate(-180,0)",
+       "submit(101,17)"
+      ],
+      "success": true,
+      "video": "assets/demo/hstar/wild-Gemini_intersection-1-after.mp4",
+      "poster": "assets/demo/hstar/wild-Gemini_intersection-1-after.jpg"
+     },
+     "scene": "Intersection"
+    },
+    {
+     "id": "wild-gsv_seattle-0",
+     "split": "test",
+     "kind": "hps",
+     "task": "If you want to enter the red house, where should you move?",
+     "fewest": 2,
+     "before": {
+      "outcome": "Missed",
+      "steps": 3,
+      "actions": [
+       "rotate(-90,0)",
+       "rotate(35,0)",
+       "submit(215,0)"
+      ],
+      "success": false,
+      "video": "assets/demo/hstar/wild-gsv_seattle-0-before.mp4",
+      "poster": "assets/demo/hstar/wild-gsv_seattle-0-before.jpg"
+     },
+     "after": {
+      "outcome": "Found",
+      "steps": 2,
+      "actions": [
+       "rotate(-180,0)",
+       "submit(92,0)"
+      ],
+      "success": true,
+      "video": "assets/demo/hstar/wild-gsv_seattle-0-after.mp4",
+      "poster": "assets/demo/hstar/wild-gsv_seattle-0-after.jpg"
+     },
+     "scene": "Seattle street"
+    },
+    {
+     "id": "wild-ChatGPT_room-3",
+     "split": "test",
+     "kind": "hps",
+     "task": "You want to read a book, where to move?",
+     "fewest": 2,
+     "before": {
+      "outcome": "Missed",
+      "steps": 4,
+      "actions": [
+       "rotate(-90,0)",
+       "rotate(25,-15)",
+       "rotate(-15,-10)",
+       "submit(10,-25)"
+      ],
+      "success": false,
+      "video": "assets/demo/hstar/wild-ChatGPT_room-3-before.mp4",
+      "poster": "assets/demo/hstar/wild-ChatGPT_room-3-before.jpg"
+     },
+     "after": {
+      "outcome": "Found",
+      "steps": 2,
+      "actions": [
+       "rotate(-180,0)",
+       "submit(241,0)"
+      ],
+      "success": true,
+      "video": "assets/demo/hstar/wild-ChatGPT_room-3-after.mp4",
+      "poster": "assets/demo/hstar/wild-ChatGPT_room-3-after.jpg"
+     },
+     "scene": "Bedroom"
+    },
+    {
+     "id": "wild-Gemini_airport-2",
+     "split": "test",
+     "kind": "hps",
+     "task": "You want to travel to Frankfurt, your flight number is 'LH496', where'd you go?",
+     "fewest": 2,
+     "before": {
+      "outcome": "Missed",
+      "steps": 2,
+      "actions": [
+       "rotate(0,5)",
+       "submit(270,5)"
+      ],
+      "success": false,
+      "video": "assets/demo/hstar/wild-Gemini_airport-2-before.mp4",
+      "poster": "assets/demo/hstar/wild-Gemini_airport-2-before.jpg"
+     },
+     "after": {
+      "outcome": "Found",
+      "steps": 2,
+      "actions": [
+       "rotate(-180,0)",
+       "submit(103,0)"
+      ],
+      "success": true,
+      "video": "assets/demo/hstar/wild-Gemini_airport-2-after.mp4",
+      "poster": "assets/demo/hstar/wild-Gemini_airport-2-after.jpg"
+     },
+     "scene": "Airport"
+    },
+    {
+     "id": "hos-410-1",
+     "split": "val",
+     "kind": "hos",
+     "task": "find mannequin",
+     "fewest": 2,
+     "before": {
+      "outcome": "Missed",
+      "steps": 4,
+      "actions": [
+       "rotate(60,0)",
+       "rotate(60,0)",
+       "rotate(0,-8)",
+       "submit(30,-8)"
+      ],
+      "success": false,
+      "video": "assets/demo/hstar/hos-410-1-before.mp4",
+      "poster": "assets/demo/hstar/hos-410-1-before.jpg"
+     },
+     "after": {
+      "outcome": "Found",
+      "steps": 2,
+      "actions": [
+       "rotate(-180,0)",
+       "submit(128,-15)"
+      ],
+      "success": true,
+      "video": "assets/demo/hstar/hos-410-1-after.mp4",
+      "poster": "assets/demo/hstar/hos-410-1-after.jpg"
+     },
+     "scene": "Clothing store"
+    },
+    {
+     "id": "hos-41-0",
+     "split": "val",
+     "kind": "hos",
+     "task": "look for the Dog Diapers",
+     "fewest": 2,
+     "before": {
+      "outcome": "Out Of Steps",
+      "steps": 10,
+      "actions": [
+       "rotate(60,0)",
+       "rotate(30,0)",
+       "rotate(-30,0)",
+       "rotate(-30,0)",
+       "rotate(-60,0)",
+       "rotate(-60,0)",
+       "rotate(12,-5)",
+       "rotate(-40,0)",
+       "rotate(-28,0)",
+       "rotate(-20,0)"
+      ],
+      "success": false,
+      "video": "assets/demo/hstar/hos-41-0-before.mp4",
+      "poster": "assets/demo/hstar/hos-41-0-before.jpg"
+     },
+     "after": {
+      "outcome": "Found",
+      "steps": 2,
+      "actions": [
+       "rotate(-180,0)",
+       "submit(274,-3)"
+      ],
+      "success": true,
+      "video": "assets/demo/hstar/hos-41-0-after.mp4",
+      "poster": "assets/demo/hstar/hos-41-0-after.jpg"
+     },
+     "scene": "Store aisle"
+    }
+   ]
+  },
+  {
+   "id": "visual-search",
+   "name": "Visual Search",
+   "metric": "accuracy",
+   "before": 0.85,
+   "after": 0.9643,
+   "cards": [
+    {
+     "id": "test-010",
+     "source": "V* Bench",
+     "question": "What is the color of the plastic stool?",
+     "options": [
+      "black",
+      "blue",
+      "white",
+      "red"
+     ],
+     "label": "C",
+     "before": "D",
+     "after": "C",
+     "image": [
+      2250,
+      1500
+     ],
+     "target": [
+      24,
+      21
+     ],
+     "fraction": 0.00014933333333333332,
+     "aspect": 1.5007,
+     "full": "assets/demo/vsearch/test-010-full.jpg",
+     "zoom": "assets/demo/vsearch/test-010-zoom.jpg"
+    },
+    {
+     "id": "test-058",
+     "source": "V* Bench",
+     "question": "What is the color of the watch?",
+     "options": [
+      "blue",
+      "silver",
+      "white",
+      "black"
+     ],
+     "label": "C",
+     "before": "D",
+     "after": "C",
+     "image": [
+      2250,
+      1500
+     ],
+     "target": [
+      14,
+      30
+     ],
+     "fraction": 0.00012444444444444444,
+     "aspect": 1.5007,
+     "full": "assets/demo/vsearch/test-058-full.jpg",
+     "zoom": "assets/demo/vsearch/test-058-zoom.jpg"
+    },
+    {
+     "id": "test-061",
+     "source": "V* Bench",
+     "question": "Is the red suitcase on the left or right side of the red stool?",
+     "options": [
+      "right",
+      "left"
+     ],
+     "label": "B",
+     "before": "A",
+     "after": "B",
+     "image": [
+      2394,
+      1500
+     ],
+     "target": [
+      121,
+      31
+     ],
+     "fraction": 0.0010445558340295182,
+     "aspect": 1.5965,
+     "full": "assets/demo/vsearch/test-061-full.jpg",
+     "zoom": "assets/demo/vsearch/test-061-zoom.jpg"
+    },
+    {
+     "id": "test-091",
+     "source": "V* Bench",
+     "question": "What is the color of the handbag?",
+     "options": [
+      "brown",
+      "black",
+      "red",
+      "white"
+     ],
+     "label": "D",
+     "before": "B",
+     "after": "D",
+     "image": [
+      2250,
+      1500
+     ],
+     "target": [
+      20,
+      49
+     ],
+     "fraction": 0.00029037037037037036,
+     "aspect": 1.5007,
+     "full": "assets/demo/vsearch/test-091-full.jpg",
+     "zoom": "assets/demo/vsearch/test-091-zoom.jpg"
+    },
+    {
+     "id": "test-018",
+     "source": "HR-Bench 8K",
+     "question": "What word is written on the hang glider?",
+     "options": [
+      "Sunny",
+      "Windy",
+      "Cloudy",
+      "Stormy"
+     ],
+     "label": "D",
+     "before": "A",
+     "after": "D",
+     "image": [
+      7680,
+      5046
+     ],
+     "target": [
+      200,
+      320
+     ],
+     "fraction": 0.0016514731140177038,
+     "aspect": 1.5214,
+     "full": "assets/demo/vsearch/test-018-full.jpg",
+     "zoom": "assets/demo/vsearch/test-018-zoom.jpg"
+    },
+    {
+     "id": "test-051",
+     "source": "HR-Bench 8K",
+     "question": "Which president's face is highlighted in the red rectangle on Mount Rushmore?",
+     "options": [
+      "Thomas Jefferson",
+      "George Washington",
+      "Abraham Lincoln",
+      "Theodore Roosevelt"
+     ],
+     "label": "D",
+     "before": "C",
+     "after": "D",
+     "image": [
+      7680,
+      5120
+     ],
+     "target": [
+      345,
+      445
+     ],
+     "fraction": 0.0039043426513671875,
+     "aspect": 1.5007,
+     "full": "assets/demo/vsearch/test-051-full.jpg",
+     "zoom": "assets/demo/vsearch/test-051-zoom.jpg"
+    }
+   ]
+  },
+  {
+   "id": "robot-control",
+   "name": "Robot Control",
+   "metric": "score",
+   "before": 5.0,
+   "after": 70.0,
+   "success_rate": 0.6,
+   "episodes": 5,
+   "case": "standard-6",
+   "clip_success": true,
+   "video": "assets/demo/robo/opus-final.mp4",
+   "poster": "assets/demo/robo/opus-final.jpg"
+  },
+  {
+   "id": "3d-tracking",
+   "name": "3D Tracking",
+   "metric": "tracking mIoU",
+   "before": 0.2119,
+   "after": 0.8013,
+   "clip": {
+    "split": "test",
+    "views": 6,
+    "objects": 4,
+    "cols": 4,
+    "layout": [
+     "Image",
+     "Ground truth",
+     "Before",
+     "After"
+    ],
+    "before": 0.174,
+    "after": 0.97
+   },
+   "video": "assets/demo/iggt/compare.mp4",
+   "poster": "assets/demo/iggt/compare.jpg"
+  }
+ ]
+}

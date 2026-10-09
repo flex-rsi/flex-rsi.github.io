@@ -12,6 +12,8 @@ Plain static site, no build step:
 - `assets/main.js`: scroll reveal, navigation state, copy button
 - `assets/results.js`, `assets/results.css`: the results section (tabs, leaderboards, curves)
 - `data/results.json`: the results, generated from the benchmark's run records
+- `assets/demos.js`, `assets/demos.css`, `data/demos.json`, `assets/demo/`: the demos section
+  (starting vs self-improved solution on held-out cases: replays, question cards, clips)
 
 ## Results data
 

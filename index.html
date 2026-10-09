@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="assets/theme.css">
   <link rel="stylesheet" href="assets/palette.css">
   <link rel="stylesheet" href="assets/results.css">
+  <link rel="stylesheet" href="assets/demos.css">
 </head>
 <body class="v-e">
   <!-- Ambient background: slow-drifting colour fields behind the glass -->
@@ -35,6 +36,7 @@
       <a href="#tracks">Tracks</a>
       <a href="#protocol">Protocol</a>
       <a href="#leaderboard">Leaderboard</a>
+      <a href="#demos">Demos</a>
       <a href="#citation">Citation</a>
     </nav>
     <a class="pill pill-ghost nav-cta" href="#leaderboard">Results</a>
@@ -167,6 +169,23 @@
       </div>
     </section>
 
+    <!-- Demos -->
+    <section class="section" id="demos">
+      <div class="section-head reveal">
+        <p class="kicker">Demos</p>
+        <h2>Before and after self&#8209;improvement</h2>
+      </div>
+      <p class="demo-lede reveal">The same model on the same held-out cases: the starting solution every run begins from, and the solution the agent arrived at on its own.</p>
+      <div class="demo-tabs reveal" role="tablist" aria-label="Demos by task"></div>
+      <div class="glass card demo reveal">
+        <div class="demo-head">
+          <div><h3 class="demo-title"></h3><p class="demo-sub"></p></div>
+          <p class="demo-score" aria-live="polite"></p>
+        </div>
+        <div class="demo-stage"></div>
+      </div>
+    </section>
+
     <!-- Citation -->
     <section class="section" id="citation">
       <div class="section-head reveal">
@@ -193,5 +212,6 @@
 
   <script src="assets/main.js" defer></script>
   <script src="assets/results.js" defer></script>
+  <script src="assets/demos.js" defer></script>
 </body>
 </html>

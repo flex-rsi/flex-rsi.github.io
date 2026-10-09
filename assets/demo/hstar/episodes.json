@@ -1,0 +1,169 @@
+[
+ {
+  "id": "wild-Gemini_intersection-1",
+  "split": "test",
+  "kind": "hos",
+  "task": "Find the ad 'BROADWAY SHOWS'.",
+  "fewest": 2,
+  "before": {
+   "outcome": "Missed",
+   "steps": 6,
+   "actions": [
+    "rotate(30,-10)",
+    "rotate(45,0)",
+    "rotate(45,0)",
+    "rotate(7,10)",
+    "rotate(3,4)",
+    "submit(40,4)"
+   ],
+   "success": false
+  },
+  "after": {
+   "outcome": "Found",
+   "steps": 2,
+   "actions": [
+    "rotate(-180,0)",
+    "submit(101,17)"
+   ],
+   "success": true
+  }
+ },
+ {
+  "id": "wild-gsv_seattle-0",
+  "split": "test",
+  "kind": "hps",
+  "task": "If you want to enter the red house, where should you move?",
+  "fewest": 2,
+  "before": {
+   "outcome": "Missed",
+   "steps": 3,
+   "actions": [
+    "rotate(-90,0)",
+    "rotate(35,0)",
+    "submit(215,0)"
+   ],
+   "success": false
+  },
+  "after": {
+   "outcome": "Found",
+   "steps": 2,
+   "actions": [
+    "rotate(-180,0)",
+    "submit(92,0)"
+   ],
+   "success": true
+  }
+ },
+ {
+  "id": "wild-ChatGPT_room-3",
+  "split": "test",
+  "kind": "hps",
+  "task": "You want to read a book, where to move?",
+  "fewest": 2,
+  "before": {
+   "outcome": "Missed",
+   "steps": 4,
+   "actions": [
+    "rotate(-90,0)",
+    "rotate(25,-15)",
+    "rotate(-15,-10)",
+    "submit(10,-25)"
+   ],
+   "success": false
+  },
+  "after": {
+   "outcome": "Found",
+   "steps": 2,
+   "actions": [
+    "rotate(-180,0)",
+    "submit(241,0)"
+   ],
+   "success": true
+  }
+ },
+ {
+  "id": "wild-Gemini_airport-2",
+  "split": "test",
+  "kind": "hps",
+  "task": "You want to travel to Frankfurt, your flight number is 'LH496', where'd you go?",
+  "fewest": 2,
+  "before": {
+   "outcome": "Missed",
+   "steps": 2,
+   "actions": [
+    "rotate(0,5)",
+    "submit(270,5)"
+   ],
+   "success": false
+  },
+  "after": {
+   "outcome": "Found",
+   "steps": 2,
+   "actions": [
+    "rotate(-180,0)",
+    "submit(103,0)"
+   ],
+   "success": true
+  }
+ },
+ {
+  "id": "hos-410-1",
+  "split": "val",
+  "kind": "hos",
+  "task": "find mannequin",
+  "fewest": 2,
+  "before": {
+   "outcome": "Missed",
+   "steps": 4,
+   "actions": [
+    "rotate(60,0)",
+    "rotate(60,0)",
+    "rotate(0,-8)",
+    "submit(30,-8)"
+   ],
+   "success": false
+  },
+  "after": {
+   "outcome": "Found",
+   "steps": 2,
+   "actions": [
+    "rotate(-180,0)",
+    "submit(128,-15)"
+   ],
+   "success": true
+  }
+ },
+ {
+  "id": "hos-41-0",
+  "split": "val",
+  "kind": "hos",
+  "task": "look for the Dog Diapers",
+  "fewest": 2,
+  "before": {
+   "outcome": "Out Of Steps",
+   "steps": 10,
+   "actions": [
+    "rotate(60,0)",
+    "rotate(30,0)",
+    "rotate(-30,0)",
+    "rotate(-30,0)",
+    "rotate(-60,0)",
+    "rotate(-60,0)",
+    "rotate(12,-5)",
+    "rotate(-40,0)",
+    "rotate(-28,0)",
+    "rotate(-20,0)"
+   ],
+   "success": false
+  },
+  "after": {
+   "outcome": "Found",
+   "steps": 2,
+   "actions": [
+    "rotate(-180,0)",
+    "submit(274,-3)"
+   ],
+   "success": true
+  }
+ }
+]
