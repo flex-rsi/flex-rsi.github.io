@@ -1,6 +1,6 @@
 # flex-rsi.github.io
 
-Project page of **Flex-RSI: A Flexible Benchmark for Recursive Self-Improvement of Frontier Agents**,
+Project page of **Flex-RSI: Benchmarking Recursive Self-Improvement of Frontier Agents**,
 served at https://flex-rsi.github.io.
 
 Plain static site, no build step:

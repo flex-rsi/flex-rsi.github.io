@@ -150,7 +150,7 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 /* ---------- hero ---------- */
 .hero {
   min-height: 100svh;
-  display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 48px;
+  display: grid; grid-template-columns: minmax(0, 1.47fr) minmax(0, 1fr); align-items: center; gap: 84px;
   padding: 120px 0 40px;
 }
 .eyebrow {
@@ -181,7 +181,7 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
   font-family: var(--mono); font-size: 11px; color: var(--ink-3);
   padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line);
 }
-.curves { display: block; width: 100%; height: auto; aspect-ratio: 220 / 276; overflow: visible; }
+.curves { display: block; width: 100%; height: auto; aspect-ratio: 220 / 305; overflow: visible; }
 /* axes: x = round (ticks light up as the leading run passes them), y = performance */
 .curves .axes line { stroke: var(--ink-3); stroke-width: 1; }
 .curves .ax-title { font: 500 10.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ink-3); }
