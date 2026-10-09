@@ -297,8 +297,10 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 /* ---------- leaderboard ---------- */
 .board { position: relative; padding: 10px 10px 4px; overflow: hidden; }
 .board-scroll { overflow-x: auto; }
-/* scrollbars in the page's flat style: thin, square, a grey thumb on a clear track */
-* { scrollbar-width: thin; scrollbar-color: var(--ink-3) transparent; }
+/* scrollbars in the page's flat style: thin, square, a grey thumb on a clear track. Chromium and Safari
+   take the ::-webkit-scrollbar rules (setting scrollbar-width/-color there would switch them to their own
+   rounded thumbs); only browsers without them (Firefox) get the standard properties. */
+@supports not selector(::-webkit-scrollbar) { * { scrollbar-width: thin; scrollbar-color: var(--ink-3) transparent; } }
 *::-webkit-scrollbar { width: 6px; height: 6px; }
 *::-webkit-scrollbar-track { background: transparent; }
 *::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 0; }
