@@ -1,0 +1,857 @@
+{
+ "updated": "2026-10-09",
+ "tasks": [
+  {
+   "id": "reconstruct",
+   "track": "Reconstruct",
+   "task": "3D instance tracking (IGGT)",
+   "primary": "t_miou",
+   "metrics": [
+    {
+     "key": "t_miou",
+     "label": "T-mIoU"
+    },
+    {
+     "key": "t_sr",
+     "label": "T-SR"
+    },
+    {
+     "key": "J",
+     "label": "J"
+    },
+    {
+     "key": "F",
+     "label": "F"
+    },
+    {
+     "key": "JF",
+     "label": "J&F"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "t_miou": 0.8013,
+      "t_sr": 0.7042,
+      "J": 0.7723,
+      "F": 0.7421,
+      "JF": 0.7572
+     },
+     "start": 0.1935,
+     "best": 0.8547,
+     "gain_pct": 341.7,
+     "curve": [
+      0.1935,
+      0.4705,
+      0.6199,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547,
+      0.8547
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "t_miou": 0.5885,
+      "t_sr": 0.3083,
+      "J": 0.5459,
+      "F": 0.5181,
+      "JF": 0.532
+     },
+     "start": 0.1935,
+     "best": 0.6569,
+     "gain_pct": 239.5,
+     "curve": [
+      0.1935,
+      0.1935,
+      0.4607,
+      0.4607,
+      0.4607,
+      0.6569,
+      0.6569,
+      0.6569,
+      0.6569,
+      0.6569,
+      0.6569,
+      0.6569,
+      0.6569
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "t_miou": 0.5236,
+      "t_sr": 0.125,
+      "J": 0.4081,
+      "F": 0.3833,
+      "JF": 0.3957
+     },
+     "start": 0.1935,
+     "best": 0.5388,
+     "gain_pct": 178.4,
+     "curve": [
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.4775,
+      0.5387,
+      0.5388
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "t_miou": 0.5159,
+      "t_sr": 0.1917,
+      "J": 0.4543,
+      "F": 0.4347,
+      "JF": 0.4445
+     },
+     "start": 0.1935,
+     "best": 0.5517,
+     "gain_pct": 185.1,
+     "curve": [
+      0.1935,
+      0.4385,
+      0.4628,
+      0.4813,
+      0.4895,
+      0.4895,
+      0.4964,
+      0.5064,
+      0.5292,
+      0.5315,
+      0.5315,
+      0.5501,
+      0.5501,
+      0.5517,
+      0.5517,
+      0.5517
+     ]
+    },
+    {
+     "model": "Claude Sonnet 5.5",
+     "weights": "closed",
+     "test": {
+      "t_miou": 0.4794,
+      "t_sr": 0.2375,
+      "J": 0.4759,
+      "F": 0.4574,
+      "JF": 0.4666
+     },
+     "start": 0.1935,
+     "best": 0.5006,
+     "gain_pct": 158.7,
+     "curve": [
+      0.1935,
+      0.1935,
+      0.1935,
+      0.3388,
+      0.387,
+      0.4064,
+      0.4064,
+      0.4064,
+      0.4064,
+      0.4064,
+      0.4064,
+      0.4836,
+      0.5006,
+      0.5006
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "t_miou": 0.3196,
+      "t_sr": 0.0542,
+      "J": 0.2625,
+      "F": 0.2144,
+      "JF": 0.2385
+     },
+     "start": 0.1935,
+     "best": 0.2911,
+     "gain_pct": 50.4,
+     "curve": [
+      0.1935,
+      0.1935,
+      0.25,
+      0.2546,
+      0.2546,
+      0.2911,
+      0.2911,
+      0.2911
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "t_miou": 0.2787,
+      "t_sr": 0.0167,
+      "J": 0.2311,
+      "F": 0.2152,
+      "JF": 0.2232
+     },
+     "start": 0.1935,
+     "best": 0.294,
+     "gain_pct": 51.9,
+     "curve": [
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.1935,
+      0.2259,
+      0.253,
+      0.281,
+      0.281,
+      0.281,
+      0.281,
+      0.294
+     ]
+    }
+   ]
+  },
+  {
+   "id": "perceive",
+   "track": "Perceive",
+   "task": "High-resolution visual search (V*Bench, HR-Bench 8K)",
+   "primary": "accuracy",
+   "metrics": [
+    {
+     "key": "accuracy",
+     "label": "Accuracy"
+    },
+    {
+     "key": "acc_vstar",
+     "label": "V*Bench"
+    },
+    {
+     "key": "acc_hrbench8k",
+     "label": "HR-Bench 8K"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.9643,
+      "acc_vstar": 0.9857,
+      "acc_hrbench8k": 0.9429
+     },
+     "start": 0.85,
+     "best": 0.95,
+     "gain_pct": 11.8,
+     "curve": [
+      0.85,
+      0.85,
+      0.925,
+      0.925,
+      0.95,
+      0.95,
+      0.95,
+      0.95,
+      0.95,
+      0.95,
+      0.95
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.8857,
+      "acc_vstar": 0.8571,
+      "acc_hrbench8k": 0.9143
+     },
+     "start": 0.8875,
+     "best": 0.8875,
+     "gain_pct": 0.0,
+     "curve": [
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.8857,
+      "acc_vstar": 0.9714,
+      "acc_hrbench8k": 0.8
+     },
+     "start": 0.7875,
+     "best": 0.875,
+     "gain_pct": 11.1,
+     "curve": [
+      0.7875,
+      0.7875,
+      0.875,
+      0.875,
+      0.875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.8875,
+      0.875
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.8571,
+      "acc_vstar": 0.9,
+      "acc_hrbench8k": 0.8143
+     },
+     "start": 0.675,
+     "best": 0.8,
+     "gain_pct": 18.5,
+     "curve": [
+      0.675,
+      0.75,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.7286,
+      "acc_vstar": 0.8143,
+      "acc_hrbench8k": 0.6429
+     },
+     "start": 0.575,
+     "best": 0.775,
+     "gain_pct": 34.8,
+     "curve": [
+      0.575,
+      0.6375,
+      0.725,
+      0.725,
+      0.725,
+      0.725,
+      0.725,
+      0.775,
+      0.775,
+      0.775,
+      0.775
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.7071,
+      "acc_vstar": 0.7714,
+      "acc_hrbench8k": 0.6429
+     },
+     "start": 0.6125,
+     "best": 0.7625,
+     "gain_pct": 24.5,
+     "curve": [
+      0.6125,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625
+     ]
+    }
+   ]
+  },
+  {
+   "id": "search",
+   "track": "Search",
+   "task": "Active visual search in 360\u00b0 scenes (H*Bench)",
+   "primary": "spl",
+   "metrics": [
+    {
+     "key": "spl",
+     "label": "SPL"
+    },
+    {
+     "key": "success",
+     "label": "Success"
+    },
+    {
+     "key": "hos_sr",
+     "label": "Object SR"
+    },
+    {
+     "key": "hps_sr",
+     "label": "Path SR"
+    },
+    {
+     "key": "avg_steps",
+     "label": "Avg. steps"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "spl": 0.7417,
+      "success": 0.8323,
+      "hos_sr": 0.8788,
+      "hps_sr": 0.7857,
+      "avg_steps": 2.2128
+     },
+     "start": 0.3163,
+     "best": 0.6633,
+     "gain_pct": 109.7,
+     "curve": [
+      0.3163,
+      0.5283,
+      0.615,
+      0.615,
+      0.615,
+      0.615,
+      0.615,
+      0.615,
+      0.6633,
+      0.6633,
+      0.6633,
+      0.6633,
+      0.6633,
+      0.6633,
+      0.6633,
+      0.6633
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "spl": 0.6904,
+      "success": 0.7814,
+      "hos_sr": 0.8485,
+      "hps_sr": 0.7143,
+      "avg_steps": 2.234
+     },
+     "start": 0.1996,
+     "best": 0.517,
+     "gain_pct": 159.0,
+     "curve": [
+      0.1996,
+      0.1996,
+      0.4022,
+      0.4022,
+      0.4022,
+      0.4022,
+      0.4022,
+      0.5013,
+      0.5013,
+      0.5013,
+      0.5013,
+      0.5013,
+      0.517,
+      0.517,
+      0.517,
+      0.517
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "spl": 0.5933,
+      "success": 0.6591,
+      "hos_sr": 0.8182,
+      "hps_sr": 0.5,
+      "avg_steps": 1.9787
+     },
+     "start": 0.1665,
+     "best": 0.5033,
+     "gain_pct": 202.3,
+     "curve": [
+      0.1665,
+      0.1665,
+      0.4375,
+      0.5033,
+      0.5033,
+      0.5033,
+      0.5033,
+      0.5033,
+      0.5033,
+      0.5033,
+      0.5033,
+      0.5033,
+      0.5033
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "spl": 0.5856,
+      "success": 0.6396,
+      "hos_sr": 0.6364,
+      "hps_sr": 0.6429,
+      "avg_steps": 1.7234
+     },
+     "start": 0.2536,
+     "best": 0.54,
+     "gain_pct": 112.9,
+     "curve": [
+      0.2536,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54,
+      0.54
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "spl": 0.5216,
+      "success": 0.5931,
+      "hos_sr": 0.7576,
+      "hps_sr": 0.4286,
+      "avg_steps": 2.1489
+     },
+     "start": 0.1761,
+     "best": 0.4444,
+     "gain_pct": 152.3,
+     "curve": [
+      0.1761,
+      0.2559,
+      0.2922,
+      0.3222,
+      0.4275,
+      0.4275,
+      0.4275,
+      0.4275,
+      0.4275,
+      0.4275,
+      0.4275,
+      0.4275,
+      0.4444
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "spl": 0.3247,
+      "success": 0.4048,
+      "hos_sr": 0.6667,
+      "hps_sr": 0.1429,
+      "avg_steps": 2.7234
+     },
+     "start": 0.0998,
+     "best": 0.3281,
+     "gain_pct": 228.7,
+     "curve": [
+      0.0998,
+      0.2012,
+      0.2012,
+      0.2012,
+      0.2012,
+      0.2012,
+      0.2012,
+      0.2077,
+      0.2077,
+      0.2077,
+      0.2077,
+      0.3281,
+      0.3281,
+      0.3281,
+      0.3281,
+      0.3281
+     ]
+    }
+   ]
+  },
+  {
+   "id": "act",
+   "track": "Act",
+   "task": "Robot control: throw bottles into a dustbin (RoboDojo)",
+   "primary": "score",
+   "metrics": [
+    {
+     "key": "score",
+     "label": "Score (0\u2013100)"
+    },
+    {
+     "key": "success_rate",
+     "label": "Success rate"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "score": 70.0,
+      "success_rate": 0.6
+     },
+     "start": 5.0,
+     "best": 76.0,
+     "gain_pct": 1420.0,
+     "curve": [
+      5.0,
+      34.0,
+      34.0,
+      34.0,
+      46.0,
+      64.0,
+      64.0,
+      64.0,
+      76.0,
+      76.0
+     ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "score": 37.0,
+      "success_rate": 0.0
+     },
+     "start": 7.0,
+     "best": 31.0,
+     "gain_pct": 342.9,
+     "curve": [
+      23.0,
+      31.0,
+      31.0,
+      31.0,
+      31.0,
+      31.0,
+      31.0,
+      31.0,
+      31.0,
+      31.0
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "score": 9.0,
+      "success_rate": 0.0
+     },
+     "start": 0.0,
+     "best": 4.0,
+     "gain_pct": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      4.0
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "score": 6.0,
+      "success_rate": 0.0
+     },
+     "start": 2.0,
+     "best": 4.0,
+     "gain_pct": 100.0,
+     "curve": [
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      4.0
+     ]
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "weights": "open",
+     "test": {
+      "score": 2.0,
+      "success_rate": 0.0
+     },
+     "start": 0.0,
+     "best": 0.0,
+     "gain_pct": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "score": 2.0,
+      "success_rate": 0.0
+     },
+     "start": 0.0,
+     "best": 0.0,
+     "gain_pct": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "score": 0.0,
+      "success_rate": 0.0
+     },
+     "start": 0.0,
+     "best": 0.0,
+     "gain_pct": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "score": 0.0,
+      "success_rate": 0.0
+     },
+     "start": 0.0,
+     "best": 0.0,
+     "gain_pct": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "score": 0.0,
+      "success_rate": 0.0
+     },
+     "start": null,
+     "best": 5.0,
+     "gain_pct": null,
+     "curve": [
+      null,
+      null,
+      0.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0
+     ]
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "gain": "Gain: best validation score relative to the run's own starting score.",
+  "curve": "Curves: best validation score so far after each round."
+ }
+}

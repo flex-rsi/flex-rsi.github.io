@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/theme.css">
   <link rel="stylesheet" href="assets/palette.css">
+  <link rel="stylesheet" href="assets/results.css">
 </head>
 <body class="v-e">
   <!-- Ambient background: slow-drifting colour fields behind the glass -->
@@ -48,7 +49,7 @@
         <p class="subtitle reveal">A Flexible Benchmark for <strong>Recursive Self&#8209;Improvement</strong> of Frontier Agents</p>
         <p class="authors reveal">Authors and affiliations to be announced</p>
         <div class="actions reveal">
-          <a class="pill pill-solid" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5"/></svg>Paper <span class="soon">soon</span></a>
+          <a class="pill pill-solid" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5"/></svg>Report <span class="soon">soon</span></a>
           <a class="pill pill-glass" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg>Code <span class="soon">soon</span></a>
           <a class="pill pill-glass" href="#leaderboard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Leaderboard</a>
         </div>
@@ -151,22 +152,16 @@
         <p class="kicker">Leaderboard</p>
         <h2>Results</h2>
       </div>
+      <div class="board-tabs reveal" role="tablist" aria-label="Results by task"></div>
       <div class="glass card board reveal">
-        <div class="board-scroll">
-          <table>
-            <thead>
-              <tr><th>#</th><th>Model</th><th>Perceive</th><th>Search</th><th>Reconstruct</th><th>Act</th><th>Overall</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>1</td><td><span class="sk w-60"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
-              <tr><td>2</td><td><span class="sk w-50"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
-              <tr><td>3</td><td><span class="sk w-70"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
-              <tr><td>4</td><td><span class="sk w-40"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
-              <tr><td>5</td><td><span class="sk w-60"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="board-veil"><span class="pill pill-glass">Results coming soon</span></div>
+        <div class="board-head"><h3 class="board-title"></h3><p class="board-sub"></p></div>
+        <div class="board-scroll"><table class="results"></table></div>
+        <figure class="curves-fig" hidden>
+          <figcaption>Best validation score so far, by round</figcaption>
+          <div class="curves-wrap"><svg class="curves-plot" viewBox="0 0 760 300" preserveAspectRatio="none" role="img"></svg></div>
+          <ul class="legend"></ul>
+        </figure>
+        <p class="board-note"></p>
       </div>
     </section>
 
@@ -195,5 +190,6 @@
   </footer>
 
   <script src="assets/main.js" defer></script>
+  <script src="assets/results.js" defer></script>
 </body>
 </html>

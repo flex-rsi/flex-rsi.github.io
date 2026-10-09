@@ -10,7 +10,9 @@ Plain static site, no build step:
 - `assets/theme.css`: the Swiss Grid look (hard rules, heavy type)
 - `assets/palette.css`: the Espresso colours (dark brown ground, ochre accent)
 - `assets/main.js`: scroll reveal, navigation state, copy button
+- `assets/results.js`, `assets/results.css`: the results section (tabs, leaderboards, curves)
+- `data/results.json`: the results, generated from the benchmark's run records
 
 Preview locally with `python3 -m http.server` in this directory.
 
-The page is a template: abstract, authors, links and results are placeholders.
+Abstract, authors and links are still placeholders.
