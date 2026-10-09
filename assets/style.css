@@ -389,3 +389,6 @@ pre { margin: 0; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; 
 /* overview: the work-in-progress line in the accent */
 .overview .wip { color: var(--accent-1); font-weight: 600; }
 .contribute-note { margin-top: 18px; font: 600 15px var(--sans); color: var(--accent-1); }
+/* footer contact: addresses keep their own case under the uppercase footer */
+.footer .contact a { text-transform: none; color: var(--accent-1); }
+.footer .contact a:hover { text-decoration: underline; }
