@@ -112,9 +112,9 @@
   }
 
   // Robot control: one validation case run by an earlier and a later round, laid out like active search.
-  // Each replay puts the decisive region, enlarged, beside the dimmed head camera where it is boxed.
+  // Each replay puts the decisive region, enlarged 2x, beside the full head camera (native 640x480) where it is boxed.
   const ROBOT_LEGEND = `<ul class="demo-legend">
-    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="4" y="3" width="14" height="8" fill="none" stroke="#f4f4f1" stroke-width="1.2" stroke-dasharray="3 2"/></svg>Region shown enlarged on the left</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="4" y="3" width="14" height="8" fill="none" stroke="#f4f4f1" stroke-width="1.2" stroke-dasharray="3 2"/></svg>Region shown enlarged 2× on the left</li>
   </ul>`;
   function robotControl(p) {
     const rounds = Object.fromEntries(p.rounds.map((r) => [r.id, r]));
@@ -124,7 +124,7 @@
     stage.innerHTML = `
       <div class="ep-task"><q>Throw all four bottles into the dustbin.</q><span class="ep-meta"></span></div>
       ${["before", "after"].map((w) => `<div class="ab-row"><div class="ab-bar"><span class="lhs"><span class="ab-tag${w === "after" ? " after" : ""}">${w === "after" ? "After" : "Before"}</span><span data-n="${w}"></span></span><span class="rhs" data-o="${w}"></span></div>
-        <div class="ab-video" data-v="${w}"></div></div>`).join("")}
+        <div class="ab-video robo" data-v="${w}"></div></div>`).join("")}
       ${ROBOT_LEGEND}
       <div class="ep-strip" role="group" aria-label="Validation cases">${p.comparisons.map((c, i) => {
         const a = rounds[c.after], b = rounds[c.before];
