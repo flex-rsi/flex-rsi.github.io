@@ -1,8 +1,47 @@
 {
+ "schema": 2,
  "updated": "2026-10-09",
+ "categories": [
+  {
+   "id": "perception",
+   "name": "Perception",
+   "about": "Seeing and understanding images and video."
+  },
+  {
+   "id": "reasoning",
+   "name": "Reasoning",
+   "about": "Multi-step spatial, temporal and logical reasoning."
+  },
+  {
+   "id": "action",
+   "name": "Action",
+   "about": "Acting in physical and simulated worlds."
+  },
+  {
+   "id": "reconstruction",
+   "name": "Reconstruction",
+   "about": "Recovering 3D and 4D structure and motion."
+  },
+  {
+   "id": "creation",
+   "name": "Creation",
+   "about": "Making and editing content to instructions."
+  },
+  {
+   "id": "bio",
+   "name": "Bio",
+   "about": "Scientific problems in the life sciences."
+  },
+  {
+   "id": "guard",
+   "name": "Guard",
+   "about": "Improving within rules, budgets and boundaries."
+  }
+ ],
  "tasks": [
   {
-   "id": "reconstruct",
+   "id": "3d-tracking",
+   "category": "reconstruction",
    "track": "3D Tracking",
    "task": "3D instance tracking (IGGT)",
    "primary": "t_miou",
@@ -42,6 +81,8 @@
      "start": 0.1935,
      "best": 0.8547,
      "gain_pct": 341.7,
+     "rounds": 15,
+     "ended": "max_rounds",
      "curve": [
       0.1935,
       0.4705,
@@ -74,6 +115,8 @@
      "start": 0.1935,
      "best": 0.6569,
      "gain_pct": 239.5,
+     "rounds": 12,
+     "ended": "budget_wall",
      "curve": [
       0.1935,
       0.1935,
@@ -103,6 +146,8 @@
      "start": 0.1935,
      "best": 0.5388,
      "gain_pct": 178.4,
+     "rounds": 9,
+     "ended": "budget_wall",
      "curve": [
       0.1935,
       0.1935,
@@ -129,6 +174,8 @@
      "start": 0.1935,
      "best": 0.5517,
      "gain_pct": 185.1,
+     "rounds": 15,
+     "ended": "max_rounds",
      "curve": [
       0.1935,
       0.4385,
@@ -161,6 +208,8 @@
      "start": 0.1935,
      "best": 0.5006,
      "gain_pct": 158.7,
+     "rounds": 13,
+     "ended": "budget_wall",
      "curve": [
       0.1935,
       0.1935,
@@ -191,6 +240,8 @@
      "start": 0.1935,
      "best": 0.2911,
      "gain_pct": 50.4,
+     "rounds": 7,
+     "ended": "budget_wall",
      "curve": [
       0.1935,
       0.1935,
@@ -215,6 +266,8 @@
      "start": 0.1935,
      "best": 0.294,
      "gain_pct": 51.9,
+     "rounds": 15,
+     "ended": "budget_wall",
      "curve": [
       0.1935,
       0.1935,
@@ -237,7 +290,8 @@
    ]
   },
   {
-   "id": "perceive",
+   "id": "visual-search",
+   "category": "perception",
    "track": "Visual Search",
    "task": "High-resolution visual search (V*Bench, HR-Bench 8K)",
    "primary": "accuracy",
@@ -267,6 +321,8 @@
      "start": 0.85,
      "best": 0.95,
      "gain_pct": 11.8,
+     "rounds": 10,
+     "ended": "max_rounds",
      "curve": [
       0.85,
       0.85,
@@ -292,6 +348,8 @@
      "start": 0.8875,
      "best": 0.8875,
      "gain_pct": 0.0,
+     "rounds": 10,
+     "ended": "max_rounds",
      "curve": [
       0.8875,
       0.8875,
@@ -317,6 +375,8 @@
      "start": 0.7875,
      "best": 0.875,
      "gain_pct": 11.1,
+     "rounds": 10,
+     "ended": "max_rounds",
      "curve": [
       0.7875,
       0.7875,
@@ -342,6 +402,8 @@
      "start": 0.675,
      "best": 0.8,
      "gain_pct": 18.5,
+     "rounds": 10,
+     "ended": "max_rounds",
      "curve": [
       0.675,
       0.75,
@@ -367,6 +429,8 @@
      "start": 0.575,
      "best": 0.775,
      "gain_pct": 34.8,
+     "rounds": 10,
+     "ended": "max_rounds",
      "curve": [
       0.575,
       0.6375,
@@ -392,6 +456,8 @@
      "start": 0.6125,
      "best": 0.7625,
      "gain_pct": 24.5,
+     "rounds": 10,
+     "ended": "max_rounds",
      "curve": [
       0.6125,
       0.7625,
@@ -409,7 +475,8 @@
    ]
   },
   {
-   "id": "search",
+   "id": "active-search",
+   "category": "action",
    "track": "Active Search",
    "task": "Active visual search in 360\u00b0 scenes (H*Bench)",
    "primary": "spl",
@@ -449,6 +516,8 @@
      "start": 0.3163,
      "best": 0.6633,
      "gain_pct": 109.7,
+     "rounds": 15,
+     "ended": "max_rounds",
      "curve": [
       0.3163,
       0.5283,
@@ -481,6 +550,8 @@
      "start": 0.1996,
      "best": 0.517,
      "gain_pct": 159.0,
+     "rounds": 15,
+     "ended": "max_rounds",
      "curve": [
       0.1996,
       0.1996,
@@ -513,6 +584,8 @@
      "start": 0.1665,
      "best": 0.5033,
      "gain_pct": 202.3,
+     "rounds": 12,
+     "ended": "budget_wall",
      "curve": [
       0.1665,
       0.1665,
@@ -542,6 +615,8 @@
      "start": 0.2536,
      "best": 0.54,
      "gain_pct": 112.9,
+     "rounds": 15,
+     "ended": "max_rounds",
      "curve": [
       0.2536,
       0.54,
@@ -574,6 +649,8 @@
      "start": 0.1761,
      "best": 0.4444,
      "gain_pct": 152.3,
+     "rounds": 12,
+     "ended": "val_calls",
      "curve": [
       0.1761,
       0.2559,
@@ -603,6 +680,8 @@
      "start": 0.0998,
      "best": 0.3281,
      "gain_pct": 228.7,
+     "rounds": 15,
+     "ended": "max_rounds",
      "curve": [
       0.0998,
       0.2012,
@@ -625,7 +704,8 @@
    ]
   },
   {
-   "id": "act",
+   "id": "robot-control",
+   "category": "action",
    "track": "Robot Control",
    "task": "Robot control: throw bottles into a dustbin (RoboDojo)",
    "primary": "score",
@@ -650,7 +730,10 @@
      "start": 5.0,
      "best": 76.0,
      "gain_pct": 1420.0,
+     "rounds": 10,
+     "ended": null,
      "curve": [
+      5.0,
       5.0,
       34.0,
       34.0,
@@ -673,7 +756,10 @@
      "start": 7.0,
      "best": 31.0,
      "gain_pct": 342.9,
+     "rounds": 10,
+     "ended": null,
      "curve": [
+      7.0,
       23.0,
       31.0,
       31.0,
@@ -696,7 +782,10 @@
      "start": 0.0,
      "best": 4.0,
      "gain_pct": null,
+     "rounds": 10,
+     "ended": null,
      "curve": [
+      0.0,
       0.0,
       0.0,
       0.0,
@@ -719,7 +808,10 @@
      "start": 2.0,
      "best": 4.0,
      "gain_pct": 100.0,
+     "rounds": 10,
+     "ended": null,
      "curve": [
+      2.0,
       2.0,
       2.0,
       2.0,
@@ -742,7 +834,10 @@
      "start": 0.0,
      "best": 0.0,
      "gain_pct": null,
+     "rounds": 10,
+     "ended": null,
      "curve": [
+      0.0,
       0.0,
       0.0,
       0.0,
@@ -765,7 +860,10 @@
      "start": 0.0,
      "best": 0.0,
      "gain_pct": null,
+     "rounds": 10,
+     "ended": null,
      "curve": [
+      0.0,
       0.0,
       0.0,
       0.0,
@@ -788,7 +886,10 @@
      "start": 0.0,
      "best": 0.0,
      "gain_pct": null,
+     "rounds": 10,
+     "ended": null,
      "curve": [
+      0.0,
       0.0,
       0.0,
       0.0,
@@ -811,7 +912,10 @@
      "start": 0.0,
      "best": 0.0,
      "gain_pct": null,
+     "rounds": 10,
+     "ended": null,
      "curve": [
+      0.0,
       0.0,
       0.0,
       0.0,
@@ -834,7 +938,10 @@
      "start": null,
      "best": 5.0,
      "gain_pct": null,
+     "rounds": 10,
+     "ended": null,
      "curve": [
+      null,
       null,
       null,
       0.0,

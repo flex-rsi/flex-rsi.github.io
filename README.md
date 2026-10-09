@@ -13,6 +13,14 @@ Plain static site, no build step:
 - `assets/results.js`, `assets/results.css`: the results section (tabs, leaderboards, curves)
 - `data/results.json`: the results, generated from the benchmark's run records
 
+## Results data
+
+`data/results.json` lists `categories` (id, name, one-line description) and `tasks`. Each task names
+its `category`, its `primary` metric and the `metrics` to show, and has one row per model: the test
+metrics, the starting and best validation score, the gain in percent, the rounds run and why the
+run ended, and the best validation score after each round. The page builds every view from this
+file: categories without tasks are not shown, and a new task or category needs no change to the page.
+
 Preview locally with `python3 -m http.server` in this directory.
 
 Abstract, authors and links are still placeholders.

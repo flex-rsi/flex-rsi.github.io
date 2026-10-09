@@ -60,3 +60,23 @@ table.results tr.partial td.model { color: var(--ink-2); }
 /* the open-ended last track card */
 .track.more h3 { letter-spacing: 0.1em; }
 .track.more p { color: var(--ink-3); }
+
+/* category tabs carry a task count; the second row lists a category's tasks */
+.board-tabs .count {
+  display: inline-block; min-width: 18px; margin-left: 8px; padding: 0 5px;
+  font: 600 11px var(--mono); line-height: 18px; text-align: center;
+  border: 1px solid currentColor; opacity: 0.8;
+}
+.board-subtabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 16px; padding-bottom: 14px; border-bottom: 1.5px solid var(--line); }
+.board-subtabs[hidden] { display: none; }
+.board-subtabs button {
+  font: 500 12px var(--mono); letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 6px 12px; cursor: pointer; color: var(--ink-2);
+  background: transparent; border: 1px solid var(--line); border-radius: 0;
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.board-subtabs button:hover { color: var(--ink); border-color: var(--ink); }
+.board-subtabs button[aria-selected="true"] { color: var(--ink); border-color: var(--accent-1); background: color-mix(in srgb, var(--accent-1) 14%, transparent); }
+table.results .cell-link { cursor: pointer; }
+table.results td.cell-link:hover, table.results th.cell-link:hover { color: var(--accent-1); }
+table.results td.na { color: var(--ink-3); }
