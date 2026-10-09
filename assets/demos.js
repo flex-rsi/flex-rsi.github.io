@@ -112,10 +112,9 @@
   }
 
   // Robot control: one validation case run by an earlier and a later round, laid out like active search.
-  // Each replay shows the head camera with the decisive region boxed, and that region enlarged beside it.
+  // Each replay puts the decisive region, enlarged, beside the dimmed head camera where it is boxed.
   const ROBOT_LEGEND = `<ul class="demo-legend">
-    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="5" y="3" width="12" height="8" fill="none" stroke="#002fa7" stroke-width="1.8"/></svg>Region where the rounds differ</li>
-    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="1" y="1" width="20" height="12" fill="none" stroke="#002fa7" stroke-width="2"/><path d="M9 4.5l-2.5 2.5 2.5 2.5M13 4.5l2.5 2.5-2.5 2.5" fill="none" stroke="#f4f4f1" stroke-width="1.2"/></svg>Same region, enlarged 2×</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="4" y="3" width="14" height="8" fill="none" stroke="#f4f4f1" stroke-width="1.2" stroke-dasharray="3 2"/></svg>Region shown enlarged on the left</li>
   </ul>`;
   function robotControl(p) {
     const rounds = Object.fromEntries(p.rounds.map((r) => [r.id, r]));
@@ -125,26 +124,25 @@
     stage.innerHTML = `
       <div class="ep-task"><q>Throw all four bottles into the dustbin.</q><span class="ep-meta"></span></div>
       ${["before", "after"].map((w) => `<div class="ab-row"><div class="ab-bar"><span class="lhs"><span class="ab-tag${w === "after" ? " after" : ""}">${w === "after" ? "After" : "Before"}</span><span data-n="${w}"></span></span><span class="rhs" data-o="${w}"></span></div>
-        <div class="ab-video robo" data-v="${w}"></div>
-        <p class="ab-cap" data-c="${w}"></p></div>`).join("")}
+        <div class="ab-video" data-v="${w}"></div></div>`).join("")}
       ${ROBOT_LEGEND}
-      <div class="ep-strip ep-strip-robo" role="group" aria-label="Validation cases">${p.comparisons.map((c, i) => {
+      <div class="ep-strip" role="group" aria-label="Validation cases">${p.comparisons.map((c, i) => {
         const a = rounds[c.after], b = rounds[c.before];
-        return `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(a.poster)}" alt="" loading="lazy"><span>${esc(c.scene)}<small>${esc(b.id)} → ${esc(a.id)} · ${b.caseScore} → ${a.caseScore}</small></span></button>`;
+        return `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(a.poster)}" alt="" loading="lazy"><span>${esc(c.scene)}<small>Validation · ${esc(b.id)} → ${esc(a.id)}</small></span></button>`;
       }).join("")}</div>
-      <p class="demo-note"><b>Full success</b> means all four bottles end in the bin and the robot returns to its start pose. Scores are for this clip's case (0–100);
-        the rates beside each round are its full-success rate over the five validation cases. Boxes and zooms are added for the reader.</p>`;
+      <p class="demo-note"></p>`;
     const show = (i) => {
       cur = i;
-      const c = p.comparisons[i];
+      const c = p.comparisons[i], before = rounds[c.before], after = rounds[c.after];
       stage.querySelector(".ep-meta").textContent = `Validation · ${c.case} · ${c.focus}`;
-      [["before", rounds[c.before]], ["after", rounds[c.after]]].forEach(([w, r]) => {
-        stage.querySelector(`[data-n="${w}"]`).innerHTML = `${roundName(r)} solution <span class="ab-rate">${r.successes}/${r.episodes} val. full successes</span>`;
+      [["before", before], ["after", after]].forEach(([w, r]) => {
+        stage.querySelector(`[data-n="${w}"]`).textContent = `${roundName(r)} solution`;
         stage.querySelector(`[data-o="${w}"]`).innerHTML = outcomeOf(r);
-        stage.querySelector(`[data-c="${w}"]`).textContent = r.summary;
-        stage.querySelector(`[data-v="${w}"]`).innerHTML = video(r.video, r.poster, ` aria-label="${esc(r.id)} on ${esc(c.case)}: head camera with the decisive region enlarged"`)
-          + `<div class="ab-labels"><span>Head camera</span><span class="${w === "after" ? "after" : ""}">Zoom 2×</span></div>`;
+        stage.querySelector(`[data-v="${w}"]`).innerHTML = video(r.video, r.poster, ` aria-label="${esc(r.id)} on ${esc(c.case)}: enlarged region beside the head camera"`);
       });
+      stage.querySelector(".demo-note").innerHTML = `<b>What changed between rounds.</b> ${esc(before.summary)} ${esc(after.summary)}
+        Across the five validation cases, full success went from ${before.successes}/${before.episodes} in ${esc(before.id)} to ${after.successes}/${after.episodes} in ${esc(after.id)};
+        a full success puts all four bottles in the bin and returns the robot to its start pose. Boxes and enlargements are added for the reader.`;
       const [a, b] = ["before", "after"].map((w) => stage.querySelector(`[data-v="${w}"] video`));
       pair(a, b);
       active = [a, b];

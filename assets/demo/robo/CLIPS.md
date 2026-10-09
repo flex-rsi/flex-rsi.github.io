@@ -11,9 +11,12 @@ Each poster is sampled 7.5 seconds into its selected clip to show the outcome.
 
 ## Zoom composites (what the page plays)
 
-`zoom-<clip>.mp4` / `.jpg` are built from the clips above with ffmpeg: the head camera (576×432) with
-the decisive region boxed in Klein blue, next to that region enlarged 2× (576×432), joined by a 6 px
-dark gap (1158×432). Region in source pixels (640×480), `x,y,w,h`:
+`zoom-<clip>.mp4` / `.jpg` follow the active-search replays (1446×432): on the left the decisive region
+enlarged 1.8× (576×432) with a dark chip "R<n>  enlarged 1.8×"; a 6 px dark gap; on the right the head
+camera (a 640×320 band, scaled to 864×432, dimmed: `eq=brightness=-0.09:saturation=0.8`) with the region
+boxed in a dashed white line labelled "Enlarged region". The chip, box and label are a transparent PNG
+rendered in JetBrains Mono and overlaid with ffmpeg. Region in source pixels (640×480) `x,y,w,h`, and the
+top of the camera band:
 
-- standard-1 (R2, R5): `20,100,320,240`, the upright small bottle beside the bin
-- standard-4 (R8, R9): `320,20,320,240`, the white bottle at the far edge of the table
+- standard-1 (R2, R5): region `20,100,320,240`, band from y=80, the upright small bottle beside the bin
+- standard-4 (R8, R9): region `300,20,320,240`, band from y=10, the white bottle at the far edge of the table

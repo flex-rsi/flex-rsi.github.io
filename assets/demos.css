@@ -87,16 +87,7 @@
 .clip-big .after { color: var(--accent-1); }
 .clip-big small { display: block; margin-top: 8px; font: 500 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
 
-/* ---- robot control: the active-search layout, with a head-camera view and its enlarged region */
-.ab-video.robo { aspect-ratio: 1158 / 432; }
-.ab-labels { position: absolute; inset: 0; display: grid; grid-template-columns: 582fr 576fr; pointer-events: none; }
-.ab-labels span { align-self: start; justify-self: start; margin: 8px; font: 600 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
-                  padding: 3px 8px; background: rgba(11, 13, 26, 0.82); color: #f4f4f1; }
-.ab-labels span.after { background: var(--accent-1); color: var(--on-accent, var(--bg)); }
-.ab-rate { margin-left: 4px; color: var(--ink-3); text-transform: none; letter-spacing: 0.02em; }
-.ab-rate::before { content: "· "; }
-.ep-strip-robo img { aspect-ratio: 4 / 3; object-position: 100% 50%; }
-.ab-cap { margin: 7px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+/* ---- robot control uses the active-search rows, legend and strip as they are */
 
 .quad { position: relative; border: 1.5px solid var(--line); background: #0b0d1a; }
 .clip-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; margin-top: 10px; }
@@ -115,7 +106,6 @@
 }
 @media (max-width: 560px) {
   .demo { padding: 16px; }
-  .ab-rate { display: none; }
   .ab-bar { flex-wrap: wrap; }
   .ab-video { margin: 0 -16px; border-left: 0; border-right: 0; }
 }
