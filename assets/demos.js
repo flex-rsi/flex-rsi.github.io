@@ -263,7 +263,7 @@
   fetch("data/demos.json")
     .then((r) => r.json())
     .then((d) => {
-      const ORDER = ["active-search", "visual-search", "robot-control", "3d-tracking"];
+      const ORDER = ["robot-control", "active-search", "visual-search", "3d-tracking"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
       tabsEl.addEventListener("click", (ev) => {
