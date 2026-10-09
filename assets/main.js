@@ -59,49 +59,55 @@
     counters.forEach(runCount);
   }
 
-  // Hero chart (x = round, y = performance): a point runs along each curve from left to right; the stretch
-  // it has passed lights up, brightest at the point. A loop arrow spins around the leading point (the agent
-  // improving itself, round after round) and each round tick lights up as it passes. Run, hold, fade,
-  // repeat; only while the chart is on screen.
+  // Hero chart (x = round, y = performance) beside the agent loop. A point runs along each curve from
+  // left to right; the stretch it has passed lights up, brightest at the point. The loop arrow around
+  // "agent" turns once per round of the leading run, the round counter and the round ticks follow it.
+  // Run, hold, fade, repeat; only while the chart is on screen.
   const chart = document.querySelector(".hero .curves");
   if (chart) {
+    const X0 = +chart.dataset.x0, X1 = +chart.dataset.x1, ROUNDS = +chart.dataset.rounds;
     const ticks = [...chart.querySelectorAll(".rtick")].map((g) => ({ g, x: +g.dataset.x }));
-    const SPIN = 170;                                                   // degrees per second
+    const spin = chart.querySelector(".loop-spin"), counter = chart.querySelector(".loop-n");
+    const cx = spin.dataset.cx, cy = spin.dataset.cy;
     const tracks = [...chart.querySelectorAll(".run")].map((g, i) => {
       const path = g.querySelector(".curve");
       return { path, L: path.getTotalLength(), delay: 0.25 * i, lit: g.querySelector(".curve-lit"),
-               dot: g.querySelector(".runner"), halo: g.querySelector(".halo"), loop: g.querySelector(".loop"),
+               dot: g.querySelector(".runner"), halo: g.querySelector(".halo"),
                rect: chart.querySelector(`#lit-clip-${i + 1} rect`), grad: chart.querySelector(`#lit-${i + 1}`) };
     });
-    const RUN = 3.4, HOLD = 1.8, FADE = 0.7, IN = 0.35;
+    const RUN = 6.0, HOLD = 1.8, FADE = 0.7, IN = 0.35, DRIFT = 40;   // DRIFT: degrees/s the loop keeps turning
     const PERIOD = IN + 0.25 * (tracks.length - 1) + RUN + HOLD + FADE;
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-    const place = (tr, p, a, spin) => {
+    const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    const place = (tr, p, a) => {
       const pt = tr.path.getPointAtLength(p * tr.L);
       const x = pt.x.toFixed(2), y = pt.y.toFixed(2);
       tr.rect.setAttribute("width", x);
       tr.grad.setAttribute("x2", Math.max(pt.x, +tr.grad.getAttribute("x1") + 1).toFixed(2));
-      if (tr.loop) {
-        tr.loop.setAttribute("transform", `translate(${x} ${y}) rotate(${spin.toFixed(1)})`);
-        tr.loop.style.opacity = a;
-        ticks.forEach((k) => k.g.classList.toggle("on", a > 0.5 && pt.x >= k.x - 0.5));
-      }
       tr.dot.setAttribute("cx", x); tr.dot.setAttribute("cy", y);
       tr.halo.setAttribute("cx", x); tr.halo.setAttribute("cy", y);
       tr.lit.style.opacity = a;
       tr.dot.style.opacity = a;
       tr.halo.style.opacity = (0.22 * a).toFixed(3);
+      return pt.x;
+    };
+    const agent = (x, a, extra) => {           // x of the leading point -> rounds done
+      const r = Math.max(0, Math.min(1, (x - X0) / (X1 - X0))) * ROUNDS;
+      spin.setAttribute("transform", `rotate(${(r * 360 + extra).toFixed(1)} ${cx} ${cy})`);
+      counter.textContent = Math.min(ROUNDS, Math.floor(r + 0.02));
+      ticks.forEach((k) => k.g.classList.toggle("on", a > 0.5 && x >= k.x - 0.5));
     };
     if (reduced) {
-      tracks.forEach((tr) => place(tr, 1, 1, 0));
+      const x = tracks.map((tr) => place(tr, 1, 1))[0];
+      agent(x, 1, 0);
     } else {
       let t0 = null, raf = 0;
       const frame = (now) => {
         if (t0 === null) t0 = now;
         const t = ((now - t0) / 1000) % PERIOD;
         const a = t < IN ? t / IN : t > PERIOD - FADE ? (PERIOD - t) / FADE : 1;
-        const spin = (((now - t0) / 1000) * SPIN) % 360;
-        tracks.forEach((tr) => place(tr, ease(Math.min(1, Math.max(0, (t - IN - tr.delay) / RUN))), a, spin));
+        const xs = tracks.map((tr) => place(tr, ease(Math.min(1, Math.max(0, (t - IN - tr.delay) / RUN))), a));
+        const after = Math.max(0, t - IN - RUN);      // after the run the loop keeps drifting, the agent keeps going
+        agent(xs[0], a, after * DRIFT);
         raf = requestAnimationFrame(frame);
       };
       const start = () => { if (!raf) { t0 = null; raf = requestAnimationFrame(frame); } };

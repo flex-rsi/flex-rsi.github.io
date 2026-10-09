@@ -189,11 +189,13 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 .curves .rtick text { font: 500 8.5px var(--mono); fill: var(--ink-3); transition: fill 0.35s ease; }
 .curves .rtick.on text { fill: var(--accent-1); font-weight: 700; }
 .curves .rtick.on line { stroke: var(--accent-1); }
-/* the self-rotating loop arrow around the leading runner: one more round of the agent improving itself */
-.curves .loop { opacity: 0; }
-.curves .loop-ring { fill: none; stroke: var(--accent-1); stroke-width: 1; opacity: 0.18; }
-.curves .loop-arc { fill: none; stroke: var(--accent-1); stroke-width: 1.8; stroke-linecap: round; }
+/* the agent loop beside the chart: one turn per round, the round counter below it */
+.curves .loop-ring { fill: none; stroke: var(--accent-1); stroke-width: 1; opacity: 0.16; }
+.curves .loop-arc { fill: none; stroke: var(--accent-1); stroke-width: 2.4; stroke-linecap: round; }
 .curves .loop-head { fill: var(--accent-1); }
+.curves .loop-agent { font: 800 13px var(--sans); letter-spacing: 0.04em; text-transform: uppercase; fill: var(--ink); }
+.curves .loop-round { font: 500 8.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ink-3); }
+.curves .loop-n { fill: var(--accent-1); font-weight: 700; }
 .gridlines line { stroke: var(--line); stroke-width: 1; }
 /* each curve: the whole path faint; the stretch a runner has passed lit with a gradient that peaks at the runner (main.js) */
 .curve { fill: none; stroke-width: 2; stroke-linecap: round; opacity: 0.26; }
