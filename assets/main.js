@@ -84,7 +84,7 @@
     const RUN = 4.4, IN = 0.3, HOLD = 0.6, FADE = 0.5;
     const PERIOD = IN + RUN + HOLD + FADE;
     // one step per round, the steps longest at the two ends and shortest in the middle (slow, fast, slow)
-    const w = Array.from({ length: ROUNDS }, (_, i) => 1 + 0.9 * ((2 * i - (ROUNDS - 1)) / (ROUNDS - 1)) ** 2);
+    const w = Array.from({ length: ROUNDS }, (_, i) => 1 + 4 * ((2 * i - (ROUNDS - 1)) / (ROUNDS - 1)) ** 2);
     const W = w.reduce((x, y) => x + y, 0), dur = w.map((v) => (RUN * v) / W);
     const starts = dur.reduce((acc, d, i) => (acc.push(acc[i] + d), acc), [0]);
     const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
