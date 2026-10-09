@@ -81,8 +81,12 @@
       const a = s[k - 1], b = s[k], f = (x - a.x) / (b.x - a.x || 1);
       return { x, y: a.y + (b.y - a.y) * f };
     };
-    const STEP = 0.55, IN = 0.3, HOLD = 0.6, FADE = 0.5;
-    const RUN = STEP * ROUNDS, PERIOD = IN + RUN + HOLD + FADE;
+    const RUN = 4.4, IN = 0.3, HOLD = 0.6, FADE = 0.5;
+    const PERIOD = IN + RUN + HOLD + FADE;
+    // one step per round, the steps longest at the two ends and shortest in the middle (slow, fast, slow)
+    const w = Array.from({ length: ROUNDS }, (_, i) => 1 + 0.9 * ((2 * i - (ROUNDS - 1)) / (ROUNDS - 1)) ** 2);
+    const W = w.reduce((x, y) => x + y, 0), dur = w.map((v) => (RUN * v) / W);
+    const starts = dur.reduce((acc, d, i) => (acc.push(acc[i] + d), acc), [0]);
     const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
     let shown = -1;
     const draw = (r, a) => {                    // r: rounds done, fractional
@@ -112,8 +116,14 @@
         if (t0 === null) t0 = now;
         const t = ((now - t0) / 1000) % PERIOD;
         const a = t < IN ? t / IN : t > PERIOD - FADE ? (PERIOD - t) / FADE : 1;
-        const u = Math.min(ROUNDS, Math.max(0, (t - IN) / STEP));
-        const r = u >= ROUNDS ? ROUNDS : Math.floor(u) + ease(u - Math.floor(u));
+        const tt = t - IN;
+        let r = ROUNDS;
+        if (tt <= 0) r = 0;
+        else if (tt < RUN) {
+          let k = 0;
+          while (k < ROUNDS - 1 && tt >= starts[k + 1]) k++;
+          r = k + ease((tt - starts[k]) / dur[k]);
+        }
         draw(r, a);
         raf = requestAnimationFrame(frame);
       };
