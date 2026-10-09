@@ -181,21 +181,26 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
   font-family: var(--mono); font-size: 11px; color: var(--ink-3);
   padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line);
 }
-.curves { display: block; width: 100%; height: auto; aspect-ratio: 400 / 218; overflow: visible; }
+.curves { display: block; width: 100%; height: auto; aspect-ratio: 220 / 276; overflow: visible; }
 /* axes: x = round (ticks light up as the leading run passes them), y = performance */
 .curves .axes line { stroke: var(--ink-3); stroke-width: 1; }
-.curves .ax-title { font: 500 8.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ink-3); }
+.curves .ax-title { font: 500 10.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ink-3); }
 .curves .rtick line { stroke: var(--ink-3); stroke-width: 1; }
-.curves .rtick text { font: 500 8.5px var(--mono); fill: var(--ink-3); transition: fill 0.35s ease; }
+.curves .rtick text { font: 500 11px var(--mono); fill: var(--ink-3); transition: fill 0.35s ease; }
 .curves .rtick.on text { fill: var(--accent-1); font-weight: 700; }
 .curves .rtick.on line { stroke: var(--accent-1); }
-/* the agent loop beside the chart: one turn per round, the round counter below it */
-.curves .loop-ring { fill: none; stroke: var(--accent-1); stroke-width: 1; opacity: 0.16; }
-.curves .loop-arc { fill: none; stroke: var(--accent-1); stroke-width: 2.4; stroke-linecap: round; }
-.curves .loop-head { fill: var(--accent-1); }
-.curves .loop-agent { font: 800 13px var(--sans); letter-spacing: 0.04em; text-transform: uppercase; fill: var(--ink); }
-.curves .loop-round { font: 500 8.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ink-3); }
-.curves .loop-n { fill: var(--accent-1); font-weight: 700; }
+/* hero chart: the agent mark in one half, the curves in the other. The mark turns a quarter per round. */
+.hero-chart { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
+.agent-cell { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding-right: 18px; }
+.agent-mark { display: block; width: 100%; max-width: 150px; height: auto; overflow: visible; }
+.agent-mark .mark-sq { fill: none; stroke: var(--accent-1); stroke-width: 4; }
+.agent-mark .mark-agent { font: 800 15px var(--sans); letter-spacing: 0.04em; text-transform: uppercase; fill: var(--ink); }
+.agent-round { margin: 0; display: flex; align-items: baseline; gap: 6px; font-family: var(--mono); color: var(--ink-3); }
+.agent-round .ar-label { font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; }
+.agent-round .ar-n { font: 800 36px/1 var(--sans); color: var(--ink); min-width: 0.7em; text-align: right; display: inline-block; }
+.agent-round .ar-n.bump { animation: ar-bump 0.35s var(--ease); }
+.agent-round .ar-of { font-size: 14px; }
+@keyframes ar-bump { 0% { transform: translateY(-6px); color: var(--accent-1); opacity: 0.4; } 100% { transform: none; opacity: 1; } }
 .gridlines line { stroke: var(--line); stroke-width: 1; }
 /* each curve: the whole path faint; the stretch a runner has passed lit with a gradient that peaks at the runner (main.js) */
 .curve { fill: none; stroke-width: 2; stroke-linecap: round; opacity: 0.26; }

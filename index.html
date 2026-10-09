@@ -13,11 +13,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css">
-  <link rel="stylesheet" href="assets/theme.css">
-  <link rel="stylesheet" href="assets/palette.css">
-  <link rel="stylesheet" href="assets/results.css">
-  <link rel="stylesheet" href="assets/demos.css">
+  <link rel="stylesheet" href="assets/style.css?v=20261009m">
+  <link rel="stylesheet" href="assets/theme.css?v=20261009m">
+  <link rel="stylesheet" href="assets/palette.css?v=20261009m">
+  <link rel="stylesheet" href="assets/results.css?v=20261009m">
+  <link rel="stylesheet" href="assets/demos.css?v=20261009m">
 </head>
 <body class="v-e">
   <!-- Ambient background: slow-drifting colour fields behind the glass -->
@@ -60,55 +60,54 @@
       <!-- Agents improving round after round, across tracks -->
       <div class="hero-stage reveal">
         <div class="hero-visual glass" aria-hidden="true">
-          <div class="chart-head">
-            <span class="chart-title">Performance over rounds</span>
-            <span class="chart-tag">illustrative</span>
+        <div class="hero-chart">
+          <div class="agent-cell">
+            <svg class="agent-mark" viewBox="0 0 120 120">
+              <g class="mark-spin"><rect class="mark-sq" x="21" y="21" width="78" height="78"/></g>
+              <text class="mark-agent" x="60" y="65.5" text-anchor="middle">agent</text>
+            </svg>
+            <p class="agent-round"><span class="ar-label">round</span><span class="ar-n">0</span><span class="ar-of">/ 8</span></p>
           </div>
-          <svg class="curves" viewBox="0 0 400 218" data-x0="152" data-x1="392" data-rounds="8">
+          <svg class="curves" viewBox="0 0 220 276" data-x0="-0.5" data-x1="210.5" data-rounds="8">
             <defs>
-              <linearGradient id="lit-1" class="lit-grad g1" gradientUnits="userSpaceOnUse" x1="152" y1="0" x2="153" y2="0">
+              <linearGradient id="lit-1" class="lit-grad g1" gradientUnits="userSpaceOnUse" x1="-0.5" y1="0" x2="0.5" y2="0">
                 <stop offset="0" stop-opacity="0.1"/><stop offset="0.65" stop-opacity="0.5"/><stop offset="1" stop-opacity="1"/>
               </linearGradient>
-              <clipPath id="lit-clip-1"><rect x="0" y="-20" width="0" height="258"/></clipPath>
-              <linearGradient id="lit-2" class="lit-grad g2" gradientUnits="userSpaceOnUse" x1="152" y1="0" x2="153" y2="0">
+              <clipPath id="lit-clip-1"><rect x="-1.5" y="-20" width="0" height="316"/></clipPath>
+              <linearGradient id="lit-2" class="lit-grad g2" gradientUnits="userSpaceOnUse" x1="-0.5" y1="0" x2="0.5" y2="0">
                 <stop offset="0" stop-opacity="0.1"/><stop offset="0.65" stop-opacity="0.5"/><stop offset="1" stop-opacity="1"/>
               </linearGradient>
-              <clipPath id="lit-clip-2"><rect x="0" y="-20" width="0" height="258"/></clipPath>
-              <linearGradient id="lit-3" class="lit-grad g3" gradientUnits="userSpaceOnUse" x1="152" y1="0" x2="153" y2="0">
+              <clipPath id="lit-clip-2"><rect x="-1.5" y="-20" width="0" height="316"/></clipPath>
+              <linearGradient id="lit-3" class="lit-grad g3" gradientUnits="userSpaceOnUse" x1="-0.5" y1="0" x2="0.5" y2="0">
                 <stop offset="0" stop-opacity="0.1"/><stop offset="0.65" stop-opacity="0.5"/><stop offset="1" stop-opacity="1"/>
               </linearGradient>
-              <clipPath id="lit-clip-3"><rect x="0" y="-20" width="0" height="258"/></clipPath>
+              <clipPath id="lit-clip-3"><rect x="-1.5" y="-20" width="0" height="316"/></clipPath>
             </defs>
-            <g class="agent-loop">
-              <circle class="loop-ring" cx="62" cy="92" r="44"/>
-              <g class="loop-spin" data-cx="62" data-cy="92"><path class="loop-arc" d="M 84.00 53.89 A 44 44 0 1 1 40.00 53.89"/><path class="loop-head" d="M 47.79 49.39 L 37.00 48.70 L 43.00 59.09 Z"/></g>
-              <text class="loop-agent" x="62" y="96.5" text-anchor="middle">agent</text>
-              <text class="loop-round" x="62" y="160" text-anchor="middle">round <tspan class="loop-n">0</tspan></text>
-            </g>
-            <g class="gridlines"><line x1="152" y1="10" x2="392" y2="10"/><line x1="152" y1="53" x2="392" y2="53"/><line x1="152" y1="96" x2="392" y2="96"/><line x1="152" y1="139" x2="392" y2="139"/></g>
-            <g class="axes"><line x1="152" y1="6" x2="152" y2="182"/><line x1="152" y1="182" x2="392" y2="182"/></g>
-            <text class="ax-title" transform="translate(142 96) rotate(-90)" text-anchor="middle">performance &#8594;</text>
-            <g class="rticks"><g class="rtick" data-x="152.0"><line x1="152.0" y1="182" x2="152.0" y2="186"/><text x="152.0" y="196" text-anchor="middle">0</text></g><g class="rtick" data-x="182.0"><line x1="182.0" y1="182" x2="182.0" y2="186"/><text x="182.0" y="196" text-anchor="middle">1</text></g><g class="rtick" data-x="212.0"><line x1="212.0" y1="182" x2="212.0" y2="186"/><text x="212.0" y="196" text-anchor="middle">2</text></g><g class="rtick" data-x="242.0"><line x1="242.0" y1="182" x2="242.0" y2="186"/><text x="242.0" y="196" text-anchor="middle">3</text></g><g class="rtick" data-x="272.0"><line x1="272.0" y1="182" x2="272.0" y2="186"/><text x="272.0" y="196" text-anchor="middle">4</text></g><g class="rtick" data-x="302.0"><line x1="302.0" y1="182" x2="302.0" y2="186"/><text x="302.0" y="196" text-anchor="middle">5</text></g><g class="rtick" data-x="332.0"><line x1="332.0" y1="182" x2="332.0" y2="186"/><text x="332.0" y="196" text-anchor="middle">6</text></g><g class="rtick" data-x="362.0"><line x1="362.0" y1="182" x2="362.0" y2="186"/><text x="362.0" y="196" text-anchor="middle">7</text></g><g class="rtick" data-x="392.0"><line x1="392.0" y1="182" x2="392.0" y2="186"/><text x="392.0" y="196" text-anchor="middle">8</text></g></g>
-            <text class="ax-title" x="392" y="216" text-anchor="end">round &#8594;</text>
+            <text class="ax-title" x="105" y="11" text-anchor="middle">performance &#8593;</text>
+            <g class="gridlines"><line x1="-0.5" y1="26" x2="210.5" y2="26"/><line x1="-0.5" y1="79.5" x2="210.5" y2="79.5"/><line x1="-0.5" y1="133" x2="210.5" y2="133"/><line x1="-0.5" y1="186.5" x2="210.5" y2="186.5"/></g>
+            <g class="axes"><line x1="-0.5" y1="22" x2="-0.5" y2="240"/><line x1="-0.5" y1="240" x2="210.5" y2="240"/></g>
+            <g class="rticks"><g class="rtick" data-x="-0.5"><line x1="-0.5" y1="240" x2="-0.5" y2="245"/><text x="-0.5" y="256" text-anchor="start">0</text></g><g class="rtick" data-x="25.9"><line x1="25.9" y1="240" x2="25.9" y2="245"/><text x="25.9" y="256" text-anchor="middle">1</text></g><g class="rtick" data-x="52.3"><line x1="52.3" y1="240" x2="52.3" y2="245"/><text x="52.3" y="256" text-anchor="middle">2</text></g><g class="rtick" data-x="78.6"><line x1="78.6" y1="240" x2="78.6" y2="245"/><text x="78.6" y="256" text-anchor="middle">3</text></g><g class="rtick" data-x="105"><line x1="105" y1="240" x2="105" y2="245"/><text x="105" y="256" text-anchor="middle">4</text></g><g class="rtick" data-x="131.4"><line x1="131.4" y1="240" x2="131.4" y2="245"/><text x="131.4" y="256" text-anchor="middle">5</text></g><g class="rtick" data-x="157.7"><line x1="157.7" y1="240" x2="157.7" y2="245"/><text x="157.7" y="256" text-anchor="middle">6</text></g><g class="rtick" data-x="184.1"><line x1="184.1" y1="240" x2="184.1" y2="245"/><text x="184.1" y="256" text-anchor="middle">7</text></g><g class="rtick" data-x="210.5"><line x1="210.5" y1="240" x2="210.5" y2="245"/><text x="210.5" y="256" text-anchor="middle">8</text></g></g>
+            <text class="ax-title" x="210.5" y="274" text-anchor="end">round &#8594;</text>
             <g class="run k1">
-              <path class="curve c1" d="M 152 166.2 C 189.9 163.4 203.8 139.7 229.1 130.4 S 280.8 94.6 307.4 82.8 S 359.2 52.3 392 39.1"/>
-              <path class="curve-lit" d="M 152 166.2 C 189.9 163.4 203.8 139.7 229.1 130.4 S 280.8 94.6 307.4 82.8 S 359.2 52.3 392 39.1" stroke="url(#lit-1)" clip-path="url(#lit-clip-1)"/>
-              <circle class="halo h1" r="8" cx="152" cy="166.2"/>
-              <circle class="runner t1" r="4" cx="152" cy="166.2"/>
+              <path class="curve c1" d="M -0.5 220.3 C 32.8 216.9 45 187.4 67.2 175.8 S 112.8 131.3 136.1 116.6 S 181.6 78.6 210.5 62.2"/>
+              <path class="curve-lit" d="M -0.5 220.3 C 32.8 216.9 45 187.4 67.2 175.8 S 112.8 131.3 136.1 116.6 S 181.6 78.6 210.5 62.2" stroke="url(#lit-1)" clip-path="url(#lit-clip-1)"/>
+              <circle class="halo h1" r="6.5" cx="-0.5" cy="220.3"/>
+              <circle class="runner t1" r="3.4" cx="-0.5" cy="220.3"/>
             </g>
             <g class="run k2">
-              <path class="curve c2" d="M 152 171.5 C 196.2 170.1 218.9 156.9 251.8 146.2 S 303.6 127.8 335.2 115.8 S 374.3 102.7 392 97.4"/>
-              <path class="curve-lit" d="M 152 171.5 C 196.2 170.1 218.9 156.9 251.8 146.2 S 303.6 127.8 335.2 115.8 S 374.3 102.7 392 97.4" stroke="url(#lit-2)" clip-path="url(#lit-clip-2)"/>
-              <circle class="halo h2" r="8" cx="152" cy="171.5"/>
-              <circle class="runner t2" r="4" cx="152" cy="171.5"/>
+              <path class="curve c2" d="M -0.5 226.9 C 38.4 225.2 58.4 208.8 87.2 195.5 S 132.8 172.5 160.5 157.7 S 195 141.3 210.5 134.7"/>
+              <path class="curve-lit" d="M -0.5 226.9 C 38.4 225.2 58.4 208.8 87.2 195.5 S 132.8 172.5 160.5 157.7 S 195 141.3 210.5 134.7" stroke="url(#lit-2)" clip-path="url(#lit-clip-2)"/>
+              <circle class="halo h2" r="6.5" cx="-0.5" cy="226.9"/>
+              <circle class="runner t2" r="3.4" cx="-0.5" cy="226.9"/>
             </g>
             <g class="run k3">
-              <path class="curve c3" d="M 152 175.3 C 208.8 174.8 240.4 167.4 272 162.2 S 335.2 151.6 392 143.6"/>
-              <path class="curve-lit" d="M 152 175.3 C 208.8 174.8 240.4 167.4 272 162.2 S 335.2 151.6 392 143.6" stroke="url(#lit-3)" clip-path="url(#lit-clip-3)"/>
-              <circle class="halo h3" r="8" cx="152" cy="175.3"/>
-              <circle class="runner t3" r="4" cx="152" cy="175.3"/>
+              <path class="curve c3" d="M -0.5 231.7 C 49.5 231 77.2 221.9 105 215.3 S 160.5 202.2 210.5 192.2"/>
+              <path class="curve-lit" d="M -0.5 231.7 C 49.5 231 77.2 221.9 105 215.3 S 160.5 202.2 210.5 192.2" stroke="url(#lit-3)" clip-path="url(#lit-clip-3)"/>
+              <circle class="halo h3" r="6.5" cx="-0.5" cy="231.7"/>
+              <circle class="runner t3" r="3.4" cx="-0.5" cy="231.7"/>
             </g>
           </svg>
+        </div>
         </div>
         <nav class="hero-index" aria-label="Tracks">
           <a href="#tracks" data-cat="perception"><span class="hi-n">01</span><span class="hi-name">Perception</span><span class="hi-meta">soon</span></a>
@@ -245,8 +244,8 @@
     <p class="muted">An evolving benchmark initiative. Contributions of tasks, baselines, evaluators, and reproducible results are welcome.</p>
   </footer>
 
-  <script src="assets/main.js" defer></script>
-  <script src="assets/results.js" defer></script>
-  <script src="assets/demos.js" defer></script>
+  <script src="assets/main.js?v=20261009m" defer></script>
+  <script src="assets/results.js?v=20261009m" defer></script>
+  <script src="assets/demos.js?v=20261009m" defer></script>
 </body>
 </html>
