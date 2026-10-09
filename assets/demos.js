@@ -112,9 +112,9 @@
   }
 
   // Robot control: one validation case run by an earlier and a later round, laid out like active search.
-  // Each replay shows the full head camera (native 640x480) with the decisive region boxed, and that region enlarged 2x beside it.
+  // Each replay shows the full head camera (native 640x480) with the decisive region boxed, joined by dashed lines to an inset of that region enlarged 2x.
   const ROBOT_LEGEND = `<ul class="demo-legend">
-    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="4" y="3" width="14" height="8" fill="none" stroke="#f4f4f1" stroke-width="1.2" stroke-dasharray="3 2"/></svg>Region shown enlarged 2× on the right</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="2.5" y="5" width="5" height="4" fill="none" stroke="#f4f4f1" stroke-width="1"/><path d="M7.5 5L12 2.5M7.5 9L12 11.5" stroke="#f4f4f1" stroke-width=".8" stroke-dasharray="1.5 1"/><rect x="12" y="2.5" width="8" height="9" fill="none" stroke="#f4f4f1" stroke-width="1"/></svg>Boxed region, enlarged 2× in the inset</li>
   </ul>`;
   function robotControl(p) {
     const rounds = Object.fromEntries(p.rounds.map((r) => [r.id, r]));
@@ -138,7 +138,7 @@
       [["before", before], ["after", after]].forEach(([w, r]) => {
         stage.querySelector(`[data-n="${w}"]`).textContent = `${roundName(r)} solution`;
         stage.querySelector(`[data-o="${w}"]`).innerHTML = outcomeOf(r);
-        stage.querySelector(`[data-v="${w}"]`).innerHTML = video(r.video, r.poster, ` aria-label="${esc(r.id)} on ${esc(c.case)}: head camera with the region enlarged beside it"`);
+        stage.querySelector(`[data-v="${w}"]`).innerHTML = video(r.video, r.poster, ` aria-label="${esc(r.id)} on ${esc(c.case)}: head camera with an enlarged inset of the decisive region"`);
       });
       stage.querySelector(".demo-note").innerHTML = `<b>What changed between rounds.</b> ${esc(before.summary)} ${esc(after.summary)}
         Across the five validation cases, full success went from ${before.successes}/${before.episodes} in ${esc(before.id)} to ${after.successes}/${after.episodes} in ${esc(after.id)};
