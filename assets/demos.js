@@ -111,25 +111,53 @@
     active = [];
   }
 
+  // Robot control: one validation case run by an earlier and a later round, laid out like active search.
+  // Each replay shows the head camera with the decisive region boxed, and that region enlarged beside it.
+  const ROBOT_LEGEND = `<ul class="demo-legend">
+    <li><svg viewBox="0 0 22 14"><rect x="1" y="1" width="20" height="12" fill="none" stroke="#002fa7" stroke-width="2"/><rect x="3" y="3" width="16" height="8" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1"/></svg>Region where the rounds differ</li>
+    <li><svg viewBox="0 0 22 14"><rect x="1" y="1" width="20" height="12" fill="rgba(0,47,167,.1)" stroke="#002fa7" stroke-width="2.5"/><path d="M8 4l-3 3 3 3M14 4l3 3-3 3" fill="none" stroke="#002fa7" stroke-width="1.4"/></svg>Same region, enlarged 2×</li>
+  </ul>`;
   function robotControl(p) {
     const rounds = Object.fromEntries(p.rounds.map((r) => [r.id, r]));
-    stage.innerHTML = `<div class="robot-pairs">${p.comparisons.map((pair) => {
-      const before = rounds[pair.before], after = rounds[pair.after];
-      const item = (r, label) => `<article class="robot-round">
-        <div class="robot-round-head"><span class="robot-round-name">${esc(r.id)} <small>${label}</small></span>
-          <span class="robot-round-rate ${r.successRate > 0 ? "ok" : "no"}">${Math.round(100 * r.successRate)}% <small>· ${r.successes}/${r.episodes} full successes</small></span></div>
-        <figure class="robot-round-video">${video(r.video, r.poster, ` controls aria-label="${esc(r.id)} validation rollout, ${Math.round(100 * r.successRate)} percent full success"`)}</figure>
-        <p class="robot-round-score">${esc(r.case)} · ${r.caseScore}/100 · ${r.caseSuccess ? "complete" : "partial"}</p>
-        <p class="robot-round-summary">${esc(r.summary)}</p>
-      </article>`;
-      return `<section class="robot-pair">
-        <div class="robot-pair-head"><span>Same validation case · ${esc(pair.case)}</span>
-          <strong>${before.caseScore} <i>→</i> ${after.caseScore}</strong></div>
-        <div class="robot-pair-clips">${item(before, "Before")} ${item(after, "After")}</div>
-      </section>`;
-    }).join("")}</div>
-    <p class="demo-note"><b>Full success</b> means all four bottles are in the bin and the robot returns to its start pose. Each card shows the round-wide validation success rate and the score for the specific clip.</p>`;
-    active = Array.from(stage.querySelectorAll("video"));
+    const roundName = (r) => `Round ${r.id.replace(/^R/, "")}`;
+    const outcomeOf = (r) => `<span class="${r.caseSuccess ? "ok" : "no"}">${r.caseSuccess ? "Complete" : "Partial"} · ${r.caseScore}/100</span>`;
+    let cur = -1;
+    stage.innerHTML = `
+      <div class="ep-task"><q>Throw all four bottles into the dustbin.</q><span class="ep-meta"></span></div>
+      ${["before", "after"].map((w) => `<div class="ab-row"><div class="ab-bar"><span class="lhs"><span class="ab-tag${w === "after" ? " after" : ""}">${w === "after" ? "After" : "Before"}</span><span data-n="${w}"></span></span><span class="rhs" data-o="${w}"></span></div>
+        <div class="ab-video robo" data-v="${w}"></div>
+        <p class="ab-cap" data-c="${w}"></p></div>`).join("")}
+      ${ROBOT_LEGEND}
+      <div class="ep-strip ep-strip-robo" role="group" aria-label="Validation cases">${p.comparisons.map((c, i) => {
+        const a = rounds[c.after], b = rounds[c.before];
+        return `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(a.poster)}" alt="" loading="lazy"><span>${esc(c.scene)}<small>${esc(b.id)} → ${esc(a.id)} · ${b.caseScore} → ${a.caseScore}</small></span></button>`;
+      }).join("")}</div>
+      <p class="demo-note"><b>Full success</b> means all four bottles end in the bin and the robot returns to its start pose. Scores are for this clip's case (0–100);
+        the rates beside each round are its full-success rate over the five validation cases. Boxes and zooms are added for the reader.</p>`;
+    const show = (i) => {
+      cur = i;
+      const c = p.comparisons[i];
+      stage.querySelector(".ep-meta").textContent = `Validation · ${c.case} · ${c.focus}`;
+      [["before", rounds[c.before]], ["after", rounds[c.after]]].forEach(([w, r]) => {
+        stage.querySelector(`[data-n="${w}"]`).innerHTML = `${roundName(r)} solution <span class="ab-rate">${r.successes}/${r.episodes} val. full successes</span>`;
+        stage.querySelector(`[data-o="${w}"]`).innerHTML = outcomeOf(r);
+        stage.querySelector(`[data-c="${w}"]`).textContent = r.summary;
+        stage.querySelector(`[data-v="${w}"]`).innerHTML = video(r.video, r.poster, ` aria-label="${esc(r.id)} on ${esc(c.case)}: head camera with the decisive region enlarged"`)
+          + `<div class="ab-labels"><span>Head camera</span><span class="${w === "after" ? "after" : ""}">Zoom 2×</span></div>`;
+      });
+      const [a, b] = ["before", "after"].map((w) => stage.querySelector(`[data-v="${w}"] video`));
+      pair(a, b);
+      active = [a, b];
+      let ready = 0;
+      const go = () => { if (++ready === 2) playAll(); };
+      [a, b].forEach((v) => (v.readyState >= 3 ? go() : v.addEventListener("canplay", go, { once: true })));
+      stage.querySelectorAll(".ep-strip button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.i === i)));
+    };
+    stage.querySelector(".ep-strip").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button");
+      if (btn && +btn.dataset.i !== cur) show(+btn.dataset.i);
+    });
+    show(0);
   }
 
   function tracking(p) {
@@ -172,13 +200,8 @@
     tabsEl.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.id === id)));
     $(".demo-title").textContent = p.name;
     $(".demo-sub").textContent = ABOUT[p.id] || "";
-    if (p.id === "robot-control" && p.rounds?.length) {
-      const first = p.rounds[0], last = p.rounds[p.rounds.length - 1];
-      $(".demo-score").innerHTML = `${esc(d.model)} <b>${Math.round(100 * first.successRate)}%</b><span class="to">→</span><span class="after">${Math.round(100 * last.successRate)}%</span><span class="what">Validation full-success rate · ${esc(first.id)} → ${esc(last.id)}</span>`;
-    } else {
-      const what = `Test ${p.metric} · start → final`;
-      $(".demo-score").innerHTML = `${esc(d.model)} <b>${fmtScore(p, p.before)}</b><span class="to">→</span><span class="after">${fmtScore(p, p.after)}</span><span class="what">${esc(what)}</span>`;
-    }
+    const what = `Test ${p.metric} · start → final`;
+    $(".demo-score").innerHTML = `${esc(d.model)} <b>${fmtScore(p, p.before)}</b><span class="to">→</span><span class="after">${fmtScore(p, p.after)}</span><span class="what">${esc(what)}</span>`;
     RENDER[p.id](p);
     card.classList.remove("swap");
     void card.offsetWidth;

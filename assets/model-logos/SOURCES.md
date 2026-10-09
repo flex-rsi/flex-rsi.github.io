@@ -1,13 +1,7 @@
-# Model icon assets
+# Model logo assets
 
-These transparent PNG marks are cropped directly from `leaderboard_sample.png`, the reference screenshot supplied for this page. Their surrounding table-row backgrounds were removed; the marks keep the screenshot's actual shapes and colors.
+Provider marks downloaded from https://4dcodebench.com/logos/<name>.svg (the logos that site's
+leaderboard uses). `gpt.svg` and `glm.svg` are drawn in black; the rest carry their brand colours.
+`assets/results.js` maps a model name to its mark (`LOGOS`).
 
-- `gpt.png`: OpenAI knot used for the GPT model rows.
-- `claude.png`: Claude's orange starburst (not the Anthropic “AI” wordmark).
-- `gemini.png`: Gemini four-color star.
-- `qwen.png`: Qwen blue mark.
-- `glm.png`: GLM/Z.ai mark.
-- `minimax.png`: MiniMax waveform mark.
-- `gemma.png`: Gemma row mark shown in the reference.
-
-The source screenshot is `/Users/jionghao/Code/rsi_viz/leaderboard_sample.png`.
+claude, deepseek, gemini, gemma, glm, gpt, mimo, minimax, mistral, qwen

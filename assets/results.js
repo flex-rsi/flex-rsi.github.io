@@ -27,22 +27,21 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const tag = (w) => `<span class="wtag">${w === "open" ? "open" : "closed"}</span>`;
 
+  // Provider marks are the SVGs from 4dcodebench.com/logos. GPT and GLM are drawn in black
+  // ("mono"); the others keep their brand colours.
+  const LOGOS = [[/claude|sonnet|opus|fable|haiku/, "claude"], [/qwen/, "qwen"], [/gemini/, "gemini"], [/gemma/, "gemma"],
+                 [/gpt|openai/, "gpt"], [/minimax/, "minimax"], [/\bglm\b/, "glm"], [/deepseek/, "deepseek"],
+                 [/mistral/, "mistral"], [/mimo/, "mimo"]];
+  const MONO = new Set(["gpt", "glm"]);
   function modelMark(name) {
     const n = name.toLowerCase();
-    let brand = "";
-    let logo = "";
-    if (/claude|sonnet|opus/.test(n)) { brand = "claude"; logo = "claude.png"; }
-    else if (/qwen/.test(n)) { brand = "qwen"; logo = "qwen.png"; }
-    else if (/gemini/.test(n)) { brand = "gemini"; logo = "gemini.png"; }
-    else if (/gemma/.test(n)) { brand = "gemma"; logo = "gemma.png"; }
-    else if (/gpt|openai/.test(n)) { brand = "gpt"; logo = "gpt.png"; }
-    else if (/minimax/.test(n)) { brand = "minimax"; logo = "minimax.png"; }
-    else if (/\bglm\b/.test(n)) { brand = "glm"; logo = "glm.png"; }
-    if (!logo) return "";
-    return `<span class="model-icon brand-${brand}" title="${esc(name)}" aria-hidden="true"><img src="assets/model-logos/${logo}" alt="" loading="lazy" decoding="async"></span>`;
+    const hit = LOGOS.find(([re]) => re.test(n));
+    if (!hit) return '<span class="model-icon" aria-hidden="true"></span>';
+    const f = hit[1];
+    return `<span class="model-icon" aria-hidden="true"><img${MONO.has(f) ? ' class="mono"' : ""} src="assets/model-logos/${f}.svg" alt="" loading="lazy" decoding="async"></span>`;
   }
   function modelCell(model, weights) {
-    return `<td class="model">${modelMark(model)}<span class="model-name">${esc(model)}</span> ${tag(weights)}</td>`;
+    return `<td class="model"><div class="mcell">${modelMark(model)}<span class="model-name">${esc(model)}</span>${tag(weights)}</div></td>`;
   }
   function rankBadge(rank) {
     const medal = rank <= 3 ? ` medal medal-${rank}` : "";
@@ -98,12 +97,12 @@
         const rs = byCat[c.id].filter((t) => t.id in r.ranks).map((t) => r.ranks[t.id]);
         if (!rs.length) return '<td class="na">–</td>';
         const avg = rs.reduce((a, b) => a + b, 0) / rs.length;
-        const part = rs.length < byCat[c.id].length ? `<span class="th-sub">${rs.length}/${byCat[c.id].length}</span>` : "";
+        const part = rs.length < byCat[c.id].length ? `<span class="frac">${rs.length}/${byCat[c.id].length}</span>` : "";
         return `<td class="cell-link" data-cat="${c.id}">${avg.toFixed(1)}${part}</td>`;
       }).join("");
-      return group + `<tr class="${rankClass(i, r.n < total)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${cells}<td class="strong">${r.avg.toFixed(1)}</td><td>${r.n}/${total}</td></tr>`;
+      return group + `<tr class="${rankClass(i, r.n < total)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${cells}<td class="strong">${r.avg.toFixed(1)}</td><td class="cov">${r.n}/${total}</td></tr>`;
     }).join("");
-    table.innerHTML = `<thead><tr class="table-band"><th colspan="2">Methods</th><th colspan="${cats.length}">Average rank by category</th><th colspan="2">Overall standing</th></tr><tr><th>#</th><th>Model</th>${heads}<th>Overall<span class="th-sub">avg. rank</span></th><th>Coverage<span class="th-sub">tasks</span></th></tr></thead><tbody>${body}</tbody>`;
+    table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${cats.length}">Average rank by category</th><th colspan="2">Overall standing</th></tr><tr><th>#</th><th class="model">Model</th>${heads}<th>Overall<span class="th-sub">avg. rank</span></th><th>Coverage<span class="th-sub">tasks</span></th></tr></thead><tbody>${body}</tbody>`;
     fig.hidden = true;
     noteEl.textContent = `Ranks use each task's primary test metric. Updated ${data.updated}.`;
   }
@@ -123,10 +122,10 @@
       if (i === 0) group = groupRow(full ? "Complete category runs" : "Partial coverage", full ? `${full} methods measured every task here` : `${partial} methods have measured results`, span, "01");
       else if (r.n < tasks.length && rows[i - 1].n === tasks.length) group = groupRow("Partial category runs", `${partial} methods · missing at least one task`, span, "02");
       const values = tasks.map((t) => `<td>${t.id in r.values ? fmt(t.primary, r.values[t.id]) : "–"}</td>`).join("");
-      const avg = `<td class="strong">${r.avg.toFixed(1)}${r.n < tasks.length ? `<span class="th-sub">${r.n}/${tasks.length} tasks</span>` : ""}</td>`;
+      const avg = `<td class="strong">${r.avg.toFixed(1)}${r.n < tasks.length ? `<span class="frac">${r.n}/${tasks.length}</span>` : ""}</td>`;
       return group + `<tr class="${rankClass(i, r.n < tasks.length)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${values}${avg}</tr>`;
     }).join("");
-    table.innerHTML = `<thead><tr class="table-band"><th colspan="2">Methods</th><th colspan="${tasks.length}">Primary test metric by task</th><th>Category standing</th></tr><tr><th>#</th><th>Model</th>${headers}<th>Avg. rank</th></tr></thead><tbody>${body}</tbody>`;
+    table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${tasks.length}">Primary test metric by task</th><th>Category standing</th></tr><tr><th>#</th><th class="model">Model</th>${headers}<th>Avg. rank</th></tr></thead><tbody>${body}</tbody>`;
     fig.hidden = true;
     noteEl.textContent = "Open a task for all test metrics and its improvement curve.";
   }
@@ -141,10 +140,10 @@
         ? groupRow("Leading results", `Top three by ${t.metrics[0].label}`, span, "01")
         : i === 3 ? groupRow("Other ranked methods", `${t.rows.length - 3} additional submissions`, span, "02") : "";
       const values = t.metrics.map((m, j) => `<td${j === 0 ? ' class="strong"' : ""}>${fmt(m.key, r.test[m.key])}</td>`).join("");
-      return group + `<tr data-i="${i}" class="${rankClass(i)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${values}<td class="gain">${gain(r.gain_pct)}</td><td>${r.rounds ?? "–"}${r.ended ? `<span class="th-sub">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
+      return group + `<tr data-i="${i}" class="${rankClass(i)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${values}<td class="${r.gain_pct > 0 ? "gain" : "na"}">${gain(r.gain_pct)}</td><td class="rounds">${r.rounds ?? "–"}${r.ended ? `<span class="ended">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
     }).join("");
     const metricHeads = t.metrics.map((m) => `<th>${esc(m.label)}</th>`).join("");
-    table.innerHTML = `<thead><tr class="table-band"><th colspan="2">Methods</th><th colspan="${t.metrics.length}">Hidden test metrics</th><th>Validation change</th><th>Run depth</th></tr><tr><th>#</th><th>Model</th>${metricHeads}<th>Gain<span class="th-sub">validation</span></th><th>Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
+    table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${t.metrics.length}">Hidden test metrics</th><th>Validation change</th><th>Run depth</th></tr><tr><th>#</th><th class="model">Model</th>${metricHeads}<th>Gain<span class="th-sub">validation</span></th><th class="rounds">Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
     drawCurves(t);
     noteEl.textContent = `${data.notes.gain} Each line ends at the last round its run reached.`;
   }

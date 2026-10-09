@@ -8,3 +8,12 @@ All four clips use the head camera. Source files are the full validation rollout
 - `opus-r9-standard4-t04-12.mp4`: R9, standard-4, source 4–12 s. The arm approaches higher; the bottle tips on contact but remains on the tabletop, unlike R8.
 
 Each poster is sampled 7.5 seconds into its selected clip to show the outcome.
+
+## Zoom composites (what the page plays)
+
+`zoom-<clip>.mp4` / `.jpg` are built from the clips above with ffmpeg: the head camera (576×432) with
+the decisive region boxed in Klein blue, next to that region enlarged 2× (576×432), joined by a 6 px
+dark gap (1158×432). Region in source pixels (640×480), `x,y,w,h`:
+
+- standard-1 (R2, R5): `20,100,320,240`, the upright small bottle beside the bin
+- standard-4 (R8, R9): `320,20,320,240`, the white bottle at the far edge of the table

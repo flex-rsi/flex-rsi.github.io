@@ -87,27 +87,16 @@
 .clip-big .after { color: var(--accent-1); }
 .clip-big small { display: block; margin-top: 8px; font: 500 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
 
-/* ---- robot control: same-case round comparisons */
-.robot-pairs { display: grid; gap: 18px; }
-.robot-pair { border: 1.5px solid var(--line); padding: 14px; }
-.robot-pair-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px;
-                   color: var(--ink-3); font: 500 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
-.robot-pair-head strong { color: var(--ink); font-size: 14px; white-space: nowrap; }
-.robot-pair-head i { color: var(--accent-1); font-style: normal; padding: 0 5px; }
-.robot-pair-clips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.robot-round { min-width: 0; border: 1.5px solid var(--line); padding: 10px; }
-.robot-round-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
-.robot-round-name, .robot-round-rate { font: 600 11px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
-.robot-round-name { color: var(--ink); }
-.robot-round-name small { color: var(--ink-3); font-weight: 500; padding-left: 5px; }
-.robot-round-rate { text-align: right; }
-.robot-round-rate.ok { color: var(--accent-1); }
-.robot-round-rate.no { color: var(--miss); }
-.robot-round-rate small { color: var(--ink-3); font-weight: 500; }
-.robot-round-video { margin: 0; border: 1.5px solid var(--line); background: #0b0d1a; }
-.robot-round-video video { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #0b0d1a; }
-.robot-round-score { margin: 8px 0 4px; color: var(--ink); font: 500 11px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
-.robot-round-summary { margin: 0; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
+/* ---- robot control: the active-search layout, with a head-camera view and its enlarged region */
+.ab-video.robo { aspect-ratio: 1158 / 432; }
+.ab-labels { position: absolute; inset: 0; display: grid; grid-template-columns: 582fr 576fr; pointer-events: none; }
+.ab-labels span { align-self: start; justify-self: start; margin: 8px; font: 600 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+                  padding: 3px 8px; background: rgba(11, 13, 26, 0.82); color: #f4f4f1; }
+.ab-labels span.after { background: var(--accent-1); color: var(--on-accent, var(--bg)); }
+.ab-rate { margin-left: 4px; color: var(--ink-3); text-transform: none; letter-spacing: 0.02em; }
+.ab-rate::before { content: "· "; }
+.ep-strip-robo img { aspect-ratio: 4 / 3; object-position: 100% 50%; }
+.ab-cap { margin: 7px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
 
 .quad { position: relative; border: 1.5px solid var(--line); background: #0b0d1a; }
 .clip-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; margin-top: 10px; }
@@ -122,15 +111,11 @@
 @media (max-width: 860px) {
   .vq-grid { grid-template-columns: minmax(0, 1fr); }
   .clip { grid-template-columns: minmax(0, 1fr); }
-  .robot-pair-clips { grid-template-columns: minmax(0, 1fr); }
   .demo-score .what { text-align: left; }
 }
 @media (max-width: 560px) {
   .demo { padding: 16px; }
-  .robot-pair { margin: 0 -6px; padding: 10px; }
-  .robot-pair-head { align-items: flex-start; flex-direction: column; gap: 5px; }
-  .robot-round-head { align-items: flex-start; flex-direction: column; gap: 4px; }
-  .robot-round-rate { text-align: left; }
+  .ab-rate { display: none; }
   .ab-bar { flex-wrap: wrap; }
   .ab-video { margin: 0 -16px; border-left: 0; border-right: 0; }
 }
