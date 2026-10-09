@@ -61,45 +61,49 @@
       <div class="hero-stage reveal">
         <div class="hero-visual glass" aria-hidden="true">
           <div class="chart-head">
-            <span class="chart-title">Score over rounds</span>
+            <span class="chart-title">Performance over rounds</span>
             <span class="chart-tag">illustrative</span>
           </div>
-          <svg class="curves" viewBox="0 0 400 150">
+          <svg class="curves" viewBox="0 0 400 218">
             <defs>
-              <linearGradient id="lit-1" class="lit-grad g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="11" y2="0">
+              <linearGradient id="lit-1" class="lit-grad g1" gradientUnits="userSpaceOnUse" x1="34" y1="0" x2="35" y2="0">
                 <stop offset="0" stop-opacity="0.1"/><stop offset="0.65" stop-opacity="0.5"/><stop offset="1" stop-opacity="1"/>
               </linearGradient>
-              <clipPath id="lit-clip-1"><rect x="0" y="-20" width="0" height="190"/></clipPath>
-              <linearGradient id="lit-2" class="lit-grad g2" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="11" y2="0">
+              <clipPath id="lit-clip-1"><rect x="0" y="-20" width="0" height="258"/></clipPath>
+              <linearGradient id="lit-2" class="lit-grad g2" gradientUnits="userSpaceOnUse" x1="34" y1="0" x2="35" y2="0">
                 <stop offset="0" stop-opacity="0.1"/><stop offset="0.65" stop-opacity="0.5"/><stop offset="1" stop-opacity="1"/>
               </linearGradient>
-              <clipPath id="lit-clip-2"><rect x="0" y="-20" width="0" height="190"/></clipPath>
-              <linearGradient id="lit-3" class="lit-grad g3" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="11" y2="0">
+              <clipPath id="lit-clip-2"><rect x="0" y="-20" width="0" height="258"/></clipPath>
+              <linearGradient id="lit-3" class="lit-grad g3" gradientUnits="userSpaceOnUse" x1="34" y1="0" x2="35" y2="0">
                 <stop offset="0" stop-opacity="0.1"/><stop offset="0.65" stop-opacity="0.5"/><stop offset="1" stop-opacity="1"/>
               </linearGradient>
-              <clipPath id="lit-clip-3"><rect x="0" y="-20" width="0" height="190"/></clipPath>
+              <clipPath id="lit-clip-3"><rect x="0" y="-20" width="0" height="258"/></clipPath>
             </defs>
-            <g class="gridlines"><line x1="0" y1="30" x2="400" y2="30"/><line x1="0" y1="60" x2="400" y2="60"/><line x1="0" y1="90" x2="400" y2="90"/><line x1="0" y1="120" x2="400" y2="120"/></g>
-            <g class="track k1">
-              <path class="curve c1" d="M 10 136.2 C 70 133.8 92 113.1 132 105 S 214 73.8 256 63.5 S 338 36.9 390 25.4"/>
-              <path class="curve-lit" d="M 10 136.2 C 70 133.8 92 113.1 132 105 S 214 73.8 256 63.5 S 338 36.9 390 25.4" stroke="url(#lit-1)" clip-path="url(#lit-clip-1)"/>
-              <circle class="halo h1" r="9" cx="10" cy="136.2"/>
-              <circle class="runner t1" r="4.5" cx="10" cy="136.2"/>
+            <g class="gridlines"><line x1="34" y1="10" x2="390" y2="10"/><line x1="34" y1="53" x2="390" y2="53"/><line x1="34" y1="96" x2="390" y2="96"/><line x1="34" y1="139" x2="390" y2="139"/></g>
+            <g class="axes"><line x1="34" y1="6" x2="34" y2="182"/><line x1="34" y1="182" x2="390" y2="182"/></g>
+            <text class="ax-title" transform="translate(12 96) rotate(-90)" text-anchor="middle">performance &#8594;</text>
+            <g class="rticks"><g class="rtick" data-x="34.0"><line x1="34.0" y1="182" x2="34.0" y2="186"/><text x="34.0" y="196" text-anchor="middle">0</text></g><g class="rtick" data-x="78.5"><line x1="78.5" y1="182" x2="78.5" y2="186"/><text x="78.5" y="196" text-anchor="middle">1</text></g><g class="rtick" data-x="123.0"><line x1="123.0" y1="182" x2="123.0" y2="186"/><text x="123.0" y="196" text-anchor="middle">2</text></g><g class="rtick" data-x="167.5"><line x1="167.5" y1="182" x2="167.5" y2="186"/><text x="167.5" y="196" text-anchor="middle">3</text></g><g class="rtick" data-x="212.0"><line x1="212.0" y1="182" x2="212.0" y2="186"/><text x="212.0" y="196" text-anchor="middle">4</text></g><g class="rtick" data-x="256.5"><line x1="256.5" y1="182" x2="256.5" y2="186"/><text x="256.5" y="196" text-anchor="middle">5</text></g><g class="rtick" data-x="301.0"><line x1="301.0" y1="182" x2="301.0" y2="186"/><text x="301.0" y="196" text-anchor="middle">6</text></g><g class="rtick" data-x="345.5"><line x1="345.5" y1="182" x2="345.5" y2="186"/><text x="345.5" y="196" text-anchor="middle">7</text></g><g class="rtick" data-x="390.0"><line x1="390.0" y1="182" x2="390.0" y2="186"/><text x="390.0" y="196" text-anchor="middle">8</text></g></g>
+            <text class="ax-title" x="390" y="216" text-anchor="end">round &#8594;</text>
+            <g class="run k1">
+              <path class="curve c1" d="M 34 166.2 C 90.2 163.4 110.8 139.7 148.3 130.4 S 225.1 94.6 264.5 82.8 S 341.3 52.3 390 39.1"/>
+              <path class="curve-lit" d="M 34 166.2 C 90.2 163.4 110.8 139.7 148.3 130.4 S 225.1 94.6 264.5 82.8 S 341.3 52.3 390 39.1" stroke="url(#lit-1)" clip-path="url(#lit-clip-1)"/>
+              <circle class="halo h1" r="9" cx="34" cy="166.2"/>
+              <circle class="runner t1" r="4.5" cx="34" cy="166.2"/>
+              <g class="loop" transform="translate(34 166.2)"><circle class="loop-ring" r="13"/><path class="loop-arc" d="M 8.36 -9.96 A 13 13 0 1 1 -6.50 -11.26"/><path class="loop-head" d="M -2.34 -13.66 L -8.40 -14.55 L -4.60 -7.97 Z"/></g>
             </g>
-            <g class="track k2">
-              <path class="curve c2" d="M 10 140.8 C 80 139.6 116 128.1 168 118.8 S 250 102.7 300 92.3 S 362 80.8 390 76.2"/>
-              <path class="curve-lit" d="M 10 140.8 C 80 139.6 116 128.1 168 118.8 S 250 102.7 300 92.3 S 362 80.8 390 76.2" stroke="url(#lit-2)" clip-path="url(#lit-clip-2)"/>
-              <circle class="halo h2" r="9" cx="10" cy="140.8"/>
-              <circle class="runner t2" r="4.5" cx="10" cy="140.8"/>
+            <g class="run k2">
+              <path class="curve c2" d="M 34 171.5 C 99.6 170.1 133.3 156.9 182 146.2 S 258.8 127.8 305.7 115.8 S 363.8 102.7 390 97.4"/>
+              <path class="curve-lit" d="M 34 171.5 C 99.6 170.1 133.3 156.9 182 146.2 S 258.8 127.8 305.7 115.8 S 363.8 102.7 390 97.4" stroke="url(#lit-2)" clip-path="url(#lit-clip-2)"/>
+              <circle class="halo h2" r="9" cx="34" cy="171.5"/>
+              <circle class="runner t2" r="4.5" cx="34" cy="171.5"/>
             </g>
-            <g class="track k3">
-              <path class="curve c3" d="M 10 144.2 C 100 143.7 150 137.3 200 132.7 S 300 123.5 390 116.5"/>
-              <path class="curve-lit" d="M 10 144.2 C 100 143.7 150 137.3 200 132.7 S 300 123.5 390 116.5" stroke="url(#lit-3)" clip-path="url(#lit-clip-3)"/>
-              <circle class="halo h3" r="9" cx="10" cy="144.2"/>
-              <circle class="runner t3" r="4.5" cx="10" cy="144.2"/>
+            <g class="run k3">
+              <path class="curve c3" d="M 34 175.3 C 118.3 174.8 165.2 167.4 212 162.2 S 305.7 151.6 390 143.6"/>
+              <path class="curve-lit" d="M 34 175.3 C 118.3 174.8 165.2 167.4 212 162.2 S 305.7 151.6 390 143.6" stroke="url(#lit-3)" clip-path="url(#lit-clip-3)"/>
+              <circle class="halo h3" r="9" cx="34" cy="175.3"/>
+              <circle class="runner t3" r="4.5" cx="34" cy="175.3"/>
             </g>
           </svg>
-          <div class="chart-axis"><span>start</span><span>rounds →</span><span>budget spent</span></div>
         </div>
         <nav class="hero-index" aria-label="Tracks">
           <a href="#tracks" data-cat="perception"><span class="hi-n">01</span><span class="hi-name">Perception</span><span class="hi-meta">soon</span></a>

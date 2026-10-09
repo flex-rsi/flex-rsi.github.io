@@ -59,24 +59,33 @@
     counters.forEach(runCount);
   }
 
-  // Hero chart: a point runs along each curve from left to right; the stretch it has passed lights up,
-  // brightest at the point. Run, hold, fade, repeat; only while the chart is on screen.
+  // Hero chart (x = round, y = performance): a point runs along each curve from left to right; the stretch
+  // it has passed lights up, brightest at the point. A loop arrow spins around the leading point (the agent
+  // improving itself, round after round) and each round tick lights up as it passes. Run, hold, fade,
+  // repeat; only while the chart is on screen.
   const chart = document.querySelector(".hero .curves");
   if (chart) {
-    const tracks = [...chart.querySelectorAll(".track")].map((g, i) => {
+    const ticks = [...chart.querySelectorAll(".rtick")].map((g) => ({ g, x: +g.dataset.x }));
+    const SPIN = 170;                                                   // degrees per second
+    const tracks = [...chart.querySelectorAll(".run")].map((g, i) => {
       const path = g.querySelector(".curve");
       return { path, L: path.getTotalLength(), delay: 0.25 * i, lit: g.querySelector(".curve-lit"),
-               dot: g.querySelector(".runner"), halo: g.querySelector(".halo"),
+               dot: g.querySelector(".runner"), halo: g.querySelector(".halo"), loop: g.querySelector(".loop"),
                rect: chart.querySelector(`#lit-clip-${i + 1} rect`), grad: chart.querySelector(`#lit-${i + 1}`) };
     });
     const RUN = 3.4, HOLD = 1.8, FADE = 0.7, IN = 0.35;
     const PERIOD = IN + 0.25 * (tracks.length - 1) + RUN + HOLD + FADE;
     const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-    const place = (tr, p, a) => {
+    const place = (tr, p, a, spin) => {
       const pt = tr.path.getPointAtLength(p * tr.L);
       const x = pt.x.toFixed(2), y = pt.y.toFixed(2);
       tr.rect.setAttribute("width", x);
-      tr.grad.setAttribute("x2", Math.max(pt.x, 11).toFixed(2));
+      tr.grad.setAttribute("x2", Math.max(pt.x, +tr.grad.getAttribute("x1") + 1).toFixed(2));
+      if (tr.loop) {
+        tr.loop.setAttribute("transform", `translate(${x} ${y}) rotate(${spin.toFixed(1)})`);
+        tr.loop.style.opacity = a;
+        ticks.forEach((k) => k.g.classList.toggle("on", a > 0.5 && pt.x >= k.x - 0.5));
+      }
       tr.dot.setAttribute("cx", x); tr.dot.setAttribute("cy", y);
       tr.halo.setAttribute("cx", x); tr.halo.setAttribute("cy", y);
       tr.lit.style.opacity = a;
@@ -84,14 +93,15 @@
       tr.halo.style.opacity = (0.22 * a).toFixed(3);
     };
     if (reduced) {
-      tracks.forEach((tr) => place(tr, 1, 1));
+      tracks.forEach((tr) => place(tr, 1, 1, 0));
     } else {
       let t0 = null, raf = 0;
       const frame = (now) => {
         if (t0 === null) t0 = now;
         const t = ((now - t0) / 1000) % PERIOD;
         const a = t < IN ? t / IN : t > PERIOD - FADE ? (PERIOD - t) / FADE : 1;
-        tracks.forEach((tr) => place(tr, ease(Math.min(1, Math.max(0, (t - IN - tr.delay) / RUN))), a));
+        const spin = (((now - t0) / 1000) * SPIN) % 360;
+        tracks.forEach((tr) => place(tr, ease(Math.min(1, Math.max(0, (t - IN - tr.delay) / RUN))), a, spin));
         raf = requestAnimationFrame(frame);
       };
       const start = () => { if (!raf) { t0 = null; raf = requestAnimationFrame(frame); } };

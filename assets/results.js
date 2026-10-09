@@ -221,23 +221,23 @@
   });
 
   // ---------- navigation ----------
-  function show(catId = "overview", taskId = "summary", push = true) {
+  function show(catId = "overview", taskId = null, push = true) {
     if (!cats.some((c) => c.id === catId)) catId = "overview";
     tabsEl.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.cat === catId)));
     if (catId === "overview") {
       overview();
     } else {
       const cat = cats.find((c) => c.id === catId), tasks = byCat[catId];
-      if (!tasks.some((t) => t.id === taskId)) taskId = "summary";
+      if (taskId !== "summary" && !tasks.some((t) => t.id === taskId)) taskId = tasks[0].id;   // a category opens on its first task
       subEl.hidden = false;
-      subEl.innerHTML = [`<button type="button" role="tab" data-task="summary">Summary</button>`,
-        ...tasks.map((t) => `<button type="button" role="tab" data-task="${t.id}">${esc(t.track)}</button>`)].join("");
+      subEl.innerHTML = [...tasks.map((t) => `<button type="button" role="tab" data-task="${t.id}">${esc(t.track)}</button>`),
+        `<button type="button" role="tab" data-task="summary">Summary</button>`].join("");
       subEl.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.task === taskId)));
       if (taskId === "summary") categorySummary(cat); else task(tasks.find((t) => t.id === taskId));
     }
     const board = $(".board");
     board.classList.remove("swap"); void board.offsetWidth; board.classList.add("swap");
-    if (push) history.replaceState(null, "", catId === "overview" ? "#results" : `#results/${catId}${taskId !== "summary" ? "/" + taskId : ""}`);
+    if (push) history.replaceState(null, "", catId === "overview" ? "#results" : `#results/${catId}/${taskId}`);
   }
   const currentCat = () => tabsEl.querySelector('[aria-selected="true"]').dataset.cat;
 
@@ -261,10 +261,10 @@
         ...cats.map((c) => `<button type="button" role="tab" data-cat="${c.id}">${esc(c.name)}<span class="count">${byCat[c.id].length}</span></button>`)].join("");
       const fromHash = () => {
         const m = location.hash.match(/^#results(?:\/([\w-]+))?(?:\/([\w-]+))?/);
-        if (m) show(m[1] || "overview", m[2] || "summary", false);
+        if (m) show(m[1] || "overview", m[2] || null, false);
         return m;
       };
-      if (fromHash()) root.scrollIntoView(); else show("overview", "summary", false);
+      if (fromHash()) root.scrollIntoView(); else show("overview", null, false);
       window.addEventListener("hashchange", () => { if (fromHash()) root.scrollIntoView({ behavior: "smooth" }); });
       // the hero's track index: categories with tasks link to their leaderboard
       document.querySelectorAll(".hero-index a[data-cat]").forEach((a) => {

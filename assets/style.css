@@ -181,7 +181,19 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
   font-family: var(--mono); font-size: 11px; color: var(--ink-3);
   padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line);
 }
-.curves { display: block; width: 100%; height: auto; aspect-ratio: 400 / 150; overflow: visible; }
+.curves { display: block; width: 100%; height: auto; aspect-ratio: 400 / 218; overflow: visible; }
+/* axes: x = round (ticks light up as the leading run passes them), y = performance */
+.curves .axes line { stroke: var(--ink-3); stroke-width: 1; }
+.curves .ax-title { font: 500 8.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ink-3); }
+.curves .rtick line { stroke: var(--ink-3); stroke-width: 1; }
+.curves .rtick text { font: 500 8.5px var(--mono); fill: var(--ink-3); transition: fill 0.35s ease; }
+.curves .rtick.on text { fill: var(--accent-1); font-weight: 700; }
+.curves .rtick.on line { stroke: var(--accent-1); }
+/* the self-rotating loop arrow around the leading runner: one more round of the agent improving itself */
+.curves .loop { opacity: 0; }
+.curves .loop-ring { fill: none; stroke: var(--accent-1); stroke-width: 1; opacity: 0.18; }
+.curves .loop-arc { fill: none; stroke: var(--accent-1); stroke-width: 1.8; stroke-linecap: round; }
+.curves .loop-head { fill: var(--accent-1); }
 .gridlines line { stroke: var(--line); stroke-width: 1; }
 /* each curve: the whole path faint; the stretch a runner has passed lit with a gradient that peaks at the runner (main.js) */
 .curve { fill: none; stroke-width: 2; stroke-linecap: round; opacity: 0.26; }
