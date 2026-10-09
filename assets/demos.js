@@ -133,22 +133,35 @@
   }
 
   function tracking(p) {
-    const L = p.clip.layout || ["RGB", "Ground truth", "Before", "After"];
-    const cols = p.clip.cols || 2;
-    stage.innerHTML = `<div class="quad">
-        ${video(p.video, p.poster, ' aria-label="Instance tracking before and after"')}
-        <div class="quad-labels" style="grid-template-columns:repeat(${cols},1fr)">${L.map((l) => `<span class="${l === "After" ? "after" : ""}">${esc(l)}</span>`).join("")}</div>
+    const L = p.layout;
+    stage.innerHTML = `<div class="quad"><div class="quad-video"></div>
+        <div class="quad-labels" style="grid-template-columns:repeat(${L.length},1fr)">${L.map((l) => `<span class="${l === "After" ? "after" : ""}">${esc(l)}</span>`).join("")}</div>
       </div>
-      <p class="clip-line"><span class="ep-meta">${p.clip.split === "test" ? "Test" : "Validation"} clip · ${p.clip.views} views of one room · ${p.clip.objects} annotated objects</span>
-        <span class="ep-meta">Tracking mIoU on this clip <span class="no">${p.clip.before.toFixed(3)}</span> → <span class="ok">${p.clip.after.toFixed(3)}</span></span></p>
+      <p class="clip-line"><span class="ep-meta" data-k="about"></span><span class="ep-meta" data-k="score"></span></p>
+      <div class="ep-strip ep-strip-wide" role="group" aria-label="Clips">${p.cases.map((c, i) =>
+        `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(c.poster)}" alt="" loading="lazy"><span>${esc(c.scene)}<small>${c.split === "test" ? "Test" : "Val"} · ${c.before.toFixed(2)} → ${c.after.toFixed(2)}</small></span></button>`).join("")}</div>
       <p class="demo-note"><b>What the agent changed.</b> The starting solution clusters pixels by color in each view and links the pieces across views by color,
         so objects break apart and their identities jump from view to view. The self-improved solution segments every view with SAM 2.1 and links the segments
         across views by voting with VGGT's 3D reprojection and DINOv2 features, keeping one identity per object.
-        Colors follow the scorer's matching to the ground truth; gray marks segments matched to no annotated object (the second armchair is not annotated).</p>`;
-    const v = stage.querySelector("video");
-    loop(v);
-    active = [v];
-    v.readyState >= 3 ? playAll() : v.addEventListener("canplay", playAll, { once: true });
+        Colors follow the scorer's matching to the ground truth; gray marks segments matched to no annotated object, including objects the ground truth leaves out.</p>`;
+    let cur = -1;
+    const show = (i) => {
+      cur = i;
+      const c = p.cases[i];
+      stage.querySelector(".quad-video").innerHTML = video(c.video, c.poster, ` aria-label="${esc(c.scene)}: instance tracking before and after"`);
+      stage.querySelector('[data-k="about"]').textContent = `${c.split === "test" ? "Test" : "Validation"} clip · ${c.views} views of one room · ${c.objects} annotated objects`;
+      stage.querySelector('[data-k="score"]').innerHTML = `Tracking mIoU on this clip <span class="no">${c.before.toFixed(3)}</span> → <span class="ok">${c.after.toFixed(3)}</span>`;
+      stage.querySelectorAll(".ep-strip button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.i === i)));
+      const v = stage.querySelector("video");
+      loop(v);
+      active = [v];
+      v.readyState >= 3 ? playAll() : v.addEventListener("canplay", playAll, { once: true });
+    };
+    stage.querySelector(".ep-strip").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button");
+      if (btn && +btn.dataset.i !== cur) show(+btn.dataset.i);
+    });
+    show(0);
   }
 
   const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking };

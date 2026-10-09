@@ -111,7 +111,9 @@
 
 .quad { position: relative; border: 1.5px solid var(--line); background: #0f0b09; }
 .clip-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; margin-top: 10px; }
-.quad video { display: block; width: 100%; height: auto; }
+.quad-video { aspect-ratio: 1600 / 300; }
+.quad video { display: block; width: 100%; height: 100%; }
+.ep-strip-wide img { object-position: 0 50%; aspect-ratio: 4 / 3; }
 .quad-labels { position: absolute; inset: 0; display: grid; pointer-events: none; }
 .quad-labels span { align-self: start; justify-self: start; margin: 8px; font: 600 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
                     padding: 3px 8px; background: rgba(27, 21, 18, 0.82); color: var(--ink); }

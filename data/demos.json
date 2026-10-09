@@ -423,22 +423,80 @@
    "metric": "tracking mIoU",
    "before": 0.2119,
    "after": 0.8013,
-   "clip": {
-    "split": "test",
-    "views": 6,
-    "objects": 4,
-    "cols": 4,
-    "layout": [
-     "Image",
-     "Ground truth",
-     "Before",
-     "After"
-    ],
-    "before": 0.174,
-    "after": 0.97
-   },
-   "video": "assets/demo/iggt/compare.mp4",
-   "poster": "assets/demo/iggt/compare.jpg"
+   "layout": [
+    "Image",
+    "Ground truth",
+    "Before",
+    "After"
+   ],
+   "cases": [
+    {
+     "id": "test-clip_00005",
+     "scene": "Lounge",
+     "split": "test",
+     "views": 6,
+     "objects": 4,
+     "before": 0.174,
+     "after": 0.97,
+     "video": "assets/demo/iggt/test-clip_00005.mp4",
+     "poster": "assets/demo/iggt/test-clip_00005.jpg"
+    },
+    {
+     "id": "val-clip_00015",
+     "scene": "Office",
+     "split": "val",
+     "views": 8,
+     "objects": 6,
+     "before": 0.316,
+     "after": 0.867,
+     "video": "assets/demo/iggt/val-clip_00015.mp4",
+     "poster": "assets/demo/iggt/val-clip_00015.jpg"
+    },
+    {
+     "id": "val-clip_00013",
+     "scene": "Kitchen",
+     "split": "val",
+     "views": 8,
+     "objects": 6,
+     "before": 0.123,
+     "after": 0.895,
+     "video": "assets/demo/iggt/val-clip_00013.mp4",
+     "poster": "assets/demo/iggt/val-clip_00013.jpg"
+    },
+    {
+     "id": "test-clip_00004",
+     "scene": "Laundry room",
+     "split": "test",
+     "views": 8,
+     "objects": 6,
+     "before": 0.161,
+     "after": 0.835,
+     "video": "assets/demo/iggt/test-clip_00004.mp4",
+     "poster": "assets/demo/iggt/test-clip_00004.jpg"
+    },
+    {
+     "id": "test-clip_00006",
+     "scene": "Apartment",
+     "split": "test",
+     "views": 8,
+     "objects": 8,
+     "before": 0.206,
+     "after": 0.85,
+     "video": "assets/demo/iggt/test-clip_00006.mp4",
+     "poster": "assets/demo/iggt/test-clip_00006.jpg"
+    },
+    {
+     "id": "val-clip_00017",
+     "scene": "Meeting room",
+     "split": "val",
+     "views": 8,
+     "objects": 7,
+     "before": 0.196,
+     "after": 0.914,
+     "video": "assets/demo/iggt/val-clip_00017.mp4",
+     "poster": "assets/demo/iggt/val-clip_00017.jpg"
+    }
+   ]
   }
  ]
 }

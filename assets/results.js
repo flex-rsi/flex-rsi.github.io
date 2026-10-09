@@ -266,7 +266,15 @@
         return m;
       };
       if (fromHash()) root.scrollIntoView(); else show("overview", "summary", false);
-      window.addEventListener("hashchange", fromHash);
+      window.addEventListener("hashchange", () => { if (fromHash()) root.scrollIntoView({ behavior: "smooth" }); });
+      // the hero's track index: categories with tasks link to their leaderboard
+      document.querySelectorAll(".hero-index a[data-cat]").forEach((a) => {
+        const n = (byCat[a.dataset.cat] || []).length;
+        if (!n) return;
+        a.classList.add("live");
+        a.href = `#results/${a.dataset.cat}`;
+        a.querySelector(".hi-meta").textContent = `${n} task${n > 1 ? "s" : ""}`;
+      });
     })
     .catch(() => { titleEl.textContent = "Results"; leadEl.textContent = "Results could not be loaded."; });
 })();
