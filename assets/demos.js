@@ -114,8 +114,8 @@
   // Robot control: one validation case run by an earlier and a later round, laid out like active search.
   // Each replay shows the head camera with the decisive region boxed, and that region enlarged beside it.
   const ROBOT_LEGEND = `<ul class="demo-legend">
-    <li><svg viewBox="0 0 22 14"><rect x="1" y="1" width="20" height="12" fill="none" stroke="#002fa7" stroke-width="2"/><rect x="3" y="3" width="16" height="8" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1"/></svg>Region where the rounds differ</li>
-    <li><svg viewBox="0 0 22 14"><rect x="1" y="1" width="20" height="12" fill="rgba(0,47,167,.1)" stroke="#002fa7" stroke-width="2.5"/><path d="M8 4l-3 3 3 3M14 4l3 3-3 3" fill="none" stroke="#002fa7" stroke-width="1.4"/></svg>Same region, enlarged 2×</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="5" y="3" width="12" height="8" fill="none" stroke="#002fa7" stroke-width="1.8"/></svg>Region where the rounds differ</li>
+    <li><svg viewBox="0 0 22 14"><rect width="22" height="14" fill="#33364a"/><rect x="1" y="1" width="20" height="12" fill="none" stroke="#002fa7" stroke-width="2"/><path d="M9 4.5l-2.5 2.5 2.5 2.5M13 4.5l2.5 2.5-2.5 2.5" fill="none" stroke="#f4f4f1" stroke-width="1.2"/></svg>Same region, enlarged 2×</li>
   </ul>`;
   function robotControl(p) {
     const rounds = Object.fromEntries(p.rounds.map((r) => [r.id, r]));
