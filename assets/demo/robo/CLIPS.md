@@ -9,14 +9,11 @@ All four clips use the head camera. Source files are the full validation rollout
 
 Each poster is sampled 7.5 seconds into its selected clip to show the outcome.
 
-## Zoom composites (what the page plays)
+## On the page
 
-`zoom-<clip>.mp4` / `.jpg` (1040×480) are inset zooms: the full head camera at its own resolution
-(640×480, uncropped, undimmed) with the decisive region (192×144) boxed in white, and beside it, in a
-dark margin, that region enlarged 2× (384×288) in a white frame with a chip "R<n>  2×". Dashed white
-lines join the box's right corners to the inset's left corners. Box, lines, frame and chip are a
-transparent PNG rendered in JetBrains Mono and overlaid with ffmpeg; the inset sits level with the box.
-Region in source pixels `x,y,w,h`:
+The page plays the clips above unchanged. `assets/demos.js` boxes the decisive region on the head camera
+and draws that region, enlarged, into a canvas beside it from the same video on every frame; the region
+is `region` (`x,y,w,h` in 640×480 pixels) on each comparison in `data/demos.json`:
 
-- standard-1 (R2, R5): `60,150,192,144`, the upright small bottle beside the bin
-- standard-4 (R8, R9): `400,60,192,144`, the white bottle at the far edge of the table
+- standard-1 (R2, R5): `50,140,224,168`, the upright small bottle beside the bin
+- standard-4 (R8, R9): `390,50,224,168`, the white bottle at the far edge of the table
