@@ -49,8 +49,8 @@
   }
 
   function task(t) {
-    titleEl.textContent = `${t.track} · ${t.task}`;
-    subEl.textContent = `Ranked by ${t.metrics[0].label} on the hidden test split.`;
+    titleEl.textContent = t.track;
+    subEl.textContent = `${t.task}. Ranked by ${t.metrics[0].label} on the hidden test split.`;
     table.innerHTML = `<thead><tr><th>#</th><th>Model</th>${t.metrics.map((m) => `<th>${esc(m.label)}</th>`).join("")}<th>Gain<span class="th-sub">validation</span></th></tr></thead>
       <tbody>${t.rows.map((r, i) => `<tr data-i="${i}"><td>${i + 1}</td><td class="model"><span class="sw" style="background:${COLORS[i % COLORS.length]}"></span>${esc(r.model)} ${tag(r.weights)}</td>${t.metrics
         .map((m, j) => `<td${j === 0 ? ' class="strong"' : ""}>${fmt(m.key, r.test[m.key])}</td>`).join("")}<td class="gain">${gain(r.gain_pct)}</td></tr>`).join("")}</tbody>`;
@@ -58,9 +58,42 @@
     noteEl.textContent = `${data.notes.gain} ${data.notes.curve}`;
   }
 
+
+  // Smooth line through the points, monotone between them (Fritsch-Carlson), so a curve that
+  // only rises never dips or overshoots between rounds.
+  function smooth(p) {
+    const n = p.length;
+    if (n < 2) return n ? `M${p[0][0]},${p[0][1]}` : "";
+    const dx = [], m = [];
+    for (let i = 0; i < n - 1; i++) { dx.push(p[i + 1][0] - p[i][0]); m.push((p[i + 1][1] - p[i][1]) / dx[i]); }
+    const t = [m[0]];
+    for (let i = 1; i < n - 1; i++) t.push(m[i - 1] * m[i] <= 0 ? 0 : (m[i - 1] + m[i]) / 2);
+    t.push(m[n - 2]);
+    for (let i = 0; i < n - 1; i++) {
+      if (m[i] === 0) { t[i] = 0; t[i + 1] = 0; continue; }
+      const a = t[i] / m[i], b = t[i + 1] / m[i], h = a * a + b * b;
+      if (h > 9) { const k = 3 / Math.sqrt(h); t[i] = k * a * m[i]; t[i + 1] = k * b * m[i]; }
+    }
+    let d = `M${p[0][0]},${p[0][1]}`;
+    for (let i = 0; i < n - 1; i++) {
+      const h = dx[i] / 3;
+      d += `C${p[i][0] + h},${p[i][1] + t[i] * h} ${p[i + 1][0] - h},${p[i + 1][1] - t[i + 1] * h} ${p[i + 1][0]},${p[i + 1][1]}`;
+    }
+    return d;
+  }
+
   function drawCurves(t) {
     const W = 760, H = 300, L = 46, R = 16, T = 14, B = 34;
-    const series = t.rows.map((r, i) => ({ r, i, pts: r.curve.map((v, x) => [x, v]).filter((p) => p[1] !== null) })).filter((s) => s.pts.length);
+    // points of each line: the start, every round whose best score rose, and the last round;
+    // joined by a smooth line, so the chart shows each model's rise rather than a staircase
+    const keyPoints = (curve) => {
+      const p = curve.map((v, x) => [x, v]).filter((q) => q[1] !== null);
+      const out = p.filter((q, k) => k === 0 || q[1] > p[k - 1][1]);
+      const end = p[p.length - 1];
+      if (end && out[out.length - 1][0] !== end[0]) out.push(end);
+      return out;
+    };
+    const series = t.rows.map((r, i) => ({ r, i, pts: keyPoints(r.curve) })).filter((s) => s.pts.length);
     const maxX = Math.max(...series.map((s) => s.r.curve.length - 1), 1);
     const vals = series.flatMap((s) => s.pts.map((p) => p[1]));
     let lo = Math.min(...vals), hi = Math.max(...vals);
@@ -75,12 +108,10 @@
     }
     for (let x = 0; x <= maxX; x += maxX > 10 ? 5 : 2) g += `<text class="ax" x="${X(x)}" y="${H - 10}" text-anchor="middle">${x}</text>`;
     const lines = series.map((s) => {
-      let d = "";
-      s.pts.forEach(([x, v], k) => {   // best-so-far is a staircase
-        d += k === 0 ? `M${X(x)},${Y(v)}` : `H${X(x)}V${Y(v)}`;
-      });
+      const pts = s.pts.map(([x, v]) => [X(x), Y(v)]);
       const last = s.pts[s.pts.length - 1];
-      d += `H${X(maxX)}`;
+      if (last[0] < maxX) pts.push([X(maxX), Y(last[1])]);   // a shorter run holds its best score
+      const d = smooth(pts);
       const c = COLORS[s.i % COLORS.length];
       return `<g class="ln" data-i="${s.i}"><path d="${d}" stroke="${c}" pathLength="1"/><circle cx="${X(maxX)}" cy="${Y(last[1])}" r="3.5" fill="${c}"/></g>`;
     }).join("");

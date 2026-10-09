@@ -3,7 +3,7 @@
  "tasks": [
   {
    "id": "reconstruct",
-   "track": "Reconstruct",
+   "track": "3D Tracking",
    "task": "3D instance tracking (IGGT)",
    "primary": "t_miou",
    "metrics": [
@@ -238,7 +238,7 @@
   },
   {
    "id": "perceive",
-   "track": "Perceive",
+   "track": "Visual Search",
    "task": "High-resolution visual search (V*Bench, HR-Bench 8K)",
    "primary": "accuracy",
    "metrics": [
@@ -410,7 +410,7 @@
   },
   {
    "id": "search",
-   "track": "Search",
+   "track": "Active Search",
    "task": "Active visual search in 360\u00b0 scenes (H*Bench)",
    "primary": "spl",
    "metrics": [
@@ -626,7 +626,7 @@
   },
   {
    "id": "act",
-   "track": "Act",
+   "track": "Robot Control",
    "task": "Robot control: throw bottles into a dustbin (RoboDojo)",
    "primary": "score",
    "metrics": [
@@ -852,6 +852,6 @@
  ],
  "notes": {
   "gain": "Gain: best validation score relative to the run's own starting score.",
-  "curve": "Curves: best validation score so far after each round."
+  "curve": "Curves join each run's starting score, every accepted improvement and its last round."
  }
 }

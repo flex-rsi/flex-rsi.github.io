@@ -56,3 +56,7 @@ table.results tr.partial td.model { color: var(--ink-2); }
 @media (prefers-reduced-motion: reduce) {
   .curves-plot .ln path { stroke-dashoffset: 0; }
 }
+
+/* the open-ended last track card */
+.track.more h3 { letter-spacing: 0.1em; }
+.track.more p { color: var(--ink-3); }
