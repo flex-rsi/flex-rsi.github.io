@@ -95,7 +95,7 @@
     const stat = (n, label) => `<div class="cov-stat"><b data-n="${n}">0</b><span>${label}</span></div>`;
     const ticks = Array.from({ length: total + 1 }, (_, k) => `<span style="left:${(100 * k) / total}%">${k}</span>`).join("");
     cov.innerHTML = `
-      <div class="cov-stats">${stat(rows.length, "frontier models")}${stat(total, "tasks")}${stat(cats.length, "categories")}${stat(runs, "model × task runs")}${stat(rounds, "self-improvement rounds")}</div>
+      <div class="cov-stats">${stat(rows.length, "frontier models")}${stat(total, "tasks")}${stat(cats.length, "categories")}${stat(runs, "model × task runs")}${stat(rounds, "total RSI rounds")}</div>
       <div class="cov-head"><span>Tasks each model has been run on</span>
         <ul class="cov-legend">${cats.map((c) => `<li><i style="background:${catColor(c.id)}"></i>${esc(c.name)}</li>`).join("")}</ul></div>
       <div class="cov-chart">
