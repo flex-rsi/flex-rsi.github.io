@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#f4f4f1"/>
-  <rect x="14" y="14" width="36" height="36" fill="#002fa7"/>
+  <!-- Flex-RSI: three rounds, each a little larger and brighter than the last, climbing to the top right -->
+  <rect width="64" height="64" fill="#002fa7"/>
+  <rect x="9" y="41" width="14" height="14" fill="#f4f4f1" fill-opacity=".32"/>
+  <rect x="20" y="25" width="19" height="19" fill="#f4f4f1" fill-opacity=".62"/>
+  <rect x="35" y="9" width="20" height="20" fill="#f4f4f1"/>
 </svg>

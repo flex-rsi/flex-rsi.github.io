@@ -2,7 +2,7 @@
 // without changes here.
 //   Overview   coverage: how many models, tasks and runs, and which tasks each model was run on
 //   Category   one tab per task (no second row when there is only one)
-//   Task       every test metric, the validation gain, the rounds run, and the improvement curves
+//   Task       every test metric, validation start and best, the rounds run, and the improvement curves
 // The current view is kept in the URL (#results/<category>/<task>) so it can be linked.
 (() => {
   const root = document.getElementById("leaderboard");
@@ -26,7 +26,15 @@
     return v.toFixed(3);
   };
   const fmtAxis = (key, v) => (key === "score" ? String(Math.round(v)) : PCT.has(key) ? (100 * v).toFixed(0) + "%" : v.toFixed(2));
-  const gain = (g) => (g === null || g === undefined ? "–" : (g >= 0 ? "+" : "") + Math.round(g) + "%");
+  // validation change as absolute values, in the primary metric's own units: start → best (+delta)
+  const change = (key, r) => {
+    if (r.best === null || r.best === undefined) return "–";
+    const v = (x) => fmt(key, x);
+    if (r.start === null || r.start === undefined) return `<span class="to">best</span> <b>${v(r.best)}</b>`;
+    const d = r.best - r.start;
+    const dz = PCT.has(key) ? (100 * d).toFixed(1) + " pt" : key === "score" ? String(Math.round(d)) : d.toFixed(3);
+    return `${v(r.start)} <span class="to">→</span> <b>${v(r.best)}</b><span class="delta${d > 0 ? "" : " flat"}">${d > 0 ? "+" : d < 0 ? "−" : "±"}${dz.replace("-", "")}</span>`;
+  };
   const ENDED = { max_rounds: "round limit", budget_wall: "time budget", budget_usd: "cost budget", budget_gpu: "GPU budget",
                   budget_tokens: "token budget", val_calls: "validation budget", idle: "no further progress" };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -122,12 +130,12 @@
     leadEl.textContent = `${t.task}. Ranked by ${t.metrics[0].label} on the hidden test split.`;
     const body = t.rows.map((r, i) => {
       const values = t.metrics.map((m, j) => `<td${j === 0 ? ' class="strong"' : ""}>${fmt(m.key, r.test[m.key])}</td>`).join("");
-      return `<tr data-i="${i}" class="${rankClass(i)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${values}<td class="${r.gain_pct > 0 ? "gain" : "na"}">${gain(r.gain_pct)}</td><td class="rounds">${r.rounds ?? "–"}${r.ended ? `<span class="ended">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
+      return `<tr data-i="${i}" class="${rankClass(i)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${values}<td class="vchange">${change(t.primary, r)}</td><td class="rounds">${r.rounds ?? "–"}${r.ended ? `<span class="ended">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
     }).join("");
     const metricHeads = t.metrics.map((m) => `<th>${esc(m.label)}</th>`).join("");
-    table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${t.metrics.length}">Hidden test metrics</th><th>Validation change</th><th>Run depth</th></tr><tr><th>#</th><th class="model">Model</th>${metricHeads}<th>Gain<span class="th-sub">validation</span></th><th class="rounds">Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
+    table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${t.metrics.length}">Hidden test metrics</th><th>Validation</th><th>Run depth</th></tr><tr><th>#</th><th class="model">Model</th>${metricHeads}<th>Start → best<span class="th-sub">${esc(t.metrics[0].label)}</span></th><th class="rounds">Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
     drawCurves(t);
-    noteEl.textContent = `${data.notes.gain} Each line ends at the last round its run reached.`;
+    noteEl.textContent = "Validation: the run's starting score and its best score over the rounds, in the primary metric's units. Each line ends at the last round its run reached.";
   }
 
   // ---------- curves ----------
