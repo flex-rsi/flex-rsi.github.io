@@ -58,7 +58,7 @@
     return `<tr class="group-row"><th colspan="${span}"><span class="group-code">${index}</span><span class="group-title">${esc(title)}</span><span class="group-meta">${esc(meta)}</span></th></tr>`;
   }
 
-  const COLORS = ["var(--accent-1)", "var(--ink)", "#c98b5e", "#9fb08f", "#8fa3b8", "#b59ac2", "#d98080", "#7fb3b0", "#a39a8e"];
+  const COLORS = ["var(--accent-1)", "var(--ink)", "#e0471b", "#00937c", "#b07700", "#7b4cc4", "#4787dd", "#c93f7c", "#5f8a1c"];
 
   let data, cats, byCat, rankOf;   // rankOf[taskId][model] = 1-based rank on that task
 

@@ -40,11 +40,11 @@
 
   // ---------------------------------------------------------------- panels
   const LEGEND = `<ul class="demo-legend">
-    <li><svg viewBox="0 0 22 14"><rect x="1" y="1" width="20" height="12" fill="rgba(232,162,60,.15)" stroke="#e8a23c" stroke-width="1.5" stroke-dasharray="4 3"/></svg>Target zone (counts as success)</li>
-    <li><svg viewBox="0 0 22 14"><path d="M2 3q9-3 18 0v8q-9 3-18 0z" fill="none" stroke="#e8a23c" stroke-width="2"/></svg>Current field of view</li>
-    <li><svg viewBox="0 0 22 14"><path d="M3 9L19 5" stroke="#f3ebe2" stroke-width="1.5"/><circle cx="3" cy="9" r="2.6" fill="#f3ebe2"/><circle cx="19" cy="5" r="2.6" fill="#f3ebe2"/></svg>Views so far</li>
-    <li><svg viewBox="0 0 22 14"><circle cx="11" cy="7" r="5" fill="none" stroke="#e8a23c" stroke-width="2"/><circle cx="11" cy="7" r="1.8" fill="#e8a23c"/></svg>Submitted, hit</li>
-    <li><svg viewBox="0 0 22 14"><path d="M6 2l10 10M16 2L6 12" stroke="#e25c4c" stroke-width="2"/></svg>Submitted, missed</li>
+    <li><svg viewBox="0 0 22 14"><rect x="1" y="1" width="20" height="12" fill="rgba(0,47,167,.27)" stroke="#002fa7" stroke-width="1.5" stroke-dasharray="4 3"/></svg>Target zone (counts as success)</li>
+    <li><svg viewBox="0 0 22 14"><path d="M2 3q9-3 18 0v8q-9 3-18 0z" fill="none" stroke="#002fa7" stroke-width="2"/></svg>Current field of view</li>
+    <li><svg viewBox="0 0 22 14"><path d="M3 9L19 5" stroke="#0b0d1a" stroke-width="3"/><path d="M3 9L19 5" stroke="#f4f4f1" stroke-width="1.4"/><circle cx="3" cy="9" r="2.6" fill="#f4f4f1" stroke="#0b0d1a" stroke-width="1"/><circle cx="19" cy="5" r="2.6" fill="#f4f4f1" stroke="#0b0d1a" stroke-width="1"/></svg>Views so far</li>
+    <li><svg viewBox="0 0 22 14"><circle cx="11" cy="7" r="5" fill="none" stroke="#002fa7" stroke-width="2"/><circle cx="11" cy="7" r="1.8" fill="#002fa7"/></svg>Submitted, hit</li>
+    <li><svg viewBox="0 0 22 14"><path d="M6 2l10 10M16 2L6 12" stroke="#d23c2e" stroke-width="2"/></svg>Submitted, missed</li>
   </ul>`;
 
   const outcome = (r) => `<span class="${r.success ? "ok" : "no"}">${esc(r.outcome)} · ${r.steps} step${r.steps > 1 ? "s" : ""}</span>`;

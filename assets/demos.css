@@ -1,5 +1,5 @@
 /* Demos: before/after self-improvement, in the Swiss Grid look. */
-:root { --miss: #e25c4c; }
+:root { --miss: #d23c2e; }
 #demos .demo-lede { max-width: 760px; margin: -8px 0 22px; color: var(--ink-2); font-size: 16px; }
 
 .demo-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
@@ -37,7 +37,7 @@
 .ab-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; font: 500 12px var(--mono); letter-spacing: 0.04em; }
 .ab-bar .lhs { display: flex; align-items: center; gap: 10px; color: var(--ink-3); text-transform: uppercase; }
 .ab-bar .rhs { text-transform: uppercase; font-weight: 600; }
-.ab-video { position: relative; aspect-ratio: 1446 / 432; background: #0f0b09; border: 1.5px solid var(--line); }
+.ab-video { position: relative; aspect-ratio: 1446 / 432; background: #0b0d1a; border: 1.5px solid var(--line); }
 .ab-video video, .ab-video img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
 .ep-strip { display: flex; gap: 10px; overflow-x: auto; margin-top: 18px; padding: 4px 2px 8px; scrollbar-width: thin; }
@@ -64,7 +64,7 @@
 .vq:hover { border-color: var(--ink-3); }
 .vq-media { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 10px; align-items: start; }
 .vq-media figure { margin: 0; position: relative; }
-.vq-media img { display: block; width: 100%; height: auto; background: #0f0b09; }
+.vq-media img { display: block; width: 100%; height: auto; background: #0b0d1a; }
 .vq-media .zoom img { aspect-ratio: 1; border: 1.5px solid var(--accent-1); }
 .vq-media figcaption { margin-top: 5px; font: 500 10.5px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-3); }
 .vq h4 { margin: 12px 0 10px; font-size: 15.5px; font-weight: 600; color: var(--ink); line-height: 1.35; }
@@ -77,7 +77,7 @@
 
 /* ---- robot control and 3D tracking: one clip with its numbers */
 .clip { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: start; }
-.clip-video { position: relative; background: #0f0b09; border: 1.5px solid var(--line); }
+.clip-video { position: relative; background: #0b0d1a; border: 1.5px solid var(--line); }
 .clip-video video { display: block; width: 100%; height: auto; }
 .clip-facts dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; margin: 0; }
 .clip-facts dt { font: 500 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
@@ -104,19 +104,19 @@
 .robot-round-rate.ok { color: var(--accent-1); }
 .robot-round-rate.no { color: var(--miss); }
 .robot-round-rate small { color: var(--ink-3); font-weight: 500; }
-.robot-round-video { margin: 0; border: 1.5px solid var(--line); background: #0f0b09; }
-.robot-round-video video { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #0f0b09; }
+.robot-round-video { margin: 0; border: 1.5px solid var(--line); background: #0b0d1a; }
+.robot-round-video video { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #0b0d1a; }
 .robot-round-score { margin: 8px 0 4px; color: var(--ink); font: 500 11px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .robot-round-summary { margin: 0; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
 
-.quad { position: relative; border: 1.5px solid var(--line); background: #0f0b09; }
+.quad { position: relative; border: 1.5px solid var(--line); background: #0b0d1a; }
 .clip-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; margin-top: 10px; }
 .quad-video { aspect-ratio: 1600 / 300; }
 .quad video { display: block; width: 100%; height: 100%; }
 .ep-strip-wide img { object-position: 0 50%; aspect-ratio: 4 / 3; }
 .quad-labels { position: absolute; inset: 0; display: grid; pointer-events: none; }
 .quad-labels span { align-self: start; justify-self: start; margin: 8px; font: 600 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
-                    padding: 3px 8px; background: rgba(27, 21, 18, 0.82); color: var(--ink); }
+                    padding: 3px 8px; background: rgba(11, 13, 26, 0.82); color: #f4f4f1; }
 .quad-labels span.after { background: var(--accent-1); color: var(--on-accent, var(--bg)); }
 
 @media (max-width: 860px) {
