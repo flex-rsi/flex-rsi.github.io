@@ -1,0 +1,43 @@
+/* Task reel: a bento of looping, silent clips between the hero and the overview. One large tile,
+   one wide panorama, six small ones, on a 4-column grid with 4:3 cells. */
+.reel { padding-top: 8px; }
+.reel-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin-bottom: 16px; }
+.reel-head .kicker { margin: 0; }
+/* the reel is a prelude, not a numbered section: Overview stays [01] */
+.reel .kicker::before { content: none; counter-increment: none; }
+.reel-lede { margin: 0; font-size: 15px; color: var(--ink-2); }
+.reel-grid {
+  display: grid; gap: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  aspect-ratio: 16 / 9;            /* four 4:3 columns by three rows */
+}
+.reel-tile { position: relative; margin: 0; overflow: hidden; background: var(--ink); min-height: 0; }
+.reel-tile.t-big { grid-column: span 2; grid-row: span 2; }
+.reel-tile.t-wide { grid-column: span 2; }
+.reel-tile video, .reel-tile img {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover;
+  transition: transform 1.2s var(--ease);
+}
+.reel-tile:hover video, .reel-tile:hover img { transform: scale(1.035); }
+/* the still photo drifts slowly toward its detail, so it reads as part of the motion */
+.reel-tile.t-still img { transform-origin: 62% 40%; animation: reel-drift 16s ease-in-out infinite alternate; }
+@keyframes reel-drift { from { transform: scale(1); } to { transform: scale(1.22); } }
+.reel-tile figcaption {
+  position: absolute; left: 8px; bottom: 8px; max-width: calc(100% - 16px);
+  padding: 5px 9px 6px; background: rgba(11, 13, 26, 0.84); color: #f4f4f1;
+  font: 500 11.5px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.3;
+}
+.reel-track { display: block; margin-bottom: 1px; font-size: 9.5px; letter-spacing: 0.08em; color: #9fb3ea; }
+.reel-tile.t-big figcaption { font-size: 13px; left: 12px; bottom: 12px; }
+@media (max-width: 760px) {
+  .reel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; aspect-ratio: auto; gap: 6px; }
+  .reel-tile { aspect-ratio: 4 / 3; }
+  .reel-tile.t-big { grid-row: span 1; aspect-ratio: 8 / 6; }
+  .reel-tile.t-wide { aspect-ratio: 8 / 3; }
+  .reel-tile figcaption { font-size: 9.5px; left: 5px; bottom: 5px; padding: 3px 6px; }
+  .reel-track { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reel-tile.t-still img { animation: none; }
+}

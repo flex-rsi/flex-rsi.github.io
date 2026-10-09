@@ -157,3 +157,64 @@ table.results tbody tr.podium-1 td.model, table.results tbody tr.podium-1 td.str
   .group-meta { display: none; }
   table.results th, table.results td { padding: 0 10px; }
 }
+
+/* ---------- overview: coverage ----------
+   A row of counts, then one bar per model: a segment per task it was run on, coloured by category.
+   Opening the tab replays the entrance (.play): counts run up, bars grow in turn from the left. */
+.cov[hidden], .board-scroll[hidden] { display: none; }
+.cov-stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1.5px solid var(--ink); border-bottom: 1px solid var(--line); }
+.cov-stat { padding: 16px 16px 14px 0; }
+.cov-stat + .cov-stat { padding-left: 16px; border-left: 1px solid var(--line); }
+.cov-stat b { display: block; font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.cov-stat:first-child b { color: var(--accent-1); }
+.cov-stat span { display: block; margin-top: 8px; font: 500 10.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+.cov-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px; margin: 26px 0 10px;
+            font: 500 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+.cov-legend { list-style: none; display: flex; gap: 6px 16px; margin: 0; padding: 0; color: var(--ink-3); }
+.cov-legend li { display: flex; align-items: center; gap: 6px; }
+.cov-legend i { width: 10px; height: 10px; }
+
+.cov-chart { --model-w: 270px; --n-w: 48px; }
+.cov-axis, .cov-row { display: grid; grid-template-columns: var(--model-w) minmax(0, 1fr) var(--n-w); align-items: center; gap: 0 14px; }
+.cov-ticks { position: relative; height: 18px; font: 500 10px var(--mono); color: var(--ink-3); }
+.cov-ticks span { position: absolute; top: 0; transform: translateX(-50%); }
+.cov-ticks span:first-child { transform: none; }
+.cov-ticks span:last-child { transform: translateX(-100%); }
+.cov-row { height: 44px; border-top: 1px solid var(--line); }
+.cov-row:last-child { border-bottom: 1px solid var(--line); }
+.cov-model { display: flex; align-items: center; gap: 10px; min-width: 0; font-weight: 600; font-size: 14px; color: var(--ink); white-space: nowrap; }
+.cov-model .model-name { overflow: hidden; text-overflow: ellipsis; }
+.cov-track { position: relative; height: 24px;
+  background: repeating-linear-gradient(90deg, transparent 0 calc(25% - 1px), var(--line) calc(25% - 1px) 25%); }
+.cov-bar { display: flex; height: 100%; gap: 2px; transform-origin: left center; }
+.cov-seg {
+  position: relative; display: flex; align-items: center; min-width: 0; padding: 0 8px; margin: 0;
+  border: 0; border-radius: 0; background: var(--c); color: #f4f4f1; cursor: pointer;
+  font: 500 10.5px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; text-align: left;
+  transition: filter 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.cov-seg span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cov-seg:hover, .cov-seg:focus-visible { filter: brightness(1.18); transform: translateY(-2px); outline: none; box-shadow: 0 3px 0 var(--ink); }
+.cov-n { font: 500 12px var(--mono); color: var(--ink-3); text-align: right; }
+.cov-n b { font-size: 15px; color: var(--ink); }
+
+.cov.play .cov-bar { animation: cov-grow 0.9s var(--ease) both; animation-delay: calc(var(--i) * 70ms + 120ms); }
+.cov.play .cov-seg span { animation: cov-fade 0.4s var(--ease) both; animation-delay: calc(var(--i) * 70ms + 700ms); }
+.cov.play .cov-model, .cov.play .cov-n { animation: cov-fade 0.5s var(--ease) both; animation-delay: calc(var(--i) * 70ms); }
+@keyframes cov-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes cov-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 760px) {
+  .cov-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 14px; }
+  .cov-stat, .cov-stat + .cov-stat { padding: 12px 0 10px; border-left: 0; }
+  .cov-stat b { font-size: 30px; }
+  .cov-chart { --model-w: 1fr; --n-w: 36px; }
+  .cov-axis { display: none; }
+  .cov-row { grid-template-columns: minmax(0, 1fr) var(--n-w); grid-template-rows: auto auto; height: auto; padding: 10px 0; gap: 8px 10px; }
+  .cov-track { grid-column: 1 / -1; grid-row: 2; }
+  .cov-model .wtag { display: none; }
+  .cov-seg span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cov.play .cov-bar, .cov.play .cov-seg span, .cov.play .cov-model, .cov.play .cov-n { animation: none; }
+}

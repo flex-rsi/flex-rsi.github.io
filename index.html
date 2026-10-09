@@ -13,11 +13,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261009s">
-  <link rel="stylesheet" href="assets/theme.css?v=20261009s">
-  <link rel="stylesheet" href="assets/palette.css?v=20261009s">
-  <link rel="stylesheet" href="assets/results.css?v=20261009s">
-  <link rel="stylesheet" href="assets/demos.css?v=20261009s">
+  <link rel="stylesheet" href="assets/style.css?v=20261009t">
+  <link rel="stylesheet" href="assets/theme.css?v=20261009t">
+  <link rel="stylesheet" href="assets/palette.css?v=20261009t">
+  <link rel="stylesheet" href="assets/results.css?v=20261009t">
+  <link rel="stylesheet" href="assets/demos.css?v=20261009t">
+  <link rel="stylesheet" href="assets/reel.css?v=20261009t">
 </head>
 <body class="v-e">
   <!-- Ambient background: slow-drifting colour fields behind the glass -->
@@ -33,10 +34,10 @@
     </a>
     <nav class="nav-links" aria-label="Sections">
       <a href="#overview">Overview</a>
+      <a href="#demos">Demos</a>
+      <a href="#leaderboard">Leaderboard</a>
       <a href="#tracks">Tracks</a>
       <a href="#protocol">Protocol</a>
-      <a href="#leaderboard">Leaderboard</a>
-      <a href="#demos">Demos</a>
       <a href="#citation">Citation</a>
     </nav>
     <a class="pill pill-ghost nav-cta" href="#leaderboard">Results</a>
@@ -122,6 +123,24 @@
       </div>
     </section>
 
+    <!-- Task reel: a glimpse of the tasks the benchmark spans -->
+    <section class="section reel" id="reel" aria-label="Tasks in the benchmark">
+      <div class="reel-head reveal">
+        <p class="kicker">At a glance</p>
+        <p class="reel-lede">Robots, panoramas, gigapixel photos and 3D scenes: the same improvement protocol across very different tasks.</p>
+      </div>
+      <div class="reel-grid reveal">
+        <figure class="reel-tile t-big"><video src="assets/reel/robot-arrange.mp4" poster="assets/reel/robot-arrange.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action · RoboDojo</span>Arrange largest number</figcaption></figure>
+        <figure class="reel-tile t-wide"><video src="assets/reel/active-search.mp4" poster="assets/reel/active-search.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action</span>Active search</figcaption></figure>
+        <figure class="reel-tile "><video src="assets/reel/tracking-kitchen.mp4" poster="assets/reel/tracking-kitchen.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Reconstruction</span>3D tracking</figcaption></figure>
+        <figure class="reel-tile "><video src="assets/reel/robot-tubes.mp4" poster="assets/reel/robot-tubes.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action · RoboDojo</span>Insert tubes</figcaption></figure>
+        <figure class="reel-tile t-still"><img src="assets/reel/visual-search.jpg" alt="" loading="lazy" aria-hidden="true"><figcaption><span class="reel-track">Perception</span>Visual search</figcaption></figure>
+        <figure class="reel-tile "><video src="assets/reel/robot-cabinet.mp4" poster="assets/reel/robot-cabinet.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action · RoboCasa</span>Open cabinet</figcaption></figure>
+        <figure class="reel-tile "><video src="assets/reel/tracking-apartment.mp4" poster="assets/reel/tracking-apartment.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Reconstruction</span>3D tracking</figcaption></figure>
+        <figure class="reel-tile "><video src="assets/reel/robot-bottles.mp4" poster="assets/reel/robot-bottles.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action · RoboDojo</span>Throw bottles into dustbin</figcaption></figure>
+      </div>
+    </section>
+
     <!-- Overview -->
     <section class="section" id="overview">
       <div class="section-head reveal">
@@ -145,6 +164,44 @@
           <h3>Help shape the benchmark</h3>
           <p>Bring a task, a model baseline, an evaluation adapter, or feedback on the protocol. Small, reproducible contributions can make RSI experiments easier for more people to run and compare.</p>
         </div>
+      </div>
+    </section>
+
+    <!-- Demos -->
+    <section class="section" id="demos">
+      <div class="section-head reveal">
+        <p class="kicker">Demos</p>
+        <h2>From starting points to improved behavior</h2>
+      </div>
+      <p class="demo-lede reveal">Compare initial and self-improved solutions, then follow selected robot-control episodes across rounds. Each example is paired with its task metric and evaluation split.</p>
+      <div class="demo-tabs reveal" role="tablist" aria-label="Demos by task"></div>
+      <div class="glass card demo reveal">
+        <div class="demo-head">
+          <div><h3 class="demo-title"></h3><p class="demo-sub"></p></div>
+          <p class="demo-score" aria-live="polite"></p>
+        </div>
+        <div class="demo-stage"></div>
+      </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section class="section" id="leaderboard">
+      <div class="section-head reveal">
+        <p class="kicker">Leaderboard</p>
+        <h2>Results</h2>
+      </div>
+      <p class="section-lede reveal">Standings are kept per task, so models are compared only where they were measured. The overview shows which models have been run on what; each category ranks its tasks on the hidden test split and follows every run's validation curve.</p>
+      <div class="board-tabs reveal" role="tablist" aria-label="Results by category"></div>
+      <div class="glass card board reveal">
+        <div class="board-head"><h3 class="board-title"></h3><p class="board-sub"></p></div>
+        <div class="board-subtabs" role="tablist" aria-label="Tasks in this category" hidden></div>
+        <div class="board-scroll"><table class="results"></table></div>
+        <figure class="curves-fig" hidden>
+          <figcaption>Validation score over rounds: start, each accepted improvement, last round</figcaption>
+          <div class="curves-wrap"><svg class="curves-plot" viewBox="0 0 760 300" preserveAspectRatio="none" role="img"></svg></div>
+          <ul class="legend"></ul>
+        </figure>
+        <p class="board-note"></p>
       </div>
     </section>
 
@@ -182,44 +239,6 @@
       </ol>
     </section>
 
-    <!-- Leaderboard -->
-    <section class="section" id="leaderboard">
-      <div class="section-head reveal">
-        <p class="kicker">Leaderboard</p>
-        <h2>Results</h2>
-      </div>
-      <p class="section-lede reveal">Compare final test metrics by task and model. Open a task to follow its validation curve from the starting point through accepted improvements to the last recorded round.</p>
-      <div class="board-tabs reveal" role="tablist" aria-label="Results by category"></div>
-      <div class="glass card board reveal">
-        <div class="board-head"><h3 class="board-title"></h3><p class="board-sub"></p></div>
-        <div class="board-subtabs" role="tablist" aria-label="Tasks in this category" hidden></div>
-        <div class="board-scroll"><table class="results"></table></div>
-        <figure class="curves-fig" hidden>
-          <figcaption>Validation score over rounds: start, each accepted improvement, last round</figcaption>
-          <div class="curves-wrap"><svg class="curves-plot" viewBox="0 0 760 300" preserveAspectRatio="none" role="img"></svg></div>
-          <ul class="legend"></ul>
-        </figure>
-        <p class="board-note"></p>
-      </div>
-    </section>
-
-    <!-- Demos -->
-    <section class="section" id="demos">
-      <div class="section-head reveal">
-        <p class="kicker">Demos</p>
-        <h2>From starting points to improved behavior</h2>
-      </div>
-      <p class="demo-lede reveal">Compare initial and self-improved solutions, then follow selected robot-control episodes across rounds. Each example is paired with its task metric and evaluation split.</p>
-      <div class="demo-tabs reveal" role="tablist" aria-label="Demos by task"></div>
-      <div class="glass card demo reveal">
-        <div class="demo-head">
-          <div><h3 class="demo-title"></h3><p class="demo-sub"></p></div>
-          <p class="demo-score" aria-live="polite"></p>
-        </div>
-        <div class="demo-stage"></div>
-      </div>
-    </section>
-
     <!-- Citation -->
     <section class="section" id="citation">
       <div class="section-head reveal">
@@ -244,8 +263,9 @@
     <p class="muted">An evolving benchmark initiative. Contributions of tasks, baselines, evaluators, and reproducible results are welcome.</p>
   </footer>
 
-  <script src="assets/main.js?v=20261009s" defer></script>
-  <script src="assets/results.js?v=20261009s" defer></script>
-  <script src="assets/demos.js?v=20261009s" defer></script>
+  <script src="assets/main.js?v=20261009t" defer></script>
+  <script src="assets/results.js?v=20261009t" defer></script>
+  <script src="assets/demos.js?v=20261009t" defer></script>
+  <script src="assets/reel.js?v=20261009t" defer></script>
 </body>
 </html>

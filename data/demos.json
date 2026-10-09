@@ -382,39 +382,232 @@
    "clip_success": true,
    "video": "assets/demo/robo/opus-final.mp4",
    "poster": "assets/demo/robo/opus-final.jpg",
-   "rounds": [
-    {
-     "id": "R2", "successRate": 0.0, "successes": 0, "episodes": 5,
-     "case": "standard-1", "caseScore": 40, "caseSuccess": false,
-     "video": "assets/demo/robo/opus-r2-standard1-t12-20.mp4",
-     "poster": "assets/demo/robo/opus-r2-standard1-t12-20.jpg",
-     "summary": "R2 repeatedly misses the upright small bottle; the gripper never secures it."
-    },
-    {
-     "id": "R5", "successRate": 0.2, "successes": 1, "episodes": 5,
-     "case": "standard-1", "caseScore": 100, "caseSuccess": true,
-     "video": "assets/demo/robo/opus-r5-standard1-t04-12.mp4",
-     "poster": "assets/demo/robo/opus-r5-standard1-t04-12.jpg",
-     "summary": "On the same standard-1 setup, R5 reaches and picks up the upright small bottle successfully."
-    },
-    {
-     "id": "R8", "successRate": 0.4, "successes": 2, "episodes": 5,
-     "case": "standard-4", "caseScore": 40, "caseSuccess": false,
-     "video": "assets/demo/robo/opus-r8-standard4-t04-12.mp4",
-     "poster": "assets/demo/robo/opus-r8-standard4-t04-12.jpg",
-     "summary": "On standard-4, the arm knocks the target bottle off the table and it falls below the tabletop."
-    },
-    {
-     "id": "R9", "successRate": 0.6, "successes": 3, "episodes": 5,
-     "case": "standard-4", "caseScore": 100, "caseSuccess": true,
-     "video": "assets/demo/robo/opus-r9-standard4-t04-12.mp4",
-     "poster": "assets/demo/robo/opus-r9-standard4-t04-12.jpg",
-     "summary": "On the same standard-4 setup, R9 approaches with the arm higher. After contact, the bottle tips over but stays on the tabletop, unlike R8."
-    }
-   ],
    "comparisons": [
-    {"case": "standard-1", "before": "R2", "after": "R5", "scene": "Upright bottle", "focus": "The upright small bottle beside the bin", "region": [50, 140, 224, 168]},
-    {"case": "standard-4", "before": "R8", "after": "R9", "scene": "Bottle on the edge", "focus": "The white bottle at the far edge of the table", "region": [390, 50, 224, 168]}
+    {
+     "scene": "Upright bottle",
+     "benchmark": "RoboDojo",
+     "task": "Throw Bottles Into Dustbin",
+     "model": "Claude Opus 5.5",
+     "case": "standard-1",
+     "focus": "The upright small bottle beside the bin",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      50,
+      140,
+      224,
+      168
+     ],
+     "before": {
+      "round": "R2",
+      "video": "assets/demo/robo/opus-r2-standard1-t12-20.mp4",
+      "poster": "assets/demo/robo/opus-r2-standard1-t12-20.jpg",
+      "outcome": "Fail",
+      "summary": "The gripper closes beside the upright small bottle and never secures it.",
+      "score": 40
+     },
+     "after": {
+      "round": "R5",
+      "video": "assets/demo/robo/opus-r5-standard1-t04-12.mp4",
+      "poster": "assets/demo/robo/opus-r5-standard1-t04-12.jpg",
+      "outcome": "Success",
+      "summary": "It reaches the same bottle, closes on it and lifts it cleanly.",
+      "score": 100
+     },
+     "changed": "The earlier policy lost bottles near the far edge: its table mask stopped short, so far-away detections were dropped. Reading the failure logs, the agent extended the far-edge perception range, added a pull-back and retry when a grasp misses, and now picks nearby bottles first so the arm does not sweep through them."
+    },
+    {
+     "scene": "Second digit",
+     "benchmark": "RoboDojo",
+     "task": "Arrange Largest Number",
+     "model": "Claude Opus 5.5",
+     "case": "standard-4",
+     "focus": "The 6, which belongs in the second slot",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      208,
+      150,
+      224,
+      168
+     ],
+     "before": {
+      "round": "R9",
+      "video": "assets/demo/robo/opus-arrange-r9-standard4-t09-17.mp4",
+      "poster": "assets/demo/robo/opus-arrange-r9-standard4-t09-17.jpg",
+      "outcome": "Fail",
+      "summary": "It picks up the 6 but sets it down beside the row; the second slot stays empty and the row reads 9_410."
+     },
+     "after": {
+      "round": "R10",
+      "video": "assets/demo/robo/opus-arrange-r10-standard4-t09-17.mp4",
+      "poster": "assets/demo/robo/opus-arrange-r10-standard4-t09-17.jpg",
+      "outcome": "Success",
+      "summary": "The 6 goes into the second slot and the row reads 96410."
+     },
+     "changed": "R9 had added a two-arm relay to get around joint limits on cross-body moves, but the hand-off could leave a tile beside its slot. The agent lowered the staging release from 16 mm to 7 mm, and when the wrist reports the tile is missing, the arm now backs out of the camera's view, finds the tile again and retries."
+    },
+    {
+     "scene": "Third tube",
+     "benchmark": "RoboDojo",
+     "task": "Insert Tubes",
+     "model": "Claude Opus 5.5",
+     "case": "standard-12",
+     "focus": "The rack, as the third tube goes in",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      208,
+      106,
+      224,
+      168
+     ],
+     "before": {
+      "round": "R5",
+      "video": "assets/demo/robo/opus-tubes-r5-standard12-t09.9-17.9.mp4",
+      "poster": "assets/demo/robo/opus-tubes-r5-standard12-t09.9-17.9.jpg",
+      "outcome": "Fail",
+      "summary": "The third tube enters at an angle and ends lying across the rack."
+     },
+     "after": {
+      "round": "R7",
+      "video": "assets/demo/robo/opus-tubes-r7-standard12-t07.6-15.6.mp4",
+      "poster": "assets/demo/robo/opus-tubes-r7-standard12-t07.6-15.6.jpg",
+      "outcome": "Success",
+      "summary": "The third tube goes in upright; all three stand in the rack."
+     },
+     "changed": "Grasp checks, a second camera look and new insertion angles all left the same tube catching the rack rim. The agent traced it to perspective: seen from the head camera the tube looks longer than it is, which moved the estimated grasp point up to 7 mm toward the cap. It now corrects for half of that apparent extra length."
+    },
+    {
+     "scene": "Cabinet door",
+     "benchmark": "RoboCasa",
+     "task": "Open Cabinet",
+     "model": "GPT-6 Astra",
+     "case": "L31S58-3002",
+     "speed": 2,
+     "focus": "The gripper at the handle",
+     "size": [
+      512,
+      512
+     ],
+     "region": [
+      0,
+      0,
+      192,
+      144
+     ],
+     "before": {
+      "round": "R4",
+      "video": "assets/demo/robo/astra-cabinet-r4-L31S58-t24-40-2x.mp4",
+      "poster": "assets/demo/robo/astra-cabinet-r4-L31S58-t24-40-2x.jpg",
+      "outcome": "Fail",
+      "summary": "The gripper keeps reaching for the handles without pulling; the door stays shut.",
+      "track": [
+       [
+        0,
+        173,
+        357
+       ],
+       [
+        1,
+        308,
+        317
+       ],
+       [
+        2,
+        323,
+        284
+       ],
+       [
+        3,
+        291,
+        264
+       ],
+       [
+        4,
+        273,
+        227
+       ],
+       [
+        5,
+        255,
+        231
+       ],
+       [
+        6,
+        243,
+        197
+       ],
+       [
+        7,
+        277,
+        231
+       ]
+      ]
+     },
+     "after": {
+      "round": "R7",
+      "video": "assets/demo/robo/astra-cabinet-r7-L31S58-t19-35-2x.mp4",
+      "poster": "assets/demo/robo/astra-cabinet-r7-L31S58-t19-35-2x.jpg",
+      "outcome": "Success",
+      "summary": "It hooks the handle and swings the door open.",
+      "track": [
+       [
+        0,
+        173,
+        351
+       ],
+       [
+        1,
+        315,
+        317
+       ],
+       [
+        2,
+        323,
+        304
+       ],
+       [
+        3,
+        291,
+        217
+       ],
+       [
+        4,
+        287,
+        227
+       ],
+       [
+        5,
+        355,
+        247
+       ],
+       [
+        6,
+        389,
+        213
+       ],
+       [
+        7,
+        437,
+        200
+       ]
+      ]
+     },
+     "view": [
+      0,
+      64,
+      512,
+      384
+     ],
+     "changed": "The earlier policy kept reaching for the handles without ever getting a hold. The later one hooks the handle and keeps pulling as the door swings open."
+    }
    ]
   },
   {

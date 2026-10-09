@@ -11,7 +11,7 @@
   const ABOUT = {
     "active-search": "The agent turns its head inside a 360° scene to find an object or the way to go, in as few actions as possible.",
     "visual-search": "Questions about small details in large, high-resolution images.",
-    "robot-control": "A dual-arm robot in simulation picks up four bottles and throws them into a dustbin, handing bottles between its arms when needed.",
+    "robot-control": "Robot manipulation in simulation: the agent rewrites the control policy between rounds, and each episode is replayed with an earlier and a later round's policy.",
     "3d-tracking": "Segment every object in several views of a scene and keep each object's identity consistent across views.",
   };
   const fmtScore = (p, v) => (p.metric === "accuracy" ? (100 * v).toFixed(1) + "%" : p.metric === "score" ? String(Math.round(v)) : v.toFixed(3));
@@ -117,28 +117,27 @@
   let robotStop = () => {};
   function robotControl(p) {
     robotStop();
-    const rounds = Object.fromEntries(p.rounds.map((r) => [r.id, r]));
-    const W = 640, H = 480;
     const row = (w) => `<section class="rb-row" data-w="${w}">
-        <div class="rb-cam"><svg class="rb-box" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><rect/></svg></div>
+        <div class="rb-cam"><svg class="rb-box" preserveAspectRatio="none" aria-hidden="true"><rect/></svg></div>
         <div class="rb-side">
           <div class="rb-head"><span class="ab-tag${w === "after" ? " after" : ""}">${w === "after" ? "After" : "Before"}</span><span class="rb-round"></span></div>
           <p class="rb-score"></p>
-          <figure class="rb-inset"><canvas></canvas><figcaption>Boxed region, enlarged</figcaption></figure>
+          <figure class="rb-inset"><canvas></canvas><figcaption></figcaption></figure>
           <p class="rb-sum"></p>
         </div>
         <svg class="rb-lead" aria-hidden="true"></svg>
       </section>`;
     stage.innerHTML = `
-      <div class="ep-task"><q>Throw all four bottles into the dustbin.</q><span class="ep-meta"></span></div>
+      <div class="rb-case">
+        <dl class="rb-facts"><div><dt>Benchmark</dt><dd data-f="benchmark"></dd></div><div><dt>Task</dt><dd data-f="task"></dd></div>
+          <div><dt>Model</dt><dd data-f="model"></dd></div><div><dt>Episode</dt><dd data-f="case"></dd></div></dl>
+      </div>
       <div class="rb-rows">${row("before")}${row("after")}</div>
-      <div class="ep-strip" role="group" aria-label="Validation cases">${p.comparisons.map((c, i) => {
-        const a = rounds[c.after], b = rounds[c.before];
-        return `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(a.poster)}" alt="" loading="lazy"><span>${esc(c.scene)}<small>Validation · ${esc(b.id)} → ${esc(a.id)}</small></span></button>`;
-      }).join("")}</div>
+      <div class="ep-strip" role="group" aria-label="Cases">${p.comparisons.map((c, i) =>
+        `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(c.after.poster)}" alt="" loading="lazy"><span>${esc(c.task)}<small>${esc(c.benchmark)} · ${esc(c.model)} · ${esc(c.before.round)} → ${esc(c.after.round)}</small></span></button>`).join("")}</div>
       <p class="demo-note"></p>`;
     const rows = [...stage.querySelectorAll(".rb-row")];
-    let region = [0, 0, W, H], token = 0;
+    let region = [0, 0, 1, 1], size = [640, 480], token = 0;
 
     // the enlarged region: copy it from the video on every frame, or from the poster until frames arrive
     const draw = (rowEl) => {
@@ -148,12 +147,36 @@
       if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch; }
       const src = v && v.readyState >= 2 ? v : img && img.complete && img.naturalWidth ? img : null;
       if (!src) return;
-      const sx = (src.videoWidth || src.naturalWidth) / W, sy = (src.videoHeight || src.naturalHeight) / H;
+      const sx = (src.videoWidth || src.naturalWidth) / size[0], sy = (src.videoHeight || src.naturalHeight) / size[1];
       const ctx = cv.getContext("2d");
       ctx.imageSmoothingQuality = "high";
-      ctx.drawImage(src, region[0] * sx, region[1] * sy, region[2] * sx, region[3] * sy, 0, 0, cw, ch);
+      const g = rowEl._region || region;
+      ctx.drawImage(src, g[0] * sx, g[1] * sy, g[2] * sx, g[3] * sy, 0, 0, cw, ch);
     };
-    const tick = (t) => () => { if (t !== token) return; rows.forEach(draw); requestAnimationFrame(tick(t)); };
+    // a side with a `track` ([t, cx, cy] keyframes in source pixels) moves its box with the video,
+    // easing between keyframes and staying inside the visible view
+    const follow = (r) => {
+      const tr = r._track, v = r.querySelector("video");
+      if (!tr || !v) return false;
+      const t = v.currentTime;
+      let k = tr.findIndex((q) => q[0] > t);
+      if (k < 0) k = tr.length;
+      const a = tr[Math.max(0, k - 1)], b = tr[Math.min(tr.length - 1, k)];
+      const f = b[0] > a[0] ? Math.min(1, Math.max(0, (t - a[0]) / (b[0] - a[0]))) : 0, e = f * f * (3 - 2 * f);
+      const [w, h] = region.slice(2), vw = r._view;
+      const x = Math.min(vw[0] + vw[2] - w, Math.max(vw[0], a[1] + (b[1] - a[1]) * e - w / 2));
+      const y = Math.min(vw[1] + vw[3] - h, Math.max(vw[1], a[2] + (b[2] - a[2]) * e - h / 2));
+      r._region = [x, y, w, h];
+      const rect = r.querySelector(".rb-box rect");
+      rect.setAttribute("x", x.toFixed(1)); rect.setAttribute("y", y.toFixed(1));
+      return true;
+    };
+    const tick = (t) => () => {
+      if (t !== token) return;
+      if (rows.map(follow).some(Boolean)) lead();
+      rows.forEach(draw);
+      requestAnimationFrame(tick(t));
+    };
 
     // leaders from the box's right corners to the inset's left corners: white over the video, ink over the page
     const lead = () => rows.forEach((r) => {
@@ -175,24 +198,34 @@
     let cur = -1;
     const show = (i) => {
       cur = i;
-      const c = p.comparisons[i], before = rounds[c.before], after = rounds[c.after];
-      region = c.region || region;
-      stage.querySelector(".ep-meta").textContent = `Validation · ${c.case} · ${c.focus}`;
-      [[rows[0], before], [rows[1], after]].forEach(([r, rd]) => {
-        r.querySelector(".rb-round").textContent = `Round ${rd.id.replace(/^R/, "")}`;
-        r.querySelector(".rb-score").innerHTML = `<b class="${rd.caseSuccess ? "ok" : "no"}">${rd.caseScore}</b><span class="of">/100</span><span class="verdict ${rd.caseSuccess ? "ok" : "no"}">${rd.caseSuccess ? "Complete" : "Partial"}</span>`;
-        r.querySelector(".rb-sum").innerHTML = `${esc(rd.summary)}<span class="rb-rate">${rd.successes} of ${rd.episodes} validation cases fully solved in ${esc(rd.id)}</span>`;
+      const c = p.comparisons[i];
+      region = c.region; size = c.size || size;
+      // every replay shows at 4:3 so the rows line up; a taller video is cropped to `view` (x, y, w, h)
+      const view = c.view || [0, 0, size[0], size[1]];
+      ["benchmark", "task", "model", "case"].forEach((k) => (stage.querySelector(`[data-f="${k}"]`).textContent = c[k]));
+      const zoom = ((c.view ? c.view[2] : size[0]) / region[2]).toFixed(1).replace(/\.0$/, "");
+      [[rows[0], c.before], [rows[1], c.after]].forEach(([r, rd]) => {
+        const ok = rd.outcome === "Success";
+        r.querySelector(".rb-round").textContent = `Round ${rd.round.replace(/^R0*/, "")}`;
+        r.querySelector(".rb-score").innerHTML = `<b class="${ok ? "ok" : "no"}">${rd.outcome}</b>${rd.score !== undefined ? `<span class="of">${rd.score}/100</span>` : ""}`;
+        r.querySelector(".rb-sum").textContent = rd.summary;
+        r.querySelector(".rb-inset figcaption").textContent = `${c.focus} · ${zoom}×${c.speed ? ` · played ${c.speed}× speed` : ""}`;
         const cam = r.querySelector(".rb-cam");
         cam.querySelector("video")?.remove();
-        cam.insertAdjacentHTML("afterbegin", video(rd.video, rd.poster, ` aria-label="${esc(rd.id)} on ${esc(c.case)}, head camera"`));
-        const rect = cam.querySelector(".rb-box rect");
-        ["x", "y", "width", "height"].forEach((k, j) => rect.setAttribute(k, region[j]));
+        cam.insertAdjacentHTML("afterbegin", video(rd.video, rd.poster, ` aria-label="${esc(c.model)}, ${esc(c.task)}, ${esc(rd.round)}: ${esc(rd.outcome)}"`));
+        const box = cam.querySelector(".rb-box");
+        box.setAttribute("viewBox", view.join(" "));
+        const v = cam.querySelector("video"), ex = size[1] - view[3], ey = size[0] - view[2];
+        v.style.objectPosition = `${ey ? (100 * view[0]) / ey : 50}% ${ex ? (100 * view[1]) / ex : 50}%`;
+        ["x", "y", "width", "height"].forEach((k, j) => box.querySelector("rect").setAttribute(k, region[j]));
+        r._track = rd.track || null;
+        r._view = view;
+        r._region = rd.track ? null : region;
         r._poster = new Image();
         r._poster.onload = () => draw(r);
         r._poster.src = rd.poster;
       });
-      stage.querySelector(".demo-note").innerHTML = `<b>Full success</b> puts all four bottles in the bin and returns the robot to its start pose; scores are for this case, out of 100.
-        The box and its enlargement are added for the reader.`;
+      stage.querySelector(".demo-note").innerHTML = `<b>What the agent changed.</b> ${esc(c.changed || "")} The box and its enlargement are added for the reader.`;
       const [a, b] = rows.map((r) => r.querySelector("video"));
       pair(a, b);
       active = [a, b];
@@ -253,7 +286,8 @@
     $(".demo-title").textContent = p.name;
     $(".demo-sub").textContent = ABOUT[p.id] || "";
     const what = `Test ${p.metric} · start → final`;
-    $(".demo-score").innerHTML = `${esc(d.model)} <b>${fmtScore(p, p.before)}</b><span class="to">→</span><span class="after">${fmtScore(p, p.after)}</span><span class="what">${esc(what)}</span>`;
+    if (p.id === "robot-control") $(".demo-score").innerHTML = `${p.comparisons.length} episodes<span class="what">RoboDojo · RoboCasa</span>`;
+    else $(".demo-score").innerHTML = `${esc(d.model)} <b>${fmtScore(p, p.before)}</b><span class="to">→</span><span class="after">${fmtScore(p, p.after)}</span><span class="what">${esc(what)}</span>`;
     RENDER[p.id](p);
     card.classList.remove("swap");
     void card.offsetWidth;
