@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flex-RSI</title>
+  <meta name="description" content="Flex-RSI: A Flexible Benchmark for Recursive Self-Improvement of Frontier Agents.">
+  <meta property="og:title" content="Flex-RSI">
+  <meta property="og:description" content="A Flexible Benchmark for Recursive Self-Improvement of Frontier Agents.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#1b1512">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="assets/palette.css">
+</head>
+<body class="v-e">
+  <!-- Ambient background: slow-drifting colour fields behind the glass -->
+  <div class="ambient" aria-hidden="true">
+    <span class="bands"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Flex-RSI home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Flex-RSI</span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#tracks">Tracks</a>
+      <a href="#protocol">Protocol</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#citation">Citation</a>
+    </nav>
+    <a class="pill pill-ghost nav-cta" href="#leaderboard">Results</a>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">Benchmark · 2026</p>
+        <h1 class="title reveal"><span class="title-flex">Flex</span><span class="title-dash">-</span><span class="title-rsi">RSI</span></h1>
+        <p class="subtitle reveal">A Flexible Benchmark for <strong>Recursive Self&#8209;Improvement</strong> of Frontier Agents</p>
+        <p class="authors reveal">Authors and affiliations to be announced</p>
+        <div class="actions reveal">
+          <a class="pill pill-solid" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5"/></svg>Paper <span class="soon">soon</span></a>
+          <a class="pill pill-glass" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg>Code <span class="soon">soon</span></a>
+          <a class="pill pill-glass" href="#leaderboard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Leaderboard</a>
+        </div>
+      </div>
+
+      <!-- Agents improving round after round, across tracks -->
+      <div class="hero-stage reveal" aria-hidden="true">
+        <div class="hero-visual glass">
+          <div class="chart-head">
+            <span class="chart-title">Score over rounds</span>
+            <span class="chart-tag">illustrative</span>
+          </div>
+          <svg class="curves" viewBox="0 0 400 260" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="fill-a" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="var(--accent-1)" stop-opacity="0.28"/>
+                <stop offset="1" stop-color="var(--accent-1)" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g class="gridlines">
+              <line x1="0" y1="52" x2="400" y2="52"/><line x1="0" y1="104" x2="400" y2="104"/>
+              <line x1="0" y1="156" x2="400" y2="156"/><line x1="0" y1="208" x2="400" y2="208"/>
+            </g>
+            <path class="area" d="M10 236 C 70 232, 92 196, 132 182 S 214 128, 256 110 S 338 64, 390 44 L390 260 L10 260 Z"/>
+            <path class="curve c1" pathLength="1" d="M10 236 C 70 232, 92 196, 132 182 S 214 128, 256 110 S 338 64, 390 44"/>
+            <path class="curve c2" pathLength="1" d="M10 244 C 80 242, 116 222, 168 206 S 250 178, 300 160 S 362 140, 390 132"/>
+            <path class="curve c3" pathLength="1" d="M10 250 C 100 249, 150 238, 200 230 S 300 214, 390 202"/>
+            <circle class="tip t1" cx="390" cy="44" r="5"/>
+            <circle class="tip t2" cx="390" cy="132" r="4.5"/>
+            <circle class="tip t3" cx="390" cy="202" r="4"/>
+          </svg>
+          <div class="chart-axis"><span>start</span><span>rounds →</span><span>budget spent</span></div>
+        </div>
+        <span class="chip chip-1">Perceive</span>
+        <span class="chip chip-2">Act</span>
+        <span class="chip chip-3">Reconstruct</span>
+        <span class="chip chip-4">Search</span>
+        <span class="chip chip-5">Reason</span>
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="section" id="overview">
+      <div class="section-head reveal">
+        <p class="kicker">Overview</p>
+        <h2>How far can a frontier agent improve itself?</h2>
+      </div>
+      <div class="glass card overview reveal">
+        <p class="lead">
+          Given a task, a fixed budget and a general-purpose starting harness, Flex-RSI measures how far a frontier
+          agent can improve on its own: its solution, and the tools and prompts it works with. A frozen protocol
+          runs every round, scores candidates on hidden splits, meters the budget and records each step, so results
+          are comparable across models, tasks and domains.
+        </p>
+        <p class="placeholder-note">Abstract placeholder. Final text to be written.</p>
+        <div class="features">
+          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><h4>One starting point</h4><p>Every agent begins from the same general-purpose harness and a weak starter solution.</p></div>
+          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 3h6"/></svg></span><h4>Fixed budgets</h4><p>Wall time, GPU hours, cost and tokens are metered; queueing is not charged.</p></div>
+          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><h4>Hidden splits</h4><p>Candidates are scored on validation and test data the agent never sees.</p></div>
+          <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6"/></svg></span><h4>Every step logged</h4><p>Each edit, experiment and model call is recorded and can be audited.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tracks -->
+    <section class="section" id="tracks">
+      <div class="section-head reveal">
+        <p class="kicker">Tracks</p>
+        <h2>From pixels to robots to biology</h2>
+      </div>
+      <div class="grid grid-tracks">
+        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><h3>Perceive</h3><p>Scene understanding and visual search in high-resolution images.</p><span class="status live">Live</span></article>
+        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg><h3>Search</h3><p>Active visual search: turning, looking and deciding in 360° scenes.</p><span class="status live">Live</span></article>
+        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg><h3>Reconstruct</h3><p>3D and 4D reconstruction and instance tracking across views.</p><span class="status live">Live</span></article>
+        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21h10M12 21v-5M8 16h8l1-6H7z M9 10V6a3 3 0 016 0v4"/></svg><h3>Act</h3><p>Robot control and planning, with the model as the policy.</p><span class="status live">Live</span></article>
+        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></svg><h3>Create</h3><p>Image editing and generation under precise instructions.</p><span class="status">Soon</span></article>
+        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3c0 6 8 6 8 12s-8 6-8 6M16 3c0 6-8 6-8 12M9 7h6M9 17h6"/></svg><h3>Reason</h3><p>Scientific reasoning, starting with biology.</p><span class="status">Soon</span></article>
+        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4"/></svg><h3>Guard</h3><p>Safety: does self-improvement stay within the rules it is given?</p><span class="status">Soon</span></article>
+      </div>
+    </section>
+
+    <!-- Protocol -->
+    <section class="section" id="protocol">
+      <div class="section-head reveal">
+        <p class="kicker">Protocol</p>
+        <h2>How a run works</h2>
+      </div>
+      <ol class="timeline glass reveal">
+        <li><span class="dot"></span><h4>Start</h4><p>A released task, a budget and the shared starting harness.</p></li>
+        <li><span class="dot"></span><h4>Iterate</h4><p>The agent experiments, edits its solution and refines its own tools.</p></li>
+        <li><span class="dot"></span><h4>Accept</h4><p>Changes are kept only when hidden validation improves beyond noise.</p></li>
+        <li><span class="dot"></span><h4>Stop</h4><p>The run ends when its budget or round limit is used up.</p></li>
+        <li><span class="dot"></span><h4>Test</h4><p>The final solution is scored once on the hidden test split.</p></li>
+      </ol>
+    </section>
+
+    <!-- Leaderboard -->
+    <section class="section" id="leaderboard">
+      <div class="section-head reveal">
+        <p class="kicker">Leaderboard</p>
+        <h2>Results</h2>
+      </div>
+      <div class="glass card board reveal">
+        <div class="board-scroll">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Model</th><th>Perceive</th><th>Search</th><th>Reconstruct</th><th>Act</th><th>Overall</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td><span class="sk w-60"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
+              <tr><td>2</td><td><span class="sk w-50"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
+              <tr><td>3</td><td><span class="sk w-70"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
+              <tr><td>4</td><td><span class="sk w-40"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
+              <tr><td>5</td><td><span class="sk w-60"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td><td><span class="sk"></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="board-veil"><span class="pill pill-glass">Results coming soon</span></div>
+      </div>
+    </section>
+
+    <!-- Citation -->
+    <section class="section" id="citation">
+      <div class="section-head reveal">
+        <p class="kicker">Citation</p>
+        <h2>BibTeX</h2>
+      </div>
+      <div class="glass card cite reveal">
+        <button class="copy" type="button" data-copy="#bibtex" aria-label="Copy BibTeX">Copy</button>
+<pre id="bibtex"><code>@misc{flexrsi2026,
+  title  = {Flex-RSI: A Flexible Benchmark for Recursive
+            Self-Improvement of Frontier Agents},
+  author = {To be announced},
+  year   = {2026},
+  note   = {Project page: https://flex-rsi.github.io}
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Flex-RSI · 2026</p>
+    <p class="muted">This page is a template. Content is in progress.</p>
+  </footer>
+
+  <script src="assets/main.js" defer></script>
+</body>
+</html>

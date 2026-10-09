@@ -1,0 +1,15 @@
+/* Swiss Grid palette: Espresso (dark) */
+:root {
+  --bg: #1b1512;
+  --ink: #f3ebe2;
+  --ink-2: #d5c8bb;
+  --ink-3: #988a7d;
+  --line: rgba(243, 235, 226, 0.18);
+  --accent-1: #e8a23c;
+  --accent-3: #46392f;
+  --glass: #1b1512;
+  --glass-strong: #1b1512;
+  --glass-edge: #f3ebe2;
+}
+html { color-scheme: dark; }
+::selection { background: rgba(232, 162, 60, 0.35); }
