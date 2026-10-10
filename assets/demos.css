@@ -145,3 +145,9 @@
   .ab-bar { flex-wrap: wrap; }
   .ab-video { margin: 0 -16px; border-left: 0; border-right: 0; }
 }
+
+/* Ego-Exo Memory: frame strips before and after, and the model's reason */
+.ee-fig { margin: 0; }
+.ee-fig img { display: block; width: 100%; max-width: 924px; height: auto; border: 1.5px solid var(--line); background: var(--bg); }
+.ab-bar .rhs .no, .ab-bar .rhs .ok { text-transform: none; font-family: var(--sans); font-size: 14px; }
+.ee-why { margin-top: 10px; padding-left: 12px; border-left: 2px solid var(--accent-1); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); max-width: 924px; }

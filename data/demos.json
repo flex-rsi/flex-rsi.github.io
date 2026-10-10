@@ -690,6 +690,273 @@
      "poster": "assets/demo/iggt/val-clip_00017.jpg"
     }
    ]
+  },
+  {
+   "id": "ego-exo-memory",
+   "name": "Ego-Exo Memory",
+   "metric": "accuracy",
+   "before": 0.6167,
+   "after": 0.725,
+   "cases": [
+    {
+     "id": "test-101",
+     "family": "Cooking",
+     "category": "Object state",
+     "scenario": "Cooking Scrambled Eggs",
+     "duration": 424,
+     "question": "While the man in the dark short-sleeve shirt was wiping his hands at the kitchen sink, what was the state of the skillet on the stovetop island?",
+     "options": [
+      "Full of clear water",
+      "Covered with chopped vegetables",
+      "Filled with mixed egg mixture",
+      "Empty and dry"
+     ],
+     "label": "C",
+     "before": "D",
+     "after": "C",
+     "starter_seconds": [
+      0,
+      60,
+      121,
+      181,
+      242,
+      302,
+      363,
+      423
+     ],
+     "chosen_seconds": [
+      48,
+      52,
+      55,
+      58,
+      62,
+      409
+     ],
+     "shown_seconds": [
+      55,
+      58,
+      62
+     ],
+     "reason": "The skillet was filled with the mixed egg mixture (C). At 55s the bowl he rinses in the sink is empty, so the eggs were already poured.",
+     "before_img": "assets/demo/egoexo/test-101-before.jpg",
+     "after_img": "assets/demo/egoexo/test-101-after.jpg"
+    },
+    {
+     "id": "test-095",
+     "family": "Bike repair",
+     "category": "Egocentric direction",
+     "scenario": "Remove a Wheel",
+     "duration": 52,
+     "question": "While the wearer is holding the detached black bicycle wheel over the patterned rug, where is the wheel relative to the wearer?",
+     "options": [
+      "Directly in front of the wearer",
+      "To the front-left of the wearer",
+      "To the front-right of the wearer",
+      "To the left of the wearer"
+     ],
+     "label": "B",
+     "before": "A",
+     "after": "B",
+     "starter_seconds": [
+      0,
+      7,
+      15,
+      22,
+      30,
+      37,
+      45,
+      52
+     ],
+     "chosen_seconds": [
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+     ],
+     "shown_seconds": [
+      48,
+      49,
+      50
+     ],
+     "reason": "The wheel is to the wearer's front-left. Ego view, 47–49 s: the detached black wheel sits in the lower-left part of the frame.",
+     "before_img": "assets/demo/egoexo/test-095-before.jpg",
+     "after_img": "assets/demo/egoexo/test-095-after.jpg"
+    },
+    {
+     "id": "test-021",
+     "family": "Bike repair",
+     "category": "Habitual location",
+     "scenario": "Remove a Wheel",
+     "duration": 117,
+     "question": "Where is the silver combination wrench usually kept in this workshop?",
+     "options": [
+      "Hanging in the lower row of the wooden tool rack filled with other metal wrenches and blue-handled tools",
+      "Hanging in the rightmost section of the wooden tool rack filled with other metal wrenches and blue-handled tools",
+      "Hanging in the upper row of the wooden tool rack filled with other metal wrenches and blue-handled tools",
+      "Hanging in the middle row of the wooden tool rack filled with other metal wrenches and blue-handled tools"
+     ],
+     "label": "D",
+     "before": "A",
+     "after": "D",
+     "starter_seconds": [
+      0,
+      17,
+      33,
+      50,
+      67,
+      84,
+      100,
+      117
+     ],
+     "chosen_seconds": [
+      4,
+      5,
+      11,
+      12,
+      15,
+      16
+     ],
+     "shown_seconds": [
+      11,
+      12,
+      16
+     ],
+     "reason": "The wrench comes from the middle row of the wooden tool rack. At 4, 5, 11 and 12 s, the wearer reaches below the tape shelf into the metal wrenches in the middle level, which sits above the blue-handled tools.",
+     "before_img": "assets/demo/egoexo/test-021-before.jpg",
+     "after_img": "assets/demo/egoexo/test-021-after.jpg"
+    },
+    {
+     "id": "test-070",
+     "family": "Cooking",
+     "category": "Object state",
+     "scenario": "Making Sesame-Ginger Asian Salad",
+     "duration": 219,
+     "question": "While the man in the black T-shirt and dark glasses was getting the white bowl-like plate from the metal counter, what was the state of the pale dressing in the squeeze bottle?",
+     "options": [
+      "It was still completely full and unopened.",
+      "It had already been poured out and was no longer full.",
+      "It had been spilled over the counter.",
+      "It was sitting empty with the cap off."
+     ],
+     "label": "B",
+     "before": "A",
+     "after": "B",
+     "starter_seconds": [
+      0,
+      31,
+      63,
+      94,
+      125,
+      156,
+      188,
+      219
+     ],
+     "chosen_seconds": [
+      168,
+      172,
+      177,
+      191,
+      195,
+      198
+     ],
+     "shown_seconds": [
+      168,
+      172,
+      177
+     ],
+     "reason": "The answer is (B): he had already poured some of the dressing, so the bottle was no longer full. At 168s the exo view shows the man in the black T-shirt and dark glasses holding the squeeze bottle upside down over the metal mixing bowl, pouring dressing onto the salad.",
+     "before_img": "assets/demo/egoexo/test-070-before.jpg",
+     "after_img": "assets/demo/egoexo/test-070-after.jpg"
+    },
+    {
+     "id": "test-064",
+     "family": "Cooking",
+     "category": "Instantaneous position",
+     "scenario": "Making Cucumber & Tomato Salad",
+     "duration": 384,
+     "question": "Where was the woman with a ponytail wearing a white floral T-shirt and dark glasses standing the FIRST time getting the cucumber?",
+     "options": [
+      "At the black countertop beside the single-burner silver stove, facing the cabinets",
+      "At the black countertop beside the two-burner silver stove, facing the cabinets",
+      "At the black countertop beside the two-burner silver stove, facing the sink",
+      "At the black countertop beside the two-burner silver stove, facing the refrigerator"
+     ],
+     "label": "B",
+     "before": "C",
+     "after": "B",
+     "starter_seconds": [
+      0,
+      55,
+      110,
+      165,
+      219,
+      274,
+      329,
+      384
+     ],
+     "chosen_seconds": [
+      22,
+      25,
+      28,
+      31,
+      37,
+      43
+     ],
+     "shown_seconds": [
+      25,
+      28,
+      43
+     ],
+     "reason": "She first takes the cucumber at about 25–28 s, while standing at the black countertop next to the two-burner silver stove and facing the cabinets. That makes the answer B.",
+     "before_img": "assets/demo/egoexo/test-064-before.jpg",
+     "after_img": "assets/demo/egoexo/test-064-after.jpg"
+    },
+    {
+     "id": "test-056",
+     "family": "Cooking",
+     "category": "Allocentric relation",
+     "scenario": "Cooking an Omelet",
+     "duration": 413,
+     "question": "While the dark-skinned person in a black shirt pours from the small seasoning container into the pink mixing bowl, where is the white salt container relative to the seasoning container?",
+     "options": [
+      "To the left of the seasoning container",
+      "To the right of the seasoning container",
+      "Underneath the seasoning container",
+      "Directly behind the seasoning container"
+     ],
+     "label": "A",
+     "before": "B",
+     "after": "A",
+     "starter_seconds": [
+      0,
+      59,
+      118,
+      177,
+      236,
+      295,
+      354,
+      413
+     ],
+     "chosen_seconds": [
+      95,
+      100,
+      108,
+      113,
+      118,
+      122
+     ],
+     "shown_seconds": [
+      108,
+      113,
+      122
+     ],
+     "reason": "During the pour (113–122 s), the person's right hand holds the seasoning container over the pink bowl. The white salt container sits on the counter to the left of the hands, between the dish rack and the cutting board.",
+     "before_img": "assets/demo/egoexo/test-056-before.jpg",
+     "after_img": "assets/demo/egoexo/test-056-after.jpg"
+    }
+   ]
   }
  ]
 }

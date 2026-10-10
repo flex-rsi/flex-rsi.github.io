@@ -13,6 +13,7 @@
     "visual-search": "Questions about small details in large, high-resolution images.",
     "robot-control": "Robot manipulation in simulation: the agent rewrites the control policy between rounds, and each episode is replayed with an earlier and a later round's policy.",
     "3d-tracking": "Segment every object in several views of a scene and keep each object's identity consistent across views.",
+    "ego-exo-memory": "Memory questions about synchronized first-person (ego) and fixed-camera (exo) videos of cooking and bike repair.",
   };
   const fmtScore = (p, v) => (p.metric === "accuracy" ? (100 * v).toFixed(1) + "%" : p.metric === "score" ? String(Math.round(v)) : v.toFixed(3));
 
@@ -276,7 +277,47 @@
     show(0);
   }
 
-  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking };
+  // Ego-Exo Memory: one question at a time. Before: the frames the starting solution saw (8 per view, evenly
+  // spaced). After: the seconds the self-improved solution chose to look at in high resolution, both views.
+  function egoExo(p) {
+    const opt = (c, k) => { const i = LETTERS.indexOf(k); return i >= 0 ? `(${k}) ${c.options[i]}` : "no answer"; };
+    stage.innerHTML = `
+      <div class="ep-task"><q></q><span class="ep-meta"></span></div>
+      <div class="ab-row"><div class="ab-bar"><span class="lhs"><span class="ab-tag">Before</span><span data-k="bl"></span></span><span class="rhs" data-k="ba"></span></div>
+        <figure class="ee-fig"><img data-k="bi" alt="Frames the starting solution saw"></figure></div>
+      <div class="ab-row"><div class="ab-bar"><span class="lhs"><span class="ab-tag after">After</span><span data-k="al"></span></span><span class="rhs" data-k="aa"></span></div>
+        <figure class="ee-fig"><img data-k="ai" alt="Frames the self-improved solution chose"></figure>
+        <p class="ee-why"></p></div>
+      <div class="ep-strip ep-strip-wide" role="group" aria-label="Questions">${p.cases.map((c, i) =>
+        `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(c.after_img)}" alt="" loading="lazy"><span>${esc(c.category)}<small>${esc(c.family)}</small></span></button>`).join("")}</div>
+      <p class="demo-note"><b>What the agent changed.</b> The starting solution shows the model 8 frames of each view, evenly spaced over the whole video, and answers in one call;
+        the moment a question is about often falls between them. The self-improved solution first skims 32 time points in both views and names the seconds that matter,
+        then looks at those seconds at high resolution in both views before it answers.</p>`;
+    let cur = -1;
+    const $s = (k) => stage.querySelector(`[data-k="${k}"]`);
+    const show = (i) => {
+      cur = i;
+      const c = p.cases[i];
+      stage.querySelector(".ep-task q").textContent = c.question;
+      stage.querySelector(".ep-meta").textContent = `Test · ${c.family} · ${c.category} · ${c.duration} s video`;
+      $s("bl").textContent = "8 frames per view, evenly spaced";
+      $s("al").textContent = `Chose to look closely at ${c.shown_seconds.join(", ")} s`;
+      $s("ba").innerHTML = `<span class="no">${esc(opt(c, c.before))} ×</span>`;
+      $s("aa").innerHTML = `<span class="ok">${esc(opt(c, c.after))} ✓</span>`;
+      $s("bi").src = c.before_img;
+      $s("ai").src = c.after_img;
+      stage.querySelector(".ee-why").textContent = c.reason ? `“${c.reason}”` : "";
+      stage.querySelectorAll(".ep-strip button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.i === i)));
+    };
+    stage.querySelector(".ep-strip").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button");
+      if (btn && +btn.dataset.i !== cur) show(+btn.dataset.i);
+    });
+    show(0);
+    active = [];
+  }
+
+  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo };
 
   function select(d, id) {
     const p = d.panels.find((x) => x.id === id);
@@ -297,7 +338,7 @@
   fetch("data/demos.json")
     .then((r) => r.json())
     .then((d) => {
-      const ORDER = ["robot-control", "active-search", "visual-search", "3d-tracking"];
+      const ORDER = ["robot-control", "active-search", "visual-search", "ego-exo-memory", "3d-tracking"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
       tabsEl.addEventListener("click", (ev) => {
