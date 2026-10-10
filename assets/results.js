@@ -17,7 +17,7 @@
   $(".board-scroll").before(cov);
   const table = $("table.results"), fig = $(".curves-fig"), svg = $(".curves-plot"), legend = $(".legend"), noteEl = $(".board-note");
 
-  const PCT = new Set(["accuracy", "acc_vstar", "acc_hrbench8k", "success", "hos_sr", "hps_sr", "success_rate"]);
+  const PCT = new Set(["accuracy", "acc_vstar", "acc_hrbench8k", "acc_starter", "acc_cooking", "acc_bike", "success", "hos_sr", "hps_sr", "success_rate"]);
   const fmt = (key, v) => {
     if (v === null || v === undefined) return "–";
     if (PCT.has(key)) return (100 * v).toFixed(1) + "%";

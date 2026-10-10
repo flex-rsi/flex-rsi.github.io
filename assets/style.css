@@ -98,7 +98,6 @@ p { margin: 0; }
 .nav-links a:hover { color: var(--ink); background: var(--tint); }
 .nav-links a.active { color: var(--ink); background: var(--tint-strong); }
 .nav-cta { padding: 7px 16px; font-size: 14px; }
-@media (min-width: 821px) { .nav-cta { display: none; } }   /* the nav already links the leaderboard; the button stands in for it on phones */
 
 /* ---------- buttons ---------- */
 .pill {
@@ -392,3 +391,5 @@ pre { margin: 0; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; 
 /* footer contact: addresses keep their own case under the uppercase footer */
 .footer .contact a { text-transform: none; color: var(--accent-1); }
 .footer .contact a:hover { text-decoration: underline; }
+/* the nav already links the leaderboard; the button stands in for it on phones (last, so .pill cannot override it) */
+@media (min-width: 821px) { .nav a.nav-cta { display: none; } }

@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-09",
+ "updated": "2026-10-10",
  "categories": [
   {
    "id": "perception",
@@ -699,6 +699,196 @@
       0.3281,
       0.3281,
       0.3281
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ego-exo-memory",
+   "category": "reasoning",
+   "track": "Ego-Exo Memory",
+   "task": "Memory reasoning over synchronized egocentric and exocentric videos (EgoExoMem, EgoExo4D part)",
+   "primary": "accuracy",
+   "metrics": [
+    {
+     "key": "accuracy",
+     "label": "Accuracy"
+    },
+    {
+     "key": "acc_starter",
+     "label": "Starter"
+    },
+    {
+     "key": "acc_cooking",
+     "label": "Cooking"
+    },
+    {
+     "key": "acc_bike",
+     "label": "Bike repair"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.725,
+      "acc_starter": 0.6167,
+      "acc_cooking": 0.7363,
+      "acc_bike": 0.6897
+     },
+     "start": 0.6375,
+     "best": 0.7375,
+     "gain_pct": 15.7,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.6375,
+      0.7375,
+      0.7375,
+      0.7375,
+      0.7375,
+      0.7375,
+      0.7375,
+      0.7375,
+      0.7375,
+      0.7375,
+      0.7375
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.6083,
+      "acc_starter": 0.55,
+      "acc_cooking": 0.6264,
+      "acc_bike": 0.5517
+     },
+     "start": 0.5875,
+     "best": 0.725,
+     "gain_pct": 23.4,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.5875,
+      0.5875,
+      0.5875,
+      0.65,
+      0.65,
+      0.65,
+      0.65,
+      0.65,
+      0.65,
+      0.65,
+      0.725
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.5917,
+      "acc_starter": 0.5417,
+      "acc_cooking": 0.5934,
+      "acc_bike": 0.5862
+     },
+     "start": 0.6125,
+     "best": 0.675,
+     "gain_pct": 10.2,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.6125,
+      0.6125,
+      0.6125,
+      0.6125,
+      0.6125,
+      0.6125,
+      0.6125,
+      0.6125,
+      0.6125,
+      0.675,
+      0.675
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.5917,
+      "acc_starter": 0.525,
+      "acc_cooking": 0.6374,
+      "acc_bike": 0.4483
+     },
+     "start": 0.6125,
+     "best": 0.6625,
+     "gain_pct": 8.2,
+     "rounds": 5,
+     "ended": "budget_wall",
+     "curve": [
+      0.6125,
+      0.6125,
+      0.6625,
+      0.6625,
+      0.6625,
+      0.6625
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.575,
+      "acc_starter": 0.5917,
+      "acc_cooking": 0.5714,
+      "acc_bike": 0.5862
+     },
+     "start": 0.7125,
+     "best": 0.7125,
+     "gain_pct": 0.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.7125,
+      0.7125,
+      0.7125,
+      0.7125,
+      0.7125,
+      0.7125,
+      0.7125,
+      0.7125,
+      0.7125,
+      0.7125,
+      0.7125
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.5167,
+      "acc_starter": 0.525,
+      "acc_cooking": 0.5275,
+      "acc_bike": 0.4828
+     },
+     "start": 0.475,
+     "best": 0.5625,
+     "gain_pct": 18.4,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.475,
+      0.475,
+      0.475,
+      0.475,
+      0.475,
+      0.5625,
+      0.5625,
+      0.5625,
+      0.5625,
+      0.5625,
+      0.5625
      ]
     }
    ]
