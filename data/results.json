@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-11",
+ "updated": "2026-10-12",
  "categories": [
   {
    "id": "perception",
@@ -760,6 +760,206 @@
       0.3281,
       0.3281,
       0.3281
+     ]
+    }
+   ]
+  },
+  {
+   "id": "video-quality",
+   "category": "perception",
+   "track": "Video Quality",
+   "task": "Perceptual video quality: score real user videos (YouTube-UGC MOS) and pick the better of AI-generated pairs (Veo 3.1 human votes)",
+   "primary": "quality",
+   "metrics": [
+    {
+     "key": "quality",
+     "label": "Score"
+    },
+    {
+     "key": "quality_starter",
+     "label": "Starter"
+    },
+    {
+     "key": "srcc",
+     "label": "SRCC"
+    },
+    {
+     "key": "plcc",
+     "label": "PLCC"
+    },
+    {
+     "key": "pair_accuracy",
+     "label": "Pair acc."
+    }
+   ],
+   "rows": [
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "quality": 0.8437,
+      "quality_starter": 0.8394,
+      "srcc": 0.8711,
+      "plcc": 0.8942,
+      "pair_accuracy": 0.8163
+     },
+     "start": 0.8485,
+     "best": 0.8485,
+     "gain_pct": 0.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.8485,
+      0.8485,
+      0.8485,
+      0.8485,
+      0.8485,
+      0.8485,
+      0.8485,
+      0.8485,
+      0.8485,
+      0.8485,
+      0.8485
+     ]
+    },
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "quality": 0.8204,
+      "quality_starter": 0.8092,
+      "srcc": 0.8653,
+      "plcc": 0.8972,
+      "pair_accuracy": 0.7755
+     },
+     "start": 0.7988,
+     "best": 0.8508,
+     "gain_pct": 6.5,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.7988,
+      0.7988,
+      0.8508,
+      0.8508,
+      0.8508,
+      0.8508,
+      0.8508,
+      0.8508,
+      0.8508,
+      0.8508,
+      0.8508
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "quality": 0.7801,
+      "quality_starter": 0.7447,
+      "srcc": 0.8662,
+      "plcc": 0.8788,
+      "pair_accuracy": 0.6939
+     },
+     "start": 0.6543,
+     "best": 0.7837,
+     "gain_pct": 19.8,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.6543,
+      0.6543,
+      0.7837,
+      0.7837,
+      0.7837,
+      0.7837,
+      0.7837,
+      0.7837,
+      0.7837,
+      0.7837,
+      0.7837
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "quality": 0.7657,
+      "quality_starter": 0.7853,
+      "srcc": 0.9395,
+      "plcc": 0.9346,
+      "pair_accuracy": 0.5918
+     },
+     "start": 0.7818,
+     "best": 0.8857,
+     "gain_pct": 13.3,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.7818,
+      0.7818,
+      0.7818,
+      0.7818,
+      0.8255,
+      0.8255,
+      0.8255,
+      0.8502,
+      0.8502,
+      0.8857,
+      0.8857
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "quality": 0.7434,
+      "quality_starter": 0.7749,
+      "srcc": 0.8133,
+      "plcc": 0.8247,
+      "pair_accuracy": 0.6735
+     },
+     "start": 0.7903,
+     "best": 0.8307,
+     "gain_pct": 5.1,
+     "rounds": 5,
+     "ended": "val_calls",
+     "curve": [
+      0.7903,
+      0.8307,
+      0.8307,
+      0.8307,
+      0.8307,
+      0.8307
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "quality": 0.6975,
+      "quality_starter": 0.7246,
+      "srcc": 0.7419,
+      "plcc": 0.1001,
+      "pair_accuracy": 0.6531
+     },
+     "start": 0.6092,
+     "best": 0.7336,
+     "gain_pct": 20.4,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.6092,
+      0.6092,
+      0.7336,
+      0.7336,
+      0.7336,
+      0.7336,
+      0.7336,
+      0.7336,
+      0.7336,
+      0.7336,
+      0.7336
      ]
     }
    ]
