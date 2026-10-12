@@ -446,6 +446,33 @@
      ]
     },
     {
+     "model": "Claude Sonnet 5.5",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.8071,
+      "acc_vstar": 0.8571,
+      "acc_hrbench8k": 0.7571
+     },
+     "start": 0.8125,
+     "best": 0.8625,
+     "gain_pct": 6.2,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8625,
+      0.8625
+     ]
+    },
+    {
      "model": "Gemma-4-31B-it",
      "weights": "open",
      "test": {
@@ -695,6 +722,40 @@
       0.54,
       0.54,
       0.54
+     ]
+    },
+    {
+     "model": "Claude Sonnet 5.5",
+     "weights": "closed",
+     "test": {
+      "spl": 0.5584,
+      "success": 0.6234,
+      "hos_sr": 0.8182,
+      "hps_sr": 0.4286,
+      "avg_steps": 2.234
+     },
+     "start": 0.2612,
+     "best": 0.53,
+     "gain_pct": 102.9,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.2612,
+      0.4667,
+      0.4667,
+      0.5258,
+      0.5258,
+      0.5258,
+      0.5258,
+      0.53,
+      0.53,
+      0.53,
+      0.53,
+      0.53,
+      0.53,
+      0.53,
+      0.53,
+      0.53
      ]
     },
     {
