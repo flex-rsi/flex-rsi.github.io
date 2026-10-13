@@ -615,7 +615,7 @@
    "name": "3D Tracking",
    "metric": "tracking mIoU",
    "before": 0.2119,
-   "after": 0.8013,
+   "after": 0.7964,
    "layout": [
     "Image",
     "Ground truth",
@@ -630,7 +630,7 @@
      "views": 6,
      "objects": 4,
      "before": 0.174,
-     "after": 0.97,
+     "after": 0.971,
      "video": "assets/demo/iggt/test-clip_00005.mp4",
      "poster": "assets/demo/iggt/test-clip_00005.jpg"
     },
@@ -641,7 +641,7 @@
      "views": 8,
      "objects": 6,
      "before": 0.316,
-     "after": 0.867,
+     "after": 0.863,
      "video": "assets/demo/iggt/val-clip_00015.mp4",
      "poster": "assets/demo/iggt/val-clip_00015.jpg"
     },
@@ -652,7 +652,7 @@
      "views": 8,
      "objects": 6,
      "before": 0.123,
-     "after": 0.895,
+     "after": 0.868,
      "video": "assets/demo/iggt/val-clip_00013.mp4",
      "poster": "assets/demo/iggt/val-clip_00013.jpg"
     },
@@ -663,7 +663,7 @@
      "views": 8,
      "objects": 6,
      "before": 0.161,
-     "after": 0.835,
+     "after": 0.758,
      "video": "assets/demo/iggt/test-clip_00004.mp4",
      "poster": "assets/demo/iggt/test-clip_00004.jpg"
     },
@@ -674,7 +674,7 @@
      "views": 8,
      "objects": 8,
      "before": 0.206,
-     "after": 0.85,
+     "after": 0.901,
      "video": "assets/demo/iggt/test-clip_00006.mp4",
      "poster": "assets/demo/iggt/test-clip_00006.jpg"
     },
@@ -685,7 +685,7 @@
      "views": 8,
      "objects": 7,
      "before": 0.196,
-     "after": 0.914,
+     "after": 0.921,
      "video": "assets/demo/iggt/val-clip_00017.mp4",
      "poster": "assets/demo/iggt/val-clip_00017.jpg"
     }
