@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-12",
+ "updated": "2026-10-13",
  "categories": [
   {
    "id": "perception",
@@ -557,6 +557,40 @@
     }
    ],
    "rows": [
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "spl": 0.7819,
+      "success": 0.934,
+      "hos_sr": 0.9394,
+      "hps_sr": 0.9286,
+      "avg_steps": 2.234
+     },
+     "start": 0.3502,
+     "best": 0.6475,
+     "gain_pct": 84.9,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.3502,
+      0.64,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475,
+      0.6475
+     ]
+    },
     {
      "model": "Claude Opus 5.5",
      "weights": "closed",
