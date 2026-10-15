@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-14",
+ "updated": "2026-10-15",
  "categories": [
   {
    "id": "perception",
@@ -100,6 +100,37 @@
       0.8474,
       0.8474,
       0.8474
+     ]
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "weights": "open",
+     "test": {
+      "t_miou": 0.6116,
+      "t_sr": 0.275,
+      "J": 0.5456,
+      "F": 0.527,
+      "JF": 0.5363
+     },
+     "start": 0.1935,
+     "best": 0.6446,
+     "gain_pct": 233.1,
+     "rounds": 12,
+     "ended": "budget_wall",
+     "curve": [
+      0.1935,
+      0.1935,
+      0.1935,
+      0.464,
+      0.464,
+      0.4893,
+      0.6215,
+      0.6215,
+      0.6215,
+      0.6215,
+      0.6353,
+      0.6446,
+      0.6446
      ]
     },
     {
@@ -1095,6 +1126,35 @@
      ]
     },
     {
+     "model": "GLM-5.3 Flash",
+     "weights": "open",
+     "test": {
+      "quality": 0.7624,
+      "quality_starter": 0.7153,
+      "srcc": 0.8922,
+      "plcc": 0.8986,
+      "pair_accuracy": 0.6327
+     },
+     "start": 0.7449,
+     "best": 0.8885,
+     "gain_pct": 19.3,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.7449,
+      0.7449,
+      0.7449,
+      0.7449,
+      0.7449,
+      0.8145,
+      0.8145,
+      0.8145,
+      0.8145,
+      0.8707,
+      0.8885
+     ]
+    },
+    {
      "model": "Gemma-4-31B-it",
      "weights": "open",
      "test": {
@@ -1335,6 +1395,32 @@
       0.7125,
       0.7125,
       0.7125
+     ]
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.5667,
+      "acc_starter": 0.525,
+      "acc_cooking": 0.6044,
+      "acc_bike": 0.4483
+     },
+     "start": 0.6,
+     "best": 0.65,
+     "gain_pct": 8.3,
+     "rounds": 8,
+     "ended": "val_calls",
+     "curve": [
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.65,
+      0.65,
+      0.65,
+      0.65,
+      0.65
      ]
     },
     {
