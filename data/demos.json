@@ -1062,22 +1062,6 @@
      "thumb": "assets/demo/imageedit/E2-014-thumb.jpg"
     },
     {
-     "id": "E2-017",
-     "family": "Retouch & restore",
-     "kind": "Soft-effect removal · smoke",
-     "about": "Remove a soft effect (haze, glare, reflection, shadow, smoke) and recover the scene behind it.",
-     "instruction": "Remove the smoke from the room; keep the table, chairs, window and furnishings unchanged",
-     "aspect": "960 / 640",
-     "before_score": 0.64,
-     "after_score": 0.77,
-     "before_note": "The smoke goes, but the chairs move and the light on the floor changes.",
-     "after_note": "Smoke gone; chairs, table and window stay where they were.",
-     "in_img": "assets/demo/imageedit/E2-017-in.jpg",
-     "before_img": "assets/demo/imageedit/E2-017-before.jpg",
-     "after_img": "assets/demo/imageedit/E2-017-after.jpg",
-     "thumb": "assets/demo/imageedit/E2-017-thumb.jpg"
-    },
-    {
      "id": "E3-003",
      "family": "Retouch & restore",
      "kind": "Remove several objects",
