@@ -1644,7 +1644,13 @@
      "weights": "closed",
      "test": {
       "overall": 0.6969,
-      "overall_starter": 0.5645
+      "overall_starter": 0.5645,
+      "cat_A": 0.8313,
+      "cat_B": 0.7352,
+      "cat_C": 0.8707,
+      "cat_E": 0.5867,
+      "cat_F": 0.3466,
+      "cat_G": 0.8109
      },
      "start": 0.5803,
      "best": 0.6892,
