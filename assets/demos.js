@@ -319,43 +319,83 @@
   }
 
   // Image editing: the source image and the two outputs side by side, each output with its score.
+  // Image editing: for each output a comparison slider over the input (input left of the divider, the
+  // output right of it). The two sliders move together, and sweep once when a case is opened.
+  let ieStop = () => {};
   function imageEdit(p) {
     const col = (k, tag, label) => `
       <figure class="ie-col"><div class="ab-bar"><span class="lhs">${tag}<span>${label}</span></span><span class="rhs" data-k="${k}s"></span></div>
-        <img data-k="${k}" alt="">${k === "in" ? "" : `<figcaption data-k="${k}n"></figcaption>`}</figure>`;
+        <div class="ie-cmp" data-k="${k}c"><img class="ie-out" data-k="${k}" alt=""><img class="ie-in" data-k="${k}i" alt="">
+          <span class="ie-line" aria-hidden="true"><span class="ie-knob"></span></span>
+          <span class="ie-chip l" aria-hidden="true">Input</span><span class="ie-chip r" aria-hidden="true">Output</span>
+          <input class="ie-range" type="range" min="0" max="100" step="0.1" value="50" aria-label="Divider between input and ${label.toLowerCase()} output"></div>
+        <figcaption data-k="${k}n"></figcaption></figure>`;
     stage.innerHTML = `
       <div class="ep-task"><q></q><span class="ep-meta"></span></div>
       <p class="ie-type"></p>
-      <div class="ie-grid">${col("in", `<span class="ab-tag">Input</span>`, "")}${col("b", `<span class="ab-tag">Before</span>`, "Starting solution")}${col("a", `<span class="ab-tag after">After</span>`, "Self-improved")}</div>
+      <div class="ie-grid">${col("b", `<span class="ab-tag">Before</span>`, "Starting solution")}${col("a", `<span class="ab-tag after">After</span>`, "Self-improved")}</div>
+      <p class="ie-hint">Drag across either image: the input is left of the divider, the output right of it. Both dividers move together.</p>
       <div class="ep-strip ep-strip-wide ie-strip" role="group" aria-label="Edits">${p.cases.map((c, i) =>
         `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(c.thumb)}" alt="" loading="lazy"><span>${esc(c.kind)}<small>${esc(c.family)}</small></span></button>`).join("")}</div>
       <p class="demo-note"><b>What the agent changed.</b> The starting solution passes the instruction unchanged to Qwen-Image-Edit-2509 with an 8-step Lightning LoRA and keeps its one output.
         The self-improved solution moves to Qwen-Image-2.1 at 40 steps. For reasoning and compound instructions it first has the editor's own vision-language encoder rewrite the request into an explicit edit
         (which object, the exact text to write, what a week of ripening looks like). It then puts the result back onto the source photo, so regions the edit did not touch keep their original pixels and texture,
         generates four seeds and lets Qwen3-VL-32B pick one by pairwise preference. Scores are the benchmark's per-image score (0 to 1, judge and programmatic checks); the notes summarize the judge's reasons.</p>`;
+    const grid = stage.querySelector(".ie-grid");
+    const ranges = [...stage.querySelectorAll(".ie-range")];
+    const setX = (x) => { grid.style.setProperty("--x", x + "%"); ranges.forEach((r) => (r.value = x)); };
+    let raf = 0;
+    const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+    ieStop = stop;
+    // one sweep: input fully shown, divider runs to the left edge (output fully shown), settles in the middle
+    const sweep = () => {
+      stop();
+      if (reduced) { setX(50); return; }
+      const keys = [[0, 100], [500, 100], [1700, 0], [2300, 0], [3100, 50]];
+      const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - 2 * (1 - t) * (1 - t));
+      let t0 = 0;
+      const step = (now) => {
+        t0 = t0 || now;
+        const t = now - t0;
+        const j = keys.findIndex(([k]) => k > t);
+        if (j < 0) { setX(50); raf = 0; return; }
+        const [ta, xa] = keys[j - 1], [tb, xb] = keys[j];
+        setX(xa + (xb - xa) * ease((t - ta) / (tb - ta)));
+        raf = requestAnimationFrame(step);
+      };
+      raf = requestAnimationFrame(step);
+    };
+    ranges.forEach((r) => {
+      r.addEventListener("pointerdown", stop);
+      r.addEventListener("input", () => { stop(); setX(+r.value); });
+    });
     let cur = -1;
     const $s = (k) => stage.querySelector(`[data-k="${k}"]`);
     const show = (i) => {
       cur = i;
       const c = p.cases[i];
+      const [w, h] = c.aspect.split("/").map(Number);
       stage.querySelector(".ep-task q").textContent = c.instruction;
       stage.querySelector(".ep-meta").textContent = `Test · ${c.family}`;
       stage.querySelector(".ie-type").textContent = `${c.kind}: ${c.about}`;
-      ["in", "b", "a"].forEach((k) => {
-        const img = $s(k);
-        img.src = c[{ in: "in_img", b: "before_img", a: "after_img" }[k]];
-        img.style.aspectRatio = c.aspect;
+      ["b", "a"].forEach((k) => {
+        $s(k + "c").style.aspectRatio = c.aspect;
+        $s(k + "c").style.width = `min(100%, ${Math.round((520 * w) / h)}px)`;   // portrait images stay at most 520 px tall
+        $s(k).src = c[k === "b" ? "before_img" : "after_img"];
+        $s(k + "i").src = c.in_img;
       });
       $s("bs").innerHTML = `<span class="no">${c.before_score.toFixed(2)}</span>`;
       $s("as").innerHTML = `<span class="ok">${c.after_score.toFixed(2)}</span>`;
       $s("bn").textContent = c.before_note;
       $s("an").textContent = c.after_note;
       stage.querySelectorAll(".ep-strip button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.i === i)));
+      sweep();
     };
     stage.querySelector(".ep-strip").addEventListener("click", (ev) => {
       const btn = ev.target.closest("button");
       if (btn && +btn.dataset.i !== cur) show(+btn.dataset.i);
     });
+    setX(50);
     show(0);
     active = [];
   }
@@ -366,6 +406,7 @@
     const p = d.panels.find((x) => x.id === id);
     pauseAll();
     robotStop();
+    ieStop();
     tabsEl.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.id === id)));
     $(".demo-title").textContent = p.name;
     $(".demo-sub").textContent = ABOUT[p.id] || "";
