@@ -14,6 +14,7 @@
     "robot-control": "Robot manipulation in simulation: the agent rewrites the control policy between rounds, and each episode is replayed with an earlier and a later round's policy.",
     "3d-tracking": "Segment every object in several views of a scene and keep each object's identity consistent across views.",
     "ego-exo-memory": "Memory questions about synchronized first-person (ego) and fixed-camera (exo) videos of cooking and bike repair.",
+    "image-editing": "Edit a photo or painting to a written instruction, change only what it asks for, and keep everything else as it was.",
   };
   const fmtScore = (p, v) => (p.metric === "accuracy" ? (100 * v).toFixed(1) + "%" : p.metric === "score" ? String(Math.round(v)) : v.toFixed(3));
 
@@ -317,7 +318,51 @@
     active = [];
   }
 
-  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo };
+  // Image editing: the source image and the two outputs side by side, each output with its score.
+  function imageEdit(p) {
+    const col = (k, tag, label) => `
+      <figure class="ie-col"><div class="ab-bar"><span class="lhs">${tag}<span>${label}</span></span><span class="rhs" data-k="${k}s"></span></div>
+        <img data-k="${k}" alt="">${k === "in" ? "" : `<figcaption data-k="${k}n"></figcaption>`}</figure>`;
+    stage.innerHTML = `
+      <div class="ep-task"><q></q><span class="ep-meta"></span></div>
+      <p class="ie-orig" hidden></p>
+      <div class="ie-grid">${col("in", `<span class="ab-tag">Input</span>`, "")}${col("b", `<span class="ab-tag">Before</span>`, "Starting solution")}${col("a", `<span class="ab-tag after">After</span>`, "Self-improved")}</div>
+      <div class="ep-strip ep-strip-wide ie-strip" role="group" aria-label="Edits">${p.cases.map((c, i) =>
+        `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(c.thumb)}" alt="" loading="lazy"><span>${esc(c.kind)}<small>${esc(c.family)}</small></span></button>`).join("")}</div>
+      <p class="demo-note"><b>What the agent changed.</b> The starting solution passes the instruction unchanged to Qwen-Image-Edit-2509 with an 8-step Lightning LoRA and keeps its one output.
+        The self-improved solution moves to Qwen-Image-2.1 at 40 steps. For reasoning and compound instructions it first has the editor's own vision-language encoder rewrite the request into an explicit edit
+        (which object, the exact text to write, what a week of ripening looks like). It then puts the result back onto the source photo, so regions the edit did not touch keep their original pixels and texture,
+        generates four seeds and lets Qwen3-VL-32B pick one by pairwise preference. Scores are the benchmark's per-image score (0 to 1, judge and programmatic checks); the notes summarize the judge's reasons.</p>`;
+    let cur = -1;
+    const $s = (k) => stage.querySelector(`[data-k="${k}"]`);
+    const show = (i) => {
+      cur = i;
+      const c = p.cases[i];
+      stage.querySelector(".ep-task q").textContent = c.instruction;
+      stage.querySelector(".ep-meta").textContent = `Test · ${c.family} · ${c.kind}`;
+      const orig = stage.querySelector(".ie-orig");
+      orig.hidden = !c.original;
+      orig.textContent = c.original ? `Given in Chinese: ${c.original}` : "";
+      ["in", "b", "a"].forEach((k) => {
+        const img = $s(k);
+        img.src = c[{ in: "in_img", b: "before_img", a: "after_img" }[k]];
+        img.style.aspectRatio = c.aspect;
+      });
+      $s("bs").innerHTML = `<span class="no">${c.before_score.toFixed(2)}</span>`;
+      $s("as").innerHTML = `<span class="ok">${c.after_score.toFixed(2)}</span>`;
+      $s("bn").textContent = c.before_note;
+      $s("an").textContent = c.after_note;
+      stage.querySelectorAll(".ep-strip button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.i === i)));
+    };
+    stage.querySelector(".ep-strip").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button");
+      if (btn && +btn.dataset.i !== cur) show(+btn.dataset.i);
+    });
+    show(0);
+    active = [];
+  }
+
+  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit };
 
   function select(d, id) {
     const p = d.panels.find((x) => x.id === id);
@@ -338,7 +383,7 @@
   fetch("data/demos.json")
     .then((r) => r.json())
     .then((d) => {
-      const ORDER = ["robot-control", "active-search", "visual-search", "ego-exo-memory", "3d-tracking"];
+      const ORDER = ["robot-control", "active-search", "visual-search", "ego-exo-memory", "3d-tracking", "image-editing"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
       tabsEl.addEventListener("click", (ev) => {

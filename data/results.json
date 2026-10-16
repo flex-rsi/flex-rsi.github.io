@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-15",
+ "updated": "2026-10-16",
  "categories": [
   {
    "id": "perception",
@@ -1449,6 +1449,117 @@
       0.5625,
       0.5625,
       0.5625
+     ]
+    }
+   ]
+  },
+  {
+   "id": "image-editing",
+   "category": "creation",
+   "track": "Image Editing",
+   "task": "Instruction-based image editing with any open model or tool (edit-image-unlimited v2: local, global, text, retouch/restore, reasoning and compound edits)",
+   "primary": "overall",
+   "metrics": [
+    {
+     "key": "overall",
+     "label": "Overall"
+    },
+    {
+     "key": "overall_starter",
+     "label": "Starter"
+    },
+    {
+     "key": "cat_A",
+     "label": "Local"
+    },
+    {
+     "key": "cat_B",
+     "label": "Global"
+    },
+    {
+     "key": "cat_C",
+     "label": "Text"
+    },
+    {
+     "key": "cat_E",
+     "label": "Retouch"
+    },
+    {
+     "key": "cat_F",
+     "label": "Reasoning"
+    },
+    {
+     "key": "cat_G",
+     "label": "Compound"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "overall": 0.7383,
+      "overall_starter": 0.5624,
+      "cat_A": 0.7819,
+      "cat_B": 0.7339,
+      "cat_C": 0.8797,
+      "cat_E": 0.6621,
+      "cat_F": 0.6694,
+      "cat_G": 0.7027
+     },
+     "start": 0.5478,
+     "best": 0.7709,
+     "gain_pct": 40.7,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5478,
+      0.6616,
+      0.6947,
+      0.7273,
+      0.7273,
+      0.7273,
+      0.7273,
+      0.7273,
+      0.7273,
+      0.7273,
+      0.7273,
+      0.7273,
+      0.7709,
+      0.7709,
+      0.7709,
+      0.7709
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "overall": 0.697,
+      "overall_starter": 0.5569
+     },
+     "start": 0.5642,
+     "best": 0.6479,
+     "gain_pct": 14.8,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5642,
+      0.5642,
+      0.5642,
+      0.5848,
+      0.5848,
+      0.5848,
+      0.5848,
+      0.5848,
+      0.6299,
+      0.6299,
+      0.6299,
+      0.6299,
+      0.6479,
+      0.6479,
+      0.6479,
+      0.6479
      ]
     }
    ]

@@ -151,3 +151,17 @@
 .ee-fig img { display: block; width: 100%; max-width: 924px; height: auto; border: 1.5px solid var(--line); background: var(--bg); }
 .ab-bar .rhs .no, .ab-bar .rhs .ok { text-transform: none; font-family: var(--sans); font-size: 14px; }
 .ee-why { margin-top: 10px; padding-left: 12px; border-left: 2px solid var(--accent-1); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); max-width: 924px; }
+/* Image editing: input, before and after side by side */
+.ie-orig { margin: -6px 0 14px; font-size: 14px; color: var(--ink-3); }
+.ie-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.ie-col { margin: 0; }
+.ie-col img { display: block; width: 100%; height: auto; max-height: 460px; object-fit: contain; border: 1.5px solid var(--line); background: var(--bg); }
+.ie-col .ab-bar .lhs > span:last-child { font-size: 11px; }
+.ie-col .ab-bar .rhs span { font: 600 15px var(--mono); }
+.ie-col figcaption { margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--line); font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+.ie-col:last-child figcaption { border-left-color: var(--accent-1); }
+.ie-strip img { object-position: 50% 50%; }
+@media (max-width: 760px) {
+  .ie-grid { grid-template-columns: minmax(0, 1fr); }
+  .ie-col img { max-height: none; }
+}

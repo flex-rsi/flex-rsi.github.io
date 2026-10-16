@@ -957,6 +957,111 @@
      "after_img": "assets/demo/egoexo/test-056-after.jpg"
     }
    ]
+  },
+  {
+   "id": "image-editing",
+   "name": "Image Editing",
+   "metric": "overall score",
+   "before": 0.5624,
+   "after": 0.7383,
+   "cases": [
+    {
+     "id": "E2-006",
+     "family": "Retouch & restore",
+     "kind": "Soft-effect removal · haze",
+     "instruction": "Remove the haze over the city so the sky is clear and the buildings look crisp with natural colors; keep the buildings unchanged",
+     "original": "去除城市上空的雾霾，让天空通透、楼群清晰、色彩自然，建筑不变",
+     "aspect": "960 / 640",
+     "before_score": 0.51,
+     "after_score": 0.75,
+     "before_note": "Haze gone, but the whole city is redrawn: buildings shift and change shape.",
+     "after_note": "Haze removed; the skyline is the original one, building for building.",
+     "in_img": "assets/demo/imageedit/E2-006-in.jpg",
+     "before_img": "assets/demo/imageedit/E2-006-before.jpg",
+     "after_img": "assets/demo/imageedit/E2-006-after.jpg",
+     "thumb": "assets/demo/imageedit/E2-006-thumb.jpg"
+    },
+    {
+     "id": "F4-004",
+     "family": "Reasoning edit",
+     "kind": "Solve, then write",
+     "instruction": "Write the answer to this expression after the equals sign on the chalkboard",
+     "original": "在黑板上等号后面写出这道算式的答案",
+     "aspect": "960 / 640",
+     "before_score": 0.0,
+     "after_score": 0.89,
+     "before_note": "Writes 4; the answer is 55.",
+     "after_note": "Writes 55; nothing else on the board changes.",
+     "in_img": "assets/demo/imageedit/F4-004-in.jpg",
+     "before_img": "assets/demo/imageedit/F4-004-before.jpg",
+     "after_img": "assets/demo/imageedit/F4-004-after.jpg",
+     "thumb": "assets/demo/imageedit/F4-004-thumb.jpg"
+    },
+    {
+     "id": "A6-004",
+     "family": "Local edit",
+     "kind": "Add object · exact count",
+     "instruction": "Add one more bee-eater of the same species on the branch so there are three in total",
+     "original": "在树枝上再加一只同种的蜂虎鸟，一共三只",
+     "aspect": "772 / 960",
+     "before_score": 0.0,
+     "after_score": 0.95,
+     "before_note": "Four birds instead of three, and the original two are recoloured.",
+     "after_note": "Exactly three; the original birds and the branch are kept.",
+     "in_img": "assets/demo/imageedit/A6-004-in.jpg",
+     "before_img": "assets/demo/imageedit/A6-004-before.jpg",
+     "after_img": "assets/demo/imageedit/A6-004-after.jpg",
+     "thumb": "assets/demo/imageedit/A6-004-thumb.jpg"
+    },
+    {
+     "id": "G2-005",
+     "family": "Compound instruction",
+     "kind": "Replace one thing, keep the rest",
+     "instruction": "Replace the flowers in the painting with sunflowers; keep the vase, the peach and the grapes unchanged",
+     "original": "把画中的花换成向日葵，花瓶、桃子和葡萄都保持不变",
+     "aspect": "753 / 960",
+     "before_score": 0.63,
+     "after_score": 0.91,
+     "before_note": "Sunflowers, but an extra apple appears and the peach and grapes change.",
+     "after_note": "Sunflowers; the vase, peach and grapes stay as they were.",
+     "in_img": "assets/demo/imageedit/G2-005-in.jpg",
+     "before_img": "assets/demo/imageedit/G2-005-before.jpg",
+     "after_img": "assets/demo/imageedit/G2-005-after.jpg",
+     "thumb": "assets/demo/imageedit/G2-005-thumb.jpg"
+    },
+    {
+     "id": "F1-003",
+     "family": "Reasoning edit",
+     "kind": "What happens over time",
+     "instruction": "Show what these bananas look like a week later",
+     "original": "画出这些香蕉放一周之后的样子",
+     "aspect": "960 / 725",
+     "before_score": 0.0,
+     "after_score": 0.77,
+     "before_note": "The bananas stay green and the photo turns into an illustration.",
+     "after_note": "Ripened to yellow with brown spots; arrangement and newspaper unchanged.",
+     "in_img": "assets/demo/imageedit/F1-003-in.jpg",
+     "before_img": "assets/demo/imageedit/F1-003-before.jpg",
+     "after_img": "assets/demo/imageedit/F1-003-after.jpg",
+     "thumb": "assets/demo/imageedit/F1-003-thumb.jpg"
+    },
+    {
+     "id": "E3-004",
+     "family": "Retouch & restore",
+     "kind": "Clean up and fill in",
+     "instruction": "Clean up the litter on the reedy shore and fill it in naturally",
+     "original": "",
+     "aspect": "960 / 498",
+     "before_score": 0.0,
+     "after_score": 0.83,
+     "before_note": "The litter stays and new debris is drawn into the reeds.",
+     "after_note": "Litter removed and the shore filled in; reeds and water kept.",
+     "in_img": "assets/demo/imageedit/E3-004-in.jpg",
+     "before_img": "assets/demo/imageedit/E3-004-before.jpg",
+     "after_img": "assets/demo/imageedit/E3-004-after.jpg",
+     "thumb": "assets/demo/imageedit/E3-004-thumb.jpg"
+    }
+   ]
   }
  ]
 }
