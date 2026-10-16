@@ -325,7 +325,7 @@
         <img data-k="${k}" alt="">${k === "in" ? "" : `<figcaption data-k="${k}n"></figcaption>`}</figure>`;
     stage.innerHTML = `
       <div class="ep-task"><q></q><span class="ep-meta"></span></div>
-      <p class="ie-orig" hidden></p>
+      <p class="ie-type"></p>
       <div class="ie-grid">${col("in", `<span class="ab-tag">Input</span>`, "")}${col("b", `<span class="ab-tag">Before</span>`, "Starting solution")}${col("a", `<span class="ab-tag after">After</span>`, "Self-improved")}</div>
       <div class="ep-strip ep-strip-wide ie-strip" role="group" aria-label="Edits">${p.cases.map((c, i) =>
         `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(c.thumb)}" alt="" loading="lazy"><span>${esc(c.kind)}<small>${esc(c.family)}</small></span></button>`).join("")}</div>
@@ -339,10 +339,8 @@
       cur = i;
       const c = p.cases[i];
       stage.querySelector(".ep-task q").textContent = c.instruction;
-      stage.querySelector(".ep-meta").textContent = `Test · ${c.family} · ${c.kind}`;
-      const orig = stage.querySelector(".ie-orig");
-      orig.hidden = !c.original;
-      orig.textContent = c.original ? `Given in Chinese: ${c.original}` : "";
+      stage.querySelector(".ep-meta").textContent = `Test · ${c.family}`;
+      stage.querySelector(".ie-type").textContent = `${c.kind}: ${c.about}`;
       ["in", "b", "a"].forEach((k) => {
         const img = $s(k);
         img.src = c[{ in: "in_img", b: "before_img", a: "after_img" }[k]];
