@@ -131,6 +131,33 @@
      ]
     },
     {
+     "model": "Gemini 4 Argon",
+     "weights": "closed",
+     "test": {
+      "t_miou": 0.738,
+      "t_sr": 0.6958,
+      "J": 0.7059,
+      "F": 0.6592,
+      "JF": 0.6826
+     },
+     "start": 0.1935,
+     "best": 0.7861,
+     "gain_pct": 306.2,
+     "rounds": 8,
+     "ended": "budget_wall",
+     "curve": [
+      0.1935,
+      0.6928,
+      0.6928,
+      0.7562,
+      0.7749,
+      0.7771,
+      0.7849,
+      0.7861,
+      0.7861
+     ]
+    },
+    {
      "model": "DeepSeek-V4.1 Flash",
      "weights": "open",
      "test": {
@@ -403,6 +430,33 @@
     }
    ],
    "rows": [
+    {
+     "model": "Gemini 4 Argon",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.9857,
+      "acc_vstar": 1.0,
+      "acc_hrbench8k": 0.9714
+     },
+     "start": 0.875,
+     "best": 0.9875,
+     "gain_pct": 12.9,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875
+     ]
+    },
     {
      "model": "Claude Opus 5.5",
      "weights": "closed",
@@ -677,6 +731,37 @@
     }
    ],
    "rows": [
+    {
+     "model": "Gemini 4 Argon",
+     "weights": "closed",
+     "test": {
+      "spl": 0.7973,
+      "success": 1.0,
+      "hos_sr": 1.0,
+      "hps_sr": 1.0,
+      "avg_steps": 2.5319
+     },
+     "start": 0.4076,
+     "best": 0.6725,
+     "gain_pct": 65.0,
+     "rounds": 12,
+     "ended": "idle",
+     "curve": [
+      0.4076,
+      0.6572,
+      0.6572,
+      0.6572,
+      0.6572,
+      0.6572,
+      0.6725,
+      0.6725,
+      0.6725,
+      0.6725,
+      0.6725,
+      0.6725,
+      0.6725
+     ]
+    },
     {
      "model": "GPT-6 Astra",
      "weights": "closed",
@@ -1038,6 +1123,33 @@
      ]
     },
     {
+     "model": "DeepSeek-V4.1 Flash",
+     "weights": "open",
+     "test": {
+      "quality": 0.8417,
+      "quality_starter": 0.7418,
+      "srcc": 0.8875,
+      "plcc": 0.8839,
+      "pair_accuracy": 0.7959
+     },
+     "start": 0.6174,
+     "best": 0.8272,
+     "gain_pct": 34.0,
+     "rounds": 8,
+     "ended": "val_calls",
+     "curve": [
+      0.6174,
+      0.6174,
+      0.7728,
+      0.7728,
+      0.7728,
+      0.8179,
+      0.8266,
+      0.8266,
+      0.8272
+     ]
+    },
+    {
      "model": "GPT-6 Astra",
      "weights": "closed",
      "test": {
@@ -1093,6 +1205,35 @@
       0.8508,
       0.8508,
       0.8508
+     ]
+    },
+    {
+     "model": "Gemini 4 Argon",
+     "weights": "closed",
+     "test": {
+      "quality": 0.8056,
+      "quality_starter": 0.7705,
+      "srcc": 0.856,
+      "plcc": 0.8968,
+      "pair_accuracy": 0.7551
+     },
+     "start": 0.7975,
+     "best": 0.864,
+     "gain_pct": 8.3,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.7975,
+      0.7975,
+      0.8344,
+      0.8578,
+      0.864,
+      0.864,
+      0.864,
+      0.864,
+      0.864,
+      0.864,
+      0.864
      ]
     },
     {
@@ -1291,6 +1432,30 @@
      ]
     },
     {
+     "model": "Gemini 4 Argon",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.7,
+      "acc_starter": 0.65,
+      "acc_cooking": 0.7363,
+      "acc_bike": 0.5862
+     },
+     "start": 0.75,
+     "best": 0.7625,
+     "gain_pct": 1.7,
+     "rounds": 6,
+     "ended": "val_calls",
+     "curve": [
+      0.75,
+      0.75,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625
+     ]
+    },
+    {
      "model": "GPT-6 Astra",
      "weights": "closed",
      "test": {
@@ -1478,6 +1643,34 @@
       0.5625,
       0.5625
      ]
+    },
+    {
+     "model": "DeepSeek-V4.1 Flash",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.4917,
+      "acc_starter": 0.4333,
+      "acc_cooking": 0.4945,
+      "acc_bike": 0.4828
+     },
+     "start": 0.55,
+     "best": 0.55,
+     "gain_pct": 0.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55
+     ]
     }
    ]
   },
@@ -1594,6 +1787,37 @@
       0.7709,
       0.7709,
       0.7709
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "overall": 0.6996,
+      "overall_starter": 0.5617
+     },
+     "start": 0.5763,
+     "best": 0.6794,
+     "gain_pct": 17.9,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5763,
+      0.5763,
+      0.5763,
+      0.5763,
+      0.5763,
+      0.5763,
+      0.6603,
+      0.6753,
+      0.6753,
+      0.6753,
+      0.6753,
+      0.6753,
+      0.6753,
+      0.6753,
+      0.6794,
+      0.6794
      ]
     },
     {
@@ -1742,6 +1966,68 @@
       0.6614,
       0.6614,
       0.6776
+     ]
+    },
+    {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "overall": 0.6721,
+      "overall_starter": 0.567
+     },
+     "start": 0.5342,
+     "best": 0.6807,
+     "gain_pct": 27.4,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5342,
+      0.6611,
+      0.6611,
+      0.6611,
+      0.6611,
+      0.6611,
+      0.6611,
+      0.6611,
+      0.6611,
+      0.6611,
+      0.6611,
+      0.6671,
+      0.6671,
+      0.6671,
+      0.6807,
+      0.6807
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "overall": 0.6428,
+      "overall_starter": 0.5563
+     },
+     "start": 0.5763,
+     "best": 0.6316,
+     "gain_pct": 9.6,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5763,
+      0.5763,
+      0.6217,
+      0.6217,
+      0.6217,
+      0.6316,
+      0.6316,
+      0.6316,
+      0.6316,
+      0.6316,
+      0.6316,
+      0.6316,
+      0.6316,
+      0.6316,
+      0.6316,
+      0.6316
      ]
     }
    ]

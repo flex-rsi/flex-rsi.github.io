@@ -69,7 +69,7 @@
     return classes.join(" ");
   }
 
-  const COLORS = ["var(--accent-1)", "var(--ink)", "#e0471b", "#00937c", "#b07700", "#7b4cc4", "#4787dd", "#c93f7c", "#5f8a1c"];
+  const COLORS = ["var(--accent-1)", "var(--ink)", "#e0471b", "#00937c", "#b07700", "#7b4cc4", "#4787dd", "#c93f7c", "#5f8a1c", "#8c5a2b", "#16a3b5", "#7d8597"];
 
   let data, cats, byCat, rankOf;   // rankOf[taskId][model] = 1-based rank on that task
 
