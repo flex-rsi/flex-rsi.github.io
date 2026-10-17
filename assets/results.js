@@ -60,6 +60,8 @@
     const medal = rank <= 3 ? ` medal medal-${rank}` : "";
     return `<span class="rank-badge${medal}">${String(rank).padStart(2, "0")}</span>`;
   }
+  // Standard competition ranking: equal scores share a rank and the next rank skips (1, 1, 3).
+  const ranksOf = (t) => t.rows.map((r) => 1 + t.rows.filter((q) => q.test[t.primary] > r.test[t.primary]).length);
   function rankClass(i, partial = false) {
     const classes = [];
     if (i < 3) classes.push("podium", `podium-${i + 1}`);
@@ -128,9 +130,10 @@
     $(".board-scroll").hidden = false;
     titleEl.textContent = t.track;
     leadEl.textContent = `${t.task}. Ranked by ${t.metrics[0].label} on the hidden test split.`;
+    const ranks = ranksOf(t);
     const body = t.rows.map((r, i) => {
       const values = t.metrics.map((m, j) => `<td${j === 0 ? ' class="strong"' : ""}>${fmt(m.key, r.test[m.key])}</td>`).join("");
-      return `<tr data-i="${i}" class="${rankClass(i)}"><td>${rankBadge(i + 1)}</td>${modelCell(r.model, r.weights)}${values}<td class="vchange">${change(t.primary, r)}</td><td class="rounds">${r.rounds ?? "–"}${r.ended ? `<span class="ended">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
+      return `<tr data-i="${i}" class="${rankClass(ranks[i] - 1)}"><td>${rankBadge(ranks[i])}</td>${modelCell(r.model, r.weights)}${values}<td class="vchange">${change(t.primary, r)}</td><td class="rounds">${r.rounds ?? "–"}${r.ended ? `<span class="ended">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
     }).join("");
     const metricHeads = t.metrics.map((m) => `<th>${esc(m.label)}</th>`).join("");
     table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${t.metrics.length}">Hidden test metrics</th><th>Validation</th><th>Run depth</th></tr><tr><th>#</th><th class="model">Model</th>${metricHeads}<th>Start → best<span class="th-sub">${esc(t.metrics[0].label)}</span></th><th class="rounds">Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
@@ -243,7 +246,7 @@
     .then((r) => r.json())
     .then((d) => {
       data = d;
-      rankOf = Object.fromEntries(d.tasks.map((t) => [t.id, Object.fromEntries(t.rows.map((r, i) => [r.model, i + 1]))]));
+      rankOf = Object.fromEntries(d.tasks.map((t) => { const rk = ranksOf(t); return [t.id, Object.fromEntries(t.rows.map((r, i) => [r.model, rk[i]]))]; }));
       byCat = {};
       d.tasks.forEach((t) => (byCat[t.category] = byCat[t.category] || []).push(t));
       const FIRST = ["robot-control"];                       // shown first within its category
