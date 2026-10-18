@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-17",
+ "updated": "2026-10-18",
  "categories": [
   {
    "id": "perception",
@@ -797,6 +797,40 @@
      ]
     },
     {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "spl": 0.7437,
+      "success": 0.8528,
+      "hos_sr": 0.8485,
+      "hps_sr": 0.8571,
+      "avg_steps": 1.9787
+     },
+     "start": 0.266,
+     "best": 0.5967,
+     "gain_pct": 124.3,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.266,
+      0.4958,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5757,
+      0.5967,
+      0.5967
+     ]
+    },
+    {
      "model": "Claude Opus 5.5",
      "weights": "closed",
      "test": {
@@ -930,40 +964,6 @@
      ]
     },
     {
-     "model": "GPT-6.1 Sol",
-     "weights": "closed",
-     "test": {
-      "spl": 0.5856,
-      "success": 0.6396,
-      "hos_sr": 0.6364,
-      "hps_sr": 0.6429,
-      "avg_steps": 1.7234
-     },
-     "start": 0.2536,
-     "best": 0.54,
-     "gain_pct": 112.9,
-     "rounds": 15,
-     "ended": "max_rounds",
-     "curve": [
-      0.2536,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54,
-      0.54
-     ]
-    },
-    {
      "model": "Claude Sonnet 5.5",
      "weights": "closed",
      "test": {
@@ -1094,35 +1094,6 @@
    ],
    "rows": [
     {
-     "model": "GPT-6.1 Sol",
-     "weights": "closed",
-     "test": {
-      "quality": 0.8437,
-      "quality_starter": 0.8394,
-      "srcc": 0.8711,
-      "plcc": 0.8942,
-      "pair_accuracy": 0.8163
-     },
-     "start": 0.8485,
-     "best": 0.8485,
-     "gain_pct": 0.0,
-     "rounds": 10,
-     "ended": "max_rounds",
-     "curve": [
-      0.8485,
-      0.8485,
-      0.8485,
-      0.8485,
-      0.8485,
-      0.8485,
-      0.8485,
-      0.8485,
-      0.8485,
-      0.8485,
-      0.8485
-     ]
-    },
-    {
      "model": "DeepSeek-V4.1 Flash",
      "weights": "open",
      "test": {
@@ -1205,6 +1176,35 @@
       0.8508,
       0.8508,
       0.8508
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "quality": 0.8083,
+      "quality_starter": 0.8182,
+      "srcc": 0.9227,
+      "plcc": 0.9424,
+      "pair_accuracy": 0.6939
+     },
+     "start": 0.8042,
+     "best": 0.8975,
+     "gain_pct": 11.6,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.8042,
+      0.8042,
+      0.854,
+      0.854,
+      0.854,
+      0.8975,
+      0.8975,
+      0.8975,
+      0.8975,
+      0.8975,
+      0.8975
      ]
     },
     {
@@ -1456,6 +1456,34 @@
      ]
     },
     {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.675,
+      "acc_starter": 0.575,
+      "acc_cooking": 0.6923,
+      "acc_bike": 0.6207
+     },
+     "start": 0.675,
+     "best": 0.75,
+     "gain_pct": 11.1,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.675,
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      0.75
+     ]
+    },
+    {
      "model": "GPT-6 Astra",
      "weights": "closed",
      "test": {
@@ -1560,34 +1588,6 @@
       0.6625,
       0.6625,
       0.6625
-     ]
-    },
-    {
-     "model": "GPT-6.1 Sol",
-     "weights": "closed",
-     "test": {
-      "accuracy": 0.575,
-      "acc_starter": 0.5917,
-      "acc_cooking": 0.5714,
-      "acc_bike": 0.5862
-     },
-     "start": 0.7125,
-     "best": 0.7125,
-     "gain_pct": 0.0,
-     "rounds": 10,
-     "ended": "max_rounds",
-     "curve": [
-      0.7125,
-      0.7125,
-      0.7125,
-      0.7125,
-      0.7125,
-      0.7125,
-      0.7125,
-      0.7125,
-      0.7125,
-      0.7125,
-      0.7125
      ]
     },
     {
