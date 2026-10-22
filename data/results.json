@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-21",
+ "updated": "2026-10-22",
  "categories": [
   {
    "id": "perception",
@@ -158,40 +158,6 @@
      ]
     },
     {
-     "model": "DeepSeek-V4.1 Flash",
-     "weights": "open",
-     "test": {
-      "t_miou": 0.7141,
-      "t_sr": 0.3792,
-      "J": 0.6193,
-      "F": 0.5928,
-      "JF": 0.6061
-     },
-     "start": 0.1935,
-     "best": 0.6878,
-     "gain_pct": 255.4,
-     "rounds": 15,
-     "ended": "max_rounds",
-     "curve": [
-      0.1935,
-      0.1935,
-      0.3435,
-      0.5626,
-      0.6409,
-      0.6631,
-      0.6631,
-      0.6631,
-      0.6878,
-      0.6878,
-      0.6878,
-      0.6878,
-      0.6878,
-      0.6878,
-      0.6878,
-      0.6878
-     ]
-    },
-    {
      "model": "GLM-5.3 Flash",
      "weights": "open",
      "test": {
@@ -223,6 +189,34 @@
      ]
     },
     {
+     "model": "DeepSeek-V4.1 Flash 1017",
+     "weights": "open",
+     "test": {
+      "t_miou": 0.6016,
+      "t_sr": 0.3083,
+      "J": 0.5451,
+      "F": 0.5384,
+      "JF": 0.5417
+     },
+     "start": 0.1935,
+     "best": 0.7013,
+     "gain_pct": 262.4,
+     "rounds": 9,
+     "ended": "budget_wall",
+     "curve": [
+      0.1935,
+      0.1935,
+      0.4304,
+      0.6352,
+      0.6862,
+      0.7013,
+      0.7013,
+      0.7013,
+      0.7013,
+      0.7013
+     ]
+    },
+    {
      "model": "Qwen3.8-Flash-Next",
      "weights": "open",
      "test": {
@@ -251,6 +245,37 @@
       0.6569,
       0.6569,
       0.6569
+     ]
+    },
+    {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "t_miou": 0.5368,
+      "t_sr": 0.2208,
+      "J": 0.4644,
+      "F": 0.4617,
+      "JF": 0.4631
+     },
+     "start": 0.1935,
+     "best": 0.5397,
+     "gain_pct": 178.9,
+     "rounds": 12,
+     "ended": "budget_wall",
+     "curve": [
+      0.1935,
+      0.1935,
+      0.2048,
+      0.2048,
+      0.2048,
+      0.428,
+      0.428,
+      0.4336,
+      0.4952,
+      0.4953,
+      0.5046,
+      0.5397,
+      0.5397
      ]
     },
     {
@@ -512,6 +537,33 @@
      ]
     },
     {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.95,
+      "acc_vstar": 0.9714,
+      "acc_hrbench8k": 0.9286
+     },
+     "start": 0.8875,
+     "best": 0.95,
+     "gain_pct": 7.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.8875,
+      0.8875,
+      0.8875,
+      0.95,
+      0.95,
+      0.95,
+      0.95,
+      0.95,
+      0.95,
+      0.95,
+      0.95
+     ]
+    },
+    {
      "model": "GPT-6 Astra",
      "weights": "closed",
      "test": {
@@ -644,6 +696,33 @@
       0.8125,
       0.8625,
       0.8625
+     ]
+    },
+    {
+     "model": "DeepSeek-V4.1 Flash 1017",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.7714,
+      "acc_vstar": 0.8,
+      "acc_hrbench8k": 0.7429
+     },
+     "start": 0.7,
+     "best": 0.8125,
+     "gain_pct": 16.1,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.7,
+      0.7,
+      0.7,
+      0.7,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125,
+      0.8125
      ]
     },
     {
@@ -899,6 +978,36 @@
      ]
     },
     {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "spl": 0.6551,
+      "success": 0.8019,
+      "hos_sr": 0.8182,
+      "hps_sr": 0.7857,
+      "avg_steps": 2.5106
+     },
+     "start": 0.3268,
+     "best": 0.5965,
+     "gain_pct": 82.5,
+     "rounds": 11,
+     "ended": "budget_tokens",
+     "curve": [
+      0.3268,
+      0.5067,
+      0.5562,
+      0.5965,
+      0.5965,
+      0.5965,
+      0.5965,
+      0.5965,
+      0.5965,
+      0.5965,
+      0.5965,
+      0.5965
+     ]
+    },
+    {
      "model": "GLM-5.3 Flash",
      "weights": "open",
      "test": {
@@ -1029,6 +1138,31 @@
      ]
     },
     {
+     "model": "DeepSeek-V4.1 Flash 1017",
+     "weights": "open",
+     "test": {
+      "spl": 0.4706,
+      "success": 0.5931,
+      "hos_sr": 0.7576,
+      "hps_sr": 0.4286,
+      "avg_steps": 2.383
+     },
+     "start": 0.1988,
+     "best": 0.3575,
+     "gain_pct": 79.8,
+     "rounds": 6,
+     "ended": "budget_wall",
+     "curve": [
+      0.1988,
+      0.1988,
+      0.3333,
+      0.3333,
+      0.3575,
+      0.3575,
+      0.3575
+     ]
+    },
+    {
      "model": "MiniMax-M3",
      "weights": "open",
      "test": {
@@ -1094,33 +1228,6 @@
    ],
    "rows": [
     {
-     "model": "DeepSeek-V4.1 Flash",
-     "weights": "open",
-     "test": {
-      "quality": 0.8417,
-      "quality_starter": 0.7418,
-      "srcc": 0.8875,
-      "plcc": 0.8839,
-      "pair_accuracy": 0.7959
-     },
-     "start": 0.6174,
-     "best": 0.8272,
-     "gain_pct": 34.0,
-     "rounds": 8,
-     "ended": "val_calls",
-     "curve": [
-      0.6174,
-      0.6174,
-      0.7728,
-      0.7728,
-      0.7728,
-      0.8179,
-      0.8266,
-      0.8266,
-      0.8272
-     ]
-    },
-    {
      "model": "GPT-6 Astra",
      "weights": "closed",
      "test": {
@@ -1176,6 +1283,32 @@
       0.8508,
       0.8508,
       0.8508
+     ]
+    },
+    {
+     "model": "DeepSeek-V4.1 Flash 1017",
+     "weights": "open",
+     "test": {
+      "quality": 0.8199,
+      "quality_starter": 0.7906,
+      "srcc": 0.9051,
+      "plcc": 0.8968,
+      "pair_accuracy": 0.7347
+     },
+     "start": 0.6734,
+     "best": 0.821,
+     "gain_pct": 21.9,
+     "rounds": 7,
+     "ended": "val_calls",
+     "curve": [
+      0.6734,
+      0.6734,
+      0.8093,
+      0.8093,
+      0.8093,
+      0.8093,
+      0.8093,
+      0.821
      ]
     },
     {
@@ -1263,6 +1396,34 @@
       0.7837,
       0.7837,
       0.7837
+     ]
+    },
+    {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "quality": 0.7753,
+      "quality_starter": 0.7751,
+      "srcc": 0.877,
+      "plcc": 0.8799,
+      "pair_accuracy": 0.6735
+     },
+     "start": 0.7693,
+     "best": 0.9002,
+     "gain_pct": 17.0,
+     "rounds": 9,
+     "ended": "val_calls",
+     "curve": [
+      0.7693,
+      0.7693,
+      0.8554,
+      0.8554,
+      0.9002,
+      0.9002,
+      0.9002,
+      0.9002,
+      0.9002,
+      0.9002
      ]
     },
     {
@@ -1512,6 +1673,34 @@
      ]
     },
     {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.6333,
+      "acc_starter": 0.5917,
+      "acc_cooking": 0.6484,
+      "acc_bike": 0.5862
+     },
+     "start": 0.6375,
+     "best": 0.7375,
+     "gain_pct": 15.7,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.6375,
+      0.6375,
+      0.6875,
+      0.6875,
+      0.6875,
+      0.6875,
+      0.6875,
+      0.6875,
+      0.6875,
+      0.6875,
+      0.7375
+     ]
+    },
+    {
      "model": "Qwen3.8-27B",
      "weights": "open",
      "test": {
@@ -1645,31 +1834,28 @@
      ]
     },
     {
-     "model": "DeepSeek-V4.1 Flash",
+     "model": "DeepSeek-V4.1 Flash 1017",
      "weights": "open",
      "test": {
-      "accuracy": 0.4917,
-      "acc_starter": 0.4333,
-      "acc_cooking": 0.4945,
-      "acc_bike": 0.4828
+      "accuracy": 0.5083,
+      "acc_starter": 0.5583,
+      "acc_cooking": 0.5385,
+      "acc_bike": 0.4138
      },
-     "start": 0.55,
-     "best": 0.55,
+     "start": 0.6625,
+     "best": 0.6625,
      "gain_pct": 0.0,
-     "rounds": 10,
-     "ended": "max_rounds",
+     "rounds": 7,
+     "ended": "val_calls",
      "curve": [
-      0.55,
-      0.55,
-      0.55,
-      0.55,
-      0.55,
-      0.55,
-      0.55,
-      0.55,
-      0.55,
-      0.55,
-      0.55
+      0.6625,
+      0.6625,
+      0.6625,
+      0.6625,
+      0.6625,
+      0.6625,
+      0.6625,
+      0.6625
      ]
     }
    ]
@@ -1794,7 +1980,13 @@
      "weights": "open",
      "test": {
       "overall": 0.6996,
-      "overall_starter": 0.5617
+      "overall_starter": 0.5617,
+      "cat_A": 0.8496,
+      "cat_B": 0.7523,
+      "cat_C": 0.874,
+      "cat_E": 0.6078,
+      "cat_F": 0.4209,
+      "cat_G": 0.6929
      },
      "start": 0.5763,
      "best": 0.6794,
@@ -1973,7 +2165,13 @@
      "weights": "closed",
      "test": {
       "overall": 0.6721,
-      "overall_starter": 0.567
+      "overall_starter": 0.567,
+      "cat_A": 0.7815,
+      "cat_B": 0.7053,
+      "cat_C": 0.8559,
+      "cat_E": 0.6068,
+      "cat_F": 0.3151,
+      "cat_G": 0.768
      },
      "start": 0.5342,
      "best": 0.6807,
@@ -2000,11 +2198,54 @@
      ]
     },
     {
+     "model": "Claude Sonnet 5.5",
+     "weights": "closed",
+     "test": {
+      "overall": 0.6597,
+      "overall_starter": 0.5704,
+      "cat_A": 0.7731,
+      "cat_B": 0.7098,
+      "cat_C": 0.8604,
+      "cat_E": 0.6139,
+      "cat_F": 0.4109,
+      "cat_G": 0.5903
+     },
+     "start": 0.5342,
+     "best": 0.6508,
+     "gain_pct": 21.8,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5342,
+      0.5342,
+      0.607,
+      0.607,
+      0.6508,
+      0.6508,
+      0.6508,
+      0.6508,
+      0.6508,
+      0.6508,
+      0.6508,
+      0.6508,
+      0.6508,
+      0.6508,
+      0.6508,
+      0.6508
+     ]
+    },
+    {
      "model": "MiniMax-M3",
      "weights": "open",
      "test": {
       "overall": 0.6428,
-      "overall_starter": 0.5563
+      "overall_starter": 0.5563,
+      "cat_A": 0.703,
+      "cat_B": 0.6899,
+      "cat_C": 0.833,
+      "cat_E": 0.5743,
+      "cat_F": 0.3327,
+      "cat_G": 0.724
      },
      "start": 0.5763,
      "best": 0.6316,
@@ -2028,6 +2269,1521 @@
       0.6316,
       0.6316,
       0.6316
+     ]
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "weights": "open",
+     "test": {
+      "overall": 0.6057,
+      "overall_starter": 0.566,
+      "cat_A": 0.6907,
+      "cat_B": 0.65,
+      "cat_C": 0.8042,
+      "cat_E": 0.5368,
+      "cat_F": 0.2914,
+      "cat_G": 0.6613
+     },
+     "start": 0.5763,
+     "best": 0.6393,
+     "gain_pct": 10.9,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5763,
+      0.5763,
+      0.6208,
+      0.6208,
+      0.6393,
+      0.6393,
+      0.6393,
+      0.6393,
+      0.6393,
+      0.6393,
+      0.6393,
+      0.6393,
+      0.6393,
+      0.6393,
+      0.6393,
+      0.6393
+     ]
+    }
+   ]
+  },
+  {
+   "id": "quantiphy-kinematics",
+   "category": "reasoning",
+   "track": "Kinematics",
+   "task": "Sizes, distances, velocities and accelerations in physical units from a short video and one known quantity, with a fixed open VLM (QuantiPhy)",
+   "primary": "mra",
+   "metrics": [
+    {
+     "key": "mra",
+     "label": "MRA"
+    },
+    {
+     "key": "mra_starter",
+     "label": "Starter"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Sonnet 5.5",
+     "weights": "closed",
+     "test": {
+      "mra": 0.5716,
+      "mra_starter": 0.3313
+     },
+     "start": 0.2635,
+     "best": 0.5654,
+     "gain_pct": 114.6,
+     "rounds": 30,
+     "ended": "budget_wall",
+     "curve": [
+      0.2635,
+      0.2635,
+      0.4885,
+      0.4885,
+      0.4885,
+      0.4885,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654,
+      0.5654
+     ]
+    },
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "mra": 0.5463,
+      "mra_starter": 0.4358
+     },
+     "start": 0.2904,
+     "best": 0.5769,
+     "gain_pct": 98.7,
+     "rounds": 29,
+     "ended": "idle",
+     "curve": [
+      0.2904,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769,
+      0.5769
+     ]
+    },
+    {
+     "model": "GPT-5.6 Sol",
+     "weights": "closed",
+     "test": {
+      "mra": 0.5,
+      "mra_starter": 0.4881
+     },
+     "start": 0.3423,
+     "best": 0.4173,
+     "gain_pct": 21.9,
+     "rounds": 18,
+     "ended": "budget_wall",
+     "curve": [
+      0.3423,
+      0.3423,
+      0.3423,
+      0.3423,
+      0.3423,
+      0.3423,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173,
+      0.4173
+     ]
+    },
+    {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "mra": 0.4821,
+      "mra_starter": 0.4254
+     },
+     "start": 0.3404,
+     "best": 0.4154,
+     "gain_pct": 22.0,
+     "rounds": 31,
+     "ended": "budget_wall",
+     "curve": [
+      0.3404,
+      0.3404,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154,
+      0.4154
+     ]
+    },
+    {
+     "model": "Gemini 3.7 Flash",
+     "weights": "closed",
+     "test": {
+      "mra": 0.4627,
+      "mra_starter": 0.3896
+     },
+     "start": 0.2981,
+     "best": 0.3981,
+     "gain_pct": 33.5,
+     "rounds": 24,
+     "ended": "idle",
+     "curve": [
+      0.2981,
+      0.3942,
+      0.3942,
+      0.3942,
+      0.3942,
+      0.3942,
+      0.3962,
+      0.3962,
+      0.3962,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981
+     ]
+    },
+    {
+     "model": "Muse Spark 1.3",
+     "weights": "closed",
+     "test": {
+      "mra": 0.4552,
+      "mra_starter": 0.3642
+     },
+     "start": 0.3173,
+     "best": 0.4846,
+     "gain_pct": 52.7,
+     "rounds": 45,
+     "ended": "idle",
+     "curve": [
+      0.3173,
+      0.3173,
+      0.3942,
+      0.3942,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846,
+      0.4846
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "mra": 0.4343,
+      "mra_starter": 0.4209
+     },
+     "start": 0.2,
+     "best": 0.5346,
+     "gain_pct": 167.3,
+     "rounds": 36,
+     "ended": "budget_wall",
+     "curve": [
+      0.2,
+      0.2,
+      0.2,
+      0.3288,
+      0.3288,
+      0.3288,
+      0.3288,
+      0.3288,
+      0.3288,
+      0.3288,
+      0.3288,
+      0.3288,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.4404,
+      0.5346,
+      0.5346,
+      0.5346,
+      0.5346,
+      0.5346,
+      0.5346,
+      0.5346,
+      0.5346,
+      0.5346,
+      0.5346,
+      0.5346,
+      0.5346
+     ]
+    },
+    {
+     "model": "Grok 4.6",
+     "weights": "closed",
+     "test": {
+      "mra": 0.3716,
+      "mra_starter": 0.4716
+     },
+     "start": 0.2462,
+     "best": 0.2462,
+     "gain_pct": 0.0,
+     "rounds": 25,
+     "ended": "budget_wall",
+     "curve": [
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462,
+      0.2462
+     ]
+    }
+   ]
+  },
+  {
+   "id": "quantiphy-mass",
+   "category": "reasoning",
+   "track": "Mass",
+   "task": "A product's weight in kilograms from its catalog photos, type and dimensions, with a fixed open VLM (QuantiPhy-style, Amazon Berkeley Objects)",
+   "primary": "mra",
+   "metrics": [
+    {
+     "key": "mra",
+     "label": "MRA"
+    },
+    {
+     "key": "mra_starter",
+     "label": "Starter"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "mra": 0.6352,
+      "mra_starter": 0.504
+     },
+     "start": 0.464,
+     "best": 0.6297,
+     "gain_pct": 35.7,
+     "rounds": 29,
+     "ended": "idle",
+     "curve": [
+      0.464,
+      0.5857,
+      0.5857,
+      0.6213,
+      0.6213,
+      0.6213,
+      0.6213,
+      0.6213,
+      0.6213,
+      0.6213,
+      0.6213,
+      0.6213,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297,
+      0.6297
+     ]
+    },
+    {
+     "model": "GPT-5.6 Sol",
+     "weights": "closed",
+     "test": {
+      "mra": 0.6298,
+      "mra_starter": 0.4977
+     },
+     "start": 0.4773,
+     "best": 0.6107,
+     "gain_pct": 27.9,
+     "rounds": 49,
+     "ended": "idle",
+     "curve": [
+      0.4773,
+      0.4773,
+      0.4773,
+      0.581,
+      0.581,
+      0.581,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.5917,
+      0.6003,
+      0.6003,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107,
+      0.6107
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "mra": 0.6267,
+      "mra_starter": 0.4907
+     },
+     "start": 0.5027,
+     "best": 0.6093,
+     "gain_pct": 21.2,
+     "rounds": 13,
+     "ended": "idle",
+     "curve": [
+      0.5027,
+      0.5473,
+      0.581,
+      0.581,
+      0.581,
+      0.6093,
+      0.6093,
+      0.6093,
+      0.6093,
+      0.6093,
+      0.6093,
+      0.6093,
+      0.6093,
+      0.6093
+     ]
+    },
+    {
+     "model": "Claude Sonnet 5.5",
+     "weights": "closed",
+     "test": {
+      "mra": 0.6253,
+      "mra_starter": 0.5097
+     },
+     "start": 0.502,
+     "best": 0.617,
+     "gain_pct": 22.9,
+     "rounds": 60,
+     "ended": "max_rounds",
+     "curve": [
+      0.502,
+      0.5837,
+      0.5837,
+      0.5837,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617,
+      0.617
+     ]
+    },
+    {
+     "model": "Gemini 3.7 Flash",
+     "weights": "closed",
+     "test": {
+      "mra": 0.6063,
+      "mra_starter": 0.5177
+     },
+     "start": 0.4667,
+     "best": 0.611,
+     "gain_pct": 30.9,
+     "rounds": 25,
+     "ended": "idle",
+     "curve": [
+      0.4667,
+      0.5623,
+      0.5623,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611,
+      0.611
+     ]
+    },
+    {
+     "model": "Grok 4.6",
+     "weights": "closed",
+     "test": {
+      "mra": 0.593,
+      "mra_starter": 0.513
+     },
+     "start": 0.4623,
+     "best": 0.5713,
+     "gain_pct": 23.6,
+     "rounds": 21,
+     "ended": "idle",
+     "curve": [
+      0.4623,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713,
+      0.5713
+     ]
+    },
+    {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "mra": 0.5752,
+      "mra_starter": 0.5
+     },
+     "start": 0.4427,
+     "best": 0.5913,
+     "gain_pct": 33.6,
+     "rounds": 32,
+     "ended": "budget_wall",
+     "curve": [
+      0.4427,
+      0.4427,
+      0.574,
+      0.574,
+      0.574,
+      0.574,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913,
+      0.5913
+     ]
+    },
+    {
+     "model": "Muse Spark 1.3",
+     "weights": "closed",
+     "test": {
+      "mra": 0.5685,
+      "mra_starter": 0.512
+     },
+     "start": 0.4527,
+     "best": 0.563,
+     "gain_pct": 24.4,
+     "rounds": 38,
+     "ended": "idle",
+     "curve": [
+      0.4527,
+      0.524,
+      0.524,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563,
+      0.563
+     ]
+    }
+   ]
+  },
+  {
+   "id": "scene-from-photo",
+   "category": "reconstruction",
+   "track": "Scene from Photo",
+   "task": "Image-to-3D: rebuild a furnished room from one photo as a Blender scene, every piece of furniture a whole 3D object (HARMONY300)",
+   "primary": "scene_score",
+   "metrics": [
+    {
+     "key": "scene_score",
+     "label": "Score"
+    },
+    {
+     "key": "scene_starter",
+     "label": "Starter"
+    },
+    {
+     "key": "appearance_term",
+     "label": "Appearance"
+    },
+    {
+     "key": "object_term",
+     "label": "Objects"
+    },
+    {
+     "key": "geometry_term",
+     "label": "Geometry"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "scene_score": 0.6651,
+      "scene_starter": 0.0715,
+      "appearance_term": 0.948,
+      "object_term": 0.6246,
+      "geometry_term": 0.4227
+     },
+     "start": 0.0768,
+     "best": 0.678,
+     "gain_pct": 782.5,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.0768,
+      0.5652,
+      0.5652,
+      0.6217,
+      0.678,
+      0.678,
+      0.678,
+      0.678,
+      0.678,
+      0.678,
+      0.678,
+      0.678,
+      0.678,
+      0.678,
+      0.678,
+      0.678
+     ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "scene_score": 0.5325,
+      "scene_starter": 0.0715,
+      "appearance_term": 0.6349,
+      "object_term": 0.625,
+      "geometry_term": 0.3375
+     },
+     "start": 0.0768,
+     "best": 0.5483,
+     "gain_pct": 613.8,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.0768,
+      0.2738,
+      0.5315,
+      0.5315,
+      0.5315,
+      0.5315,
+      0.5315,
+      0.5341,
+      0.5341,
+      0.5341,
+      0.5483,
+      0.5483,
+      0.5483,
+      0.5483,
+      0.5483,
+      0.5483
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "scene_score": 0.3997,
+      "scene_starter": 0.0715,
+      "appearance_term": 0.787,
+      "object_term": 0.1648,
+      "geometry_term": 0.2473
+     },
+     "start": 0.0768,
+     "best": 0.4318,
+     "gain_pct": 462.1,
+     "rounds": 10,
+     "ended": "budget_wall",
+     "curve": [
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.2626,
+      0.2626,
+      0.2626,
+      0.4,
+      0.4318
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "scene_score": 0.3328,
+      "scene_starter": 0.0715,
+      "appearance_term": 0.8182,
+      "object_term": 0.0019,
+      "geometry_term": 0.1782
+     },
+     "start": 0.0768,
+     "best": 0.3287,
+     "gain_pct": 327.9,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.2334,
+      0.2776,
+      0.2819,
+      0.2819,
+      0.2827,
+      0.2827,
+      0.2827,
+      0.3287,
+      0.3287
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "scene_score": 0.2903,
+      "scene_starter": 0.0715,
+      "appearance_term": 0.6301,
+      "object_term": 0.0436,
+      "geometry_term": 0.1971
+     },
+     "start": 0.0768,
+     "best": 0.2857,
+     "gain_pct": 271.9,
+     "rounds": 11,
+     "ended": "budget_wall",
+     "curve": [
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.1645,
+      0.1645,
+      0.1645,
+      0.1645,
+      0.1645,
+      0.1645,
+      0.2857
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "scene_score": 0.154,
+      "scene_starter": 0.0715,
+      "appearance_term": 0.2138,
+      "object_term": 0.0036,
+      "geometry_term": 0.2444
+     },
+     "start": 0.0768,
+     "best": 0.1717,
+     "gain_pct": 123.5,
+     "rounds": 11,
+     "ended": "budget_wall",
+     "curve": [
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.0768,
+      0.1717,
+      0.1717
+     ]
+    }
+   ]
+  },
+  {
+   "id": "scene-from-video",
+   "category": "reconstruction",
+   "track": "Scene from Video",
+   "task": "Video-to-3D: reconstruct an indoor scene from its RGB frames alone as a simulation-ready scene, one textured mesh per object (HoloScene scenes, CoDimRecon setting)",
+   "primary": "scene_score",
+   "metrics": [
+    {
+     "key": "scene_score",
+     "label": "Score"
+    },
+    {
+     "key": "scene_starter",
+     "label": "Starter"
+    },
+    {
+     "key": "geometry_term",
+     "label": "Geometry"
+    },
+    {
+     "key": "appearance_term",
+     "label": "Appearance"
+    },
+    {
+     "key": "physics_term",
+     "label": "Physics"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "scene_score": 0.7089,
+      "scene_starter": 0.2669,
+      "geometry_term": 0.6879,
+      "appearance_term": 0.7321,
+      "physics_term": 0.7066
+     },
+     "start": 0.1731,
+     "best": 0.2786,
+     "gain_pct": 60.9,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.1731,
+      0.1731,
+      0.2205,
+      0.2208,
+      0.2208,
+      0.2208,
+      0.2589,
+      0.2774,
+      0.2786,
+      0.2786,
+      0.2786,
+      0.2786,
+      0.2786,
+      0.2786,
+      0.2786,
+      0.2786
+     ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "scene_score": 0.5343,
+      "scene_starter": 0.2669,
+      "geometry_term": 0.6632,
+      "appearance_term": 0.563,
+      "physics_term": 0.3767
+     },
+     "start": 0.1731,
+     "best": 0.5614,
+     "gain_pct": 224.4,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.1731,
+      0.1731,
+      0.2447,
+      0.2447,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.3981,
+      0.4868,
+      0.5612,
+      0.5614,
+      0.5614,
+      0.5614,
+      0.5614,
+      0.5614
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "scene_score": 0.3446,
+      "scene_starter": 0.2669,
+      "geometry_term": 0.5467,
+      "appearance_term": 0.4872,
+      "physics_term": 0.0
+     },
+     "start": 0.1731,
+     "best": 0.1731,
+     "gain_pct": -0.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "scene_score": 0.2669,
+      "scene_starter": 0.2669,
+      "geometry_term": 0.3241,
+      "appearance_term": 0.4766,
+      "physics_term": 0.0
+     },
+     "start": 0.1731,
+     "best": 0.1731,
+     "gain_pct": 0.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "scene_score": 0.2669,
+      "scene_starter": 0.2669,
+      "geometry_term": 0.3241,
+      "appearance_term": 0.4766,
+      "physics_term": 0.0
+     },
+     "start": 0.1731,
+     "best": 0.1731,
+     "gain_pct": 0.0,
+     "rounds": 11,
+     "ended": "idle",
+     "curve": [
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "scene_score": 0.1755,
+      "scene_starter": 0.2669,
+      "geometry_term": 0.286,
+      "appearance_term": 0.2405,
+      "physics_term": 0.0
+     },
+     "start": 0.1731,
+     "best": 0.1965,
+     "gain_pct": 13.5,
+     "rounds": 12,
+     "ended": "val_calls",
+     "curve": [
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1731,
+      0.1965,
+      0.1965,
+      0.1965
+     ]
+    }
+   ]
+  },
+  {
+   "id": "multi-turn-editing",
+   "category": "creation",
+   "track": "Multi-turn Editing",
+   "task": "Edit a photo over five turns, each instruction revealed only at its turn and applied to the previous result (MSE-Bench)",
+   "primary": "mt_score",
+   "metrics": [
+    {
+     "key": "mt_score",
+     "label": "Score"
+    },
+    {
+     "key": "mt_starter",
+     "label": "Starter"
+    },
+    {
+     "key": "success_t1",
+     "label": "Turn 1"
+    },
+    {
+     "key": "success_t3",
+     "label": "Turn 3"
+    },
+    {
+     "key": "success_t5",
+     "label": "Turn 5"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "mt_score": 0.7026,
+      "mt_starter": 0.6465,
+      "success_t1": 0.85,
+      "success_t3": 0.6,
+      "success_t5": 0.375
+     },
+     "start": 0.6807,
+     "best": 0.7226,
+     "gain_pct": 6.2,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.6807,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226,
+      0.7226
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "mt_score": 0.7015,
+      "success_t1": 0.875,
+      "success_t3": 0.6,
+      "success_t5": 0.475
+     },
+     "start": 0.6824,
+     "best": 0.7084,
+     "gain_pct": 3.8,
+     "rounds": 8,
+     "ended": "budget_wall",
+     "curve": [
+      0.6824,
+      0.6824,
+      0.6824,
+      0.6824,
+      0.6824,
+      0.6824,
+      0.7084,
+      0.7084,
+      0.7084
+     ]
+    },
+    {
+     "model": "Claude Sonnet 5.5",
+     "weights": "closed",
+     "test": {
+      "mt_score": 0.6984,
+      "mt_starter": 0.6512,
+      "success_t1": 0.875,
+      "success_t3": 0.575,
+      "success_t5": 0.425
+     },
+     "start": 0.6833,
+     "best": 0.7207,
+     "gain_pct": 5.5,
+     "rounds": 7,
+     "ended": "budget_wall",
+     "curve": [
+      0.6833,
+      0.6833,
+      0.6833,
+      0.6833,
+      0.7207,
+      0.7207,
+      0.7207,
+      0.7207
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "mt_score": 0.6919,
+      "mt_starter": 0.6479,
+      "success_t1": 0.9,
+      "success_t3": 0.6,
+      "success_t5": 0.425
+     },
+     "start": 0.6827,
+     "best": 0.7039,
+     "gain_pct": 3.1,
+     "rounds": 8,
+     "ended": "budget_wall",
+     "curve": [
+      0.6827,
+      0.6827,
+      0.6827,
+      0.6827,
+      0.7039,
+      0.7039,
+      0.7039,
+      0.7039,
+      0.7039
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "mt_score": 0.6827,
+      "mt_starter": 0.6497,
+      "success_t1": 0.95,
+      "success_t3": 0.575,
+      "success_t5": 0.425
+     },
+     "start": 0.6837,
+     "best": 0.7207,
+     "gain_pct": 5.4,
+     "rounds": 7,
+     "ended": "budget_wall",
+     "curve": [
+      0.6837,
+      0.7088,
+      0.7207,
+      0.7207,
+      0.7207,
+      0.7207,
+      0.7207,
+      0.7207
+     ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "mt_score": 0.6778,
+      "mt_starter": 0.651,
+      "success_t1": 0.95,
+      "success_t3": 0.675,
+      "success_t5": 0.5
+     },
+     "start": 0.6798,
+     "best": 0.712,
+     "gain_pct": 4.7,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.6798,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712,
+      0.712
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "mt_score": 0.6626,
+      "mt_starter": 0.6503,
+      "success_t1": 0.95,
+      "success_t3": 0.675,
+      "success_t5": 0.35
+     },
+     "start": 0.6827,
+     "best": 0.6994,
+     "gain_pct": 2.4,
+     "rounds": 6,
+     "ended": "budget_wall",
+     "curve": [
+      0.6827,
+      0.6827,
+      0.6827,
+      0.6827,
+      0.6827,
+      0.6994,
+      0.6994
      ]
     }
    ]
