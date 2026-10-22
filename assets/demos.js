@@ -15,8 +15,10 @@
     "3d-tracking": "Segment every object in several views of a scene and keep each object's identity consistent across views.",
     "ego-exo-memory": "Memory questions about synchronized first-person (ego) and fixed-camera (exo) videos of cooking and bike repair.",
     "image-editing": "Edit a photo or painting to a written instruction, change only what it asks for, and keep everything else as it was.",
+    "arc-agi-2": "Grid puzzles: infer the rule from a few input–output examples and produce the output grid for a new input, with two guesses per test.",
+    "arc-agi-3": "Interactive puzzle games with no instructions: the agent acts, works out the rules and the goal, and clears as many levels as it can within its limits.",
   };
-  const fmtScore = (p, v) => (p.metric === "accuracy" ? (100 * v).toFixed(1) + "%" : p.metric === "score" ? String(Math.round(v)) : v.toFixed(3));
+  const fmtScore = (p, v) => (p.metric === "accuracy" ? (100 * v).toFixed(1) + "%" : p.metric === "score" ? String(Math.round(v)) : p.metric === "RHAE" ? v.toFixed(2) : v.toFixed(3));
 
   // ---------------------------------------------------------------- video helpers
   let inView = false, active = [];
@@ -400,7 +402,90 @@
     active = [];
   }
 
-  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit };
+  // ARC-AGI-2: one puzzle at a time. The demonstrations, then each test input with the guesses of both solutions.
+  const ARC = ["#000000", "#0074d9", "#ff4136", "#2ecc40", "#ffdc00", "#aaaaaa", "#f012be", "#ff851b", "#7fdbff", "#870c25"];
+  const grid = (rows, max = 132) => {
+    const h = rows.length, w = rows[0].length, c = Math.max(3, Math.min(14, Math.floor(max / Math.max(w, h))));
+    const cells = rows.flatMap((r, y) => [...r].map((v, x) => `<rect x="${x}" y="${y}" width="1" height="1" fill="${ARC[+v]}"/>`)).join("");
+    return `<svg class="arc-g" viewBox="0 0 ${w} ${h}" width="${w * c}" height="${h * c}" role="img" aria-label="${h} by ${w} grid">${cells}</svg>`;
+  };
+  function arcPuzzles(p) {
+    const guesses = (gs) => (gs.length ? gs.map((g) => `<figure>${grid(g.grid)}<figcaption class="${g.ok ? "ok" : "no"}">${g.ok ? "✓" : "×"}</figcaption></figure>`).join("")
+      : `<p class="arc-none no">No answer ×</p>`);
+    stage.innerHTML = `
+      <div class="ep-task"><span class="ep-meta"></span></div>
+      <div class="arc-train"></div>
+      <div class="arc-tests"></div>
+      <div class="ep-strip ep-strip-wide arc-strip" role="group" aria-label="Puzzles">${p.cases.map((c, i) =>
+        `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><span class="arc-thumb">${grid(c.tests[0].input, 72)}</span><span>${esc(c.puzzle)}<small>${c.split === "test" ? "Test" : "Validation"} · ${c.tests.length} test${c.tests.length > 1 ? "s" : ""}</small></span></button>`).join("")}</div>
+      <p class="demo-note"><b>What the agent changed.</b> The starting solution asks the model once for up to two output grids as bare JSON; a reply it cannot parse counts as no answer, as on 8b28cd80.
+        The self-improved solution parses each test's guesses separately and asks again if any test came back empty. It also has the model write a Python transform,
+        which it keeps only if the program reproduces every demonstration output; the direct guesses keep priority, and a verified program fills an empty slot or moves the guess it agrees with to first place.</p>`;
+    let cur = -1;
+    const show = (i) => {
+      cur = i;
+      const c = p.cases[i];
+      stage.querySelector(".ep-meta").textContent = `${c.split === "test" ? "Test" : "Validation"} · puzzle ${c.puzzle} · ${c.train.length} demonstrations · ${c.tests.length} test${c.tests.length > 1 ? "s" : ""}`;
+      stage.querySelector(".arc-train").innerHTML = c.train.map((t) => `<figure class="arc-pair">${grid(t.input, 96)}<span class="to">→</span>${grid(t.output, 96)}</figure>`).join("");
+      stage.querySelector(".arc-tests").innerHTML = c.tests.map((t, k) => `
+        <div class="arc-test">
+          <div class="arc-col"><div class="ab-bar"><span class="lhs">${c.tests.length > 1 ? `Test ${k + 1} input` : "Test input"}</span></div>${grid(t.input)}</div>
+          <div class="arc-col"><div class="ab-bar"><span class="lhs"><span class="ab-tag">Before</span>Starting solution</span></div><div class="arc-guesses">${guesses(t.before)}</div></div>
+          <div class="arc-col"><div class="ab-bar"><span class="lhs"><span class="ab-tag after">After</span>Self-improved</span></div><div class="arc-guesses">${guesses(t.after)}</div></div>
+        </div>`).join("");
+      stage.querySelectorAll(".ep-strip button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.i === i)));
+    };
+    stage.querySelector(".ep-strip").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button");
+      if (btn && +btn.dataset.i !== cur) show(+btn.dataset.i);
+    });
+    show(0);
+    active = [];
+  }
+
+  // ARC-AGI-3: the level the starting solution got stuck on, played by both solutions from the same frame.
+  function arcGames(p) {
+    let cur = -1;
+    stage.innerHTML = `
+      <div class="ep-task"><span class="arc-game"></span><span class="ep-meta"></span></div>
+      <div class="a3-grid">
+        <div><div class="ab-bar"><span class="lhs"><span class="ab-tag">Before</span>Starting solution</span><span class="rhs" data-o="before"></span></div>
+          <div class="a3-video" data-v="before"></div></div>
+        <div><div class="ab-bar"><span class="lhs"><span class="ab-tag after">After</span>Self-improved</span><span class="rhs" data-o="after"></span></div>
+          <div class="a3-video" data-v="after"></div></div>
+      </div>
+      <div class="ep-strip ep-strip-wide a3-strip" role="group" aria-label="Games">${p.episodes.map((e, i) =>
+        `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(e.after.poster)}" alt="" loading="lazy"><span>${esc(e.game)}<small>${e.split === "test" ? "Test" : "Validation"} · level ${e.level}</small></span></button>`).join("")}</div>
+      <p class="demo-note"><b>What the agent changed.</b> The starting solution sends the model the current frame and a short memory of its last actions, and plays the up to 8 actions it returns;
+        in four of the five validation games it ran out of time or model calls. From round 1 the self-improved solution tells the model which pixels each action changed, drops unavailable actions,
+        keeps clicks on the grid, restarts after GAME_OVER and stops before the limits. Later accepted rounds add one-line hints that appear only when they apply:
+        three batches with no change, a level just cleared (write the rules down and reuse them), a GAME_OVER, most model calls used, and an action that redrew much of the screen.</p>`;
+    const show = (i) => {
+      cur = i;
+      const e = p.episodes[i];
+      stage.querySelector(".arc-game").textContent = `${e.game} · level ${e.level} of ${e.levels}`;
+      stage.querySelector(".ep-meta").textContent = `${e.split === "test" ? "Test" : "Validation"} · levels cleared ${e.cleared[0]} → ${e.cleared[1]}`;
+      ["before", "after"].forEach((w) => {
+        stage.querySelector(`[data-o="${w}"]`).innerHTML = outcome(e[w]);
+        stage.querySelector(`[data-v="${w}"]`).innerHTML = video(e[w].video, e[w].poster, ` aria-label="${w === "before" ? "Starting" : "Self-improved"} solution replay"`);
+      });
+      const [a, b] = ["before", "after"].map((w) => stage.querySelector(`[data-v="${w}"] video`));
+      pair(a, b);
+      active = [a, b];
+      let ready = 0;
+      const go = () => { if (++ready === 2) playAll(); };
+      [a, b].forEach((v) => (v.readyState >= 3 ? go() : v.addEventListener("canplay", go, { once: true })));
+      stage.querySelectorAll(".ep-strip button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.i === i)));
+    };
+    stage.querySelector(".ep-strip").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button");
+      if (btn && +btn.dataset.i !== cur) show(+btn.dataset.i);
+    });
+    show(0);
+  }
+
+  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit,
+                   "arc-agi-2": arcPuzzles, "arc-agi-3": arcGames };
 
   function select(d, id) {
     const p = d.panels.find((x) => x.id === id);
@@ -422,7 +507,7 @@
   fetch("data/demos.json")
     .then((r) => r.json())
     .then((d) => {
-      const ORDER = ["robot-control", "active-search", "visual-search", "ego-exo-memory", "3d-tracking", "image-editing"];
+      const ORDER = ["robot-control", "active-search", "visual-search", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2", "arc-agi-3"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
       tabsEl.addEventListener("click", (ev) => {

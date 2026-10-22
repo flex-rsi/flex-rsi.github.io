@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-18",
+ "updated": "2026-10-21",
  "categories": [
   {
    "id": "perception",
@@ -2281,6 +2281,413 @@
       5.0,
       5.0,
       5.0
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arc-agi-1",
+   "category": "reasoning",
+   "track": "ARC-AGI-1",
+   "task": "Abstract reasoning on grid puzzles from a few examples (ARC-AGI-1 public evaluation set, pass@2)",
+   "primary": "accuracy",
+   "metrics": [
+    {
+     "key": "accuracy",
+     "label": "Accuracy"
+    },
+    {
+     "key": "acc_starter",
+     "label": "Starter"
+    }
+   ],
+   "rows": [
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.9975,
+      "acc_starter": 0.9925
+     },
+     "start": 0.9875,
+     "best": 1.0,
+     "gain_pct": 1.3,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.9875,
+      0.9875,
+      0.9875,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.9875,
+      "acc_starter": 0.9875
+     },
+     "start": 0.9875,
+     "best": 0.9875,
+     "gain_pct": 0.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875
+     ]
+    },
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.98,
+      "acc_starter": 0.96
+     },
+     "start": 0.9875,
+     "best": 1.0,
+     "gain_pct": 1.3,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.9875,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.7725,
+      "acc_starter": 0.755
+     },
+     "start": 0.8375,
+     "best": 0.95,
+     "gain_pct": 13.4,
+     "rounds": 5,
+     "ended": "budget_wall",
+     "curve": [
+      0.8375,
+      0.95,
+      0.95,
+      0.95,
+      0.95,
+      0.95
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.54,
+      "acc_starter": 0.54
+     },
+     "start": 0.675,
+     "best": 0.675,
+     "gain_pct": 0.0,
+     "rounds": 2,
+     "ended": "budget_wall",
+     "curve": [
+      0.675,
+      0.675,
+      0.675
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arc-agi-2",
+   "category": "reasoning",
+   "track": "ARC-AGI-2",
+   "task": "Abstract reasoning on grid puzzles from a few examples (ARC-AGI-2 public evaluation set, pass@2)",
+   "primary": "accuracy",
+   "metrics": [
+    {
+     "key": "accuracy",
+     "label": "Accuracy"
+    },
+    {
+     "key": "acc_starter",
+     "label": "Starter"
+    }
+   ],
+   "rows": [
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.9583,
+      "acc_starter": 0.925
+     },
+     "start": 0.9875,
+     "best": 1.0,
+     "gain_pct": 1.3,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.9875,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.95,
+      "acc_starter": 0.7833
+     },
+     "start": 0.9625,
+     "best": 1.0,
+     "gain_pct": 3.9,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.9625,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.9333,
+      "acc_starter": 0.9333
+     },
+     "start": 0.9875,
+     "best": 0.9875,
+     "gain_pct": 0.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875,
+      0.9875
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.1917,
+      "acc_starter": 0.15
+     },
+     "start": 0.775,
+     "best": 0.8,
+     "gain_pct": 3.2,
+     "rounds": 3,
+     "ended": "budget_wall",
+     "curve": [
+      0.775,
+      0.775,
+      0.8,
+      0.8
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.0167,
+      "acc_starter": 0.0167
+     },
+     "start": 0.6,
+     "best": 0.6,
+     "gain_pct": 0.0,
+     "rounds": 2,
+     "ended": "budget_wall",
+     "curve": [
+      0.6,
+      0.6,
+      0.6
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arc-agi-3",
+   "category": "reasoning",
+   "track": "ARC-AGI-3",
+   "task": "Interactive puzzle games learned by playing, scored by action efficiency against humans (ARC-AGI-3 public games)",
+   "primary": "rhae",
+   "metrics": [
+    {
+     "key": "rhae",
+     "label": "RHAE"
+    },
+    {
+     "key": "rhae_starter",
+     "label": "Starter"
+    }
+   ],
+   "rows": [
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "rhae": 44.2188,
+      "rhae_starter": 25.4292
+     },
+     "start": 29.8428,
+     "best": 48.2196,
+     "gain_pct": 61.6,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      29.8428,
+      48.2196,
+      48.2196,
+      48.2196,
+      48.2196,
+      48.2196,
+      48.2196,
+      48.2196,
+      48.2196,
+      48.2196,
+      48.2196
+     ]
+    },
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "rhae": 40.4222,
+      "rhae_starter": 21.5978
+     },
+     "start": 32.9693,
+     "best": 49.3405,
+     "gain_pct": 49.7,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      32.9693,
+      37.7778,
+      37.7778,
+      37.7778,
+      39.0293,
+      44.6405,
+      44.9952,
+      44.9952,
+      48.5215,
+      48.5215,
+      49.3405
+     ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "rhae": 36.5481,
+      "rhae_starter": 36.5481
+     },
+     "start": 39.0035,
+     "best": 39.0035,
+     "gain_pct": 0.0,
+     "rounds": 9,
+     "ended": "idle",
+     "curve": [
+      39.0035,
+      39.0035,
+      39.0035,
+      39.0035,
+      39.0035,
+      39.0035,
+      39.0035,
+      39.0035,
+      39.0035,
+      39.0035
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "rhae": 0.2778,
+      "rhae_starter": 0.0
+     },
+     "start": 0.0,
+     "best": 0.3182,
+     "gain_pct": null,
+     "rounds": 7,
+     "ended": "budget_wall",
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.1784,
+      0.1784,
+      0.1784,
+      0.1784,
+      0.3182
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "rhae": 0.0,
+      "rhae_starter": 0.0
+     },
+     "start": 0.0,
+     "best": 0.0,
+     "gain_pct": null,
+     "rounds": 2,
+     "ended": "budget_wall",
+     "curve": [
+      0.0,
+      0.0,
+      0.0
      ]
     }
    ]

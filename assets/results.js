@@ -18,11 +18,12 @@
   const table = $("table.results"), fig = $(".curves-fig"), svg = $(".curves-plot"), legend = $(".legend"), noteEl = $(".board-note");
 
   const PCT = new Set(["accuracy", "acc_vstar", "acc_hrbench8k", "acc_starter", "acc_cooking", "acc_bike", "pair_accuracy", "success", "hos_sr", "hps_sr", "success_rate"]);
+  const DEC2 = new Set(["rhae", "rhae_starter"]);   // ARC-AGI-3 RHAE, 0 to 100
   const fmt = (key, v) => {
     if (v === null || v === undefined) return "–";
     if (PCT.has(key)) return (100 * v).toFixed(1) + "%";
     if (key === "score") return String(Math.round(v));
-    if (key === "avg_steps") return v.toFixed(2);
+    if (key === "avg_steps" || DEC2.has(key)) return v.toFixed(2);
     return v.toFixed(3);
   };
   const fmtAxis = (key, v) => (key === "score" ? String(Math.round(v)) : PCT.has(key) ? (100 * v).toFixed(0) + "%" : v.toFixed(2));
@@ -32,7 +33,7 @@
     const v = (x) => fmt(key, x);
     if (r.start === null || r.start === undefined) return `<span class="to">best</span> <b>${v(r.best)}</b>`;
     const d = r.best - r.start;
-    const dz = PCT.has(key) ? (100 * d).toFixed(1) + " pt" : key === "score" ? String(Math.round(d)) : d.toFixed(3);
+    const dz = PCT.has(key) ? (100 * d).toFixed(1) + " pt" : key === "score" ? String(Math.round(d)) : d.toFixed(DEC2.has(key) ? 2 : 3);
     return `${v(r.start)} <span class="to">→</span> <b>${v(r.best)}</b><span class="delta${d > 0 ? "" : " flat"}">${d > 0 ? "+" : d < 0 ? "−" : "±"}${dz.replace("-", "")}</span>`;
   };
   const ENDED = { max_rounds: "round limit", budget_wall: "time budget", budget_usd: "cost budget", budget_gpu: "GPU budget",

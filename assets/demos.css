@@ -179,3 +179,27 @@
   .ie-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
+
+/* ARC-AGI-2: the demonstrations, then each test input with both solutions' guesses */
+.arc-g { display: block; max-width: 100%; height: auto; shape-rendering: crispEdges; outline: 1.5px solid var(--line); }
+.arc-g rect { stroke: rgba(136, 136, 136, 0.55); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.arc-train { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; margin-bottom: 18px; }
+.arc-pair { display: flex; align-items: center; gap: 8px; margin: 0; }
+.arc-pair .to { font: 500 14px var(--mono); color: var(--ink-3); }
+.arc-tests { display: grid; gap: 16px; }
+.arc-test { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding-top: 14px; border-top: 1.5px solid var(--line); }
+.arc-guesses { display: flex; flex-wrap: wrap; gap: 14px; }
+.arc-guesses figure { margin: 0; }
+.arc-guesses figcaption { margin-top: 5px; font: 700 13px var(--mono); }
+.demo .arc-none { margin: 0; font: 600 12px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.ep-strip .arc-thumb { display: flex; align-items: center; justify-content: center; aspect-ratio: 4 / 3; padding: 8px; background: color-mix(in srgb, var(--ink) 6%, transparent); }
+/* ARC-AGI-3: the same level played by both solutions, side by side */
+.arc-game { font-size: clamp(18px, 2.2vw, 24px); font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.a3-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.a3-video { position: relative; aspect-ratio: 1; background: #0b0d1a; border: 1.5px solid var(--line); }
+.a3-video video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+.a3-strip img { aspect-ratio: 1; object-position: 50% 50%; image-rendering: pixelated; }
+@media (max-width: 760px) {
+  .arc-test { grid-template-columns: minmax(0, 1fr); }
+  .a3-grid { grid-template-columns: minmax(0, 1fr); }
+}
