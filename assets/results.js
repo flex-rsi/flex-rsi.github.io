@@ -78,38 +78,94 @@
 
   // Overview: who has been measured on what. Counts up top, then one bar per model built from one
   // segment per task it was run on, coloured by category; a segment opens that task's leaderboard.
-  // Category colours stay in the page's palette: Klein blue, ink, two tints of the blue, a warm grey
-  // (then a slate and a pale grey for categories still to come). Text is light on the dark ones.
-  const CAT_COLOR = [["#002fa7", "#f4f4f1"], ["#0b0d1a", "#f4f4f1"], ["#6f8fe8", "#0b0d1a"], ["#bccaf2", "#0b0d1a"],
-                     ["#cfccc1", "#0b0d1a"], ["#5d6378", "#f4f4f1"], ["#e6e5df", "#0b0d1a"]];
+  // Category colours from the page's palette, no black: Klein blue and three lighter steps of it, then a
+  // warm sand (a taupe and a pale sand for categories still to come). Text is light on the two darkest.
+  const CAT_COLOR = [["#002fa7", "#f4f4f1"], ["#4567d8", "#f4f4f1"], ["#93a9ef", "#0b0d1a"], ["#cdd7f7", "#0b0d1a"],
+                     ["#ddd5c2", "#0b0d1a"], ["#a39d8c", "#0b0d1a"], ["#ecebe5", "#0b0d1a"]];
   const catPair = (id) => CAT_COLOR[Math.max(0, cats.findIndex((c) => c.id === id)) % CAT_COLOR.length];
   const catColor = (id) => catPair(id)[0];
-  // The task cells scroll sideways under a drawn rail (native scrollbars are hidden or auto-hide on many
-  // systems): the thumb shows the visible share and position; drag it, or click the rail to jump there.
-  let railObs = null;
-  function railSetup() {
-    const sc = cov.querySelector(".cov-scroll"), rail = cov.querySelector(".cov-rail"), thumb = rail.firstElementChild;
+  // Rows wider than the chart move sideways on their own, back and forth and all together: one shared
+  // position f from 0 to 1, each row shifted by f times its own overflow; rows that fit stay still. The
+  // rail below shows f. Dragging the rail or the rows, clicking the rail or scrolling sideways moves them
+  // by hand, and they set off again a few seconds later; hovering the chart pauses them so a cell can be
+  // clicked. With reduced motion they only move by hand.
+  let covLoop = 0, covObs = [];
+  function covMotion() {
+    cancelAnimationFrame(covLoop);
+    covObs.forEach((o) => o.disconnect());
+    covObs = [];
+    const mid = cov.querySelector(".cov-mid"), lanes = mid.querySelector(".cov-lanes");
+    const rail = mid.querySelector(".cov-rail"), thumb = rail.firstElementChild;
+    const bars = [...lanes.querySelectorAll(".cov-bar")];
+    const SPEED = 55, REST = 1800, IDLE = 4000;   // px per second of the longest row; pause at each end; wait after a manual move
+    let over = [], longest = 0, f = 0, dir = 1, hold = performance.now() + 2400, hover = false, inView = true, last = 0;
     const draw = () => {
-      const over = sc.scrollWidth - sc.clientWidth;
-      rail.hidden = over <= 1;
+      bars.forEach((b, i) => (b.style.translate = over[i] ? `${(-f * over[i]).toFixed(1)}px 0` : ""));
+      rail.hidden = longest <= 1;
       if (rail.hidden) return;
-      const w = Math.max(28, (rail.clientWidth * sc.clientWidth) / sc.scrollWidth);
+      const w = Math.max(28, (rail.clientWidth * lanes.clientWidth) / (lanes.clientWidth + longest));
       thumb.style.width = w + "px";
-      thumb.style.transform = `translateX(${(sc.scrollLeft / over) * (rail.clientWidth - w)}px)`;
+      thumb.style.transform = `translateX(${(f * (rail.clientWidth - w)).toFixed(1)}px)`;
     };
-    const to = (x) => {   // x: the thumb's left edge in rail pixels
-      const w = thumb.offsetWidth, room = rail.clientWidth - w;
-      sc.scrollLeft = (Math.min(room, Math.max(0, x)) / (room || 1)) * (sc.scrollWidth - sc.clientWidth);
+    const measure = () => {
+      over = bars.map((b) => Math.max(0, b.scrollWidth - lanes.clientWidth));   // a bar is as wide as its cells
+      longest = Math.max(0, ...over);
+      draw();
     };
+    const set = (v) => { f = Math.min(1, Math.max(0, v)); hold = performance.now() + IDLE; draw(); };
+    const step = (now) => {
+      if (!mid.isConnected || cov.hidden) return;
+      const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
+      last = now;
+      if (!reduced && inView && !hover && longest > 1 && now > hold) {
+        f += (dir * SPEED * dt) / longest;
+        if (f >= 1 || f <= 0) { f = Math.min(1, Math.max(0, f)); dir = -dir; hold = now + REST; }
+        draw();
+      }
+      covLoop = requestAnimationFrame(step);
+    };
+    // the rail: drag the thumb, or click the rail to centre the thumb there
+    const toX = (x) => { const room = rail.clientWidth - thumb.offsetWidth; set(room > 0 ? x / room : 0); };
     let grab = null;
     thumb.addEventListener("pointerdown", (e) => { grab = e.clientX - thumb.getBoundingClientRect().left; thumb.setPointerCapture(e.pointerId); e.preventDefault(); });
-    thumb.addEventListener("pointermove", (e) => { if (grab !== null) to(e.clientX - rail.getBoundingClientRect().left - grab); });
+    thumb.addEventListener("pointermove", (e) => { if (grab !== null) toX(e.clientX - rail.getBoundingClientRect().left - grab); });
     thumb.addEventListener("pointerup", () => (grab = null));
-    rail.addEventListener("pointerdown", (e) => { if (e.target === rail) to(e.clientX - rail.getBoundingClientRect().left - thumb.offsetWidth / 2); });
-    sc.addEventListener("scroll", draw, { passive: true });
-    if (railObs) railObs.disconnect();
-    if ("ResizeObserver" in window) { railObs = new ResizeObserver(draw); railObs.observe(sc); }
-    draw();
+    rail.addEventListener("pointerdown", (e) => { if (e.target === rail) toX(e.clientX - rail.getBoundingClientRect().left - thumb.offsetWidth / 2); });
+    // the rows: drag sideways (a drag does not count as a click on a cell), or scroll sideways
+    let drag = null;
+    lanes.addEventListener("pointerdown", (e) => { if (longest > 1 && e.button === 0) drag = { x: e.clientX, f, moved: false, id: e.pointerId }; });
+    lanes.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x;
+      if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; lanes.setPointerCapture(drag.id); lanes.classList.add("dragging"); }
+      if (drag.moved) set(drag.f - dx / longest);
+    });
+    const endDrag = () => {
+      if (drag && drag.moved) lanes.addEventListener("click", (e) => { e.stopPropagation(); e.preventDefault(); }, { capture: true, once: true });
+      drag = null;
+      lanes.classList.remove("dragging");
+    };
+    lanes.addEventListener("pointerup", endDrag);
+    lanes.addEventListener("pointercancel", () => { drag = null; lanes.classList.remove("dragging"); });
+    lanes.addEventListener("wheel", (e) => {
+      const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.shiftKey ? e.deltaY : 0;
+      if (!d || longest <= 1) return;
+      e.preventDefault();
+      set(f + d / longest);
+    }, { passive: false });
+    lanes.addEventListener("keydown", (e) => {
+      const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (k && longest > 1) { e.preventDefault(); set(f + (k * 130) / longest); }
+    });
+    mid.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hover = true; });
+    mid.addEventListener("pointerleave", () => { hover = false; hold = Math.max(hold, performance.now() + 1200); });
+    if ("ResizeObserver" in window) { const o = new ResizeObserver(measure); o.observe(lanes); covObs.push(o); }
+    if ("IntersectionObserver" in window) {
+      const o = new IntersectionObserver((es) => es.forEach((x) => (inView = x.isIntersecting)), { threshold: 0.2 });
+      o.observe(mid); covObs.push(o);
+    }
+    measure();
+    covLoop = requestAnimationFrame(step);
   }
   function overview() {
     titleEl.textContent = "Overview";
@@ -133,16 +189,16 @@
         <ul class="cov-legend">${cats.map((c) => `<li><i style="background:${catColor(c.id)}"></i>${esc(c.name)}</li>`).join("")}</ul></div>
       <div class="cov-chart">
         <div class="cov-names">${rows.map((r, i) => `<div class="cov-model" style="--i:${i}">${modelMark(r.model)}<span class="model-name">${esc(r.model)}</span>${tag(r.weights)}</div>`).join("")}</div>
-        <div class="cov-mid"><div class="cov-scroll" tabindex="0" aria-label="Tasks per model; scroll sideways for more"><div class="cov-lanes" style="--total:${total}">${rows.map((r, i) =>
+        <div class="cov-mid"><div class="cov-lanes" tabindex="0" aria-label="Tasks per model; rows that do not fit move sideways">${rows.map((r, i) =>
           `<div class="cov-lane" style="--i:${i}"><div class="cov-bar">${r.tasks.map((t) => {
             const [bg, fg] = catPair(t.category);
             return `<button type="button" class="cov-seg" data-cat="${t.category}" data-task="${t.id}" style="--c:${bg};--fg:${fg}" title="${esc(t.track)} · ${esc(r.model)} ranked ${rankOf[t.id][r.model]} of ${t.rows.length}"><span>${esc(t.track)}</span></button>`;
-          }).join("")}</div></div>`).join("")}</div></div>
+          }).join("")}</div></div>`).join("")}</div>
           <div class="cov-rail" hidden><span class="cov-thumb"></span></div></div>
         <div class="cov-counts">${rows.map((r, i) => `<div class="cov-n" style="--i:${i}"><b>${r.tasks.length}</b>/${total}</div>`).join("")}</div>
       </div>`;
     cov.hidden = false;
-    railSetup();
+    covMotion();
     $(".board-scroll").hidden = true;
     fig.hidden = true;
     noteEl.textContent = `Hover a segment for that model's rank on the task; click it to open the task. Updated ${data.updated}.`;
