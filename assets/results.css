@@ -170,36 +170,46 @@ table.results tbody tr.podium-1 td.model, table.results tbody tr.podium-1 td.str
 .cov-stat span { display: block; margin-top: 8px; font: 500 10.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
 .cov-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px; margin: 26px 0 10px;
             font: 500 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
-.cov-legend { list-style: none; display: flex; gap: 6px 16px; margin: 0; padding: 0; color: var(--ink-3); }
+.cov-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; color: var(--ink-3); }
 .cov-legend li { display: flex; align-items: center; gap: 6px; }
 .cov-legend i { width: 10px; height: 10px; }
 
-.cov-chart { --model-w: 270px; --n-w: 48px; }
-.cov-axis, .cov-row { display: grid; grid-template-columns: var(--model-w) minmax(0, 1fr) var(--n-w); align-items: center; gap: 0 14px; }
-.cov-ticks { position: relative; height: 18px; font: 500 10px var(--mono); color: var(--ink-3); }
-.cov-ticks span { position: absolute; top: 0; transform: translateX(-50%); }
-.cov-ticks span:first-child { transform: none; }
-.cov-ticks span:last-child { transform: translateX(-100%); }
-.cov-row { height: 44px; border-top: 1px solid var(--line); }
-.cov-row:last-child { border-bottom: 1px solid var(--line); }
-.cov-model { display: flex; align-items: center; gap: 10px; min-width: 0; font-weight: 600; font-size: 14px; color: var(--ink); white-space: nowrap; }
+/* Three columns: model names and counts stay put, the task cells between them scroll sideways as one.
+   A cell is a sixth of the visible width (at least 92 px), so its task name can be read; every lane
+   shows one faint slot per task, filled where the model was run. */
+.cov-chart { --model-w: 240px; --n-w: 66px; --row-h: 48px; display: grid; grid-template-columns: var(--model-w) minmax(0, 1fr) var(--n-w); }
+.cov-names > *, .cov-lane, .cov-counts > * { height: var(--row-h); border-top: 1px solid var(--line); }
+.cov-names > :last-child, .cov-lane:last-child, .cov-counts > :last-child { border-bottom: 1px solid var(--line); }
+.cov-model { display: flex; align-items: center; gap: 10px; min-width: 0; padding-right: 14px; font-weight: 600; font-size: 14px; color: var(--ink); white-space: nowrap; }
 .cov-model .model-name { overflow: hidden; text-overflow: ellipsis; }
-.cov-track { position: relative; height: 24px;
-  background: repeating-linear-gradient(90deg, transparent 0 calc(25% - 1px), var(--line) calc(25% - 1px) 25%); }
-.cov-bar { display: flex; height: 100%; gap: 2px; transform-origin: left center; }
+.cov-mid { min-width: 0; }
+.cov-scroll { container-type: inline-size; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: none; }
+.cov-scroll::-webkit-scrollbar { display: none; }
+.cov-scroll:focus-visible { outline: 1.5px solid var(--accent-1); outline-offset: 2px; }
+.cov-rail { position: relative; height: 8px; margin-top: 12px; background: var(--line); cursor: pointer; touch-action: none; }
+.cov-rail[hidden] { display: none; }
+.cov-thumb { position: absolute; top: 0; left: 0; height: 100%; background: var(--ink-3); cursor: grab; transition: background 0.2s var(--ease); }
+.cov-thumb:hover, .cov-thumb:active { background: var(--accent-1); }
+.cov-thumb:active { cursor: grabbing; }
+.cov-lanes { --gap: 2px; --cell: max(92px, calc((100cqw - 5 * var(--gap)) / 6));
+  width: calc(var(--total) * (var(--cell) + var(--gap)) - var(--gap)); min-width: 100%; }
+.cov-lane { display: flex; align-items: center;
+  background: repeating-linear-gradient(90deg, rgba(11, 13, 26, 0.045) 0 var(--cell), transparent var(--cell) calc(var(--cell) + var(--gap)))
+              0 50% / 100% 32px no-repeat; }
+.cov-bar { display: flex; height: 32px; gap: var(--gap); transform-origin: left center; }
 .cov-seg {
-  position: relative; display: flex; align-items: center; min-width: 0; padding: 0 8px; margin: 0;
-  border: 0; border-radius: 0; background: var(--c); color: #f4f4f1; cursor: pointer;
-  font: 500 10.5px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; text-align: left;
+  position: relative; display: flex; align-items: center; flex: 0 0 var(--cell); min-width: 0; padding: 0 8px; margin: 0;
+  border: 0; border-radius: 0; background: var(--c); color: var(--fg, #f4f4f1); cursor: pointer;
+  font: 600 11.5px/1.15 var(--sans, inherit); letter-spacing: -0.005em; text-align: left;
   transition: filter 0.2s var(--ease), transform 0.2s var(--ease);
 }
-.cov-seg span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cov-seg:hover, .cov-seg:focus-visible { filter: brightness(1.18); transform: translateY(-2px); outline: none; box-shadow: 0 3px 0 var(--ink); }
-.cov-n { font: 500 12px var(--mono); color: var(--ink-3); text-align: right; }
+.cov-seg span { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; }
+.cov-seg:hover, .cov-seg:focus-visible { filter: brightness(1.12); transform: translateY(-2px); outline: none; box-shadow: 0 3px 0 var(--ink); }
+.cov-n { display: flex; align-items: center; justify-content: flex-end; gap: 1px; padding-left: 10px; font: 500 12px var(--mono); color: var(--ink-3); white-space: nowrap; }
 .cov-n b { font-size: 15px; color: var(--ink); }
 
-.cov.play .cov-bar { animation: cov-grow 0.9s var(--ease) both; animation-delay: calc(var(--i) * 70ms + 120ms); }
-.cov.play .cov-seg span { animation: cov-fade 0.4s var(--ease) both; animation-delay: calc(var(--i) * 70ms + 700ms); }
+.cov.play .cov-bar { animation: cov-grow 0.9s var(--ease) both; animation-delay: calc(var(--i) * 60ms + 120ms); }
+.cov.play .cov-lane .cov-seg span { animation: cov-fade 0.4s var(--ease) both; animation-delay: calc(var(--i) * 60ms + 700ms); }
 .cov.play .cov-model, .cov.play .cov-n { animation: cov-fade 0.5s var(--ease) both; animation-delay: calc(var(--i) * 70ms); }
 @keyframes cov-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes cov-fade { from { opacity: 0; } to { opacity: 1; } }
@@ -208,12 +218,13 @@ table.results tbody tr.podium-1 td.model, table.results tbody tr.podium-1 td.str
   .cov-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 14px; }
   .cov-stat, .cov-stat + .cov-stat { padding: 12px 0 10px; border-left: 0; }
   .cov-stat b { font-size: 30px; }
-  .cov-chart { --model-w: 1fr; --n-w: 36px; }
-  .cov-axis { display: none; }
-  .cov-row { grid-template-columns: minmax(0, 1fr) var(--n-w); grid-template-rows: auto auto; height: auto; padding: 10px 0; gap: 8px 10px; }
-  .cov-track { grid-column: 1 / -1; grid-row: 2; }
+  .cov-chart { --model-w: 112px; --n-w: 50px; --row-h: 44px; }
+  .cov-n { padding-left: 8px; font-size: 11px; }
+  .cov-n b { font-size: 13px; }
+  .cov-model { gap: 6px; padding-right: 8px; font-size: 12px; }
   .cov-model .wtag { display: none; }
-  .cov-seg span { display: none; }
+  .cov-lanes { --cell: max(84px, calc((100cqw - 5 * var(--gap)) / 6)); }
+  .cov-seg { padding: 0 6px; font-size: 11px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .cov.play .cov-bar, .cov.play .cov-seg span, .cov.play .cov-model, .cov.play .cov-n { animation: none; }

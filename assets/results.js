@@ -78,8 +78,39 @@
 
   // Overview: who has been measured on what. Counts up top, then one bar per model built from one
   // segment per task it was run on, coloured by category; a segment opens that task's leaderboard.
-  const CAT_COLOR = ["var(--accent-1)", "#6f8fe8", "var(--ink)", "#b07700", "#00937c", "#7b4cc4", "#c93f7c"];
-  const catColor = (id) => CAT_COLOR[cats.findIndex((c) => c.id === id) % CAT_COLOR.length];
+  // Category colours stay in the page's palette: Klein blue, ink, two tints of the blue, a warm grey
+  // (then a slate and a pale grey for categories still to come). Text is light on the dark ones.
+  const CAT_COLOR = [["#002fa7", "#f4f4f1"], ["#0b0d1a", "#f4f4f1"], ["#6f8fe8", "#0b0d1a"], ["#bccaf2", "#0b0d1a"],
+                     ["#cfccc1", "#0b0d1a"], ["#5d6378", "#f4f4f1"], ["#e6e5df", "#0b0d1a"]];
+  const catPair = (id) => CAT_COLOR[Math.max(0, cats.findIndex((c) => c.id === id)) % CAT_COLOR.length];
+  const catColor = (id) => catPair(id)[0];
+  // The task cells scroll sideways under a drawn rail (native scrollbars are hidden or auto-hide on many
+  // systems): the thumb shows the visible share and position; drag it, or click the rail to jump there.
+  let railObs = null;
+  function railSetup() {
+    const sc = cov.querySelector(".cov-scroll"), rail = cov.querySelector(".cov-rail"), thumb = rail.firstElementChild;
+    const draw = () => {
+      const over = sc.scrollWidth - sc.clientWidth;
+      rail.hidden = over <= 1;
+      if (rail.hidden) return;
+      const w = Math.max(28, (rail.clientWidth * sc.clientWidth) / sc.scrollWidth);
+      thumb.style.width = w + "px";
+      thumb.style.transform = `translateX(${(sc.scrollLeft / over) * (rail.clientWidth - w)}px)`;
+    };
+    const to = (x) => {   // x: the thumb's left edge in rail pixels
+      const w = thumb.offsetWidth, room = rail.clientWidth - w;
+      sc.scrollLeft = (Math.min(room, Math.max(0, x)) / (room || 1)) * (sc.scrollWidth - sc.clientWidth);
+    };
+    let grab = null;
+    thumb.addEventListener("pointerdown", (e) => { grab = e.clientX - thumb.getBoundingClientRect().left; thumb.setPointerCapture(e.pointerId); e.preventDefault(); });
+    thumb.addEventListener("pointermove", (e) => { if (grab !== null) to(e.clientX - rail.getBoundingClientRect().left - grab); });
+    thumb.addEventListener("pointerup", () => (grab = null));
+    rail.addEventListener("pointerdown", (e) => { if (e.target === rail) to(e.clientX - rail.getBoundingClientRect().left - thumb.offsetWidth / 2); });
+    sc.addEventListener("scroll", draw, { passive: true });
+    if (railObs) railObs.disconnect();
+    if ("ResizeObserver" in window) { railObs = new ResizeObserver(draw); railObs.observe(sc); }
+    draw();
+  }
   function overview() {
     titleEl.textContent = "Overview";
     leadEl.textContent = "Which frontier models have been run on which tasks so far. Standings are kept per task, so a model is only compared where it was measured: open a category for its rankings and improvement curves.";
@@ -96,21 +127,22 @@
     const total = data.tasks.length, runs = data.tasks.reduce((n, t) => n + t.rows.length, 0);
     const rounds = data.tasks.reduce((n, t) => n + t.rows.reduce((k, r) => k + (r.rounds || 0), 0), 0);
     const stat = (n, label) => `<div class="cov-stat"><b data-n="${n}">0</b><span>${label}</span></div>`;
-    const ticks = Array.from({ length: total + 1 }, (_, k) => `<span style="left:${(100 * k) / total}%">${k}</span>`).join("");
     cov.innerHTML = `
       <div class="cov-stats">${stat(rows.length, "frontier models")}${stat(total, "tasks")}${stat(cats.length, "categories")}${stat(runs, "model × task runs")}${stat(rounds, "total RSI rounds")}</div>
       <div class="cov-head"><span>Tasks each model has been run on</span>
         <ul class="cov-legend">${cats.map((c) => `<li><i style="background:${catColor(c.id)}"></i>${esc(c.name)}</li>`).join("")}</ul></div>
       <div class="cov-chart">
-        <div class="cov-axis"><span class="cov-axis-pad"></span><div class="cov-ticks">${ticks}</div><span class="cov-axis-n"></span></div>
-        ${rows.map((r, i) => `<div class="cov-row" style="--i:${i}">
-          <div class="cov-model">${modelMark(r.model)}<span class="model-name">${esc(r.model)}</span>${tag(r.weights)}</div>
-          <div class="cov-track"><div class="cov-bar">${r.tasks.map((t) =>
-            `<button type="button" class="cov-seg" data-cat="${t.category}" data-task="${t.id}" style="width:${100 / total}%;--c:${catColor(t.category)}" title="${esc(t.track)} · ${esc(r.model)} ranked ${rankOf[t.id][r.model]} of ${t.rows.length}"><span>${esc(t.track)}</span></button>`).join("")}</div></div>
-          <div class="cov-n"><b>${r.tasks.length}</b>/${total}</div>
-        </div>`).join("")}
+        <div class="cov-names">${rows.map((r, i) => `<div class="cov-model" style="--i:${i}">${modelMark(r.model)}<span class="model-name">${esc(r.model)}</span>${tag(r.weights)}</div>`).join("")}</div>
+        <div class="cov-mid"><div class="cov-scroll" tabindex="0" aria-label="Tasks per model; scroll sideways for more"><div class="cov-lanes" style="--total:${total}">${rows.map((r, i) =>
+          `<div class="cov-lane" style="--i:${i}"><div class="cov-bar">${r.tasks.map((t) => {
+            const [bg, fg] = catPair(t.category);
+            return `<button type="button" class="cov-seg" data-cat="${t.category}" data-task="${t.id}" style="--c:${bg};--fg:${fg}" title="${esc(t.track)} · ${esc(r.model)} ranked ${rankOf[t.id][r.model]} of ${t.rows.length}"><span>${esc(t.track)}</span></button>`;
+          }).join("")}</div></div>`).join("")}</div></div>
+          <div class="cov-rail" hidden><span class="cov-thumb"></span></div></div>
+        <div class="cov-counts">${rows.map((r, i) => `<div class="cov-n" style="--i:${i}"><b>${r.tasks.length}</b>/${total}</div>`).join("")}</div>
       </div>`;
     cov.hidden = false;
+    railSetup();
     $(".board-scroll").hidden = true;
     fig.hidden = true;
     noteEl.textContent = `Hover a segment for that model's rank on the task; click it to open the task. Updated ${data.updated}.`;
