@@ -31,11 +31,21 @@
     r.x = r.dir > 0 ? 0 : setW * 0.35;            // start the two rows out of step
     if (clips) r.track.querySelectorAll("video").forEach((v) => clips.observe(v));
   });
-  const measure = () => rows.forEach((r) => (r.w = r.clone.offsetLeft - r.first.offsetLeft));
+  // Whole-pixel motion: clips are drawn on the pixel grid, so a row moved by fractions of a pixel makes them
+  // jitter against their frames and captions. Tiles get whole-pixel widths (so a copy of the set is a whole
+  // number of pixels wide) and every step is rounded to the screen's device pixels.
+  const measure = () => rows.forEach((r) => {
+    const tiles = [...r.track.children];
+    tiles.forEach((t) => (t.style.width = ""));
+    const ws = tiles.map((t) => Math.round(t.getBoundingClientRect().width));
+    tiles.forEach((t, i) => (t.style.width = `${ws[i]}px`));
+    r.w = r.clone.offsetLeft - r.first.offsetLeft;
+  });
   measure();
   window.addEventListener("resize", measure, { passive: true });
 
-  const SPEED = 24;                                  // px per second
+  const SPEED = 30;                                  // px per second: a pixel every other frame at 60 Hz
+  const snap = (x) => { const d = window.devicePixelRatio || 1; return Math.round(x * d) / d; };
   let v = SPEED, target = SPEED, last = 0, raf = 0;
   const frame = (now) => {
     const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
@@ -43,7 +53,7 @@
     v += (target - v) * Math.min(1, dt * 5);
     rows.forEach((r) => {
       r.x = (r.x + v * dt) % r.w;
-      r.track.style.transform = `translate3d(${(r.dir < 0 ? -r.x : r.x - r.w).toFixed(2)}px, 0, 0)`;
+      r.track.style.transform = `translate3d(${snap(r.dir < 0 ? -r.x : r.x - r.w)}px, 0, 0)`;
     });
     raf = requestAnimationFrame(frame);
   };
