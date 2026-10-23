@@ -48,22 +48,24 @@
   font-size: 20px; font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase;
 }
 .pg-n { font: 500 12px var(--mono); letter-spacing: 0.06em; color: var(--accent-1); }
-.people-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
-.person {
-  display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 14px; align-content: start;
-  padding: 16px 16px 18px; border: 1.5px solid var(--ink); background: var(--bg);
+/* organizers: photo, name, role and interests; the whole card links to their homepage */
+.org-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.org {
+  display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; height: 100%;
+  padding: 14px 16px 14px 14px; border: 1.5px solid var(--ink); background: var(--bg);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
-.p-mark {
-  grid-row: span 2; display: grid; place-items: center; width: 48px; height: 48px;
-  background: var(--ink); color: var(--bg); font: 800 16px var(--sans); letter-spacing: 0.02em;
+.org:hover, .org:focus-visible { transform: translate(-3px, -3px); box-shadow: 5px 5px 0 var(--accent-1); outline: none; }
+.org-photo { display: block; width: 112px; height: 112px; object-fit: cover; }
+.org-body { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.org-name { display: flex; align-items: baseline; gap: 6px; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.25; }
+.org-link { font-size: 14px; color: var(--accent-1); }
+.org-role { font: 500 11px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-1); }
+.org-about { font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+.pg-empty {
+  padding: 16px; border: 1.5px dashed var(--ink-3); color: var(--ink-3);
+  font: 500 12px var(--mono); letter-spacing: 0.06em; text-transform: uppercase;
 }
-.person.org .p-mark { background: var(--accent-1); color: #fff; }
-.p-name { font-size: 16px; font-weight: 700; line-height: 1.3; }
-.p-work { margin-top: 4px; font: 500 11px/1.55 var(--mono); letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-3); }
-.p-soon { display: inline-block; margin-left: 4px; padding: 0 5px; border: 1px solid var(--ink-3); font-size: 9.5px; }
-.person.tba { border-style: dashed; }
-.person.tba .p-mark { background: none; color: var(--ink-3); border: 1.5px dashed var(--ink-3); }
-.person.tba .p-name { align-self: center; color: var(--ink-3); }
 
 /* ---------- contribute: the call for contributions ---------- */
 .open-call {
