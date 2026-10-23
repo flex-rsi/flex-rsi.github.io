@@ -4447,137 +4447,327 @@
    ]
   },
   {
-   "id": "robot-control",
+   "id": "robodojo",
    "category": "action",
-   "track": "Robot Control",
-   "task": "Robot control: throw bottles into a dustbin (RoboDojo)",
-   "primary": "score",
+   "track": "RoboDojo",
+   "task": "A dual-arm ARX X5 robot with the model as its policy, across the RoboDojo tasks (score 0\u2013100 per task)",
+   "primary": "pts_suite",
    "metrics": [
     {
-     "key": "score",
-     "label": "Score (0\u2013100)"
+     "key": "pts_suite",
+     "label": "Suite"
     },
     {
-     "key": "success_rate",
-     "label": "Success rate"
+     "key": "tasks_run",
+     "label": "Tasks (of 10)"
+    },
+    {
+     "key": "pts_put-bottles-into-dustbin",
+     "label": "Bottles"
+    },
+    {
+     "key": "pts_arrange-largest-number",
+     "label": "Largest number"
+    },
+    {
+     "key": "pts_fold-clothes",
+     "label": "Fold clothes"
+    },
+    {
+     "key": "pts_insert-tubes",
+     "label": "Insert tubes"
+    },
+    {
+     "key": "pts_fill-egg-holder",
+     "label": "Egg holder"
+    },
+    {
+     "key": "pts_pick-from-conveyor-by-image",
+     "label": "Conveyor pick"
+    },
+    {
+     "key": "pts_play-tic-tac-toe",
+     "label": "Tic-tac-toe"
+    },
+    {
+     "key": "pts_play-xylophone",
+     "label": "Xylophone"
+    },
+    {
+     "key": "pts_push-t",
+     "label": "Push-T"
+    },
+    {
+     "key": "pts_sort-nesting-dolls-by-size",
+     "label": "Nesting dolls"
     }
+   ],
+   "footnotes": [
+    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Per task, the model's latest run with a final test."
    ],
    "rows": [
     {
      "model": "Claude Opus 5.5",
      "weights": "closed",
      "test": {
-      "score": 70.0,
-      "success_rate": 0.6
+      "pts_put-bottles-into-dustbin": 70.0,
+      "pts_arrange-largest-number": 27.0,
+      "pts_fold-clothes": 68.0,
+      "pts_insert-tubes": 72.0,
+      "pts_fill-egg-holder": 19.0,
+      "pts_pick-from-conveyor-by-image": 0.0,
+      "pts_play-tic-tac-toe": 95.0,
+      "pts_play-xylophone": 100.0,
+      "pts_push-t": 80.0,
+      "pts_sort-nesting-dolls-by-size": 20.0,
+      "pts_suite": 55.1,
+      "tasks_run": 10
      },
-     "start": 5.0,
-     "best": 76.0,
-     "gain_pct": 1420.0,
-     "rounds": 10,
+     "start": 0.5,
+     "best": 68.9,
+     "gain_pct": 13680.0,
+     "rounds": 100,
      "ended": null,
      "curve": [
-      5.0,
-      5.0,
-      34.0,
-      34.0,
-      34.0,
-      46.0,
-      64.0,
-      64.0,
-      64.0,
-      76.0,
-      76.0
+      0.5,
+      8.5,
+      32.6,
+      47.8,
+      55.0,
+      60.6,
+      65.3,
+      66.5,
+      67.7,
+      68.9,
+      68.9
+     ]
+    },
+    {
+     "model": "Gemini 4 Argon",
+     "weights": "closed",
+     "test": {
+      "pts_put-bottles-into-dustbin": 70.0,
+      "pts_arrange-largest-number": 71.0,
+      "pts_insert-tubes": 100.0,
+      "pts_play-tic-tac-toe": 100.0,
+      "pts_push-t": 40.0,
+      "pts_suite": 38.1,
+      "tasks_run": 5
+     },
+     "start": 0.9,
+     "best": 36.5,
+     "gain_pct": 3955.6,
+     "rounds": 40,
+     "ended": null,
+     "curve": [
+      0.9,
+      3.7,
+      14.3,
+      32.2,
+      32.5,
+      34.5,
+      36.5,
+      36.5,
+      36.5,
+      36.5,
+      36.5
      ]
     },
     {
      "model": "GPT-6 Astra",
      "weights": "closed",
      "test": {
-      "score": 37.0,
-      "success_rate": 0.0
+      "pts_put-bottles-into-dustbin": 37.0,
+      "pts_arrange-largest-number": 18.0,
+      "pts_fold-clothes": 4.0,
+      "pts_insert-tubes": 0.0,
+      "pts_fill-egg-holder": 7.0,
+      "pts_pick-from-conveyor-by-image": 40.0,
+      "pts_play-tic-tac-toe": 100.0,
+      "pts_play-xylophone": 80.0,
+      "pts_push-t": 0.0,
+      "pts_sort-nesting-dolls-by-size": 0.0,
+      "pts_suite": 28.6,
+      "tasks_run": 10
      },
-     "start": 7.0,
-     "best": 31.0,
-     "gain_pct": 342.9,
-     "rounds": 10,
+     "start": 0.7,
+     "best": 30.0,
+     "gain_pct": 4185.7,
+     "rounds": 100,
      "ended": null,
      "curve": [
-      7.0,
-      23.0,
-      31.0,
-      31.0,
-      31.0,
-      31.0,
-      31.0,
-      31.0,
-      31.0,
-      31.0,
-      31.0
+      0.7,
+      5.0,
+      10.2,
+      13.0,
+      17.0,
+      17.0,
+      17.0,
+      17.8,
+      22.0,
+      24.0,
+      30.0
      ]
     },
     {
-     "model": "Qwen3.8-Flash-Next",
+     "model": "DeepSeek-V4.1 Flash 1017",
      "weights": "open",
      "test": {
-      "score": 9.0,
-      "success_rate": 0.0
+      "pts_put-bottles-into-dustbin": 16.0,
+      "pts_arrange-largest-number": 11.0,
+      "pts_fold-clothes": 0.0,
+      "pts_insert-tubes": 16.0,
+      "pts_fill-egg-holder": 0.0,
+      "pts_pick-from-conveyor-by-image": 0.0,
+      "pts_play-tic-tac-toe": 75.0,
+      "pts_play-xylophone": 60.0,
+      "pts_push-t": 0.0,
+      "pts_sort-nesting-dolls-by-size": 0.0,
+      "pts_suite": 17.8,
+      "tasks_run": 10
      },
      "start": 0.0,
-     "best": 4.0,
+     "best": 18.7,
      "gain_pct": null,
-     "rounds": 10,
+     "rounds": 100,
      "ended": null,
      "curve": [
       0.0,
       0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      4.0
+      0.1,
+      2.7,
+      3.5,
+      13.2,
+      17.6,
+      17.6,
+      17.7,
+      18.7,
+      18.7
      ]
     },
     {
      "model": "GPT-6.1 Sol",
      "weights": "closed",
      "test": {
-      "score": 6.0,
-      "success_rate": 0.0
+      "pts_put-bottles-into-dustbin": 6.0,
+      "pts_arrange-largest-number": 21.0,
+      "pts_fold-clothes": 12.0,
+      "pts_insert-tubes": 4.0,
+      "pts_fill-egg-holder": 0.0,
+      "pts_pick-from-conveyor-by-image": 0.0,
+      "pts_play-tic-tac-toe": 75.0,
+      "pts_play-xylophone": 0.0,
+      "pts_push-t": 0.0,
+      "pts_sort-nesting-dolls-by-size": 0.0,
+      "pts_suite": 11.8,
+      "tasks_run": 10
      },
-     "start": 2.0,
-     "best": 4.0,
-     "gain_pct": 100.0,
-     "rounds": 10,
+     "start": 0.2,
+     "best": 18.9,
+     "gain_pct": 9350.0,
+     "rounds": 112,
      "ended": null,
      "curve": [
-      2.0,
-      2.0,
-      2.0,
-      2.0,
-      2.0,
-      2.0,
-      2.0,
-      2.0,
-      2.0,
-      2.0,
-      4.0
+      0.2,
+      2.2,
+      10.6,
+      14.3,
+      16.3,
+      16.7,
+      16.7,
+      18.7,
+      18.7,
+      18.7,
+      18.7,
+      18.7,
+      18.7,
+      18.7,
+      18.7,
+      18.7,
+      18.9,
+      18.9,
+      18.9,
+      18.9,
+      18.9,
+      18.9,
+      18.9
+     ]
+    },
+    {
+     "model": "Muse Wonder 1.0",
+     "weights": "closed",
+     "test": {
+      "pts_put-bottles-into-dustbin": 6.0,
+      "pts_insert-tubes": 0.0,
+      "pts_play-tic-tac-toe": 90.0,
+      "pts_suite": 9.6,
+      "tasks_run": 3
+     },
+     "start": 0.0,
+     "best": 9.6,
+     "gain_pct": null,
+     "rounds": 30,
+     "ended": null,
+     "curve": [
+      0.0,
+      7.5,
+      8.1,
+      9.1,
+      9.1,
+      9.1,
+      9.6,
+      9.6,
+      9.6,
+      9.6,
+      9.6
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "pts_put-bottles-into-dustbin": 9.0,
+      "pts_arrange-largest-number": 0.0,
+      "pts_fold-clothes": 0.0,
+      "pts_insert-tubes": 0.0,
+      "pts_play-tic-tac-toe": 75.0,
+      "pts_push-t": 0.0,
+      "pts_suite": 8.4,
+      "tasks_run": 6
+     },
+     "start": 0.0,
+     "best": 7.9,
+     "gain_pct": null,
+     "rounds": 60,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      5.0,
+      7.5,
+      7.5,
+      7.9
      ]
     },
     {
      "model": "GLM-5.3 Flash",
      "weights": "open",
      "test": {
-      "score": 2.0,
-      "success_rate": 0.0
+      "pts_put-bottles-into-dustbin": 2.0,
+      "pts_play-tic-tac-toe": 0.0,
+      "pts_push-t": 0.0,
+      "pts_suite": 0.2,
+      "tasks_run": 3
      },
      "start": 0.0,
      "best": 0.0,
      "gain_pct": null,
-     "rounds": 10,
+     "rounds": 30,
      "ended": null,
      "curve": [
       0.0,
@@ -4597,34 +4787,9 @@
      "model": "Gemma-4-31B-it",
      "weights": "open",
      "test": {
-      "score": 2.0,
-      "success_rate": 0.0
-     },
-     "start": 0.0,
-     "best": 0.0,
-     "gain_pct": null,
-     "rounds": 10,
-     "ended": null,
-     "curve": [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
-     ]
-    },
-    {
-     "model": "Qwen3.8-27B",
-     "weights": "open",
-     "test": {
-      "score": 0.0,
-      "success_rate": 0.0
+      "pts_put-bottles-into-dustbin": 2.0,
+      "pts_suite": 0.2,
+      "tasks_run": 1
      },
      "start": 0.0,
      "best": 0.0,
@@ -4649,13 +4814,23 @@
      "model": "MiniMax-M3",
      "weights": "open",
      "test": {
-      "score": 0.0,
-      "success_rate": 0.0
+      "pts_put-bottles-into-dustbin": 0.0,
+      "pts_arrange-largest-number": 0.0,
+      "pts_fold-clothes": 0.0,
+      "pts_insert-tubes": 0.0,
+      "pts_fill-egg-holder": 0.0,
+      "pts_pick-from-conveyor-by-image": 0.0,
+      "pts_play-tic-tac-toe": 0.0,
+      "pts_play-xylophone": 0.0,
+      "pts_push-t": 0.0,
+      "pts_sort-nesting-dolls-by-size": 0.0,
+      "pts_suite": 0.0,
+      "tasks_run": 10
      },
      "start": 0.0,
      "best": 0.0,
      "gain_pct": null,
-     "rounds": 10,
+     "rounds": 100,
      "ended": null,
      "curve": [
       0.0,
@@ -4675,26 +4850,460 @@
      "model": "Gemini 3.8 Flash",
      "weights": "closed",
      "test": {
-      "score": 0.0,
-      "success_rate": 0.0
+      "pts_put-bottles-into-dustbin": 0.0,
+      "pts_suite": 0.0,
+      "tasks_run": 1
      },
-     "start": null,
-     "best": 5.0,
+     "start": 0.0,
+     "best": 0.5,
      "gain_pct": null,
      "rounds": 10,
      "ended": null,
      "curve": [
-      null,
-      null,
-      null,
       0.0,
-      5.0,
-      5.0,
-      5.0,
-      5.0,
-      5.0,
-      5.0,
-      5.0
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "pts_put-bottles-into-dustbin": 0.0,
+      "pts_suite": 0.0,
+      "tasks_run": 1
+     },
+     "start": 0.0,
+     "best": 0.0,
+     "gain_pct": null,
+     "rounds": 10,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  },
+  {
+   "id": "robocasa",
+   "category": "action",
+   "track": "RoboCasa",
+   "task": "A mobile manipulator in a simulated kitchen with the model as its policy, across the RoboCasa tasks (success rate per task)",
+   "primary": "sr_suite",
+   "metrics": [
+    {
+     "key": "sr_suite",
+     "label": "Suite"
+    },
+    {
+     "key": "tasks_run",
+     "label": "Tasks (of 9)"
+    },
+    {
+     "key": "sr_coffee-setup-mug",
+     "label": "Coffee mug"
+    },
+    {
+     "key": "sr_heat-kebab-sandwich",
+     "label": "Kebab sandwich"
+    },
+    {
+     "key": "sr_kettle-boiling",
+     "label": "Kettle"
+    },
+    {
+     "key": "sr_open-cabinet",
+     "label": "Cabinet"
+    },
+    {
+     "key": "sr_open-drawer",
+     "label": "Drawer"
+    },
+    {
+     "key": "sr_portion-hot-dogs",
+     "label": "Hot dogs"
+    },
+    {
+     "key": "sr_turn-off-stove",
+     "label": "Stove off"
+    },
+    {
+     "key": "sr_turn-on-microwave",
+     "label": "Microwave"
+    },
+    {
+     "key": "sr_turn-on-sink-faucet",
+     "label": "Faucet"
+    }
+   ],
+   "footnotes": [
+    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Per task, the model's latest run with a final test."
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "sr_coffee-setup-mug": 0.0,
+      "sr_kettle-boiling": 0.4,
+      "sr_open-cabinet": 0.6,
+      "sr_open-drawer": 1.0,
+      "sr_turn-off-stove": 0.2,
+      "sr_turn-on-microwave": 1.0,
+      "sr_turn-on-sink-faucet": 0.8,
+      "sr_suite": 0.4444,
+      "tasks_run": 7
+     },
+     "start": 0.0444,
+     "best": 0.4889,
+     "gain_pct": 1001.1,
+     "rounds": 95,
+     "ended": null,
+     "curve": [
+      0.0444,
+      0.2222,
+      0.2889,
+      0.3111,
+      0.3778,
+      0.4,
+      0.4222,
+      0.4222,
+      0.4444,
+      0.4667,
+      0.4667,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889
+     ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "sr_coffee-setup-mug": 0.6,
+      "sr_open-cabinet": 0.0,
+      "sr_open-drawer": 0.8,
+      "sr_turn-off-stove": 0.4,
+      "sr_turn-on-microwave": 0.8,
+      "sr_turn-on-sink-faucet": 0.0,
+      "sr_suite": 0.2889,
+      "tasks_run": 6
+     },
+     "start": 0.0,
+     "best": 0.3111,
+     "gain_pct": null,
+     "rounds": 54,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0889,
+      0.1556,
+      0.1556,
+      0.1778,
+      0.2,
+      0.2,
+      0.2667,
+      0.2667,
+      0.2667,
+      0.3111
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "sr_coffee-setup-mug": 0.4,
+      "sr_kettle-boiling": 0.0,
+      "sr_open-cabinet": 0.2,
+      "sr_open-drawer": 0.8,
+      "sr_turn-on-microwave": 0.6,
+      "sr_turn-on-sink-faucet": 0.2,
+      "sr_suite": 0.2444,
+      "tasks_run": 6
+     },
+     "start": 0.0,
+     "best": 0.3111,
+     "gain_pct": null,
+     "rounds": 52,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.1778,
+      0.2,
+      0.2222,
+      0.2222,
+      0.2222,
+      0.2444,
+      0.2889,
+      0.3111,
+      0.3111,
+      0.3111,
+      0.3111
+     ]
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "weights": "open",
+     "test": {
+      "sr_coffee-setup-mug": 0.0,
+      "sr_heat-kebab-sandwich": 0.0,
+      "sr_kettle-boiling": 0.0,
+      "sr_open-cabinet": 0.0,
+      "sr_portion-hot-dogs": 0.0,
+      "sr_turn-off-stove": 0.0,
+      "sr_turn-on-microwave": 0.0,
+      "sr_turn-on-sink-faucet": 0.6,
+      "sr_suite": 0.0667,
+      "tasks_run": 8
+     },
+     "start": 0.0,
+     "best": 0.0667,
+     "gain_pct": null,
+     "rounds": 80,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0667
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "sr_coffee-setup-mug": 0.0,
+      "sr_heat-kebab-sandwich": 0.0,
+      "sr_kettle-boiling": 0.0,
+      "sr_open-cabinet": 0.0,
+      "sr_open-drawer": 0.0,
+      "sr_portion-hot-dogs": 0.0,
+      "sr_turn-off-stove": 0.0,
+      "sr_turn-on-microwave": 0.2,
+      "sr_turn-on-sink-faucet": 0.2,
+      "sr_suite": 0.0444,
+      "tasks_run": 9
+     },
+     "start": 0.0222,
+     "best": 0.1111,
+     "gain_pct": 400.5,
+     "rounds": 125,
+     "ended": null,
+     "curve": [
+      0.0222,
+      0.0222,
+      0.0667,
+      0.0889,
+      0.0889,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "sr_coffee-setup-mug": 0.0,
+      "sr_heat-kebab-sandwich": 0.0,
+      "sr_kettle-boiling": 0.0,
+      "sr_open-cabinet": 0.0,
+      "sr_open-drawer": 0.0,
+      "sr_portion-hot-dogs": 0.0,
+      "sr_turn-off-stove": 0.0,
+      "sr_turn-on-microwave": 0.2,
+      "sr_turn-on-sink-faucet": 0.0,
+      "sr_suite": 0.0222,
+      "tasks_run": 9
+     },
+     "start": 0.0,
+     "best": 0.0111,
+     "gain_pct": null,
+     "rounds": 86,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0111,
+      0.0111,
+      0.0111,
+      0.0111,
+      0.0111,
+      0.0111,
+      0.0111,
+      0.0111,
+      0.0111
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "sr_coffee-setup-mug": 0.0,
+      "sr_heat-kebab-sandwich": 0.0,
+      "sr_kettle-boiling": 0.0,
+      "sr_open-cabinet": 0.0,
+      "sr_open-drawer": 0.0,
+      "sr_portion-hot-dogs": 0.0,
+      "sr_turn-off-stove": 0.0,
+      "sr_turn-on-microwave": 0.0,
+      "sr_turn-on-sink-faucet": 0.0,
+      "sr_suite": 0.0,
+      "tasks_run": 9
+     },
+     "start": 0.0,
+     "best": 0.0222,
+     "gain_pct": null,
+     "rounds": 106,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0111,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "sr_coffee-setup-mug": 0.0,
+      "sr_heat-kebab-sandwich": 0.0,
+      "sr_kettle-boiling": 0.0,
+      "sr_open-cabinet": 0.0,
+      "sr_open-drawer": 0.0,
+      "sr_portion-hot-dogs": 0.0,
+      "sr_turn-off-stove": 0.0,
+      "sr_turn-on-microwave": 0.0,
+      "sr_turn-on-sink-faucet": 0.0,
+      "sr_suite": 0.0,
+      "tasks_run": 9
+     },
+     "start": 0.0,
+     "best": 0.0333,
+     "gain_pct": null,
+     "rounds": 101,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0111,
+      0.0111,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333
      ]
     }
    ]

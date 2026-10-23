@@ -19,21 +19,26 @@
 
   const PCT = new Set(["accuracy", "acc_vstar", "acc_hrbench8k", "acc_starter", "acc_cooking", "acc_bike", "pair_accuracy", "success", "hos_sr", "hps_sr", "success_rate", "success_t1", "success_t3", "success_t5"]);
   const DEC2 = new Set(["rhae", "rhae_starter", "robolab_score", "robolab_starter"]);   // 0 to 100 scores shown to 2 decimals   // ARC-AGI-3 RHAE, 0 to 100
+  // suite boards: sr_* are success rates (shown as %), pts_* are 0-100 scores, tasks_run a count
+  const isSR = (key) => key.startsWith("sr_"), isPts = (key) => key.startsWith("pts_");
   const fmt = (key, v) => {
     if (v === null || v === undefined) return "–";
+    if (key === "tasks_run") return String(v);
+    if (isSR(key)) { const p = 100 * v; return (Number.isInteger(Math.round(p * 10) / 10) ? p.toFixed(0) : p.toFixed(1)) + "%"; }
+    if (isPts(key)) return Number.isInteger(v) ? String(v) : v.toFixed(1);
     if (PCT.has(key)) return (100 * v).toFixed(1) + "%";
     if (key === "score") return String(Math.round(v));
     if (key === "avg_steps" || DEC2.has(key)) return v.toFixed(2);
     return v.toFixed(3);
   };
-  const fmtAxis = (key, v) => (key === "score" ? String(Math.round(v)) : PCT.has(key) ? (100 * v).toFixed(0) + "%" : v.toFixed(2));
+  const fmtAxis = (key, v) => (key === "score" || isPts(key) ? String(Math.round(v)) : PCT.has(key) || isSR(key) ? (100 * v).toFixed(0) + "%" : v.toFixed(2));
   // validation change as absolute values, in the primary metric's own units: start → best (+delta)
   const change = (key, r) => {
     if (r.best === null || r.best === undefined) return "–";
     const v = (x) => fmt(key, x);
     if (r.start === null || r.start === undefined) return `<span class="to">best</span> <b>${v(r.best)}</b>`;
     const d = r.best - r.start;
-    const dz = PCT.has(key) ? (100 * d).toFixed(1) + " pt" : key === "score" ? String(Math.round(d)) : d.toFixed(DEC2.has(key) ? 2 : 3);
+    const dz = PCT.has(key) || isSR(key) ? (100 * d).toFixed(1) + " pt" : key === "score" ? String(Math.round(d)) : isPts(key) ? d.toFixed(1) : d.toFixed(DEC2.has(key) ? 2 : 3);
     return `${v(r.start)} <span class="to">→</span> <b>${v(r.best)}</b><span class="delta${d > 0 ? "" : " flat"}">${d > 0 ? "+" : d < 0 ? "−" : "±"}${dz.replace("-", "")}</span>`;
   };
   const ENDED = { max_rounds: "round limit", budget_wall: "time budget", budget_usd: "cost budget", budget_gpu: "GPU budget",
@@ -347,7 +352,7 @@
       rankOf = Object.fromEntries(d.tasks.map((t) => { const rk = ranksOf(t); return [t.id, Object.fromEntries(t.rows.flatMap((r, i) => (r.extra ? [] : [[r.model, rk[i]]])))]; }));
       byCat = {};
       d.tasks.forEach((t) => (byCat[t.category] = byCat[t.category] || []).push(t));
-      const FIRST = ["robot-control"];                       // shown first within its category
+      const FIRST = ["robodojo", "robocasa"];                // shown first within their category
       Object.values(byCat).forEach((ts) => ts.sort((x, y) => (FIRST.includes(y.id) ? 1 : 0) - (FIRST.includes(x.id) ? 1 : 0)));
       cats = d.categories.filter((c) => byCat[c.id]);        // categories without tasks stay hidden
       tabsEl.innerHTML = [`<button type="button" role="tab" data-cat="overview">Overview</button>`,
