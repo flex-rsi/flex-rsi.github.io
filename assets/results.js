@@ -17,29 +17,24 @@
   $(".board-scroll").before(cov);
   const table = $("table.results"), fig = $(".curves-fig"), svg = $(".curves-plot"), legend = $(".legend"), noteEl = $(".board-note");
 
-  const PCT = new Set(["accuracy", "acc_vstar", "acc_hrbench8k", "acc_starter", "acc_cooking", "acc_bike", "pair_accuracy", "success", "hos_sr", "hps_sr", "success_rate", "success_t1", "success_t3", "success_t5"]);
-  const DEC2 = new Set(["rhae", "rhae_starter", "robolab_score", "robolab_starter"]);   // 0 to 100 scores shown to 2 decimals   // ARC-AGI-3 RHAE, 0 to 100
-  // suite boards: sr_* are success rates (shown as %), pts_* are 0-100 scores, tasks_run a count
-  const isSR = (key) => key.startsWith("sr_"), isPts = (key) => key.startsWith("pts_");
+  // Every metric is shown on one 0-100 scale, to one decimal, without a % sign: scores and rates kept in 0-1 are
+  // multiplied by 100; RoboDojo points (pts_*), RoboLab scores and ARC-AGI-3 RHAE are already 0-100. Counts stay
+  // counts (tasks run; average steps to two decimals).
+  const ON100 = new Set(["rhae", "rhae_starter", "robolab_score", "robolab_starter", "score"]);
+  const scale = (key) => (ON100.has(key) || key.startsWith("pts_") ? 1 : 100);
   const fmt = (key, v) => {
     if (v === null || v === undefined) return "–";
     if (key === "tasks_run") return String(v);
-    if (isSR(key)) { const p = 100 * v; return (Number.isInteger(Math.round(p * 10) / 10) ? p.toFixed(0) : p.toFixed(1)) + "%"; }
-    if (isPts(key)) return Number.isInteger(v) ? String(v) : v.toFixed(1);
-    if (PCT.has(key)) return (100 * v).toFixed(1) + "%";
-    if (key === "score") return String(Math.round(v));
-    if (key === "avg_steps" || DEC2.has(key)) return v.toFixed(2);
-    return v.toFixed(3);
+    if (key === "avg_steps") return v.toFixed(2);
+    return (scale(key) * v).toFixed(1);
   };
-  const fmtAxis = (key, v) => (key === "score" || isPts(key) ? String(Math.round(v)) : PCT.has(key) || isSR(key) ? (100 * v).toFixed(0) + "%" : v.toFixed(2));
-  // validation change as absolute values, in the primary metric's own units: start → best (+delta)
+  // validation change in the same units: start → best (+delta)
   const change = (key, r) => {
     if (r.best === null || r.best === undefined) return "–";
     const v = (x) => fmt(key, x);
     if (r.start === null || r.start === undefined) return `<span class="to">best</span> <b>${v(r.best)}</b>`;
-    const d = r.best - r.start;
-    const dz = PCT.has(key) || isSR(key) ? (100 * d).toFixed(1) + " pt" : key === "score" ? String(Math.round(d)) : isPts(key) ? d.toFixed(1) : d.toFixed(DEC2.has(key) ? 2 : 3);
-    return `${v(r.start)} <span class="to">→</span> <b>${v(r.best)}</b><span class="delta${d > 0 ? "" : " flat"}">${d > 0 ? "+" : d < 0 ? "−" : "±"}${dz.replace("-", "")}</span>`;
+    const d = Math.round(10 * scale(key) * (r.best - r.start)) / 10;
+    return `${v(r.start)} <span class="to">→</span> <b>${v(r.best)}</b><span class="delta${d > 0 ? "" : " flat"}">${d > 0 ? "+" : d < 0 ? "−" : "±"}${Math.abs(d).toFixed(1)}</span>`;
   };
   const ENDED = { max_rounds: "round limit", budget_wall: "time budget", budget_usd: "cost budget", budget_gpu: "GPU budget",
                   budget_tokens: "token budget", val_calls: "validation budget", idle: "no further progress" };
@@ -241,7 +236,7 @@
     table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${t.metrics.length}">Hidden test metrics</th><th>Validation</th><th>Run depth</th></tr><tr><th>#</th><th class="model">Model</th>${metricHeads}<th>Start → best<span class="th-sub">${esc(t.metrics[0].label)}</span></th><th class="rounds">Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
     drawCurves(t);
     noteEl.innerHTML = (t.footnotes || []).map((f) => `<span class="fn">${esc(f)}</span>`).join("") +
-      "Validation: the run's starting score and its best score over the rounds, in the primary metric's units. Each line ends at the last round its run reached.";
+      "Validation: the run's starting score and its best score over the rounds, on the same 0–100 scale. Each line ends at the last round its run reached.";
   }
 
   // ---------- curves ----------
@@ -281,15 +276,20 @@
     const W = 760, H = 300, L = 46, R = 16, T = 14, B = 34;
     const series = t.rows.map((r, i) => ({ r, i, pts: keyPoints(r.curve) })).filter((s) => s.pts.length);
     const maxX = Math.max(...series.map((s) => s.r.curve.length - 1), 1);
-    const vals = series.flatMap((s) => s.pts.map((p) => p[1]));
-    let lo = Math.min(...vals), hi = Math.max(...vals);
-    const pad = (hi - lo) * 0.08 || 0.05; lo = Math.max(0, lo - pad); hi += pad;
+    const k = scale(t.primary);                      // curves are kept in the metric's own units
+    const vals = series.flatMap((s) => s.pts.map((p) => k * p[1]));
+    // round ticks on the 0-100 scale: a 1-2-2.5-5 step giving about four intervals, never below 0 or above 100
+    const raw = Math.max((Math.max(...vals) - Math.min(...vals)) / 4, 0.5), e = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / e;
+    const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * e;
+    const lo = Math.max(0, Math.floor(Math.min(...vals) / step) * step);
+    const hi = Math.max(lo + step, Math.min(100, Math.ceil(Math.max(...vals) / step) * step));
     const X = (x) => L + (x / maxX) * (W - L - R);
-    const Y = (v) => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+    const Y = (v) => T + (1 - (k * v - lo) / (hi - lo)) * (H - T - B);
     let g = "";
-    for (let k = 0; k <= 4; k++) {
-      const v = lo + (k / 4) * (hi - lo), y = Y(v);
-      g += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y}" y2="${y}"/><text class="ax" x="${L - 8}" y="${y + 4}" text-anchor="end">${fmtAxis(t.primary, v)}</text>`;
+    for (let j = 0; j <= Math.round((hi - lo) / step); j++) {
+      const v = lo + j * step;
+      const y = T + (1 - (v - lo) / (hi - lo)) * (H - T - B), lab = Math.abs(v - Math.round(v)) < 1e-6 ? v.toFixed(0) : v.toFixed(1);
+      g += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y}" y2="${y}"/><text class="ax" x="${L - 8}" y="${y + 4}" text-anchor="end">${lab}</text>`;
     }
     for (let x = 0; x <= maxX; x += maxX > 10 ? 5 : 2) g += `<text class="ax" x="${X(x)}" y="${H - 10}" text-anchor="middle">${x}</text>`;
     const lines = series.map((s) => {
