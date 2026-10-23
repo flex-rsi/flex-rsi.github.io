@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leaderboard · Flex-RSI</title>
+  <meta name="description" content="Flex-RSI results: per-task standings of frontier agents improving themselves over rounds.">
+  <meta property="og:title" content="Leaderboard · Flex-RSI">
+  <meta property="og:description" content="Flex-RSI results: per-task standings of frontier agents improving themselves over rounds.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f4f4f1">
+  <link rel="icon" href="assets/favicon.svg?v=20261012a" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=20261024a">
+  <link rel="stylesheet" href="assets/theme.css?v=20261024a">
+  <link rel="stylesheet" href="assets/palette.css?v=20261024a">
+  <link rel="stylesheet" href="assets/pages.css?v=20261024a">
+  <link rel="stylesheet" href="assets/results.css?v=20261024a">
+</head>
+<body class="v-e">
+  <div class="ambient" aria-hidden="true">
+    <span class="bands"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="./" aria-label="Flex-RSI home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" fill="#002fa7"/><rect x="9" y="41" width="14" height="14" fill="#f4f4f1" fill-opacity=".32"/><rect x="20" y="25" width="19" height="19" fill="#f4f4f1" fill-opacity=".62"/><rect x="35" y="9" width="20" height="20" fill="#f4f4f1"/></svg>
+      <span>Flex-RSI</span>
+    </a>
+    <nav class="nav-links" aria-label="Pages">
+      <a href="./">Home</a>
+      <a href="leaderboard.html" aria-current="page">Leaderboard</a>
+      <a href="demos.html">Demos</a>
+      <a href="people.html">People</a>
+      <a href="contribute.html">Contribute</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- Leaderboard -->
+    <section class="section page-top" id="leaderboard">
+      <div class="section-head reveal">
+        <p class="kicker">Leaderboard</p>
+        <h2>Results</h2>
+      </div>
+      <p class="section-lede reveal">Standings are kept per task, so models are compared only where they were measured. The overview shows which models have been run on what; each category ranks its tasks on the hidden test split and follows every run's validation curve.</p>
+      <div class="board-tabs reveal" role="tablist" aria-label="Results by category"></div>
+      <div class="glass card board reveal">
+        <div class="board-head"><h3 class="board-title"></h3><p class="board-sub"></p></div>
+        <div class="board-subtabs" role="tablist" aria-label="Tasks in this category" hidden></div>
+        <div class="board-scroll"><table class="results"></table></div>
+        <figure class="curves-fig" hidden>
+          <figcaption>Validation score over rounds: start, each accepted improvement, last round</figcaption>
+          <div class="curves-wrap"><svg class="curves-plot" viewBox="0 0 760 300" preserveAspectRatio="none" role="img"></svg></div>
+          <ul class="legend"></ul>
+        </figure>
+        <p class="board-note"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Flex-RSI · 2026</p>
+    <p class="muted">An evolving benchmark initiative. Contributions of tasks, baselines, evaluators, and reproducible results are welcome.</p>
+    <p class="contact">Contact: <a href="mailto:jingdongz95@gmail.com">jingdongz95@gmail.com</a> · <a href="mailto:jionghaow99@gmail.com">jionghaow99@gmail.com</a> · <a href="mailto:yuhuaijin36@gmail.com">yuhuaijin36@gmail.com</a></p>
+  </footer>
+
+  <script src="assets/main.js?v=20261024a" defer></script>
+  <script src="assets/results.js?v=20261024a" defer></script>
+</body>
+</html>

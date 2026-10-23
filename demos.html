@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demos · Flex-RSI</title>
+  <meta name="description" content="Flex-RSI demos: starting and self-improved solutions side by side, task by task.">
+  <meta property="og:title" content="Demos · Flex-RSI">
+  <meta property="og:description" content="Flex-RSI demos: starting and self-improved solutions side by side, task by task.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f4f4f1">
+  <link rel="icon" href="assets/favicon.svg?v=20261012a" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=20261024a">
+  <link rel="stylesheet" href="assets/theme.css?v=20261024a">
+  <link rel="stylesheet" href="assets/palette.css?v=20261024a">
+  <link rel="stylesheet" href="assets/pages.css?v=20261024a">
+  <link rel="stylesheet" href="assets/demos.css?v=20261024a">
+</head>
+<body class="v-e">
+  <div class="ambient" aria-hidden="true">
+    <span class="bands"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="./" aria-label="Flex-RSI home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" fill="#002fa7"/><rect x="9" y="41" width="14" height="14" fill="#f4f4f1" fill-opacity=".32"/><rect x="20" y="25" width="19" height="19" fill="#f4f4f1" fill-opacity=".62"/><rect x="35" y="9" width="20" height="20" fill="#f4f4f1"/></svg>
+      <span>Flex-RSI</span>
+    </a>
+    <nav class="nav-links" aria-label="Pages">
+      <a href="./">Home</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="demos.html" aria-current="page">Demos</a>
+      <a href="people.html">People</a>
+      <a href="contribute.html">Contribute</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- Demos -->
+    <section class="section page-top" id="demos">
+      <div class="section-head reveal">
+        <p class="kicker">Demos</p>
+        <h2>From starting points to improved behavior</h2>
+      </div>
+      <p class="demo-lede reveal">Compare initial and self-improved solutions, then follow selected robot-control episodes across rounds. Each example is paired with its task metric and evaluation split.</p>
+      <div class="demo-tabs reveal" role="tablist" aria-label="Demos by task"></div>
+      <div class="glass card demo reveal">
+        <div class="demo-head">
+          <div><h3 class="demo-title"></h3><p class="demo-sub"></p></div>
+          <p class="demo-score" aria-live="polite"></p>
+        </div>
+        <div class="demo-stage"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Flex-RSI · 2026</p>
+    <p class="muted">An evolving benchmark initiative. Contributions of tasks, baselines, evaluators, and reproducible results are welcome.</p>
+    <p class="contact">Contact: <a href="mailto:jingdongz95@gmail.com">jingdongz95@gmail.com</a> · <a href="mailto:jionghaow99@gmail.com">jionghaow99@gmail.com</a> · <a href="mailto:yuhuaijin36@gmail.com">yuhuaijin36@gmail.com</a></p>
+  </footer>
+
+  <script src="assets/main.js?v=20261024a" defer></script>
+  <script src="assets/demos.js?v=20261024a" defer></script>
+</body>
+</html>

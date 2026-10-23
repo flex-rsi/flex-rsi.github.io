@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contribute · Flex-RSI</title>
+  <meta name="description" content="How to contribute tasks, baselines and evaluators to Flex-RSI.">
+  <meta property="og:title" content="Contribute · Flex-RSI">
+  <meta property="og:description" content="How to contribute tasks, baselines and evaluators to Flex-RSI.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f4f4f1">
+  <link rel="icon" href="assets/favicon.svg?v=20261012a" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=20261024a">
+  <link rel="stylesheet" href="assets/theme.css?v=20261024a">
+  <link rel="stylesheet" href="assets/palette.css?v=20261024a">
+  <link rel="stylesheet" href="assets/pages.css?v=20261024a">
+</head>
+<body class="v-e">
+  <div class="ambient" aria-hidden="true">
+    <span class="bands"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="./" aria-label="Flex-RSI home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" fill="#002fa7"/><rect x="9" y="41" width="14" height="14" fill="#f4f4f1" fill-opacity=".32"/><rect x="20" y="25" width="19" height="19" fill="#f4f4f1" fill-opacity=".62"/><rect x="35" y="9" width="20" height="20" fill="#f4f4f1"/></svg>
+      <span>Flex-RSI</span>
+    </a>
+    <nav class="nav-links" aria-label="Pages">
+      <a href="./">Home</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="demos.html">Demos</a>
+      <a href="people.html">People</a>
+      <a href="contribute.html" aria-current="page">Contribute</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="section page-top" id="contribute">
+      <div class="section-head reveal">
+        <p class="kicker">Contribute</p>
+        <h2>How to contribute</h2>
+      </div>
+      <p class="section-lede reveal">Bring a task, a model baseline, an evaluation adapter, or feedback on the protocol. Small, reproducible contributions can make RSI experiments easier for more people to run and compare. Every run follows the same five steps:</p>
+      <ol class="timeline glass reveal">
+        <li><span class="dot"></span><h4>Start</h4><p>Choose a task and model, then declare the run budget.</p></li>
+        <li><span class="dot"></span><h4>Iterate</h4><p>The agent revises its solution, prompts, or tools over repeated rounds.</p></li>
+        <li><span class="dot"></span><h4>Accept</h4><p>Use validation to check whether a change improves on the starting point.</p></li>
+        <li><span class="dot"></span><h4>Stop</h4><p>End at the declared budget or round limit, and record resources used.</p></li>
+        <li><span class="dot"></span><h4>Test</h4><p>Score the selected final solution once on held-out test data.</p></li>
+      </ol>
+      <div class="open-call reveal">
+        <p class="oc-tag">Public contribution window</p>
+        <p class="oc-status">Coming soon</p>
+        <p class="oc-text">We will open-source the benchmark and open submissions to everyone once its infrastructure is complete. Until then, write to us if you would like to bring a task or a model early.</p>
+        <p class="oc-contact"><a href="mailto:jingdongz95@gmail.com">jingdongz95@gmail.com</a><a href="mailto:jionghaow99@gmail.com">jionghaow99@gmail.com</a><a href="mailto:yuhuaijin36@gmail.com">yuhuaijin36@gmail.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Flex-RSI · 2026</p>
+    <p class="muted">An evolving benchmark initiative. Contributions of tasks, baselines, evaluators, and reproducible results are welcome.</p>
+    <p class="contact">Contact: <a href="mailto:jingdongz95@gmail.com">jingdongz95@gmail.com</a> · <a href="mailto:jionghaow99@gmail.com">jionghaow99@gmail.com</a> · <a href="mailto:yuhuaijin36@gmail.com">yuhuaijin36@gmail.com</a></p>
+  </footer>
+
+  <script src="assets/main.js?v=20261024a" defer></script>
+</body>
+</html>

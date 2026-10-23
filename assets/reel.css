@@ -1,43 +1,75 @@
-/* Task reel: a bento of looping, silent clips between the hero and the overview. One large tile,
-   one wide panorama, six small ones, on a 4-column grid with 4:3 cells. */
-.reel { padding-top: 8px; }
-.reel-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin-bottom: 16px; }
-.reel-head .kicker { margin: 0; }
-/* the reel is a prelude, not a numbered section: Overview stays [01] */
-.reel .kicker::before { content: none; counter-increment: none; }
-.reel-lede { margin: 0; font-size: 15px; color: var(--ink-2); }
-.reel-grid {
-  display: grid; gap: 8px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: repeat(3, minmax(0, 1fr));
-  aspect-ratio: 16 / 9;            /* four 4:3 columns by three rows */
+/* "At a glance": a full-bleed dark band of demo tiles in two rows that drift in opposite directions (reel.js).
+   Every tile has one height and its media's aspect ratio, and links to its task's demo. */
+.glance {
+  position: relative; width: 100vw; margin-left: calc(50% - 50vw); margin-top: 8px;
+  padding: 52px 0 58px; background: var(--ink); color: var(--bg);
 }
-.reel-tile { position: relative; margin: 0; overflow: hidden; background: var(--ink); min-height: 0; }
-.reel-tile.t-big { grid-column: span 2; grid-row: span 2; }
-.reel-tile.t-wide { grid-column: span 2; }
-.reel-tile video, .reel-tile img {
+.glance-head {
+  width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto 24px;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px;
+}
+.glance-head .kicker { margin: 0; color: var(--bg); }
+/* the band is a prelude, not a numbered section: Overview stays [01] */
+.glance .kicker::before { content: none; counter-increment: none; }
+.glance-lede { flex: 1 1 380px; margin: 0; font-size: 15px; color: var(--accent-3); }
+.glance-all {
+  padding: 6px 12px; border: 1.5px solid var(--bg); color: var(--bg);
+  font: 500 12px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+}
+.glance-all:hover { background: var(--bg); color: var(--ink); }
+
+.glance-rows { display: grid; gap: 10px; }
+.glance-row { overflow: hidden; }
+.glance-track { display: flex; gap: 10px; width: max-content; will-change: transform; }
+.g-tile {
+  position: relative; flex: none; display: block; overflow: hidden;
+  height: clamp(150px, 15vw, 232px); aspect-ratio: var(--ar, 4 / 3); background: #1b1e30;
+}
+.g-tile video, .g-tile img {
   position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover;
   transition: transform 1.2s var(--ease);
 }
-.reel-tile:hover video, .reel-tile:hover img { transform: scale(1.035); }
-/* the still photo drifts slowly toward its detail, so it reads as part of the motion */
-.reel-tile.t-still img { transform-origin: 62% 40%; animation: reel-drift 16s ease-in-out infinite alternate; }
-@keyframes reel-drift { from { transform: scale(1); } to { transform: scale(1.22); } }
-.reel-tile figcaption {
+.g-tile:hover video, .g-tile:hover img { transform: scale(1.04); }
+.g-tile::after {                                      /* a hard frame on hover, in the page's flat style */
+  content: ""; position: absolute; inset: 0; border: 2px solid transparent; pointer-events: none;
+  transition: border-color 0.3s var(--ease);
+}
+.g-tile:hover::after, .g-tile:focus-visible::after { border-color: var(--bg); }
+.g-tile:focus-visible { outline: none; }
+.g-cap {
   position: absolute; left: 8px; bottom: 8px; max-width: calc(100% - 16px);
-  padding: 5px 9px 6px; background: rgba(11, 13, 26, 0.84); color: #f4f4f1;
-  font: 500 11.5px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.3;
+  padding: 5px 9px 6px; background: rgba(11, 13, 26, 0.86); color: #f4f4f1;
+  font: 500 11px/1.3 var(--mono); letter-spacing: 0.04em; text-transform: uppercase;
 }
-.reel-track { display: block; margin-bottom: 1px; font-size: 9.5px; letter-spacing: 0.08em; color: #9fb3ea; }
-.reel-tile.t-big figcaption { font-size: 13px; left: 12px; bottom: 12px; }
+.g-track { display: block; margin-bottom: 1px; font-size: 9.5px; letter-spacing: 0.08em; color: #9fb3ea; }
+.g-go {
+  position: absolute; top: 8px; right: 8px; padding: 3px 8px; background: var(--accent-1); color: #fff;
+  font: 500 10.5px var(--mono); letter-spacing: 0.06em; text-transform: uppercase;
+  opacity: 0; transform: translateY(-4px); transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.g-tile:hover .g-go, .g-tile:focus-visible .g-go { opacity: 1; transform: none; }
+
+/* stills drift slowly toward their detail, so they read as part of the motion */
+.g-still img { transform-origin: 60% 40%; animation: g-drift 16s ease-in-out infinite alternate; }
+@keyframes g-drift { from { transform: scale(1); } to { transform: scale(1.18); } }
+.g-grid img { object-fit: contain; }
+/* image edits: the input, then the edited photo fading in over it, on a loop */
+.g-edit .g-after { animation: g-edit 9s ease-in-out infinite; }
+.g-state {
+  position: absolute; top: 8px; left: 8px; overflow: hidden;
+  font: 500 10px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: #f4f4f1;
+}
+.g-state i { display: block; padding: 3px 7px; font-style: normal; background: rgba(11, 13, 26, 0.86); }
+.g-state i + i { position: absolute; inset: 0; background: var(--accent-1); animation: g-edit 9s ease-in-out infinite; }
+@keyframes g-edit { 0%, 36% { opacity: 0; } 46%, 88% { opacity: 1; } 98%, 100% { opacity: 0; } }
+
+/* reduced motion: still rows the reader scrolls */
+.glance.still .glance-row { overflow-x: auto; }
+
 @media (max-width: 760px) {
-  .reel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; aspect-ratio: auto; gap: 6px; }
-  .reel-tile { aspect-ratio: 4 / 3; }
-  .reel-tile.t-big { grid-row: span 1; aspect-ratio: 8 / 6; }
-  .reel-tile.t-wide { aspect-ratio: 8 / 3; }
-  .reel-tile figcaption { font-size: 9.5px; left: 5px; bottom: 5px; padding: 3px 6px; }
-  .reel-track { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .reel-tile.t-still img { animation: none; }
+  .glance { padding: 40px 0 44px; }
+  .g-tile { height: 132px; }
+  .g-cap { font-size: 9.5px; left: 5px; bottom: 5px; padding: 3px 6px; }
+  .g-track { display: none; }
 }

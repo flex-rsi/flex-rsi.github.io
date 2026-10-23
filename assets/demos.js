@@ -585,11 +585,16 @@
       const ORDER = ["robot-control", "robolab", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
+      // the selected task is kept in the URL (demos.html#<task>), so the home page tiles can link straight to it
+      const fromHash = () => d.panels.find((p) => p.id === decodeURIComponent(location.hash.slice(1)))?.id;
       tabsEl.addEventListener("click", (ev) => {
         const b = ev.target.closest("button");
-        if (b && b.getAttribute("aria-selected") !== "true") select(d, b.dataset.id);
+        if (!b || b.getAttribute("aria-selected") === "true") return;
+        select(d, b.dataset.id);
+        history.replaceState(null, "", `#${b.dataset.id}`);
       });
-      select(d, d.panels[0].id);
+      window.addEventListener("hashchange", () => { const id = fromHash(); if (id) select(d, id); });
+      select(d, fromHash() || d.panels[0].id);
     })
     .catch(() => { root.hidden = true; });
 })();

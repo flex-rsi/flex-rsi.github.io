@@ -1,0 +1,84 @@
+/* Multi-page layout: the page links in the nav, the first section of each page, and the pieces that only one
+   page has (home numbers and track tasks, people, the contribution call). */
+
+/* ---------- nav: one link per page, the current one inked ---------- */
+.nav-links a[aria-current="page"] { background: var(--ink); color: var(--bg); }
+@media (max-width: 820px) {
+  .nav { flex-wrap: wrap; row-gap: 8px; }
+  .nav-links { display: flex; width: 100%; margin-left: 0; gap: 2px; overflow-x: auto; }
+  .nav-links a { padding: 5px 9px; font-size: 11px; white-space: nowrap; }
+  .hero { padding-top: 124px; }
+}
+
+/* the first section of a page clears the fixed nav */
+.section.page-top { padding-top: 124px; }
+@media (max-width: 820px) { .section.page-top { padding-top: 132px; } }
+
+/* ---------- home: overview numbers ---------- */
+.home-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 26px; border: 1.5px solid var(--ink); }
+.hs {
+  display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 12px; border-right: 1.5px solid var(--ink);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+}
+.hs:last-child { border-right: 0; }
+.hs b { font: 800 clamp(30px, 3.4vw, 44px)/1 var(--sans); letter-spacing: -0.03em; color: var(--accent-1); }
+.hs span { font: 500 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+.hs:hover { background: var(--ink); }
+.hs:hover b, .hs:hover span { color: var(--bg); }
+@media (max-width: 560px) {
+  .home-stats { grid-template-columns: 1fr 1fr; }
+  .hs:nth-child(2) { border-right: 0; }
+  .hs:nth-child(-n + 2) { border-bottom: 1.5px solid var(--ink); }
+}
+
+/* ---------- home: each track's tasks, linked to their leaderboard ---------- */
+.track-tasks { list-style: none; margin: 16px 0 0; padding: 14px 0 0; border-top: 1.5px solid var(--line); display: flex; flex-wrap: wrap; gap: 6px; }
+.track-tasks a {
+  display: inline-block; padding: 3px 8px; border: 1.5px solid var(--ink); color: var(--ink);
+  font: 500 11px var(--mono); letter-spacing: 0.04em; text-transform: uppercase;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+.track-tasks a:hover { background: var(--accent-1); border-color: var(--accent-1); color: #fff; }
+.tracks-more { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+
+/* ---------- people ---------- */
+.people-group { margin-top: 36px; }
+.pg-head {
+  display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1.5px solid var(--ink);
+  font-size: 20px; font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase;
+}
+.pg-n { font: 500 12px var(--mono); letter-spacing: 0.06em; color: var(--accent-1); }
+.people-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+.person {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 14px; align-content: start;
+  padding: 16px 16px 18px; border: 1.5px solid var(--ink); background: var(--bg);
+}
+.p-mark {
+  grid-row: span 2; display: grid; place-items: center; width: 48px; height: 48px;
+  background: var(--ink); color: var(--bg); font: 800 16px var(--sans); letter-spacing: 0.02em;
+}
+.person.org .p-mark { background: var(--accent-1); color: #fff; }
+.p-name { font-size: 16px; font-weight: 700; line-height: 1.3; }
+.p-work { margin-top: 4px; font: 500 11px/1.55 var(--mono); letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-3); }
+.p-soon { display: inline-block; margin-left: 4px; padding: 0 5px; border: 1px solid var(--ink-3); font-size: 9.5px; }
+.person.tba { border-style: dashed; }
+.person.tba .p-mark { background: none; color: var(--ink-3); border: 1.5px dashed var(--ink-3); }
+.person.tba .p-name { align-self: center; color: var(--ink-3); }
+
+/* ---------- contribute: the call for contributions ---------- */
+.open-call {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); column-gap: 36px; align-items: end;
+  margin-top: 28px; padding: 26px 28px 22px; background: var(--accent-1); color: #fff;
+}
+.oc-tag { font: 500 12px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; }
+.oc-status { grid-column: 1; margin-top: 6px; font: 800 clamp(34px, 5vw, 56px)/1 var(--sans); letter-spacing: -0.04em; text-transform: uppercase; }
+.oc-text { grid-column: 2; grid-row: 1 / span 2; font-size: 16px; line-height: 1.6; }
+.oc-contact {
+  grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 24px; margin-top: 20px; padding-top: 14px;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.4); font: 500 13px var(--mono);
+}
+.oc-contact a:hover { text-decoration: underline; }
+@media (max-width: 760px) {
+  .open-call { grid-template-columns: 1fr; }
+  .oc-text { grid-column: 1; grid-row: auto; margin-top: 14px; }
+}

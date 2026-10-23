@@ -24,19 +24,6 @@
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  // Highlight the nav link of the section in view.
-  const links = new Map([...document.querySelectorAll(".nav-links a")].map((a) => [a.getAttribute("href").slice(1), a]));
-  if ("IntersectionObserver" in window) {
-    const spy = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        links.forEach((a) => a.classList.remove("active"));
-        links.get(e.target.id)?.classList.add("active");
-      });
-    }, { rootMargin: "-45% 0px -50% 0px" });
-    document.querySelectorAll("main section[id]").forEach((s) => spy.observe(s));
-  }
-
   // Count up the overview numbers when they appear.
   const counters = document.querySelectorAll("[data-count]");
   const runCount = (el) => {
@@ -92,7 +79,7 @@
       const x = X0 + (X1 - X0) * (r / ROUNDS);
       runs.forEach((run) => {
         const pt = at(run, x), px = pt.x.toFixed(2), py = pt.y.toFixed(2);
-        run.rect.setAttribute("width", px);
+        run.rect.setAttribute("width", Math.max(0, pt.x).toFixed(2));
         run.grad.setAttribute("x2", Math.max(pt.x, X0 + 1).toFixed(2));
         run.dot.setAttribute("cx", px); run.dot.setAttribute("cy", py);
         run.halo.setAttribute("cx", px); run.halo.setAttribute("cy", py);

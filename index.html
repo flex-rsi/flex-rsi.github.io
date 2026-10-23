@@ -6,41 +6,37 @@
   <title>Flex-RSI</title>
   <meta name="description" content="Flex-RSI: Benchmarking Recursive Self-Improvement of Frontier Agents.">
   <meta property="og:title" content="Flex-RSI">
-  <meta property="og:description" content="Benchmarking Recursive Self-Improvement of Frontier Agents.">
-  <meta name="color-scheme" content="dark">
+  <meta property="og:description" content="Flex-RSI: Benchmarking Recursive Self-Improvement of Frontier Agents.">
+  <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#f4f4f1">
   <link rel="icon" href="assets/favicon.svg?v=20261012a" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261023b">
-  <link rel="stylesheet" href="assets/theme.css?v=20261023a">
-  <link rel="stylesheet" href="assets/palette.css?v=20261012a">
-  <link rel="stylesheet" href="assets/results.css?v=20261023a">
-  <link rel="stylesheet" href="assets/demos.css?v=20261023b">
-  <link rel="stylesheet" href="assets/reel.css?v=20261012a">
+  <link rel="stylesheet" href="assets/style.css?v=20261024a">
+  <link rel="stylesheet" href="assets/theme.css?v=20261024a">
+  <link rel="stylesheet" href="assets/palette.css?v=20261024a">
+  <link rel="stylesheet" href="assets/pages.css?v=20261024a">
+  <link rel="stylesheet" href="assets/reel.css?v=20261024a">
 </head>
 <body class="v-e">
-  <!-- Ambient background: slow-drifting colour fields behind the glass -->
   <div class="ambient" aria-hidden="true">
     <span class="bands"></span>
     <span class="grain"></span>
   </div>
 
   <header class="nav" id="nav">
-    <a class="brand" href="#top" aria-label="Flex-RSI home">
+    <a class="brand" href="./" aria-label="Flex-RSI home">
       <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" fill="#002fa7"/><rect x="9" y="41" width="14" height="14" fill="#f4f4f1" fill-opacity=".32"/><rect x="20" y="25" width="19" height="19" fill="#f4f4f1" fill-opacity=".62"/><rect x="35" y="9" width="20" height="20" fill="#f4f4f1"/></svg>
       <span>Flex-RSI</span>
     </a>
-    <nav class="nav-links" aria-label="Sections">
-      <a href="#overview">Overview</a>
-      <a href="#demos">Demos</a>
-      <a href="#leaderboard">Leaderboard</a>
-      <a href="#tracks">Tracks</a>
-      <a href="#contribute">Contribute</a>
-      <a href="#citation">Citation</a>
+    <nav class="nav-links" aria-label="Pages">
+      <a href="./" aria-current="page">Home</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="demos.html">Demos</a>
+      <a href="people.html">People</a>
+      <a href="contribute.html">Contribute</a>
     </nav>
-    <a class="pill pill-ghost nav-cta" href="#leaderboard">Leaderboard</a>
   </header>
 
   <main id="top">
@@ -54,7 +50,7 @@
         <div class="actions reveal">
           <a class="pill pill-solid" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5"/></svg>Report <span class="soon">soon</span></a>
           <a class="pill pill-glass" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg>Code <span class="soon">soon</span></a>
-          <a class="pill pill-glass" href="#leaderboard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Leaderboard</a>
+          <a class="pill pill-glass" href="leaderboard.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Leaderboard</a>
         </div>
       </div>
 
@@ -121,21 +117,36 @@
       </div>
     </section>
 
-    <!-- Task reel: a glimpse of the tasks the benchmark spans -->
-    <section class="section reel" id="reel" aria-label="Tasks in the benchmark">
-      <div class="reel-head reveal">
+    <!-- At a glance: demo tiles drifting in two rows, each a link to its demo -->
+    <section class="glance" id="glance" aria-label="Demos at a glance">
+      <div class="glance-head reveal">
         <p class="kicker">At a glance</p>
-        <p class="reel-lede">Robots, panoramas, gigapixel photos and 3D scenes: the same improvement protocol across very different tasks.</p>
+        <p class="glance-lede">Robots, panoramas, puzzles, edits and 3D scenes, each shown by the self-improved solution. Pick one to see it next to where it started.</p>
+        <a class="glance-all" href="demos.html">All demos &#8594;</a>
       </div>
-      <div class="reel-grid reveal">
-        <figure class="reel-tile t-big"><video src="assets/reel/robot-arrange.mp4" poster="assets/reel/robot-arrange.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action · RoboDojo</span>Arrange largest number</figcaption></figure>
-        <figure class="reel-tile t-wide"><video src="assets/reel/active-search.mp4" poster="assets/reel/active-search.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action</span>Active search</figcaption></figure>
-        <figure class="reel-tile "><video src="assets/reel/tracking-kitchen.mp4" poster="assets/reel/tracking-kitchen.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Reconstruction</span>3D tracking</figcaption></figure>
-        <figure class="reel-tile "><video src="assets/reel/robot-tubes.mp4" poster="assets/reel/robot-tubes.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action · RoboDojo</span>Insert tubes</figcaption></figure>
-        <figure class="reel-tile t-still"><img src="assets/reel/visual-search.jpg" alt="" loading="lazy" aria-hidden="true"><figcaption><span class="reel-track">Perception</span>Visual search</figcaption></figure>
-        <figure class="reel-tile "><video src="assets/reel/robot-cabinet.mp4" poster="assets/reel/robot-cabinet.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action · RoboCasa</span>Open cabinet</figcaption></figure>
-        <figure class="reel-tile "><video src="assets/reel/tracking-apartment.mp4" poster="assets/reel/tracking-apartment.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Reconstruction</span>3D tracking</figcaption></figure>
-        <figure class="reel-tile "><video src="assets/reel/robot-bottles.mp4" poster="assets/reel/robot-bottles.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption><span class="reel-track">Action · RoboDojo</span>Throw bottles into dustbin</figcaption></figure>
+      <div class="glance-rows">
+        <div class="glance-row"><div class="glance-track">
+          <a class="g-tile" href="demos.html#robot-control" style="--ar: 4 / 3"><video src="assets/reel/robot-arrange.mp4" poster="assets/reel/robot-arrange.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Action · RoboDojo</span>Arrange the largest number</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#active-search" style="--ar: 8 / 3"><video src="assets/reel/active-search.mp4" poster="assets/reel/active-search.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Action · Active Search</span>Look around a 360° scene</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#robolab" style="--ar: 4 / 3"><video src="assets/demo/robolab/stack3-after.mp4" poster="assets/demo/robolab/stack3-after.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Action · RoboLab</span>Stack three cubes</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile g-edit" href="demos.html#image-editing" style="--ar: 3 / 2"><img src="assets/demo/imageedit/E2-006-in.jpg" alt="" loading="lazy"><img class="g-after" src="assets/demo/imageedit/E2-006-after.jpg" alt="" loading="lazy"><span class="g-state" aria-hidden="true"><i>Input</i><i>Edited</i></span><span class="g-cap"><span class="g-track">Creation · Image Editing</span>Remove the haze</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#arc-agi-3" style="--ar: 1 / 1"><video src="assets/demo/arc3/ls20-after.mp4" poster="assets/demo/arc3/ls20.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Reasoning · ARC-AGI-3</span>Learn a game by playing it</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#3d-tracking" style="--ar: 4 / 3"><video src="assets/reel/tracking-kitchen.mp4" poster="assets/reel/tracking-kitchen.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Reconstruction · 3D Tracking</span>Track every object across views</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#video-quality" style="--ar: 16 / 9"><video src="assets/demo/videoquality/v077.mp4" poster="assets/demo/videoquality/v077.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Perception · Video Quality</span>Judge AI-generated video</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile g-still" href="demos.html#ego-exo-memory" style="--ar: 25 / 22"><img src="assets/reel/ego-exo.jpg" alt="" loading="lazy"><span class="g-cap"><span class="g-track">Reasoning · Ego-Exo Memory</span>Remember what happened</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#robot-control" style="--ar: 4 / 3"><video src="assets/reel/robot-cabinet.mp4" poster="assets/reel/robot-cabinet.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Action · RoboCasa</span>Open the cabinet</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+        </div></div>
+        <div class="glance-row"><div class="glance-track">
+          <a class="g-tile g-still" href="demos.html#visual-search" style="--ar: 3 / 2"><img src="assets/reel/visual-search.jpg" alt="" loading="lazy"><span class="g-cap"><span class="g-track">Perception · Visual Search</span>Find small details in large photos</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#robot-control" style="--ar: 4 / 3"><video src="assets/reel/robot-tubes.mp4" poster="assets/reel/robot-tubes.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Action · RoboDojo</span>Insert the tubes</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile g-edit" href="demos.html#image-editing" style="--ar: 5 / 4"><img src="assets/demo/imageedit/G1-004-in.jpg" alt="" loading="lazy"><img class="g-after" src="assets/demo/imageedit/G1-004-after.jpg" alt="" loading="lazy"><span class="g-state" aria-hidden="true"><i>Input</i><i>Edited</i></span><span class="g-cap"><span class="g-track">Creation · Image Editing</span>Recolor the flower, add a butterfly</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#robolab" style="--ar: 4 / 3"><video src="assets/demo/robolab/cube-banana-after.mp4" poster="assets/demo/robolab/cube-banana-after.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Action · RoboLab</span>Cube and banana into the bowl</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile g-grid" href="demos.html#arc-agi-2" style="--ar: 2 / 1"><img src="assets/reel/arc-agi-2.svg" alt="" loading="lazy"><span class="g-cap"><span class="g-track">Reasoning · ARC-AGI-2</span>Infer the rule from examples</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#3d-tracking" style="--ar: 4 / 3"><video src="assets/reel/tracking-apartment.mp4" poster="assets/reel/tracking-apartment.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Reconstruction · 3D Tracking</span>Keep each identity across views</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#video-quality" style="--ar: 16 / 9"><video src="assets/demo/videoquality/v040.mp4" poster="assets/demo/videoquality/v040.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Perception · Video Quality</span>Score real user videos</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#robot-control" style="--ar: 4 / 3"><video src="assets/reel/robot-bottles.mp4" poster="assets/reel/robot-bottles.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Action · RoboDojo</span>Throw the bottles into the dustbin</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+          <a class="g-tile" href="demos.html#arc-agi-3" style="--ar: 1 / 1"><video src="assets/demo/arc3/cn04-after.mp4" poster="assets/demo/arc3/cn04.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="g-cap"><span class="g-track">Reasoning · ARC-AGI-3</span>Clear levels with no instructions</span><span class="g-go" aria-hidden="true">Demo &#8594;</span></a>
+        </div></div>
       </div>
     </section>
 
@@ -152,54 +163,18 @@
           Tasks span visual perception and reasoning, robot control, 3D reconstruction and more.
         </p>
         <p class="mission wip">We are actively expanding Flex-RSI with more tasks, tracks and models.</p>
+        <div class="home-stats">
+          <a href="leaderboard.html" class="hs"><b data-stat="models">&#8211;</b><span>frontier models</span></a>
+          <a href="leaderboard.html" class="hs"><b data-stat="tasks">&#8211;</b><span>tasks</span></a>
+          <a href="leaderboard.html" class="hs"><b data-stat="runs">&#8211;</b><span>model × task runs</span></a>
+          <a href="leaderboard.html" class="hs"><b data-stat="rounds">&#8211;</b><span>total RSI rounds</span></a>
+        </div>
         <div class="features">
           <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><h4>Shared starting point</h4><p>Begin from a documented task setup and starter solution, then let the agent improve its own approach.</p></div>
           <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 3h6"/></svg></span><h4>Declared budgets</h4><p>Set limits for time, tokens, API spend or GPU hours, and report the budget with each run.</p></div>
           <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><h4>Held-out evaluation</h4><p>Use validation to guide iteration and reserve test data for the final score.</p></div>
           <div class="feature"><span class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6"/></svg></span><h4>Traceable progress</h4><p>Record edits, experiments, model calls and outcomes so each run can be understood and repeated.</p></div>
         </div>
-        <div class="community-invite" id="get-involved">
-          <h3>Help shape the benchmark</h3>
-          <p>Bring a task, a model baseline, an evaluation adapter, or feedback on the protocol. Small, reproducible contributions can make RSI experiments easier for more people to run and compare. We will open-source the benchmark for broader evaluation once its infrastructure is complete.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Demos -->
-    <section class="section" id="demos">
-      <div class="section-head reveal">
-        <p class="kicker">Demos</p>
-        <h2>From starting points to improved behavior</h2>
-      </div>
-      <p class="demo-lede reveal">Compare initial and self-improved solutions, then follow selected robot-control episodes across rounds. Each example is paired with its task metric and evaluation split.</p>
-      <div class="demo-tabs reveal" role="tablist" aria-label="Demos by task"></div>
-      <div class="glass card demo reveal">
-        <div class="demo-head">
-          <div><h3 class="demo-title"></h3><p class="demo-sub"></p></div>
-          <p class="demo-score" aria-live="polite"></p>
-        </div>
-        <div class="demo-stage"></div>
-      </div>
-    </section>
-
-    <!-- Leaderboard -->
-    <section class="section" id="leaderboard">
-      <div class="section-head reveal">
-        <p class="kicker">Leaderboard</p>
-        <h2>Results</h2>
-      </div>
-      <p class="section-lede reveal">Standings are kept per task, so models are compared only where they were measured. The overview shows which models have been run on what; each category ranks its tasks on the hidden test split and follows every run's validation curve.</p>
-      <div class="board-tabs reveal" role="tablist" aria-label="Results by category"></div>
-      <div class="glass card board reveal">
-        <div class="board-head"><h3 class="board-title"></h3><p class="board-sub"></p></div>
-        <div class="board-subtabs" role="tablist" aria-label="Tasks in this category" hidden></div>
-        <div class="board-scroll"><table class="results"></table></div>
-        <figure class="curves-fig" hidden>
-          <figcaption>Validation score over rounds: start, each accepted improvement, last round</figcaption>
-          <div class="curves-wrap"><svg class="curves-plot" viewBox="0 0 760 300" preserveAspectRatio="none" role="img"></svg></div>
-          <ul class="legend"></ul>
-        </figure>
-        <p class="board-note"></p>
       </div>
     </section>
 
@@ -211,29 +186,14 @@
       </div>
       <p class="section-lede reveal">The current tasks span five areas, perception, reasoning, action, reconstruction and creation: from visual search and memory over video to robot control, 3D scene reconstruction and image and video generation. Flex-RSI is designed to grow as contributors bring new tasks and domains.</p>
       <div class="grid grid-tracks">
-        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><h3>Perception</h3><p>Seeing and understanding: recognising objects, reading fine detail and making sense of whole scenes in images and video.</p></article>
-        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.2 7.3l2.6 8.4M15.8 7.3l-2.6 8.4M8.5 6h7"/></svg><h3>Reasoning</h3><p>Drawing conclusions over several steps: spatial, temporal and logical reasoning about what is observed and what is known.</p></article>
-        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21h10M12 21v-5M8 16h8l1-6H7z M9 10V6a3 3 0 016 0v4"/></svg><h3>Action</h3><p>Acting in physical and simulated worlds: planning, controlling robots and moving to gather the information a task needs.</p></article>
-        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg><h3>Reconstruction</h3><p>Recovering the structure of the world: 3D and 4D geometry, correspondence and motion from images and video.</p></article>
-        <article class="glass card track reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></svg><h3>Creation</h3><p>Making and editing content: images, scenes and other media produced to precise instructions.</p></article>
+        <article class="glass card track reveal" data-cat="perception"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><h3>Perception</h3><p>Seeing and understanding: recognising objects, reading fine detail and making sense of whole scenes in images and video.</p></article>
+        <article class="glass card track reveal" data-cat="reasoning"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.2 7.3l2.6 8.4M15.8 7.3l-2.6 8.4M8.5 6h7"/></svg><h3>Reasoning</h3><p>Drawing conclusions over several steps: spatial, temporal and logical reasoning about what is observed and what is known.</p></article>
+        <article class="glass card track reveal" data-cat="action"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21h10M12 21v-5M8 16h8l1-6H7z M9 10V6a3 3 0 016 0v4"/></svg><h3>Action</h3><p>Acting in physical and simulated worlds: planning, controlling robots and moving to gather the information a task needs.</p></article>
+        <article class="glass card track reveal" data-cat="reconstruction"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg><h3>Reconstruction</h3><p>Recovering the structure of the world: 3D and 4D geometry, correspondence and motion from images and video.</p></article>
+        <article class="glass card track reveal" data-cat="creation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></svg><h3>Creation</h3><p>Making and editing content: images, scenes and other media produced to precise instructions.</p></article>
         <article class="glass card track more reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg><h3>…</h3><p>More domains as the benchmark grows.</p></article>
       </div>
-    </section>
-
-    <!-- Protocol -->
-    <section class="section" id="contribute">
-      <div class="section-head reveal">
-        <p class="kicker">Contribute</p>
-        <h2>How to contribute</h2>
-      </div>
-      <ol class="timeline glass reveal">
-        <li><span class="dot"></span><h4>Start</h4><p>Choose a task and model, then declare the run budget.</p></li>
-        <li><span class="dot"></span><h4>Iterate</h4><p>The agent revises its solution, prompts, or tools over repeated rounds.</p></li>
-        <li><span class="dot"></span><h4>Accept</h4><p>Use validation to check whether a change improves on the starting point.</p></li>
-        <li><span class="dot"></span><h4>Stop</h4><p>End at the declared budget or round limit, and record resources used.</p></li>
-        <li><span class="dot"></span><h4>Test</h4><p>Score the selected final solution once on held-out test data.</p></li>
-      </ol>
-      <p class="contribute-note reveal">Submission channel opening soon.</p>
+      <p class="tracks-more reveal"><a class="pill pill-solid" href="leaderboard.html">Leaderboard &#8594;</a><a class="pill pill-glass" href="contribute.html">Bring a task &#8594;</a></p>
     </section>
 
     <!-- Citation -->
@@ -261,9 +221,8 @@
     <p class="contact">Contact: <a href="mailto:jingdongz95@gmail.com">jingdongz95@gmail.com</a> · <a href="mailto:jionghaow99@gmail.com">jionghaow99@gmail.com</a> · <a href="mailto:yuhuaijin36@gmail.com">yuhuaijin36@gmail.com</a></p>
   </footer>
 
-  <script src="assets/main.js?v=20261012a" defer></script>
-  <script src="assets/results.js?v=20261023c" defer></script>
-  <script src="assets/demos.js?v=20261023c" defer></script>
-  <script src="assets/reel.js?v=20261012a" defer></script>
+  <script src="assets/main.js?v=20261024a" defer></script>
+  <script src="assets/home.js?v=20261024a" defer></script>
+  <script src="assets/reel.js?v=20261024a" defer></script>
 </body>
 </html>
