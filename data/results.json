@@ -3983,6 +3983,259 @@
    ]
   },
   {
+   "id": "robolab",
+   "category": "action",
+   "track": "Generalist Manipulation",
+   "task": "One tabletop manipulation policy for many tasks (pick and place, stacking, reorienting, choosing objects by colour, size, kind or position), scored on tasks it never saw during development (RoboLab)",
+   "primary": "robolab_score",
+   "metrics": [
+    {
+     "key": "robolab_score",
+     "label": "Score (0\u2013100)"
+    },
+    {
+     "key": "success_rate",
+     "label": "Success rate"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "robolab_score": 71.875,
+      "success_rate": 0.6667
+     },
+     "start": 16.6667,
+     "best": 70.8333,
+     "gain_pct": 325.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      16.6667,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      70.8333,
+      70.8333,
+      70.8333,
+      70.8333
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "robolab_score": 62.5,
+      "success_rate": 0.5625
+     },
+     "start": 18.75,
+     "best": 68.75,
+     "gain_pct": 266.7,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      18.75,
+      47.9167,
+      68.75,
+      68.75,
+      68.75,
+      68.75,
+      68.75,
+      68.75,
+      68.75,
+      68.75,
+      68.75
+     ]
+    },
+    {
+     "model": "Claude Sonnet 5.5",
+     "weights": "closed",
+     "test": {
+      "robolab_score": 40.9722,
+      "success_rate": 0.3125
+     },
+     "start": 8.3333,
+     "best": 47.9167,
+     "gain_pct": 475.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      8.3333,
+      8.3333,
+      22.9167,
+      47.9167,
+      47.9167,
+      47.9167,
+      47.9167,
+      47.9167,
+      47.9167,
+      47.9167,
+      47.9167
+     ]
+    },
+    {
+     "model": "GPT-5.6 Sol",
+     "weights": "closed",
+     "test": {
+      "robolab_score": 37.8472,
+      "success_rate": 0.2917
+     },
+     "start": 2.0833,
+     "best": 29.1667,
+     "gain_pct": 1300.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      2.0833,
+      29.1667,
+      29.1667,
+      29.1667,
+      29.1667,
+      29.1667,
+      29.1667,
+      29.1667,
+      29.1667,
+      29.1667,
+      29.1667
+     ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "robolab_score": 32.9861,
+      "success_rate": 0.2083
+     },
+     "start": 31.25,
+     "best": 47.9167,
+     "gain_pct": 53.3,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      47.9167,
+      47.9167,
+      47.9167,
+      47.9167,
+      47.9167
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "robolab_score": 31.5972,
+      "success_rate": 0.2292
+     },
+     "start": 4.1667,
+     "best": 37.5,
+     "gain_pct": 800.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      4.1667,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      45.8333,
+      45.8333,
+      45.8333,
+      45.8333,
+      37.5
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "robolab_score": 17.3611,
+      "success_rate": 0.0625
+     },
+     "start": 4.1667,
+     "best": 45.8333,
+     "gain_pct": 1000.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      4.1667,
+      20.8333,
+      20.8333,
+      20.8333,
+      45.8333,
+      45.8333,
+      45.8333,
+      45.8333,
+      45.8333,
+      45.8333,
+      45.8333
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "robolab_score": 8.3333,
+      "success_rate": 0.0417
+     },
+     "start": 8.3333,
+     "best": 8.3333,
+     "gain_pct": 0.0,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      8.3333,
+      8.3333,
+      8.3333,
+      8.3333,
+      8.3333,
+      8.3333,
+      8.3333,
+      8.3333,
+      8.3333,
+      8.3333,
+      8.3333
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "robolab_score": 5.2083,
+      "success_rate": 0.0
+     },
+     "start": 4.1667,
+     "best": 8.3333,
+     "gain_pct": 100.0,
+     "rounds": 10,
+     "ended": "budget_gpu",
+     "curve": [
+      4.1667,
+      4.1667,
+      4.1667,
+      4.1667,
+      4.1667,
+      4.1667,
+      4.1667,
+      4.1667,
+      4.1667,
+      4.1667,
+      8.3333
+     ]
+    }
+   ]
+  },
+  {
    "id": "video-generation",
    "category": "creation",
    "track": "Video Generation",

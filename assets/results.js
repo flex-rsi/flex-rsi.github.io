@@ -18,7 +18,7 @@
   const table = $("table.results"), fig = $(".curves-fig"), svg = $(".curves-plot"), legend = $(".legend"), noteEl = $(".board-note");
 
   const PCT = new Set(["accuracy", "acc_vstar", "acc_hrbench8k", "acc_starter", "acc_cooking", "acc_bike", "pair_accuracy", "success", "hos_sr", "hps_sr", "success_rate", "success_t1", "success_t3", "success_t5"]);
-  const DEC2 = new Set(["rhae", "rhae_starter"]);   // ARC-AGI-3 RHAE, 0 to 100
+  const DEC2 = new Set(["rhae", "rhae_starter", "robolab_score", "robolab_starter"]);   // 0 to 100 scores shown to 2 decimals   // ARC-AGI-3 RHAE, 0 to 100
   const fmt = (key, v) => {
     if (v === null || v === undefined) return "–";
     if (PCT.has(key)) return (100 * v).toFixed(1) + "%";
