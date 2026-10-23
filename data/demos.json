@@ -1731,6 +1731,143 @@
      }
     }
    ]
+  },
+  {
+   "id": "video-quality",
+   "name": "Video Quality",
+   "metric": "quality score",
+   "before": 0.8092,
+   "after": 0.8204,
+   "cases": [
+    {
+     "id": "test-007",
+     "kind": "rate",
+     "category": "Music video",
+     "mos": 3.54,
+     "before": 3.0,
+     "after": 3.5,
+     "width": 1280,
+     "height": 720,
+     "video": "assets/demo/videoquality/v040.mp4",
+     "poster": "assets/demo/videoquality/v040.jpg"
+    },
+    {
+     "id": "test-031",
+     "kind": "rate",
+     "category": "TV clip",
+     "mos": 1.99,
+     "before": 1.3,
+     "after": 1.71,
+     "width": 1440,
+     "height": 1080,
+     "video": "assets/demo/videoquality/v042.mp4",
+     "poster": "assets/demo/videoquality/v042.jpg"
+    },
+    {
+     "id": "test-019",
+     "kind": "rate",
+     "category": "Animation",
+     "mos": 4.52,
+     "before": 4.0,
+     "after": 4.5,
+     "width": 1280,
+     "height": 720,
+     "video": "assets/demo/videoquality/v043.mp4",
+     "poster": "assets/demo/videoquality/v043.jpg"
+    },
+    {
+     "id": "test-020",
+     "kind": "rate",
+     "category": "How-to",
+     "mos": 2.84,
+     "before": 2.3,
+     "after": 2.82,
+     "width": 854,
+     "height": 480,
+     "video": "assets/demo/videoquality/v070.mp4",
+     "poster": "assets/demo/videoquality/v070.jpg"
+    },
+    {
+     "id": "test-004",
+     "kind": "compare",
+     "question": "alignment",
+     "question_text": "Which video matches the prompt better?",
+     "prompt": "A sleek, futuristic hovercar races through a neon-lit metropolis at midnight. The vehicle glides smoothly over elevated tracks, illuminating the skyline with vibrant colors as it weaves between towering skyscrapers, creating a sense of speed and advanced technology.",
+     "label": "B",
+     "before": "A",
+     "after": "B",
+     "clips": [
+      {
+       "video": "assets/demo/videoquality/v103.mp4",
+       "poster": "assets/demo/videoquality/v103.jpg"
+      },
+      {
+       "video": "assets/demo/videoquality/v077.mp4",
+       "poster": "assets/demo/videoquality/v077.jpg"
+      }
+     ]
+    },
+    {
+     "id": "test-009",
+     "kind": "compare",
+     "question": "artifacts",
+     "question_text": "Which video has fewer visual artifacts?",
+     "prompt": "A daring escape through a neon-lit cyberpunk city at night. The protagonist weaves between towering skyscrapers as drones hunt, then leaps onto a hovering motorcycle and races into the vibrant skyline.",
+     "label": "B",
+     "before": "A",
+     "after": "B",
+     "clips": [
+      {
+       "video": "assets/demo/videoquality/v073.mp4",
+       "poster": "assets/demo/videoquality/v073.jpg"
+      },
+      {
+       "video": "assets/demo/videoquality/v167.mp4",
+       "poster": "assets/demo/videoquality/v167.jpg"
+      }
+     ]
+    },
+    {
+     "id": "test-018",
+     "kind": "compare",
+     "question": "preference",
+     "question_text": "Which video looks better overall?",
+     "prompt": "A 3D animated dragon soaring above a medieval castle at sunset, its scales shimmering in the golden light. Flames flicker from its mouth as it navigates through fluffy clouds, casting dynamic shadows below.",
+     "label": "B",
+     "before": "A",
+     "after": "B",
+     "clips": [
+      {
+       "video": "assets/demo/videoquality/v106.mp4",
+       "poster": "assets/demo/videoquality/v106.jpg"
+      },
+      {
+       "video": "assets/demo/videoquality/v089.mp4",
+       "poster": "assets/demo/videoquality/v089.jpg"
+      }
+     ]
+    },
+    {
+     "id": "test-048",
+     "kind": "compare",
+     "question": "preference",
+     "question_text": "Which video looks better overall?",
+     "prompt": "A serene mermaid glides through vibrant coral reefs, sunlight filtering through the water. Fish of every color swim around her gracefully as she dances with the ocean currents.",
+     "label": "B",
+     "before": "A",
+     "after": "B",
+     "clips": [
+      {
+       "video": "assets/demo/videoquality/v154.mp4",
+       "poster": "assets/demo/videoquality/v154.jpg"
+      },
+      {
+       "video": "assets/demo/videoquality/v180.mp4",
+       "poster": "assets/demo/videoquality/v180.jpg"
+      }
+     ]
+    }
+   ]
   }
  ]
 }

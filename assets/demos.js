@@ -15,6 +15,7 @@
     "3d-tracking": "Segment every object in several views of a scene and keep each object's identity consistent across views.",
     "ego-exo-memory": "Memory questions about synchronized first-person (ego) and fixed-camera (exo) videos of cooking and bike repair.",
     "image-editing": "Edit a photo or painting to a written instruction, change only what it asks for, and keep everything else as it was.",
+    "video-quality": "Judge how good videos look to people: score real user videos from 1 to 5, and pick the better of two AI-generated clips.",
     "arc-agi-2": "Grid puzzles: infer the rule from a few input–output examples and produce the output grid for a new input, with two guesses per test.",
     "arc-agi-3": "Interactive puzzle games with no instructions: the agent acts, works out the rules and the goal, and clears as many levels as it can within its limits.",
   };
@@ -484,7 +485,80 @@
     show(0);
   }
 
-  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit,
+  // Video quality: a real user video scored against the people's mean opinion score (MOS) on a 1-5 scale,
+  // or two AI-generated clips with the people's vote on one question; the starting and the self-improved
+  // solution's answers side by side.
+  function videoQuality(p) {
+    stage.innerHTML = `
+      <div class="ep-task"><q></q><span class="ep-meta"></span></div>
+      <p class="vqd-prompt" hidden></p>
+      <div class="vqd-body"></div>
+      <div class="ep-strip ep-strip-wide vqd-strip" role="group" aria-label="Cases">${p.cases.map((c, i) =>
+        `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(c.kind === "rate" ? c.poster : c.clips[0].poster)}" alt="" loading="lazy"><span>${
+          c.kind === "rate" ? `${esc(c.category)}<small>Rate · people ${c.mos.toFixed(2)}</small>` : `${esc(c.question)}<small>Compare · AI clips</small>`}</span></button>`).join("")}</div>
+      <p class="demo-note"><b>What the agent changed.</b> The starting solution shows the model 8 frames of a video and asks for a score from 1 to 5; for a pair it shows 6 frames of each clip and asks all three questions in one call.
+        The self-improved solution adds a resolution prior to the score (+0.15 for each doubling of the pixel count over 640 × 360), and asks the pair questions one at a time:
+        alignment with the prompt shown; artifacts and overall preference without the prompt, on 10 frames per clip, asked twice with A and B swapped, the two votes weighted by the confidence the model states.</p>`;
+    const body = stage.querySelector(".vqd-body"), promptEl = stage.querySelector(".vqd-prompt");
+    let cur = -1;
+    const pos = (v) => `${(100 * (Math.min(5, Math.max(1, v)) - 1)) / 4}%`;
+    const show = (i) => {
+      cur = i;
+      pauseAll();
+      const c = p.cases[i];
+      if (c.kind === "rate") {
+        stage.querySelector(".ep-task q").textContent = "How good does this video look to people?";
+        stage.querySelector(".ep-meta").textContent = `Test · real user video · ${c.category} · ${c.width} × ${c.height}`;
+        promptEl.hidden = true;
+        const span = (a, b, cls) => `<span class="vqd-err ${cls}" style="left:${pos(Math.min(a, b))};width:calc(${pos(Math.max(a, b))} - ${pos(Math.min(a, b))})"></span>`;
+        body.innerHTML = `<div class="vqd-rate">
+          <figure class="vqd-clip">${video(c.video, c.poster, " loop")}</figure>
+          <div class="vqd-score">
+            <div class="vqd-scale">
+              ${span(c.mos, c.before, "no")}${span(c.mos, c.after, "ok")}
+              <span class="vqd-mark people" style="left:${pos(c.mos)}"><i></i><b>People ${c.mos.toFixed(2)}</b></span>
+              <span class="vqd-mark before" style="left:${pos(c.before)}"><i></i><b>Before ${c.before.toFixed(2)}</b></span>
+              <span class="vqd-mark after" style="left:${pos(c.after)}"><i></i><b>After ${c.after.toFixed(2)}</b></span>
+              <span class="vqd-axis">${[1, 2, 3, 4, 5].map((k) => `<span style="left:${pos(k)}">${k}</span>`).join("")}</span>
+            </div>
+            <dl class="vqd-read">
+              <div><dt><span class="ab-tag">Before</span></dt><dd>${c.before.toFixed(2)} <span class="no">off by ${Math.abs(c.before - c.mos).toFixed(2)}</span></dd></div>
+              <div><dt><span class="ab-tag after">After</span></dt><dd>${c.after.toFixed(2)} <span class="ok">off by ${Math.abs(c.after - c.mos).toFixed(2)}</span></dd></div>
+            </dl>
+          </div></div>`;
+        const v = body.querySelector("video");
+        active = [v];
+        loop(v);
+      } else {
+        stage.querySelector(".ep-task q").textContent = c.question_text;
+        stage.querySelector(".ep-meta").textContent = "Test · two AI-generated clips from one prompt";
+        promptEl.hidden = false;
+        promptEl.textContent = `Prompt: ${c.prompt}`;
+        const pick = (who, k, mark) => `<div><dt>${who}</dt><dd>${k}${mark ? ` <span class="${mark === "✓" ? "ok" : "no"}">${mark}</span>` : ""}</dd></div>`;
+        body.innerHTML = `<div class="vqd-pair">${c.clips.map((m, j) => {
+            const k = "AB"[j];
+            return `<figure class="vqd-clip${k === c.label ? " chosen" : ""}">${video(m.video, m.poster)}<figcaption><span class="vqd-ab">${k}</span>${k === c.label ? "<span class=\"vqd-people\">People's choice</span>" : ""}</figcaption></figure>`;
+          }).join("")}</div>
+          <dl class="vqd-read vqd-picks">
+            ${pick("<span class=\"ab-tag\">People</span>", c.label, "")}
+            ${pick("<span class=\"ab-tag\">Before</span>", c.before, c.before === c.label ? "✓" : "×")}
+            ${pick("<span class=\"ab-tag after\">After</span>", c.after, c.after === c.label ? "✓" : "×")}
+          </dl>`;
+        const [a, b] = body.querySelectorAll("video");
+        active = [a, b];
+        pair(a, b);
+      }
+      stage.querySelectorAll(".vqd-strip button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.i === i)));
+      playAll();
+    };
+    stage.querySelector(".vqd-strip").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button");
+      if (btn && +btn.dataset.i !== cur) show(+btn.dataset.i);
+    });
+    show(0);
+  }
+
+  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit, "video-quality": videoQuality,
                    "arc-agi-2": arcPuzzles, "arc-agi-3": arcGames };
 
   function select(d, id) {
@@ -507,7 +581,7 @@
   fetch("data/demos.json")
     .then((r) => r.json())
     .then((d) => {
-      const ORDER = ["robot-control", "active-search", "arc-agi-3", "visual-search", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2"];
+      const ORDER = ["robot-control", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
       tabsEl.addEventListener("click", (ev) => {
