@@ -1856,6 +1856,124 @@
      ]
     }
    ]
+  },
+  {
+   "id": "robolab",
+   "name": "RoboLab",
+   "metric": "score",
+   "what": "Dev score · start → final",
+   "before": 33.33,
+   "after": 85.42,
+   "comparisons": [
+    {
+     "scene": "Three cubes",
+     "benchmark": "RoboLab",
+     "task": "Stack the rubiks cubes in a tower",
+     "model": "Claude Opus 5.5",
+     "case": "dev task, episode 1",
+     "focus": "The cubes",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      288,
+      60,
+      240,
+      180
+     ],
+     "speed": 1.5,
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robolab/stack3-before.mp4",
+      "poster": "assets/demo/robolab/stack3-before.jpg",
+      "outcome": "Fail",
+      "summary": "It puts one cube on another, then knocks the pair over going for the third; the cubes end up side by side.",
+      "score": 50
+     },
+     "after": {
+      "round": "R7",
+      "video": "assets/demo/robolab/stack3-after.mp4",
+      "poster": "assets/demo/robolab/stack3-after.jpg",
+      "outcome": "Success",
+      "summary": "It stacks the cubes one by one and sets the third on top of the other two.",
+      "score": 100
+     },
+     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself."
+    },
+    {
+     "scene": "Cube and banana",
+     "benchmark": "RoboLab",
+     "task": "Put the cube and the banana in the bowl",
+     "model": "Claude Opus 5.5",
+     "case": "dev task, episode 1",
+     "focus": "Cube, banana and bowl",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      188,
+      60,
+      320,
+      240
+     ],
+     "speed": 1.5,
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robolab/cube-banana-before.mp4",
+      "poster": "assets/demo/robolab/cube-banana-before.jpg",
+      "outcome": "Fail",
+      "summary": "It knocks the cube off the banana, then lifts the banana and carries it away from the bowl; neither ends up inside.",
+      "score": 0
+     },
+     "after": {
+      "round": "R7",
+      "video": "assets/demo/robolab/cube-banana-after.mp4",
+      "poster": "assets/demo/robolab/cube-banana-after.jpg",
+      "outcome": "Success",
+      "summary": "It puts the cube in the bowl, then picks up the banana and lowers it in after it.",
+      "score": 100
+     },
+     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself."
+    },
+    {
+     "scene": "Smaller object",
+     "benchmark": "RoboLab",
+     "task": "Place the smaller object in the grey bin.",
+     "model": "Claude Opus 5.5",
+     "case": "dev task, episode 1",
+     "focus": "The two boxes and the bin",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      268,
+      60,
+      280,
+      210
+     ],
+     "speed": 1.5,
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robolab/smaller-object-before.mp4",
+      "poster": "assets/demo/robolab/smaller-object-before.jpg",
+      "outcome": "Fail",
+      "summary": "It lifts the butter carton but drops it on the table, then grabs the larger box instead; nothing reaches the bin.",
+      "score": 0
+     },
+     "after": {
+      "round": "R7",
+      "video": "assets/demo/robolab/smaller-object-after.mp4",
+      "poster": "assets/demo/robolab/smaller-object-after.jpg",
+      "outcome": "Success",
+      "summary": "It picks the smaller butter carton and lowers it into the grey bin.",
+      "score": 100
+     },
+     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself."
+    }
+   ]
   }
  ]
 }

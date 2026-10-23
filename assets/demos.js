@@ -15,6 +15,7 @@
     "3d-tracking": "Segment every object in several views of a scene and keep each object's identity consistent across views.",
     "ego-exo-memory": "Memory questions about synchronized first-person (ego) and fixed-camera (exo) videos of cooking and bike repair.",
     "image-editing": "Edit a photo or painting to a written instruction, change only what it asks for, and keep everything else as it was.",
+    "robolab": "One generalist policy for many tabletop tasks. The same episode run by the starting and by the self-improved policy; only dev tasks are recorded on video.",
     "video-quality": "Judge how good videos look to people: score real user videos from 1 to 5, and pick the better of two AI-generated clips.",
     "arc-agi-2": "Grid puzzles: infer the rule from a few input–output examples and produce the output grid for a new input, with two guesses per test.",
     "arc-agi-3": "Interactive puzzle games with no instructions: the agent acts, works out the rules and the goal, and clears as many levels as it can within its limits.",
@@ -211,7 +212,7 @@
       const zoom = ((c.view ? c.view[2] : size[0]) / region[2]).toFixed(1).replace(/\.0$/, "");
       [[rows[0], c.before], [rows[1], c.after]].forEach(([r, rd]) => {
         const ok = rd.outcome === "Success";
-        r.querySelector(".rb-round").textContent = `Round ${rd.round.replace(/^R0*/, "")}`;
+        r.querySelector(".rb-round").textContent = `Round ${rd.round.replace(/^R0*(?=\d)/, "")}`;
         r.querySelector(".rb-score").innerHTML = `<b class="${ok ? "ok" : "no"}">${rd.outcome}</b>${rd.score !== undefined ? `<span class="of">${rd.score}/100</span>` : ""}`;
         r.querySelector(".rb-sum").textContent = rd.summary;
         r.querySelector(".rb-inset figcaption").textContent = `${c.focus} · ${zoom}×${c.speed ? ` · played ${c.speed}× speed` : ""}`;
@@ -558,7 +559,7 @@
     show(0);
   }
 
-  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit, "video-quality": videoQuality,
+  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit, "video-quality": videoQuality, "robolab": robotControl,
                    "arc-agi-2": arcPuzzles, "arc-agi-3": arcGames };
 
   function select(d, id) {
@@ -569,7 +570,7 @@
     tabsEl.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.id === id)));
     $(".demo-title").textContent = p.name;
     $(".demo-sub").textContent = ABOUT[p.id] || "";
-    const what = `Test ${p.metric} · start → final`;
+    const what = p.what || `Test ${p.metric} · start → final`;
     if (p.id === "robot-control") $(".demo-score").innerHTML = `${p.comparisons.length} episodes<span class="what">RoboDojo · RoboCasa</span>`;
     else $(".demo-score").innerHTML = `${esc(d.model)} <b>${fmtScore(p, p.before)}</b><span class="to">→</span><span class="after">${fmtScore(p, p.after)}</span><span class="what">${esc(what)}</span>`;
     RENDER[p.id](p);
@@ -581,7 +582,7 @@
   fetch("data/demos.json")
     .then((r) => r.json())
     .then((d) => {
-      const ORDER = ["robot-control", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2"];
+      const ORDER = ["robot-control", "robolab", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
       tabsEl.addEventListener("click", (ev) => {
