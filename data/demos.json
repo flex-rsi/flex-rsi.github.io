@@ -1776,18 +1776,6 @@
      "poster": "assets/demo/videoquality/v043.jpg"
     },
     {
-     "id": "test-020",
-     "kind": "rate",
-     "category": "How-to",
-     "mos": 2.84,
-     "before": 2.3,
-     "after": 2.82,
-     "width": 854,
-     "height": 480,
-     "video": "assets/demo/videoquality/v070.mp4",
-     "poster": "assets/demo/videoquality/v070.jpg"
-    },
-    {
      "id": "test-004",
      "kind": "compare",
      "question": "alignment",
