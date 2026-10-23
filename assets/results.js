@@ -46,12 +46,12 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const tag = (w) => `<span class="wtag">${w === "open" ? "open" : "closed"}</span>`;
 
-  // Provider marks are the SVGs from 4dcodebench.com/logos. GPT and GLM are drawn in black
-  // ("mono"); the others keep their brand colours.
+  // Provider marks are the SVGs from 4dcodebench.com/logos, plus Grok and Meta (for Muse) from the same LobeHub
+  // icon set. GPT, GLM and Grok are drawn in black ("mono"); the others keep their brand colours.
   const LOGOS = [[/claude|sonnet|opus|fable|haiku/, "claude"], [/qwen/, "qwen"], [/gemini/, "gemini"], [/gemma/, "gemma"],
                  [/gpt|openai/, "gpt"], [/minimax/, "minimax"], [/\bglm\b/, "glm"], [/deepseek/, "deepseek"],
-                 [/mistral/, "mistral"], [/mimo/, "mimo"]];
-  const MONO = new Set(["gpt", "glm"]);
+                 [/mistral/, "mistral"], [/mimo/, "mimo"], [/grok/, "grok"], [/\bmuse\b/, "meta"]];
+  const MONO = new Set(["gpt", "glm", "grok"]);
   function modelMark(name) {
     const n = name.toLowerCase();
     const hit = LOGOS.find(([re]) => re.test(n));
