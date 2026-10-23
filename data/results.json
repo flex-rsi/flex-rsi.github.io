@@ -3244,6 +3244,9 @@
      "label": "Geometry"
     }
    ],
+   "footnotes": [
+    "\u2020 GPT-6 Astra at effort ultra, its highest reasoning effort, with a 3500 s model-call timeout. Every other row uses the standard effort medium. Shown for comparison: it takes no rank and is not counted in the overview."
+   ],
    "rows": [
     {
      "model": "Claude Opus 5.5",
@@ -3278,6 +3281,39 @@
       0.678,
       0.678
      ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "scene_score": 0.6156,
+      "scene_starter": 0.0715,
+      "appearance_term": 0.8112,
+      "object_term": 0.5997,
+      "geometry_term": 0.436
+     },
+     "start": 0.0768,
+     "best": 0.6309,
+     "gain_pct": 721.3,
+     "rounds": 12,
+     "ended": "budget_wall",
+     "curve": [
+      0.0768,
+      0.5858,
+      0.5858,
+      0.5858,
+      0.5858,
+      0.6165,
+      0.621,
+      0.6266,
+      0.6309,
+      0.6309,
+      0.6309,
+      0.6309,
+      0.6309
+     ],
+     "mark": "\u2020",
+     "extra": true
     },
     {
      "model": "GPT-6 Astra",
@@ -3466,6 +3502,9 @@
      "label": "Physics"
     }
    ],
+   "footnotes": [
+    "\u2020 GPT-6 Astra at effort ultra, its highest reasoning effort, with a 3500 s model-call timeout. Every other row uses the standard effort medium. Shown for comparison: it takes no rank and is not counted in the overview."
+   ],
    "rows": [
     {
      "model": "Claude Opus 5.5",
@@ -3500,6 +3539,39 @@
       0.2786,
       0.2786
      ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "scene_score": 0.5483,
+      "scene_starter": 0.2669,
+      "geometry_term": 0.7046,
+      "appearance_term": 0.5864,
+      "physics_term": 0.3538
+     },
+     "start": 0.1731,
+     "best": 0.4784,
+     "gain_pct": 176.4,
+     "rounds": 12,
+     "ended": "budget_wall",
+     "curve": [
+      0.1731,
+      0.336,
+      0.4637,
+      0.4637,
+      0.4637,
+      0.4784,
+      0.4784,
+      0.4784,
+      0.4784,
+      0.4784,
+      0.4784,
+      0.4784,
+      0.4784
+     ],
+     "mark": "\u2020",
+     "extra": true
     },
     {
      "model": "GPT-6 Astra",

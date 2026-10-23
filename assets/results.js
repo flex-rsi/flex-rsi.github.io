@@ -54,15 +54,22 @@
     const f = hit[1];
     return `<span class="model-icon" aria-hidden="true"><img${MONO.has(f) ? ' class="mono"' : ""} src="assets/model-logos/${f}.svg" alt="" loading="lazy" decoding="async"></span>`;
   }
-  function modelCell(model, weights) {
-    return `<td class="model"><div class="mcell">${modelMark(model)}<span class="model-name">${esc(model)}</span>${tag(weights)}</div></td>`;
+  // r.mark flags a row run under a non-standard condition (its task's footnote says which): it takes
+  // no rank and stays out of the overview
+  const markSup = (mark) => (mark ? `<sup class="row-mark">${esc(mark)}</sup>` : "");
+  function modelCell(model, weights, mark) {
+    return `<td class="model"><div class="mcell">${modelMark(model)}<span class="model-name">${esc(model)}${markSup(mark)}</span>${tag(weights)}</div></td>`;
   }
   function rankBadge(rank) {
+    if (rank === null || rank === undefined) return `<span class="rank-badge na">–</span>`;
     const medal = rank <= 3 ? ` medal medal-${rank}` : "";
     return `<span class="rank-badge${medal}">${String(rank).padStart(2, "0")}</span>`;
   }
   // Standard competition ranking: equal scores share a rank and the next rank skips (1, 1, 3).
-  const ranksOf = (t) => t.rows.map((r) => 1 + t.rows.filter((q) => q.test[t.primary] > r.test[t.primary]).length);
+  const ranksOf = (t) => {
+    const std = t.rows.filter((q) => !q.extra);
+    return t.rows.map((r) => (r.extra ? null : 1 + std.filter((q) => q.test[t.primary] > r.test[t.primary]).length));
+  };
   function rankClass(i, partial = false) {
     const classes = [];
     if (i < 3) classes.push("podium", `podium-${i + 1}`);
@@ -172,7 +179,7 @@
     leadEl.textContent = "Which frontier models have been run on which tasks so far. Standings are kept per task, so a model is only compared where it was measured: open a category for its rankings and improvement curves.";
     subEl.hidden = true;
     const models = new Map();
-    data.tasks.forEach((t) => t.rows.forEach((r) => {
+    data.tasks.forEach((t) => t.rows.filter((r) => !r.extra).forEach((r) => {
       const m = models.get(r.model) || { model: r.model, weights: r.weights, tasks: [] };
       m.tasks.push(t);
       models.set(r.model, m);
@@ -180,8 +187,9 @@
     const order = (t) => cats.findIndex((c) => c.id === t.category) * 100 + data.tasks.indexOf(t);
     const rows = [...models.values()].map((m) => ({ ...m, tasks: m.tasks.sort((x, y) => order(x) - order(y)) }))
       .sort((x, y) => y.tasks.length - x.tasks.length || x.model.localeCompare(y.model));
-    const total = data.tasks.length, runs = data.tasks.reduce((n, t) => n + t.rows.length, 0);
-    const rounds = data.tasks.reduce((n, t) => n + t.rows.reduce((k, r) => k + (r.rounds || 0), 0), 0);
+    const std = (t) => t.rows.filter((r) => !r.extra);
+    const total = data.tasks.length, runs = data.tasks.reduce((n, t) => n + std(t).length, 0);
+    const rounds = data.tasks.reduce((n, t) => n + std(t).reduce((k, r) => k + (r.rounds || 0), 0), 0);
     const stat = (n, label) => `<div class="cov-stat"><b data-n="${n}">0</b><span>${label}</span></div>`;
     cov.innerHTML = `
       <div class="cov-stats">${stat(rows.length, "frontier models")}${stat(total, "tasks")}${stat(cats.length, "categories")}${stat(runs, "model × task runs")}${stat(rounds, "total RSI rounds")}</div>
@@ -222,12 +230,13 @@
     const ranks = ranksOf(t);
     const body = t.rows.map((r, i) => {
       const values = t.metrics.map((m, j) => `<td${j === 0 ? ' class="strong"' : ""}>${fmt(m.key, r.test[m.key])}</td>`).join("");
-      return `<tr data-i="${i}" class="${rankClass(ranks[i] - 1)}"><td>${rankBadge(ranks[i])}</td>${modelCell(r.model, r.weights)}${values}<td class="vchange">${change(t.primary, r)}</td><td class="rounds">${r.rounds ?? "–"}${r.ended ? `<span class="ended">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
+      return `<tr data-i="${i}" class="${ranks[i] === null ? "" : rankClass(ranks[i] - 1)}"><td>${rankBadge(ranks[i])}</td>${modelCell(r.model, r.weights, r.mark)}${values}<td class="vchange">${change(t.primary, r)}</td><td class="rounds">${r.rounds ?? "–"}${r.ended ? `<span class="ended">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
     }).join("");
     const metricHeads = t.metrics.map((m) => `<th>${esc(m.label)}</th>`).join("");
     table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${t.metrics.length}">Hidden test metrics</th><th>Validation</th><th>Run depth</th></tr><tr><th>#</th><th class="model">Model</th>${metricHeads}<th>Start → best<span class="th-sub">${esc(t.metrics[0].label)}</span></th><th class="rounds">Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
     drawCurves(t);
-    noteEl.textContent = "Validation: the run's starting score and its best score over the rounds, in the primary metric's units. Each line ends at the last round its run reached.";
+    noteEl.innerHTML = (t.footnotes || []).map((f) => `<span class="fn">${esc(f)}</span>`).join("") +
+      "Validation: the run's starting score and its best score over the rounds, in the primary metric's units. Each line ends at the last round its run reached.";
   }
 
   // ---------- curves ----------
@@ -285,7 +294,7 @@
     }).join("");
     svg.setAttribute("aria-label", `${t.track}: validation score over rounds`);
     svg.innerHTML = g + lines;
-    legend.innerHTML = series.map((s) => `<li data-i="${s.i}"><span class="legend-line" style="--legend-color:${COLORS[s.i % COLORS.length]}"></span>${modelMark(s.r.model)}<span>${esc(s.r.model)}</span></li>`).join("");
+    legend.innerHTML = series.map((s) => `<li data-i="${s.i}"><span class="legend-line" style="--legend-color:${COLORS[s.i % COLORS.length]}"></span>${modelMark(s.r.model)}<span>${esc(s.r.model)}${markSup(s.r.mark)}</span></li>`).join("");
     fig.hidden = false;
     svg.classList.remove("drawn");
     requestAnimationFrame(() => svg.classList.add("drawn"));
@@ -335,7 +344,7 @@
     .then((r) => r.json())
     .then((d) => {
       data = d;
-      rankOf = Object.fromEntries(d.tasks.map((t) => { const rk = ranksOf(t); return [t.id, Object.fromEntries(t.rows.map((r, i) => [r.model, rk[i]]))]; }));
+      rankOf = Object.fromEntries(d.tasks.map((t) => { const rk = ranksOf(t); return [t.id, Object.fromEntries(t.rows.flatMap((r, i) => (r.extra ? [] : [[r.model, rk[i]]])))]; }));
       byCat = {};
       d.tasks.forEach((t) => (byCat[t.category] = byCat[t.category] || []).push(t));
       const FIRST = ["robot-control"];                       // shown first within its category

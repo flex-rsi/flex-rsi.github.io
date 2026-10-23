@@ -234,3 +234,8 @@ table.results td.vchange b { font-weight: 600; color: var(--ink); }
 table.results td.vchange .to { padding: 0 3px; color: var(--ink-3); }
 table.results td.vchange .delta { margin-left: 8px; font: 600 11px var(--mono); color: var(--accent-1); }
 table.results td.vchange .delta.flat { color: var(--ink-3); }
+
+/* a row run under a non-standard condition: a mark after the model name, no rank, a footnote below the table */
+.row-mark { margin-left: 2px; font-size: 0.8em; font-weight: 700; color: var(--accent-1); }
+table.results .rank-badge.na { color: var(--ink-3); border-color: var(--line); background: transparent; }
+.board-note .fn { display: block; margin-bottom: 6px; }
