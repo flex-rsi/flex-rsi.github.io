@@ -142,7 +142,7 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
 .section-head h2 { font-size: clamp(28px, 4vw, 42px); line-height: 1.12; }
 .grid { display: grid; gap: 18px; }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-tracks { grid-template-columns: repeat(4, 1fr); }
+.grid-tracks { grid-template-columns: repeat(3, 1fr); }
 .card { padding: 28px; }
 .card h3 { font-size: 19px; margin: 14px 0 8px; }
 .card p { color: var(--ink-2); font-size: 15px; }
@@ -225,7 +225,7 @@ main { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto; }
   color: var(--ink-3); transition: background 0.3s var(--ease), color 0.3s var(--ease);
 }
 .hero-index a:nth-child(odd) { border-right: 1px solid var(--glass-edge); }
-.hero-index a:nth-child(n + 7) { border-bottom: 0; }
+.hero-index a:nth-child(n + 5) { border-bottom: 0; }
 .hero-index .hi-n { font: 500 11px var(--mono); letter-spacing: 0.06em; }
 .hero-index .hi-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hero-index .hi-meta { font: 500 10.5px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
@@ -368,7 +368,7 @@ pre { margin: 0; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; 
 @media (max-width: 560px), (min-width: 821px) and (max-width: 1000px) {
   .hero-index { grid-template-columns: 1fr; }
   .hero-index a:nth-child(odd) { border-right: 0; }
-  .hero-index a:nth-child(n + 7) { border-bottom: 1px solid var(--glass-edge); }
+  .hero-index a:nth-child(n + 5) { border-bottom: 1px solid var(--glass-edge); }
   .hero-index a:last-child { border-bottom: 0; }
 }
 @media (max-width: 560px) {

@@ -26,16 +26,6 @@
    "id": "creation",
    "name": "Creation",
    "about": "Making and editing content to instructions."
-  },
-  {
-   "id": "bio",
-   "name": "Bio",
-   "about": "Scientific problems in the life sciences."
-  },
-  {
-   "id": "safety",
-   "name": "Safety",
-   "about": "Staying safe and within rules, budgets and boundaries."
   }
  ],
  "tasks": [
