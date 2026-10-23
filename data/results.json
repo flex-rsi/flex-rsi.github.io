@@ -3985,8 +3985,8 @@
   {
    "id": "robolab",
    "category": "action",
-   "track": "Generalist Manipulation",
-   "task": "One tabletop manipulation policy for many tasks (pick and place, stacking, reorienting, choosing objects by colour, size, kind or position), scored on tasks it never saw during development (RoboLab)",
+   "track": "RoboLab",
+   "task": "One generalist tabletop manipulation policy for many tasks (pick and place, stacking, reorienting, choosing objects by colour, size, kind or position), scored on tasks it never saw during development",
    "primary": "robolab_score",
    "metrics": [
     {
