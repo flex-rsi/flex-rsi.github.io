@@ -4503,7 +4503,7 @@
     }
    ],
    "footnotes": [
-    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 10; a longer run's last point is its final best. Per task, the model's latest run with a final test."
+    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 15; a longer run's last point is its final best. Per task, the model's latest run with a final test."
    ],
    "rows": [
     {
@@ -4675,6 +4675,11 @@
       16.3,
       16.7,
       16.7,
+      18.7,
+      18.7,
+      18.7,
+      18.7,
+      18.7,
       18.7,
       18.7,
       18.7,
@@ -4943,7 +4948,7 @@
     }
    ],
    "footnotes": [
-    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 10; a longer run's last point is its final best. Per task, the model's latest run with a final test."
+    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 15; a longer run's last point is its final best. Per task, the model's latest run with a final test."
    ],
    "rows": [
     {
@@ -4976,6 +4981,11 @@
       0.4222,
       0.4444,
       0.4667,
+      0.4667,
+      0.4889,
+      0.4889,
+      0.4889,
+      0.4889,
       0.4889
      ]
     },
@@ -5038,6 +5048,7 @@
       0.2222,
       0.2444,
       0.2889,
+      0.3111,
       0.3111,
       0.3111,
       0.3111
@@ -5104,6 +5115,11 @@
       0.0667,
       0.0889,
       0.0889,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
+      0.1111,
       0.1111,
       0.1111,
       0.1111,
@@ -5179,6 +5195,11 @@
       0.0,
       0.0,
       0.0111,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
+      0.0222,
       0.0222
      ]
     },
@@ -5214,6 +5235,11 @@
       0.0222,
       0.0222,
       0.0222,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
+      0.0333,
       0.0333
      ]
     }
