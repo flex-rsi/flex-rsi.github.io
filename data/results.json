@@ -4503,7 +4503,7 @@
     }
    ],
    "footnotes": [
-    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 15; a longer run's last point is its final best. Per task, the model's latest run with a final test."
+    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 10; a longer run's last point is its final best. Per task, the model's latest run with a final test."
    ],
    "rows": [
     {
@@ -4675,11 +4675,6 @@
       16.3,
       16.7,
       16.7,
-      18.7,
-      18.7,
-      18.7,
-      18.7,
-      18.7,
       18.7,
       18.7,
       18.7,
@@ -4948,7 +4943,7 @@
     }
    ],
    "footnotes": [
-    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 15; a longer run's last point is its final best. Per task, the model's latest run with a final test."
+    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 10; a longer run's last point is its final best. Per task, the model's latest run with a final test."
    ],
    "rows": [
     {
@@ -4981,11 +4976,6 @@
       0.4222,
       0.4444,
       0.4667,
-      0.4667,
-      0.4889,
-      0.4889,
-      0.4889,
-      0.4889,
       0.4889
      ]
     },
@@ -5050,7 +5040,6 @@
       0.2889,
       0.3111,
       0.3111,
-      0.3111,
       0.3111
      ]
     },
@@ -5062,17 +5051,18 @@
       "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.0,
       "sr_open-cabinet": 0.0,
+      "sr_open-drawer": 0.0,
       "sr_portion-hot-dogs": 0.0,
       "sr_turn-off-stove": 0.0,
       "sr_turn-on-microwave": 0.0,
       "sr_turn-on-sink-faucet": 0.6,
       "sr_suite": 0.0667,
-      "tasks_run": 8
+      "tasks_run": 9
      },
      "start": 0.0,
      "best": 0.0667,
      "gain_pct": null,
-     "rounds": 80,
+     "rounds": 90,
      "ended": null,
      "curve": [
       0.0,
@@ -5115,11 +5105,6 @@
       0.0667,
       0.0889,
       0.0889,
-      0.1111,
-      0.1111,
-      0.1111,
-      0.1111,
-      0.1111,
       0.1111,
       0.1111,
       0.1111,
@@ -5195,11 +5180,6 @@
       0.0,
       0.0,
       0.0111,
-      0.0222,
-      0.0222,
-      0.0222,
-      0.0222,
-      0.0222,
       0.0222
      ]
     },
@@ -5235,11 +5215,6 @@
       0.0222,
       0.0222,
       0.0222,
-      0.0333,
-      0.0333,
-      0.0333,
-      0.0333,
-      0.0333,
       0.0333
      ]
     }

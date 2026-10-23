@@ -64,6 +64,13 @@
 .g-state i + i { position: absolute; inset: 0; background: var(--accent-1); animation: g-edit 9s ease-in-out infinite; }
 @keyframes g-edit { 0%, 36% { opacity: 0; } 46%, 88% { opacity: 1; } 98%, 100% { opacity: 0; } }
 
+/* Ego-Exo: the two synchronized views side by side (ego 300 px wide of 834), each labelled */
+.g-view {
+  position: absolute; top: 8px; left: 8px; padding: 3px 7px; background: rgba(11, 13, 26, 0.86); color: #f4f4f1;
+  font: 500 10px var(--mono); letter-spacing: 0.06em; text-transform: uppercase;
+}
+.g-view.exo { left: calc(300 / 834 * 100% + 8px); }
+
 /* reduced motion: still rows the reader scrolls */
 .glance.still .glance-row { overflow-x: auto; }
 
