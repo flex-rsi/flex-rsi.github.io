@@ -3993,6 +3993,135 @@
    ]
   },
   {
+   "id": "video-generation",
+   "category": "creation",
+   "track": "Video Generation",
+   "task": "Text-to-video workflows around a frozen video model (MiniMax H3, 480p), scored on compositional prompts: attribute and action binding, numeracy, spatial relations (T2V-CompBench)",
+   "primary": "composition_score",
+   "metrics": [
+    {
+     "key": "composition_score",
+     "label": "Score"
+    },
+    {
+     "key": "comp_starter",
+     "label": "Starter"
+    }
+   ],
+   "rows": [
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "composition_score": 0.9138,
+      "comp_starter": 0.8063
+     },
+     "start": 0.6911,
+     "best": 0.9071,
+     "gain_pct": 31.2,
+     "rounds": 6,
+     "ended": "budget_wall",
+     "curve": [
+      0.6911,
+      0.6911,
+      0.8781,
+      0.8781,
+      0.8781,
+      0.8781,
+      0.9071
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "composition_score": 0.8729,
+      "comp_starter": 0.8063
+     },
+     "start": 0.6911,
+     "best": 0.7651,
+     "gain_pct": 10.7,
+     "rounds": 5,
+     "ended": "budget_wall",
+     "curve": [
+      0.6911,
+      0.6911,
+      0.7423,
+      0.7423,
+      0.7651,
+      0.7651
+     ]
+    },
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "composition_score": 0.8712,
+      "comp_starter": 0.8063
+     },
+     "start": 0.6911,
+     "best": 0.7783,
+     "gain_pct": 12.6,
+     "rounds": 4,
+     "ended": "budget_wall",
+     "curve": [
+      0.6911,
+      0.6911,
+      0.6911,
+      0.7783,
+      0.7783
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "composition_score": 0.8181,
+      "comp_starter": 0.8063
+     },
+     "start": 0.6911,
+     "best": 0.7185,
+     "gain_pct": 4.0,
+     "rounds": 5,
+     "ended": "budget_wall",
+     "curve": [
+      0.6911,
+      0.6911,
+      0.6911,
+      0.7021,
+      0.7132,
+      0.7185
+     ]
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "weights": "open",
+     "test": {
+      "composition_score": 0.796,
+      "comp_starter": 0.8063
+     },
+     "start": 0.6911,
+     "best": 0.8195,
+     "gain_pct": 18.6,
+     "rounds": 10,
+     "ended": "budget_wall",
+     "curve": [
+      0.6911,
+      0.6911,
+      0.6911,
+      0.6911,
+      0.6911,
+      0.6911,
+      0.6911,
+      0.6911,
+      0.6911,
+      0.8086,
+      0.8195
+     ]
+    }
+   ]
+  },
+  {
    "id": "robot-control",
    "category": "action",
    "track": "Robot Control",
