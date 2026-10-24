@@ -1900,7 +1900,7 @@
       "score": 100
      },
      "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
-     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the shorter replay then holds its last frame until the other ends. Frames are lightly smoothed over time for display."
     },
     {
      "scene": "Two bowls",
@@ -1937,7 +1937,7 @@
       "score": 100
      },
      "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
-     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the shorter replay then holds its last frame until the other ends. Frames are lightly smoothed over time for display."
     },
     {
      "scene": "Smaller object",
@@ -1974,7 +1974,7 @@
       "score": 100
      },
      "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
-     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the shorter replay then holds its last frame until the other ends. Frames are lightly smoothed over time for display."
     },
     {
      "scene": "Cube and banana",
@@ -2011,7 +2011,7 @@
       "score": 100
      },
      "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
-     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the shorter replay then holds its last frame until the other ends. Frames are lightly smoothed over time for display."
     },
     {
      "scene": "Cube, then banana",
@@ -2048,7 +2048,7 @@
       "score": 100
      },
      "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
-     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the shorter replay then holds its last frame until the other ends. Frames are lightly smoothed over time for display."
     }
    ]
   }
