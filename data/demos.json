@@ -1888,7 +1888,7 @@
       "video": "assets/demo/robolab/stack3-before.mp4",
       "poster": "assets/demo/robolab/stack3-before.jpg",
       "outcome": "Fail",
-      "summary": "It puts one cube on another, then knocks the pair over going for the third; the cubes end up side by side.",
+      "summary": "It puts one cube on another, then knocks the pair over going for the third; the cubes end up side by side. It stops when its 40 model calls run out.",
       "score": 50
      },
      "after": {
@@ -1899,43 +1899,45 @@
       "summary": "It stacks the cubes one by one and sets the third on top of the other two.",
       "score": 100
      },
-     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself."
+     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
     },
     {
-     "scene": "Cube and banana",
+     "scene": "Two bowls",
      "benchmark": "RoboLab",
-     "task": "Put the cube and the banana in the bowl",
+     "task": "Stack the right bowl on the left bowl",
      "model": "Claude Opus 5.5",
      "case": "dev task, episode 1",
-     "focus": "Cube, banana and bowl",
+     "focus": "The bowls",
      "size": [
       640,
       480
      ],
      "region": [
-      188,
-      60,
+      100,
+      40,
       320,
       240
      ],
      "speed": 1.5,
      "before": {
       "round": "R0",
-      "video": "assets/demo/robolab/cube-banana-before.mp4",
-      "poster": "assets/demo/robolab/cube-banana-before.jpg",
+      "video": "assets/demo/robolab/bowls-before.mp4",
+      "poster": "assets/demo/robolab/bowls-before.jpg",
       "outcome": "Fail",
-      "summary": "It knocks the cube off the banana, then lifts the banana and carries it away from the bowl; neither ends up inside.",
+      "summary": "It grabs a bowl by the rim and drags it about, but never sets one inside the other; the bowls end up side by side. It stops when its 40 model calls run out.",
       "score": 0
      },
      "after": {
       "round": "R7",
-      "video": "assets/demo/robolab/cube-banana-after.mp4",
-      "poster": "assets/demo/robolab/cube-banana-after.jpg",
+      "video": "assets/demo/robolab/bowls-after.mp4",
+      "poster": "assets/demo/robolab/bowls-after.jpg",
       "outcome": "Success",
-      "summary": "It puts the cube in the bowl, then picks up the banana and lowers it in after it.",
+      "summary": "It lifts the robot's right bowl (on the image's left: the robot faces the camera) and sets it into the other one.",
       "score": 100
      },
-     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself."
+     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
     },
     {
      "scene": "Smaller object",
@@ -1960,7 +1962,7 @@
       "video": "assets/demo/robolab/smaller-object-before.mp4",
       "poster": "assets/demo/robolab/smaller-object-before.jpg",
       "outcome": "Fail",
-      "summary": "It lifts the butter carton but drops it on the table, then grabs the larger box instead; nothing reaches the bin.",
+      "summary": "It lifts the butter carton but drops it on the table, then grabs the larger box instead; nothing reaches the bin. It stops when its 40 model calls run out.",
       "score": 0
      },
      "after": {
@@ -1971,7 +1973,82 @@
       "summary": "It picks the smaller butter carton and lowers it into the grey bin.",
       "score": 100
      },
-     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself."
+     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
+    },
+    {
+     "scene": "Cube and banana",
+     "benchmark": "RoboLab",
+     "task": "Put the cube and the banana in the bowl",
+     "model": "Claude Opus 5.5",
+     "case": "dev task, episode 1",
+     "focus": "Cube, banana and bowl",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      188,
+      60,
+      320,
+      240
+     ],
+     "speed": 1.5,
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robolab/cube-banana-before.mp4",
+      "poster": "assets/demo/robolab/cube-banana-before.jpg",
+      "outcome": "Fail",
+      "summary": "It knocks the cube off the banana, then lifts the banana and carries it away from the bowl; neither ends up inside. It stops when its 40 model calls run out.",
+      "score": 0
+     },
+     "after": {
+      "round": "R7",
+      "video": "assets/demo/robolab/cube-banana-after.mp4",
+      "poster": "assets/demo/robolab/cube-banana-after.jpg",
+      "outcome": "Success",
+      "summary": "It puts the cube in the bowl, then picks up the banana and lowers it in after it.",
+      "score": 100
+     },
+     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
+    },
+    {
+     "scene": "Cube, then banana",
+     "benchmark": "RoboLab",
+     "task": "Put the cube then the banana in the bowl",
+     "model": "Claude Opus 5.5",
+     "case": "dev task, episode 1",
+     "focus": "Cube, banana and bowl",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      188,
+      60,
+      320,
+      240
+     ],
+     "speed": 1.5,
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robolab/then-banana-before.mp4",
+      "poster": "assets/demo/robolab/then-banana-before.jpg",
+      "outcome": "Fail",
+      "summary": "It nudges the cube and the banana, then wanders off to the side; neither goes into the bowl. It stops when its 40 model calls run out.",
+      "score": 0
+     },
+     "after": {
+      "round": "R7",
+      "video": "assets/demo/robolab/then-banana-after.mp4",
+      "poster": "assets/demo/robolab/then-banana-after.jpg",
+      "outcome": "Success",
+      "summary": "It puts the cube in the bowl first, then brings the banana and lowers it in on top.",
+      "score": 100
+     },
+     "changed": "The starting policy asks the model for every next waypoint of the gripper (a position, a turn and open or closed) and drives there in a straight line. The self-improved policy makes the model a planner of grounded skills: on a zoomed over-shoulder view with pixel rulers and a compass for the robot's left and forward, it answers pick(point) or place(point), and the policy lifts the point into 3D with depth, segments the object and scripts the grasp height, finger direction and release height itself.",
+     "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the last frame is then held. Frames are lightly smoothed over time for display."
     }
    ]
   }

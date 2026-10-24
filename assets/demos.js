@@ -231,7 +231,7 @@
         r._poster.onload = () => draw(r);
         r._poster.src = rd.poster;
       });
-      stage.querySelector(".demo-note").innerHTML = `<b>What the agent changed.</b> ${esc(c.changed || "")} The box and its enlargement are added for the reader.`;
+      stage.querySelector(".demo-note").innerHTML = `<b>What the agent changed.</b> ${esc(c.changed || "")} The box and its enlargement are added for the reader.${c.note ? ` ${esc(c.note)}` : ""}`;
       const [a, b] = rows.map((r) => r.querySelector("video"));
       pair(a, b);
       active = [a, b];
