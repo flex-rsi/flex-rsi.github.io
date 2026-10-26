@@ -87,7 +87,24 @@
 
 /* affiliations: one row of logos at the foot of the People page, grey until hovered */
 .aff-row { list-style: none; margin: 0; padding: 6px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 26px 44px; }
-.aff-row img { display: block; width: auto; filter: grayscale(1); opacity: 0.72; transition: filter 0.3s var(--ease), opacity 0.3s var(--ease); }
-.aff-row li:hover img { filter: none; opacity: 1; }
+.aff-row img, .aff-track img { display: block; width: auto; filter: grayscale(1); opacity: 0.72; transition: filter 0.3s var(--ease), opacity 0.3s var(--ease); }
+.aff-row li:hover img, .aff-track li:hover img { filter: none; opacity: 1; }
 .aff-text { display: flex; align-items: center; gap: 9px; }
 .aff-text span { font: 700 13px/1.15 var(--sans); letter-spacing: -0.01em; color: var(--ink-2); }
+
+/* home: the same logos in a full-width band above the citation, scrolling left (three copies of the row, so the
+   loop never shows an end); hovering pauses it */
+.aff-band { width: 100vw; margin: 96px 0 0 calc(50% - 50vw); }
+.aff-kicker { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto 14px; }
+.aff-band .kicker::before { content: none; counter-increment: none; }
+.aff-marquee { overflow: hidden; padding: 24px 0; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+.aff-track { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; width: max-content;
+  animation: aff-scroll 60s linear infinite; }
+.aff-track li { flex: none; margin-right: 64px; }   /* a margin, not a gap, so one copy is exactly a third */
+.aff-marquee:hover .aff-track { animation-play-state: paused; }
+@keyframes aff-scroll { to { transform: translateX(-33.3333%); } }
+@media (prefers-reduced-motion: reduce) {
+  .aff-marquee { overflow-x: auto; }
+  .aff-track { animation: none; }
+}
+@media (max-width: 560px) { .aff-band { margin-top: 72px; } .aff-track li { margin-right: 44px; } }
