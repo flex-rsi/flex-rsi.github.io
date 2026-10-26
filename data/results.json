@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-23",
+ "updated": "2026-10-26",
  "categories": [
   {
    "id": "perception",
@@ -4113,6 +4113,243 @@
    ]
   },
   {
+   "id": "libero-max",
+   "category": "action",
+   "track": "LIBERO-MAX",
+   "task": "A Franka arm in LIBERO kitchen scenes where the world changes once the episode is under way; the model's controller drives it, with a frozen X-VLA policy, cameras and depth to call on (LIBERO-MAX, dynamic success rate over paired episodes)",
+   "primary": "dynamic_success_rate",
+   "metrics": [
+    {
+     "key": "dynamic_success_rate",
+     "label": "Dynamic success"
+    },
+    {
+     "key": "base_success_rate",
+     "label": "Base success"
+    },
+    {
+     "key": "dsr_starter",
+     "label": "Starter"
+    }
+   ],
+   "footnotes": [
+    "One run per model: seed 0 of three."
+   ],
+   "rows": [
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "dynamic_success_rate": 0.2917,
+      "base_success_rate": 0.5417,
+      "dsr_starter": 0.25
+     },
+     "start": 0.3125,
+     "best": 0.4375,
+     "gain_pct": 40.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.3125,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375,
+      0.4375
+     ]
+    },
+    {
+     "model": "Qwen3.6-35B-A3B",
+     "weights": "open",
+     "test": {
+      "dynamic_success_rate": 0.25,
+      "base_success_rate": 0.5417,
+      "dsr_starter": 0.25
+     },
+     "start": 0.3125,
+     "best": 0.3125,
+     "gain_pct": 0.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "dynamic_success_rate": 0.25,
+      "base_success_rate": 0.5417,
+      "dsr_starter": 0.25
+     },
+     "start": 0.3125,
+     "best": 0.3125,
+     "gain_pct": 0.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125
+     ]
+    }
+   ]
+  },
+  {
+   "id": "libero-pro",
+   "category": "action",
+   "track": "LIBERO-PRO",
+   "task": "A Franka arm in LIBERO kitchen scenes with the task perturbed before it starts (objects, positions, wording, goal or camera); the model's controller drives it, with a frozen X-VLA policy, cameras and depth to call on (LIBERO-PRO, success rate)",
+   "primary": "success_rate",
+   "metrics": [
+    {
+     "key": "success_rate",
+     "label": "Success rate"
+    },
+    {
+     "key": "sr_starter",
+     "label": "Starter"
+    }
+   ],
+   "footnotes": [
+    "One run per model: seed 0 of three."
+   ],
+   "rows": [
+    {
+     "model": "Gemma-4-31B-it",
+     "weights": "open",
+     "test": {
+      "success_rate": 0.5333,
+      "sr_starter": 0.5333
+     },
+     "start": 0.5,
+     "best": 0.5,
+     "gain_pct": 0.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    {
+     "model": "Qwen3.6-35B-A3B",
+     "weights": "open",
+     "test": {
+      "success_rate": 0.5333,
+      "sr_starter": 0.5333
+     },
+     "start": 0.5,
+     "best": 0.5,
+     "gain_pct": 0.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    {
+     "model": "Qwen3.8-27B",
+     "weights": "open",
+     "test": {
+      "success_rate": 0.5,
+      "sr_starter": 0.5333
+     },
+     "start": 0.5,
+     "best": 0.55,
+     "gain_pct": 10.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55
+     ]
+    }
+   ]
+  },
+  {
    "id": "video-generation",
    "category": "creation",
    "track": "Video Generation",
@@ -4398,29 +4635,68 @@
      "test": {
       "pts_put-bottles-into-dustbin": 70.0,
       "pts_arrange-largest-number": 71.0,
+      "pts_fold-clothes": 44.0,
       "pts_insert-tubes": 100.0,
+      "pts_pick-from-conveyor-by-image": 0.0,
       "pts_play-tic-tac-toe": 100.0,
+      "pts_play-xylophone": 20.0,
       "pts_push-t": 40.0,
-      "pts_suite": 38.1,
-      "tasks_run": 5
+      "pts_suite": 44.5,
+      "tasks_run": 8
      },
      "start": 0.9,
-     "best": 36.5,
-     "gain_pct": 3955.6,
-     "rounds": 40,
+     "best": 44.9,
+     "gain_pct": 4888.9,
+     "rounds": 70,
      "ended": null,
      "curve": [
       0.9,
       3.7,
-      14.3,
-      32.2,
-      32.5,
-      34.5,
-      36.5,
-      36.5,
-      36.5,
-      36.5,
-      36.5
+      20.7,
+      38.6,
+      38.9,
+      40.9,
+      42.9,
+      42.9,
+      42.9,
+      42.9,
+      44.9
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "pts_put-bottles-into-dustbin": 6.0,
+      "pts_arrange-largest-number": 21.0,
+      "pts_fold-clothes": 12.0,
+      "pts_insert-tubes": 4.0,
+      "pts_fill-egg-holder": 4.0,
+      "pts_pick-from-conveyor-by-image": 60.0,
+      "pts_play-tic-tac-toe": 75.0,
+      "pts_play-xylophone": 80.0,
+      "pts_push-t": 0.0,
+      "pts_sort-nesting-dolls-by-size": 40.0,
+      "pts_suite": 30.2,
+      "tasks_run": 10
+     },
+     "start": 0.2,
+     "best": 38.8,
+     "gain_pct": 19300.0,
+     "rounds": 112,
+     "ended": null,
+     "curve": [
+      0.2,
+      4.5,
+      18.9,
+      24.2,
+      30.2,
+      30.6,
+      32.6,
+      36.6,
+      36.6,
+      38.6,
+      38.8
      ]
     },
     {
@@ -4496,68 +4772,39 @@
      ]
     },
     {
-     "model": "GPT-6.1 Sol",
-     "weights": "closed",
-     "test": {
-      "pts_put-bottles-into-dustbin": 6.0,
-      "pts_arrange-largest-number": 21.0,
-      "pts_fold-clothes": 12.0,
-      "pts_insert-tubes": 4.0,
-      "pts_fill-egg-holder": 0.0,
-      "pts_pick-from-conveyor-by-image": 0.0,
-      "pts_play-tic-tac-toe": 75.0,
-      "pts_play-xylophone": 0.0,
-      "pts_push-t": 0.0,
-      "pts_sort-nesting-dolls-by-size": 0.0,
-      "pts_suite": 11.8,
-      "tasks_run": 10
-     },
-     "start": 0.2,
-     "best": 18.9,
-     "gain_pct": 9350.0,
-     "rounds": 112,
-     "ended": null,
-     "curve": [
-      0.2,
-      2.2,
-      10.6,
-      14.3,
-      16.3,
-      16.7,
-      16.7,
-      18.7,
-      18.7,
-      18.7,
-      18.9
-     ]
-    },
-    {
      "model": "Muse Wonder 1.0",
      "weights": "closed",
      "test": {
       "pts_put-bottles-into-dustbin": 6.0,
+      "pts_arrange-largest-number": 2.0,
+      "pts_fold-clothes": 4.0,
       "pts_insert-tubes": 0.0,
+      "pts_fill-egg-holder": 4.0,
+      "pts_pick-from-conveyor-by-image": 0.0,
       "pts_play-tic-tac-toe": 90.0,
-      "pts_suite": 9.6,
-      "tasks_run": 3
+      "pts_play-xylophone": 0.0,
+      "pts_push-t": 0.0,
+      "pts_sort-nesting-dolls-by-size": 0.0,
+      "pts_suite": 10.6,
+      "tasks_run": 10
      },
      "start": 0.0,
-     "best": 9.6,
+     "best": 15.4,
      "gain_pct": null,
-     "rounds": 30,
+     "rounds": 100,
      "ended": null,
      "curve": [
       0.0,
-      7.5,
-      8.1,
-      9.1,
-      9.1,
-      9.1,
-      9.6,
-      9.6,
-      9.6,
-      9.6,
-      9.6
+      7.8,
+      10.1,
+      12.3,
+      14.3,
+      14.9,
+      15.4,
+      15.4,
+      15.4,
+      15.4,
+      15.4
      ]
     },
     {
@@ -4568,15 +4815,19 @@
       "pts_arrange-largest-number": 0.0,
       "pts_fold-clothes": 0.0,
       "pts_insert-tubes": 0.0,
+      "pts_fill-egg-holder": 0.0,
+      "pts_pick-from-conveyor-by-image": 0.0,
       "pts_play-tic-tac-toe": 75.0,
+      "pts_play-xylophone": 0.0,
       "pts_push-t": 0.0,
+      "pts_sort-nesting-dolls-by-size": 0.0,
       "pts_suite": 8.4,
-      "tasks_run": 6
+      "tasks_run": 10
      },
      "start": 0.0,
-     "best": 7.9,
+     "best": 9.9,
      "gain_pct": null,
-     "rounds": 60,
+     "rounds": 100,
      "ended": null,
      "curve": [
       0.0,
@@ -4584,12 +4835,12 @@
       0.0,
       1.0,
       1.0,
-      1.0,
-      1.0,
-      5.0,
-      7.5,
-      7.5,
-      7.9
+      3.0,
+      3.0,
+      7.0,
+      9.5,
+      9.5,
+      9.9
      ]
     },
     {
@@ -4793,7 +5044,8 @@
     }
    ],
    "footnotes": [
-    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 10; a longer run's last point is its final best. Per task, the model's latest run with a final test."
+    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 10; a longer run's last point is its final best. Per task, the model's latest run with a final test.",
+    "\u2020 Muse Spark 1.3 through an internal endpoint, 5 rounds per task instead of 10; 5 of its 9 test evaluations ended in an error and show \u2013. Shown for comparison: it takes no rank and is not counted in the overview."
    ],
    "rows": [
     {
@@ -4801,32 +5053,34 @@
      "weights": "closed",
      "test": {
       "sr_coffee-setup-mug": 0.0,
+      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.4,
       "sr_open-cabinet": 0.6,
       "sr_open-drawer": 1.0,
+      "sr_portion-hot-dogs": 0.6,
       "sr_turn-off-stove": 0.2,
       "sr_turn-on-microwave": 1.0,
       "sr_turn-on-sink-faucet": 0.8,
-      "sr_suite": 0.4444,
-      "tasks_run": 7
+      "sr_suite": 0.5111,
+      "tasks_run": 9
      },
      "start": 0.0444,
-     "best": 0.4889,
-     "gain_pct": 1001.1,
-     "rounds": 95,
+     "best": 0.5556,
+     "gain_pct": 1151.4,
+     "rounds": 115,
      "ended": null,
      "curve": [
       0.0444,
-      0.2222,
-      0.2889,
-      0.3111,
+      0.2444,
+      0.3556,
       0.3778,
-      0.4,
-      0.4222,
-      0.4222,
       0.4444,
       0.4667,
-      0.4889
+      0.4889,
+      0.4889,
+      0.5111,
+      0.5333,
+      0.5556
      ]
     },
     {
@@ -4834,31 +5088,34 @@
      "weights": "closed",
      "test": {
       "sr_coffee-setup-mug": 0.6,
+      "sr_heat-kebab-sandwich": 0.0,
+      "sr_kettle-boiling": 0.2,
       "sr_open-cabinet": 0.0,
       "sr_open-drawer": 0.8,
+      "sr_portion-hot-dogs": 0.2,
       "sr_turn-off-stove": 0.4,
       "sr_turn-on-microwave": 0.8,
       "sr_turn-on-sink-faucet": 0.0,
-      "sr_suite": 0.2889,
-      "tasks_run": 6
+      "sr_suite": 0.3333,
+      "tasks_run": 9
      },
      "start": 0.0,
-     "best": 0.3111,
+     "best": 0.4222,
      "gain_pct": null,
-     "rounds": 54,
+     "rounds": 84,
      "ended": null,
      "curve": [
       0.0,
-      0.0889,
-      0.1556,
-      0.1556,
-      0.1778,
-      0.2,
       0.2,
       0.2667,
       0.2667,
-      0.2667,
-      0.3111
+      0.2889,
+      0.3111,
+      0.3111,
+      0.3778,
+      0.3778,
+      0.3778,
+      0.4222
      ]
     },
     {
@@ -4866,31 +5123,34 @@
      "weights": "closed",
      "test": {
       "sr_coffee-setup-mug": 0.4,
+      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.0,
       "sr_open-cabinet": 0.2,
       "sr_open-drawer": 0.8,
+      "sr_portion-hot-dogs": 0.0,
+      "sr_turn-off-stove": 0.4,
       "sr_turn-on-microwave": 0.6,
       "sr_turn-on-sink-faucet": 0.2,
-      "sr_suite": 0.2444,
-      "tasks_run": 6
+      "sr_suite": 0.2889,
+      "tasks_run": 9
      },
      "start": 0.0,
-     "best": 0.3111,
+     "best": 0.4,
      "gain_pct": null,
-     "rounds": 52,
+     "rounds": 82,
      "ended": null,
      "curve": [
       0.0,
-      0.1778,
-      0.2,
-      0.2222,
-      0.2222,
-      0.2222,
       0.2444,
       0.2889,
       0.3111,
       0.3111,
-      0.3111
+      0.3111,
+      0.3333,
+      0.3778,
+      0.4,
+      0.4,
+      0.4
      ]
     },
     {
@@ -5067,6 +5327,33 @@
       0.0222,
       0.0333
      ]
+    },
+    {
+     "model": "Muse Spark 1.3",
+     "weights": "closed",
+     "test": {
+      "sr_open-drawer": 0.0,
+      "sr_turn-off-stove": 0.0,
+      "sr_turn-on-microwave": 0.0,
+      "sr_turn-on-sink-faucet": 0.0,
+      "sr_suite": 0.0,
+      "tasks_run": 4
+     },
+     "start": 0.0,
+     "best": 0.0,
+     "gain_pct": null,
+     "rounds": 20,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "mark": "\u2020",
+     "extra": true
     }
    ]
   },
@@ -5166,6 +5453,41 @@
      ]
     },
     {
+     "model": "DeepSeek-V4.1 Flash 1017",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.91,
+      "acc_starter": 0.91
+     },
+     "start": 0.9375,
+     "best": 0.9375,
+     "gain_pct": 0.0,
+     "rounds": 2,
+     "ended": "budget_wall",
+     "curve": [
+      0.9375,
+      0.9375,
+      0.9375
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.8075,
+      "acc_starter": 0.8075
+     },
+     "start": 0.9,
+     "best": 0.9,
+     "gain_pct": 0.0,
+     "rounds": 1,
+     "ended": "budget_wall",
+     "curve": [
+      0.9,
+      0.9
+     ]
+    },
+    {
      "model": "Qwen3.8-27B",
      "weights": "open",
      "test": {
@@ -5184,6 +5506,28 @@
       0.95,
       0.95,
       0.95
+     ]
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.635,
+      "acc_starter": 0.635
+     },
+     "start": 0.7625,
+     "best": 0.7625,
+     "gain_pct": 0.0,
+     "rounds": 6,
+     "ended": "budget_wall",
+     "curve": [
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625,
+      0.7625
      ]
     },
     {
@@ -5302,6 +5646,46 @@
      ]
     },
     {
+     "model": "DeepSeek-V4.1 Flash 1017",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.4667,
+      "acc_starter": 0.4667
+     },
+     "start": 0.925,
+     "best": 0.925,
+     "gain_pct": 0.0,
+     "rounds": 4,
+     "ended": "budget_wall",
+     "curve": [
+      0.925,
+      0.925,
+      0.925,
+      0.925,
+      0.925
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.225,
+      "acc_starter": 0.225
+     },
+     "start": 0.825,
+     "best": 0.825,
+     "gain_pct": 0.0,
+     "rounds": 4,
+     "ended": "budget_wall",
+     "curve": [
+      0.825,
+      0.825,
+      0.825,
+      0.825,
+      0.825
+     ]
+    },
+    {
      "model": "Qwen3.8-27B",
      "weights": "open",
      "test": {
@@ -5318,6 +5702,41 @@
       0.775,
       0.8,
       0.8
+     ]
+    },
+    {
+     "model": "GLM-5.3 Flash",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.1417,
+      "acc_starter": 0.1417
+     },
+     "start": 0.6875,
+     "best": 0.6875,
+     "gain_pct": 0.0,
+     "rounds": 2,
+     "ended": "budget_wall",
+     "curve": [
+      0.6875,
+      0.6875,
+      0.6875
+     ]
+    },
+    {
+     "model": "MiniMax-M3",
+     "weights": "open",
+     "test": {
+      "accuracy": 0.0417,
+      "acc_starter": 0.0417
+     },
+     "start": 0.725,
+     "best": 0.725,
+     "gain_pct": 0.0,
+     "rounds": 1,
+     "ended": "budget_wall",
+     "curve": [
+      0.725,
+      0.725
      ]
     },
     {
