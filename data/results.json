@@ -5358,6 +5358,73 @@
    ]
   },
   {
+   "id": "embodied-swe",
+   "category": "action",
+   "track": "Embodied-SWE",
+   "task": "A Franka arm in Isaac Sim must flip a bread slice with a spatula and serve it onto a plate; the agent writes the robot program, scored on EmbodiedSWE-Bench's 0-1 rubric over hidden seeds (test 4 x 8 environments)",
+   "primary": "rubric_score",
+   "metrics": [
+    {
+     "key": "rubric_score",
+     "label": "Score"
+    },
+    {
+     "key": "rubric_starter",
+     "label": "Starter"
+    }
+   ],
+   "footnotes": [
+    "One run per model: seed 1. From the task's report (rsib records on BlueVela); curves are rebuilt from the accepted rounds.",
+    "Qwen3.8-Flash-Next (FP8) is served by a local vLLM and makes every model call of the run; with no price, its run is capped at the tokens the Claude run used (about 22M)."
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "rubric_score": 0.444,
+      "rubric_starter": 0.0
+     },
+     "start": 0.0,
+     "best": 0.413,
+     "gain_pct": null,
+     "rounds": 7,
+     "ended": "budget_wall",
+     "curve": [
+      0.0,
+      0.0,
+      0.163,
+      0.25,
+      0.338,
+      0.338,
+      0.413,
+      0.413
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "rubric_score": 0.238,
+      "rubric_starter": 0.0
+     },
+     "start": 0.0,
+     "best": 0.238,
+     "gain_pct": null,
+     "rounds": 5,
+     "ended": "budget_tokens",
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.238,
+      0.238,
+      0.238
+     ]
+    }
+   ]
+  },
+  {
    "id": "arc-agi-1",
    "category": "reasoning",
    "track": "ARC-AGI-1",
@@ -5892,6 +5959,77 @@
       0.0,
       0.0,
       0.0
+     ]
+    }
+   ]
+  },
+  {
+   "id": "spatial-vsi",
+   "category": "reasoning",
+   "track": "Spatial-VSI",
+   "task": "Spatial questions about indoor videos (VSI-Bench: counts, sizes, distances, directions, route and order of appearance), answered by a solver that calls the model; official VSI-Bench overall score on 320 test questions from 100 unseen scenes",
+   "primary": "vsi_score",
+   "metrics": [
+    {
+     "key": "vsi_score",
+     "label": "Score"
+    },
+    {
+     "key": "vsi_starter",
+     "label": "Starter"
+    }
+   ],
+   "footnotes": [
+    "Task v0.1.1 (validation 480 questions, noise sigma 0.015), one run per model: seed 5. From the task's report (rsib records on BlueVela); curves are rebuilt from the accepted rounds.",
+    "Qwen3.8-Flash-Next (FP8) is served by a local vLLM and makes every model call of the run; with no price, its run is capped at the tokens the Claude run used (about 22M)."
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "vsi_score": 0.659,
+      "vsi_starter": 0.61
+     },
+     "start": 0.636,
+     "best": 0.702,
+     "gain_pct": 10.4,
+     "rounds": 10,
+     "ended": "budget_usd",
+     "curve": [
+      0.636,
+      0.702,
+      0.702,
+      0.702,
+      0.702,
+      0.702,
+      0.702,
+      0.702,
+      0.702,
+      0.702,
+      0.702
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "vsi_score": 0.561,
+      "vsi_starter": 0.534
+     },
+     "start": 0.58,
+     "best": 0.602,
+     "gain_pct": 3.8,
+     "rounds": 6,
+     "ended": "budget_tokens",
+     "curve": [
+      0.58,
+      0.58,
+      0.58,
+      0.58,
+      0.58,
+      0.602,
+      0.602
      ]
     }
    ]
