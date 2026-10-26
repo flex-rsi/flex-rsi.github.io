@@ -2051,6 +2051,455 @@
      "note": "A replay ends where its episode ends: at once on success, or when the starting policy has used its 40 model calls; the shorter replay then holds its last frame until the other ends. Frames are lightly smoothed over time for display."
     }
    ]
+  },
+  {
+   "id": "scene-from-photo",
+   "name": "Scene from Photo",
+   "metric": "scene score",
+   "before": 7.1,
+   "after": 66.5,
+   "what": "Test score · start → final",
+   "changed": "The starting solution returns an empty room box. In round 1 it estimates the camera and the room and stands a box template in for each piece of furniture; later rounds generate each piece's shape with Hunyuan3D and place it in the estimated camera frame. On the 60 test photos (222 annotated pieces) the final version gives 198 pieces a mesh, and 110 (50%) pass on both shape and placement (input-view IoU at least 0.5 and realness at least 0.5); round 1 had 173 and 56.",
+   "data": "The starter, round 1 and round 4 (final) solutions rerun on dev photos, each in its own estimated camera frame with the photo projected through that camera; geometry as the evaluator renders it, meshes simplified. Ground truth is the dev annotation's furniture (3D-FRONT).",
+   "versions": [
+    [
+     "r0",
+     "Starter"
+    ],
+    [
+     "r1",
+     "Round 1"
+    ],
+    [
+     "r4",
+     "Round 4 · final"
+    ],
+    [
+     "gt",
+     "Ground truth"
+    ]
+   ],
+   "scenes": [
+    {
+     "id": "d011",
+     "photo": "assets/demo/harmony/d011.jpg",
+     "aspect": 1.3388429752066116,
+     "target": 3.236,
+     "note": "Ground truth has 4 pieces: two armchairs, a coffee table and a three-seat sofa. The final version rebuilds 5: the sofa, coffee table, chair and armchair are generated meshes, and one more table is still a template (60 faces) with no counterpart in the annotation.",
+     "versions": {
+      "r0": {
+       "glb": "assets/demo/harmony/d011-r0.glb",
+       "hfov": 60.00000051112913,
+       "faces": 12,
+       "faces_in": 12,
+       "objects": [
+        {
+         "name": "floor",
+         "faces_in": 2
+        },
+        {
+         "name": "ceiling",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_left",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_right",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_back",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_front",
+         "faces_in": 2
+        }
+       ]
+      },
+      "r1": {
+       "glb": "assets/demo/harmony/d011-r1.glb",
+       "hfov": 61.33567610410726,
+       "faces": 27900,
+       "faces_in": 110852,
+       "objects": [
+        {
+         "name": "wall_room",
+         "faces_in": 110432
+        },
+        {
+         "name": "sofa_00",
+         "faces_in": 108
+        },
+        {
+         "name": "coffee_table_01",
+         "faces_in": 72
+        },
+        {
+         "name": "chair_02",
+         "faces_in": 72
+        },
+        {
+         "name": "armchair_03",
+         "faces_in": 108
+        },
+        {
+         "name": "table_04",
+         "faces_in": 60
+        }
+       ]
+      },
+      "r4": {
+       "glb": "assets/demo/harmony/d011-r4.glb",
+       "hfov": 61.33567610410726,
+       "faces": 91620,
+       "faces_in": 321873,
+       "objects": [
+        {
+         "name": "wall_room",
+         "faces_in": 110432
+        },
+        {
+         "name": "sofa_00",
+         "faces_in": 30979
+        },
+        {
+         "name": "coffee_table_01",
+         "faces_in": 63311
+        },
+        {
+         "name": "chair_02",
+         "faces_in": 60221
+        },
+        {
+         "name": "armchair_03",
+         "faces_in": 56870
+        },
+        {
+         "name": "table_04",
+         "faces_in": 60
+        }
+       ]
+      },
+      "gt": {
+       "glb": "assets/demo/harmony/d011-gt.glb",
+       "hfov": 58.042546449405194,
+       "faces": 58006,
+       "faces_in": 214621,
+       "objects": [
+        {
+         "name": "room",
+         "faces_in": 99630
+        },
+        {
+         "name": "armchair_00",
+         "faces_in": 12803
+        },
+        {
+         "name": "Coffee Table_01",
+         "faces_in": 37018
+        },
+        {
+         "name": "armchair_02",
+         "faces_in": 31467
+        },
+        {
+         "name": "Three-Seat / Multi-seat Sofa_03",
+         "faces_in": 33703
+        }
+       ]
+      }
+     }
+    },
+    {
+     "id": "d015",
+     "photo": "assets/demo/harmony/d015.jpg",
+     "aspect": 1.3388429752066116,
+     "target": 3.836,
+     "note": "Ground truth has 5 pieces: a three-seat sofa, an armchair, a coffee table, a side table and a shelf. The final version has 4: the coffee table and a sofa are generated meshes, the second sofa and a table are still templates, and the shelf is not rebuilt.",
+     "versions": {
+      "r0": {
+       "glb": "assets/demo/harmony/d015-r0.glb",
+       "hfov": 60.00000051112913,
+       "faces": 12,
+       "faces_in": 12,
+       "objects": [
+        {
+         "name": "floor",
+         "faces_in": 2
+        },
+        {
+         "name": "ceiling",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_left",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_right",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_back",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_front",
+         "faces_in": 2
+        }
+       ]
+      },
+      "r1": {
+       "glb": "assets/demo/harmony/d015-r1.glb",
+       "hfov": 59.32743936918772,
+       "faces": 29092,
+       "faces_in": 110780,
+       "objects": [
+        {
+         "name": "wall_room",
+         "faces_in": 110432
+        },
+        {
+         "name": "coffee_table_00",
+         "faces_in": 72
+        },
+        {
+         "name": "sofa_01",
+         "faces_in": 108
+        },
+        {
+         "name": "sofa_02",
+         "faces_in": 108
+        },
+        {
+         "name": "table_03",
+         "faces_in": 60
+        }
+       ]
+      },
+      "r4": {
+       "glb": "assets/demo/harmony/d015-r4.glb",
+       "hfov": 59.32743936918772,
+       "faces": 59258,
+       "faces_in": 222750,
+       "objects": [
+        {
+         "name": "wall_room",
+         "faces_in": 110432
+        },
+        {
+         "name": "coffee_table_00",
+         "faces_in": 50924
+        },
+        {
+         "name": "sofa_01",
+         "faces_in": 61226
+        },
+        {
+         "name": "sofa_02",
+         "faces_in": 108
+        },
+        {
+         "name": "table_03",
+         "faces_in": 60
+        }
+       ]
+      },
+      "gt": {
+       "glb": "assets/demo/harmony/d015-gt.glb",
+       "hfov": 58.042546449405194,
+       "faces": 79483,
+       "faces_in": 150429,
+       "objects": [
+        {
+         "name": "room",
+         "faces_in": 41056
+        },
+        {
+         "name": "Three-Seat / Multi-seat Sofa_00",
+         "faces_in": 26572
+        },
+        {
+         "name": "armchair_01",
+         "faces_in": 8410
+        },
+        {
+         "name": "Coffee Table_02",
+         "faces_in": 27540
+        },
+        {
+         "name": "Corner/Side Table_03",
+         "faces_in": 32229
+        },
+        {
+         "name": "Shelf_04",
+         "faces_in": 14622
+        }
+       ]
+      }
+     }
+    },
+    {
+     "id": "d027",
+     "photo": "assets/demo/harmony/d027.jpg",
+     "aspect": 1.3388429752066116,
+     "target": 3.558,
+     "note": "Ground truth has 7 pieces: two side tables, a coffee table, two armchairs, a three-seat sofa and a sideboard. The final version also has 7, all generated meshes.",
+     "versions": {
+      "r0": {
+       "glb": "assets/demo/harmony/d027-r0.glb",
+       "hfov": 60.00000051112913,
+       "faces": 12,
+       "faces_in": 12,
+       "objects": [
+        {
+         "name": "floor",
+         "faces_in": 2
+        },
+        {
+         "name": "ceiling",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_left",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_right",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_back",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_front",
+         "faces_in": 2
+        }
+       ]
+      },
+      "r1": {
+       "glb": "assets/demo/harmony/d027-r1.glb",
+       "hfov": 62.64765114072427,
+       "faces": 36230,
+       "faces_in": 111044,
+       "objects": [
+        {
+         "name": "wall_room",
+         "faces_in": 110432
+        },
+        {
+         "name": "coffee_table_00",
+         "faces_in": 72
+        },
+        {
+         "name": "sofa_01",
+         "faces_in": 108
+        },
+        {
+         "name": "armchair_02",
+         "faces_in": 108
+        },
+        {
+         "name": "armchair_03",
+         "faces_in": 108
+        },
+        {
+         "name": "shelf_04",
+         "faces_in": 96
+        },
+        {
+         "name": "table_05",
+         "faces_in": 60
+        },
+        {
+         "name": "table_06",
+         "faces_in": 60
+        }
+       ]
+      },
+      "r4": {
+       "glb": "assets/demo/harmony/d027-r4.glb",
+       "hfov": 62.64765114072427,
+       "faces": 151557,
+       "faces_in": 603474,
+       "objects": [
+        {
+         "name": "wall_room",
+         "faces_in": 110432
+        },
+        {
+         "name": "coffee_table_00",
+         "faces_in": 23963
+        },
+        {
+         "name": "sofa_01",
+         "faces_in": 35169
+        },
+        {
+         "name": "armchair_02",
+         "faces_in": 71925
+        },
+        {
+         "name": "armchair_03",
+         "faces_in": 62713
+        },
+        {
+         "name": "shelf_04",
+         "faces_in": 66023
+        },
+        {
+         "name": "table_05",
+         "faces_in": 139361
+        },
+        {
+         "name": "table_06",
+         "faces_in": 93888
+        }
+       ]
+      },
+      "gt": {
+       "glb": "assets/demo/harmony/d027-gt.glb",
+       "hfov": 58.042546449405194,
+       "faces": 83897,
+       "faces_in": 233559,
+       "objects": [
+        {
+         "name": "Corner/Side Table_00",
+         "faces_in": 66094
+        },
+        {
+         "name": "Corner/Side Table_01",
+         "faces_in": 66094
+        },
+        {
+         "name": "Coffee Table_02",
+         "faces_in": 40047
+        },
+        {
+         "name": "armchair_03",
+         "faces_in": 13887
+        },
+        {
+         "name": "Three-Seat / Multi-seat Sofa_04",
+         "faces_in": 20020
+        },
+        {
+         "name": "armchair_05",
+         "faces_in": 14847
+        },
+        {
+         "name": "Sideboard / Side Cabinet / Console Table_06",
+         "faces_in": 12570
+        }
+       ]
+      }
+     }
+    }
+   ]
   }
  ]
 }

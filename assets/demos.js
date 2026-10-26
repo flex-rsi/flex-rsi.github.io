@@ -15,12 +15,13 @@
     "3d-tracking": "Segment every object in several views of a scene and keep each object's identity consistent across views.",
     "ego-exo-memory": "Memory questions about synchronized first-person (ego) and fixed-camera (exo) videos of cooking and bike repair.",
     "image-editing": "Edit a photo or painting to a written instruction, change only what it asks for, and keep everything else as it was.",
+    "scene-from-photo": "Rebuild a furnished room from one photo as a 3D scene, every piece of furniture a whole object where the photo shows it. Compare any two versions side by side.",
     "robolab": "One generalist policy for many tabletop tasks. The same episode run by the starting and by the self-improved policy; only dev tasks are recorded on video.",
     "video-quality": "Judge how good videos look to people: score real user videos from 1 to 5, and pick the better of two AI-generated clips.",
     "arc-agi-2": "Grid puzzles: infer the rule from a few input–output examples and produce the output grid for a new input, with two guesses per test.",
     "arc-agi-3": "Interactive puzzle games with no instructions: the agent acts, works out the rules and the goal, and clears as many levels as it can within its limits.",
   };
-  const fmtScore = (p, v) => (p.metric === "accuracy" ? (100 * v).toFixed(1) + "%" : p.metric === "score" ? String(Math.round(v)) : p.metric === "RHAE" ? v.toFixed(2) : v.toFixed(3));
+  const fmtScore = (p, v) => (p.metric === "accuracy" ? (100 * v).toFixed(1) + "%" : p.metric === "scene score" ? v.toFixed(1) : p.metric === "score" ? String(Math.round(v)) : p.metric === "RHAE" ? v.toFixed(2) : v.toFixed(3));
 
   // ---------------------------------------------------------------- video helpers
   let inView = false, active = [];
@@ -559,7 +560,195 @@
     show(0);
   }
 
-  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit, "video-quality": videoQuality, "robolab": robotControl,
+  // ---------------------------------------------------------------- scene from photo: two synced 3D views
+  // three.js r147 (assets/vendor/three-r147) loads the first time this panel opens. Each version's GLB carries UVs
+  // projected from that version's own camera, so "Photo" maps the input photo onto it with a plain texture.
+  let sceneStop = () => {};
+  let threeReady = null;
+  const loadScript = (src) => new Promise((ok, fail) => {
+    const el = document.createElement("script");
+    el.src = src; el.onload = ok; el.onerror = () => fail(new Error(src));
+    document.head.append(el);
+  });
+  const loadThree = () => threeReady || (threeReady = loadScript("assets/vendor/three-r147/three.min.js").then(() =>
+    Promise.all(["OrbitControls", "GLTFLoader"].map((n) => loadScript(`assets/vendor/three-r147/${n}.js`)))));
+  function sceneViewer(p) {
+    const PALETTE = ["#002fa7", "#d9822b", "#2e9e6a", "#c2185b", "#16a2b8", "#7a5cc6", "#e0a526", "#5d6d7e", "#7cb342", "#b4472f"];
+    const isRoom = (n) => /^(wall|room|floor|ceiling)/.test(n);
+    const label = Object.fromEntries(p.versions);
+    const state = { sc: p.scenes[0], mode: "photo", room: true };
+    const opts = (v) => p.versions.map(([k, l]) => `<option value="${k}"${k === v ? " selected" : ""}>${esc(l)}</option>`).join("");
+    const pane = (side, v) => `<div class="s3-pane"><div class="s3-head"><label>${side} <select>${opts(v)}</select></label><span class="s3-stats"></span></div>
+        <div class="s3-stage"><canvas></canvas><span class="s3-state">Loading…</span></div><ul class="s3-legend"></ul></div>`;
+    stage.innerHTML = `<div class="s3-bar">
+        <div class="s3-seg" role="group" aria-label="Shading"><button type="button" data-mode="photo" aria-pressed="true">Photo</button><button type="button" data-mode="object" aria-pressed="false">Pieces</button></div>
+        <label class="s3-check"><input type="checkbox" checked> Room</label>
+        <button type="button" class="s3-reset">Back to the photo's view</button></div>
+      <div class="s3-panes">${pane("Left", "r4")}${pane("Right", "gt")}</div>
+      <p class="s3-hint">Drag to orbit, scroll or pinch to zoom, right-drag or two fingers to pan; both views move together. The opening view is the photo's camera, where the projected photo looks like the photo itself: turn away to see the geometry. Click a piece to hide it.</p>
+      <p class="s3-note"></p>
+      <div class="ep-strip" role="group" aria-label="Dev scenes">${p.scenes.map((c, i) =>
+        `<button type="button" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(c.photo)}" alt="" loading="lazy"><span>Scene ${esc(c.id)}<small>dev photo</small></span></button>`).join("")}</div>
+      <p class="demo-note"><b>What the agent changed.</b> ${esc(p.changed)} ${esc(p.data)}</p>`;
+    let alive = true, ro = null;
+    const panes = [];
+    sceneStop = () => {
+      alive = false;
+      if (ro) ro.disconnect();
+      panes.forEach((q) => { q.controls.dispose(); q.renderer.dispose(); q.renderer.forceContextLoss(); });
+    };
+    loadThree().then(() => alive && init()).catch(() => stage.querySelectorAll(".s3-state").forEach((e) => (e.textContent = "The 3D viewer could not be loaded.")));
+
+    function init() {
+      const T = window.THREE, ASPECT = p.scenes[0].aspect;
+      const loader = new T.GLTFLoader(), texLoader = new T.TextureLoader();
+      const textures = {}, cache = new Map(), materials = new WeakMap();
+      const photo = (c) => {
+        if (!textures[c.id]) {
+          const t = texLoader.load(c.photo, renderAll);
+          t.flipY = false; t.encoding = T.sRGBEncoding; t.anisotropy = 4;
+          textures[c.id] = t;
+        }
+        return textures[c.id];
+      };
+      const load = (c, ver) => {
+        const key = c.id + "/" + ver;
+        if (!cache.has(key)) cache.set(key, new Promise((ok, fail) => loader.load(c.versions[ver].glb, ok, undefined, fail)).then((g) => {
+          const info = c.versions[ver].objects;
+          let k = 0;
+          g.scene.traverse((o) => {
+            if (!o.isMesh) return;
+            const name = o.name || (o.parent && o.parent.name) || "";
+            const meta = info.find((x) => x.name === name || T.PropertyBinding.sanitizeNodeName(x.name) === name) || {};
+            o.geometry.computeVertexNormals();
+            const room = isRoom(meta.name || name), color = room ? "#b8bccc" : PALETTE[k++ % PALETTE.length];
+            o.userData = { name: meta.name || name, room, color, facesIn: meta.faces_in || 0 };
+            materials.set(o.geometry, { photo: new T.MeshBasicMaterial({ map: photo(c), side: T.DoubleSide }),
+                                        object: new T.MeshLambertMaterial({ color, side: T.DoubleSide }) });
+          });
+          return g.scene;
+        }));
+        return cache.get(key);
+      };
+
+      const master = new T.PerspectiveCamera(50, ASPECT, 0.01, 200);
+      stage.querySelectorAll(".s3-pane").forEach((el) => {
+        const canvas = el.querySelector("canvas");
+        const renderer = new T.WebGLRenderer({ canvas, antialias: true });
+        renderer.outputEncoding = T.sRGBEncoding;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        const scene = new T.Scene();
+        scene.add(new T.HemisphereLight(0xffffff, 0x51605b, 0.85));
+        const cam = new T.PerspectiveCamera(50, ASPECT, 0.01, 200), sun = new T.DirectionalLight(0xffffff, 0.55);
+        cam.add(sun); sun.position.set(0.4, 0.8, 0.2); scene.add(cam);
+        panes.push({ el, canvas, renderer, scene, cam, controls: new T.OrbitControls(master, canvas), group: null, ver: null, hidden: new Set() });
+      });
+      panes[1].controls.target = panes[0].controls.target;
+      panes.forEach((q) => q.controls.addEventListener("change", renderAll));
+
+      function renderAll() {
+        if (!alive) return;
+        const bg = new T.Color(getComputedStyle(stage.querySelector(".s3-stage")).backgroundColor);
+        panes.forEach((q) => {
+          q.cam.position.copy(master.position); q.cam.quaternion.copy(master.quaternion);
+          q.renderer.setClearColor(bg, 1);
+          q.renderer.render(q.scene, q.cam);
+        });
+      }
+      function resize() {
+        panes.forEach((q) => {
+          const w = q.canvas.parentElement.clientWidth, h = Math.round(w / ASPECT);
+          q.renderer.setSize(w, h, false);
+          q.cam.aspect = w / h; q.cam.updateProjectionMatrix();
+        });
+        renderAll();
+      }
+      ro = new ResizeObserver(resize);
+      ro.observe(stage.querySelector(".s3-panes"));
+      function resetView() {
+        const d = state.sc.target || 3;
+        master.position.set(0, 0, 0); master.up.set(0, 1, 0);
+        panes[0].controls.target.set(0, 0, -d);
+        master.lookAt(0, 0, -d);
+        panes.forEach((q) => q.controls.update());
+        renderAll();
+      }
+      function applyLook(q) {
+        if (!q.group) return;
+        q.group.traverse((o) => {
+          if (!o.isMesh) return;
+          o.material = materials.get(o.geometry)[state.mode];
+          o.visible = !q.hidden.has(o.userData.name) && (state.room || !o.userData.room);
+        });
+      }
+      function legend(q) {
+        const ul = q.el.querySelector(".s3-legend");
+        const items = [];
+        if (q.group) q.group.traverse((o) => { if (o.isMesh && !o.userData.room) items.push(o.userData); });
+        if (!items.length) { ul.innerHTML = `<li class="s3-empty">No furniture: only the room box</li>`; return; }
+        ul.innerHTML = items.map((it) => {
+          const tag = q.ver === "gt" ? "ground truth" : it.facesIn <= 500 ? `template · ${it.facesIn} faces` : "generated mesh";
+          return `<li><button type="button" data-name="${esc(it.name)}" aria-pressed="${!q.hidden.has(it.name)}"><span class="sw" style="background:${it.color}"></span>${esc(it.name)}<span class="tag${it.facesIn <= 500 && q.ver !== "gt" ? " tpl" : ""}">${tag}</span></button></li>`;
+        }).join("");
+      }
+      panes.forEach((q) => q.el.querySelector(".s3-legend").addEventListener("click", (ev) => {
+        const b = ev.target.closest("button");
+        if (!b) return;
+        const n = b.dataset.name;
+        q.hidden.has(n) ? q.hidden.delete(n) : q.hidden.add(n);
+        b.setAttribute("aria-pressed", String(!q.hidden.has(n)));
+        applyLook(q); renderAll();
+      }));
+      async function show(q, ver) {
+        q.ver = ver;
+        const c = state.sc, v = c.versions[ver];
+        q.cam.fov = (2 * Math.atan(Math.tan((v.hfov * Math.PI) / 360) / ASPECT) * 180) / Math.PI;
+        q.cam.updateProjectionMatrix();
+        const st = q.el.querySelector(".s3-state");
+        st.textContent = "Loading…"; st.hidden = false;
+        const n = v.objects.filter((o) => !isRoom(o.name)).length;
+        q.el.querySelector(".s3-stats").textContent = `${n} piece${n === 1 ? "" : "s"} · ${v.faces.toLocaleString("en")} faces`;
+        try {
+          const tmpl = await load(c, ver);
+          if (!alive || q.ver !== ver || state.sc !== c) return;
+          if (q.group) q.scene.remove(q.group);
+          q.group = tmpl.clone(true);
+          q.hidden = new Set();
+          q.scene.add(q.group);
+          applyLook(q); legend(q);
+          st.hidden = true;
+        } catch (e) {
+          st.textContent = "Could not load this version.";
+        }
+        renderAll();
+      }
+      panes.forEach((q) => q.el.querySelector("select").addEventListener("change", (ev) => show(q, ev.target.value)));
+      const selectScene = (i) => {
+        state.sc = p.scenes[i];
+        stage.querySelectorAll(".ep-strip button").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.i === i)));
+        stage.querySelector(".s3-note").textContent = state.sc.note || "";
+        resetView();
+        panes.forEach((q) => show(q, q.el.querySelector("select").value));
+      };
+      stage.querySelector(".ep-strip").addEventListener("click", (ev) => {
+        const b = ev.target.closest("button");
+        if (b && p.scenes[+b.dataset.i] !== state.sc) selectScene(+b.dataset.i);
+      });
+      stage.querySelector(".s3-seg").addEventListener("click", (ev) => {
+        const b = ev.target.closest("button");
+        if (!b) return;
+        state.mode = b.dataset.mode;
+        stage.querySelectorAll(".s3-seg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        panes.forEach(applyLook); renderAll();
+      });
+      stage.querySelector(".s3-check input").addEventListener("change", (ev) => { state.room = ev.target.checked; panes.forEach(applyLook); renderAll(); });
+      stage.querySelector(".s3-reset").addEventListener("click", resetView);
+      resize();
+      selectScene(0);
+    }
+  }
+
+  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit, "video-quality": videoQuality, "robolab": robotControl, "scene-from-photo": sceneViewer,
                    "arc-agi-2": arcPuzzles, "arc-agi-3": arcGames };
 
   function select(d, id) {
@@ -567,6 +756,7 @@
     pauseAll();
     robotStop();
     ieStop();
+    sceneStop(); sceneStop = () => {};
     tabsEl.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.id === id)));
     $(".demo-title").textContent = p.name;
     $(".demo-sub").textContent = ABOUT[p.id] || "";
@@ -582,7 +772,7 @@
   fetch("data/demos.json")
     .then((r) => r.json())
     .then((d) => {
-      const ORDER = ["robot-control", "robolab", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2"];
+      const ORDER = ["robot-control", "robolab", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "scene-from-photo", "image-editing", "arc-agi-2"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
       // the selected task is kept in the URL (demos.html#<task>), so the home page tiles can link straight to it
