@@ -769,7 +769,7 @@
     card.classList.add("swap");
   }
 
-  fetch("data/demos.json")
+  fetch("data/demos.json", { cache: "no-cache" })
     .then((r) => r.json())
     .then((d) => {
       const ORDER = ["robot-control", "robolab", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "scene-from-photo", "image-editing", "arc-agi-2"];
