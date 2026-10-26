@@ -62,8 +62,6 @@
 .org-link { font-size: 14px; color: var(--accent-1); }
 .org-role { font: 500 11px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-1); }
 .org-about { font-size: 14px; line-height: 1.5; color: var(--ink-2); }
-/* contributors and advisors: name and role only, centred on the photo */
-.org-grid-plain .org-body { justify-content: center; }
 .pg-empty {
   padding: 16px; border: 1.5px dashed var(--ink-3); color: var(--ink-3);
   font: 500 12px var(--mono); letter-spacing: 0.06em; text-transform: uppercase;
@@ -86,3 +84,10 @@
   .open-call { grid-template-columns: 1fr; }
   .oc-text { grid-column: 1; grid-row: auto; margin-top: 14px; }
 }
+
+/* affiliations: one row of logos at the foot of the People page, grey until hovered */
+.aff-row { list-style: none; margin: 0; padding: 6px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 26px 44px; }
+.aff-row img { display: block; width: auto; filter: grayscale(1); opacity: 0.72; transition: filter 0.3s var(--ease), opacity 0.3s var(--ease); }
+.aff-row li:hover img { filter: none; opacity: 1; }
+.aff-text { display: flex; align-items: center; gap: 9px; }
+.aff-text span { font: 700 13px/1.15 var(--sans); letter-spacing: -0.01em; color: var(--ink-2); }
