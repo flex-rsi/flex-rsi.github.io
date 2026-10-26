@@ -772,7 +772,7 @@
   fetch("data/demos.json", { cache: "no-cache" })
     .then((r) => r.json())
     .then((d) => {
-      const ORDER = ["robot-control", "robolab", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "scene-from-photo", "image-editing", "arc-agi-2"];
+      const ORDER = ["robot-control", "robolab", "scene-from-photo", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
       // the selected task is kept in the URL (demos.html#<task>), so the home page tiles can link straight to it
