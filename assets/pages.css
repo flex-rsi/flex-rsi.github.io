@@ -92,10 +92,10 @@
 .aff-text { display: flex; align-items: center; gap: 9px; }
 .aff-text span { font: 700 13px/1.15 var(--sans); letter-spacing: -0.01em; color: var(--ink-2); }
 
-/* home: the same logos in a full-width band above the citation, scrolling left (three copies of the row, so the
-   loop never shows an end); hovering pauses it */
-.aff-band { width: 100vw; margin: 96px 0 0 calc(50% - 50vw); }
-.aff-kicker { width: min(calc(100% - 32px), var(--maxw)); margin: 0 auto 14px; }
+/* home: the same logos in a band above the citation, as wide as the text, scrolling left (three copies of the
+   row, so the loop never shows an end); hovering pauses it */
+.aff-band { margin: 96px 0 0; }
+.aff-kicker { margin: 0 0 14px; }
 .aff-band .kicker::before { content: none; counter-increment: none; }
 .aff-marquee { overflow: hidden; padding: 24px 0; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
 .aff-track { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; width: max-content;
