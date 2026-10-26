@@ -62,6 +62,8 @@
 .org-link { font-size: 14px; color: var(--accent-1); }
 .org-role { font: 500 11px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-1); }
 .org-about { font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+/* contributors and advisors: name and role only, centred on the photo */
+.org-grid-plain .org-body { justify-content: center; }
 .pg-empty {
   padding: 16px; border: 1.5px dashed var(--ink-3); color: var(--ink-3);
   font: 500 12px var(--mono); letter-spacing: 0.06em; text-transform: uppercase;
