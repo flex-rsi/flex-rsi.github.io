@@ -5921,6 +5921,48 @@
      ]
     },
     {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "rhae": 0.9127,
+      "rhae_starter": 0.0
+     },
+     "start": 0.0,
+     "best": 4.127,
+     "gain_pct": null,
+     "rounds": 7,
+     "ended": "budget_wall",
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      4.127,
+      4.127,
+      4.127,
+      4.127,
+      4.127
+     ]
+    },
+    {
+     "model": "DeepSeek-V4.1 Flash 1017",
+     "weights": "open",
+     "test": {
+      "rhae": 0.5556,
+      "rhae_starter": 0.5556
+     },
+     "start": 3.8095,
+     "best": 3.8095,
+     "gain_pct": 0.0,
+     "rounds": 3,
+     "ended": "budget_wall",
+     "curve": [
+      3.8095,
+      3.8095,
+      3.8095,
+      3.8095
+     ]
+    },
+    {
      "model": "Qwen3.8-27B",
      "weights": "open",
      "test": {
