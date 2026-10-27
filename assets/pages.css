@@ -85,15 +85,15 @@
   .oc-text { grid-column: 1; grid-row: auto; margin-top: 14px; }
 }
 
-/* affiliations at the foot of the People page, in their own colours: equal cells on the cards' grid, two cells to a
-   card (6 columns beside 3 cards, 4 beside 2, 2 beside 1), so every column line falls on a card edge; each logo
-   flush left at the card photos' inset and centred on its row */
+/* affiliations at the foot of the People page, in their own colours, unframed: equal columns on the cards' grid, two
+   to a card (6 columns beside 3 cards, 4 beside 2, 2 beside 1), so every column starts on a card edge; each logo
+   flush left on its column and centred on its row */
 .aff-group { container-type: inline-size; }
-.aff-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.aff-grid { list-style: none; margin: 0; padding: 4px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 14px; }
 @container (min-width: 654px) { .aff-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @container (min-width: 988px) { .aff-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
-.aff-grid li { display: flex; align-items: center; min-width: 0; height: 88px; padding: 0 14px; border: 1.5px solid var(--ink); background: var(--bg); }
-.aff-grid img { display: block; height: var(--h); max-width: 100%; object-fit: contain; object-position: left center; }
+.aff-grid li { display: flex; align-items: center; min-width: 0; height: 56px; }
+.aff-grid img { display: block; height: var(--h); max-width: calc(100% - 28px); object-fit: contain; object-position: left center; }
 .aff-track img { display: block; width: auto; }
 .aff-text { display: flex; align-items: center; gap: 9px; }
 .aff-text span { font: 700 13px/1.15 var(--sans); letter-spacing: -0.01em; color: var(--ink-2); }
