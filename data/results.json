@@ -4545,52 +4545,67 @@
      "label": "Suite"
     },
     {
+     "key": "tasks_nonzero",
+     "label": "Tasks > 0 (of 10)"
+    },
+    {
      "key": "tasks_run",
      "label": "Tasks (of 10)"
     },
     {
      "key": "pts_put-bottles-into-dustbin",
-     "label": "Bottles"
+     "label": "Bottles",
+     "hidden": true
     },
     {
      "key": "pts_arrange-largest-number",
-     "label": "Largest number"
+     "label": "Largest number",
+     "hidden": true
     },
     {
      "key": "pts_fold-clothes",
-     "label": "Fold clothes"
+     "label": "Fold clothes",
+     "hidden": true
     },
     {
      "key": "pts_insert-tubes",
-     "label": "Insert tubes"
+     "label": "Insert tubes",
+     "hidden": true
     },
     {
      "key": "pts_fill-egg-holder",
-     "label": "Egg holder"
+     "label": "Egg holder",
+     "hidden": true
     },
     {
      "key": "pts_pick-from-conveyor-by-image",
-     "label": "Conveyor pick"
+     "label": "Conveyor pick",
+     "hidden": true
     },
     {
      "key": "pts_play-tic-tac-toe",
-     "label": "Tic-tac-toe"
+     "label": "Tic-tac-toe",
+     "hidden": true
     },
     {
      "key": "pts_play-xylophone",
-     "label": "Xylophone"
+     "label": "Xylophone",
+     "hidden": true
     },
     {
      "key": "pts_push-t",
-     "label": "Push-T"
+     "label": "Push-T",
+     "hidden": true
     },
     {
      "key": "pts_sort-nesting-dolls-by-size",
-     "label": "Nesting dolls"
+     "label": "Nesting dolls",
+     "hidden": true
     }
    ],
    "footnotes": [
-    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test."
+    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
+    "Tasks > 0: how many of the 10 tasks the model scored above 0 on test (score > 0). Per-task scores are kept in data/results.json."
    ],
    "rows": [
     {
@@ -4608,7 +4623,8 @@
       "pts_push-t": 80.0,
       "pts_sort-nesting-dolls-by-size": 20.0,
       "pts_suite": 55.1,
-      "tasks_run": 10
+      "tasks_run": 10,
+      "tasks_nonzero": 9
      },
      "start": 0.5,
      "best": 68.9,
@@ -4642,7 +4658,8 @@
       "pts_play-xylophone": 20.0,
       "pts_push-t": 40.0,
       "pts_suite": 44.5,
-      "tasks_run": 8
+      "tasks_run": 8,
+      "tasks_nonzero": 7
      },
      "start": 0.9,
      "best": 44.9,
@@ -4678,7 +4695,8 @@
       "pts_push-t": 0.0,
       "pts_sort-nesting-dolls-by-size": 40.0,
       "pts_suite": 29.6,
-      "tasks_run": 10
+      "tasks_run": 10,
+      "tasks_nonzero": 8
      },
      "start": 0.2,
      "best": 38.6,
@@ -4714,7 +4732,8 @@
       "pts_push-t": 0.0,
       "pts_sort-nesting-dolls-by-size": 0.0,
       "pts_suite": 28.6,
-      "tasks_run": 10
+      "tasks_run": 10,
+      "tasks_nonzero": 7
      },
      "start": 0.7,
      "best": 30.0,
@@ -4750,7 +4769,8 @@
       "pts_push-t": 0.0,
       "pts_sort-nesting-dolls-by-size": 0.0,
       "pts_suite": 17.8,
-      "tasks_run": 10
+      "tasks_run": 10,
+      "tasks_nonzero": 5
      },
      "start": 0.0,
      "best": 18.7,
@@ -4786,7 +4806,8 @@
       "pts_push-t": 0.0,
       "pts_sort-nesting-dolls-by-size": 0.0,
       "pts_suite": 10.6,
-      "tasks_run": 10
+      "tasks_run": 10,
+      "tasks_nonzero": 5
      },
      "start": 0.0,
      "best": 15.4,
@@ -4822,7 +4843,8 @@
       "pts_push-t": 0.0,
       "pts_sort-nesting-dolls-by-size": 0.0,
       "pts_suite": 8.4,
-      "tasks_run": 10
+      "tasks_run": 10,
+      "tasks_nonzero": 2
      },
      "start": 0.0,
      "best": 9.9,
@@ -4851,7 +4873,8 @@
       "pts_play-tic-tac-toe": 0.0,
       "pts_push-t": 0.0,
       "pts_suite": 0.2,
-      "tasks_run": 3
+      "tasks_run": 3,
+      "tasks_nonzero": 1
      },
      "start": 0.0,
      "best": 0.0,
@@ -4878,7 +4901,8 @@
      "test": {
       "pts_put-bottles-into-dustbin": 2.0,
       "pts_suite": 0.2,
-      "tasks_run": 1
+      "tasks_run": 1,
+      "tasks_nonzero": 1
      },
      "start": 0.0,
      "best": 0.0,
@@ -4905,7 +4929,8 @@
      "test": {
       "pts_put-bottles-into-dustbin": 0.0,
       "pts_suite": 0.0,
-      "tasks_run": 1
+      "tasks_run": 1,
+      "tasks_nonzero": 0
      },
      "start": 0.0,
      "best": 0.5,
@@ -4941,7 +4966,8 @@
       "pts_push-t": 0.0,
       "pts_sort-nesting-dolls-by-size": 0.0,
       "pts_suite": 0.0,
-      "tasks_run": 10
+      "tasks_run": 10,
+      "tasks_nonzero": 0
      },
      "start": 0.0,
      "best": 0.0,
@@ -4968,7 +4994,8 @@
      "test": {
       "pts_put-bottles-into-dustbin": 0.0,
       "pts_suite": 0.0,
-      "tasks_run": 1
+      "tasks_run": 1,
+      "tasks_nonzero": 0
      },
      "start": 0.0,
      "best": 0.0,
@@ -5003,48 +5030,62 @@
      "label": "Suite"
     },
     {
+     "key": "tasks_nonzero",
+     "label": "Tasks > 0 (of 9)"
+    },
+    {
      "key": "tasks_run",
      "label": "Tasks (of 9)"
     },
     {
      "key": "sr_coffee-setup-mug",
-     "label": "Coffee mug"
+     "label": "Coffee mug",
+     "hidden": true
     },
     {
      "key": "sr_heat-kebab-sandwich",
-     "label": "Kebab sandwich"
+     "label": "Kebab sandwich",
+     "hidden": true
     },
     {
      "key": "sr_kettle-boiling",
-     "label": "Kettle"
+     "label": "Kettle",
+     "hidden": true
     },
     {
      "key": "sr_open-cabinet",
-     "label": "Cabinet"
+     "label": "Cabinet",
+     "hidden": true
     },
     {
      "key": "sr_open-drawer",
-     "label": "Drawer"
+     "label": "Drawer",
+     "hidden": true
     },
     {
      "key": "sr_portion-hot-dogs",
-     "label": "Hot dogs"
+     "label": "Hot dogs",
+     "hidden": true
     },
     {
      "key": "sr_turn-off-stove",
-     "label": "Stove off"
+     "label": "Stove off",
+     "hidden": true
     },
     {
      "key": "sr_turn-on-microwave",
-     "label": "Microwave"
+     "label": "Microwave",
+     "hidden": true
     },
     {
      "key": "sr_turn-on-sink-faucet",
-     "label": "Faucet"
+     "label": "Faucet",
+     "hidden": true
     }
    ],
    "footnotes": [
     "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
+    "Tasks > 0: how many of the 9 tasks the model scored above 0 on test (success rate > 0). Per-task scores are kept in data/results.json.",
     "\u2020 Muse Spark 1.3 through an internal endpoint, 5 rounds per task instead of 10; 5 of its 9 test evaluations ended in an error and show \u2013. Shown for comparison: it takes no rank and is not counted in the overview."
    ],
    "rows": [
@@ -5062,7 +5103,8 @@
       "sr_turn-on-microwave": 1.0,
       "sr_turn-on-sink-faucet": 0.8,
       "sr_suite": 0.5111,
-      "tasks_run": 9
+      "tasks_run": 9,
+      "tasks_nonzero": 7
      },
      "start": 0.0444,
      "best": 0.5333,
@@ -5097,7 +5139,8 @@
       "sr_turn-on-microwave": 0.8,
       "sr_turn-on-sink-faucet": 0.0,
       "sr_suite": 0.3333,
-      "tasks_run": 9
+      "tasks_run": 9,
+      "tasks_nonzero": 6
      },
      "start": 0.0,
      "best": 0.4222,
@@ -5132,7 +5175,8 @@
       "sr_turn-on-microwave": 0.6,
       "sr_turn-on-sink-faucet": 0.2,
       "sr_suite": 0.2889,
-      "tasks_run": 9
+      "tasks_run": 9,
+      "tasks_nonzero": 6
      },
      "start": 0.0,
      "best": 0.4,
@@ -5167,7 +5211,8 @@
       "sr_turn-on-microwave": 0.0,
       "sr_turn-on-sink-faucet": 0.6,
       "sr_suite": 0.0667,
-      "tasks_run": 9
+      "tasks_run": 9,
+      "tasks_nonzero": 1
      },
      "start": 0.0,
      "best": 0.0667,
@@ -5202,7 +5247,8 @@
       "sr_turn-on-microwave": 0.2,
       "sr_turn-on-sink-faucet": 0.2,
       "sr_suite": 0.0444,
-      "tasks_run": 9
+      "tasks_run": 9,
+      "tasks_nonzero": 2
      },
      "start": 0.0222,
      "best": 0.1111,
@@ -5237,7 +5283,8 @@
       "sr_turn-on-microwave": 0.2,
       "sr_turn-on-sink-faucet": 0.0,
       "sr_suite": 0.0222,
-      "tasks_run": 9
+      "tasks_run": 9,
+      "tasks_nonzero": 1
      },
      "start": 0.0,
      "best": 0.0111,
@@ -5272,7 +5319,8 @@
       "sr_turn-on-microwave": 0.0,
       "sr_turn-on-sink-faucet": 0.0,
       "sr_suite": 0.0,
-      "tasks_run": 9
+      "tasks_run": 9,
+      "tasks_nonzero": 0
      },
      "start": 0.0,
      "best": 0.0222,
@@ -5307,7 +5355,8 @@
       "sr_turn-on-microwave": 0.0,
       "sr_turn-on-sink-faucet": 0.0,
       "sr_suite": 0.0,
-      "tasks_run": 9
+      "tasks_run": 9,
+      "tasks_nonzero": 0
      },
      "start": 0.0,
      "best": 0.0333,
@@ -5337,7 +5386,8 @@
       "sr_turn-on-microwave": 0.0,
       "sr_turn-on-sink-faucet": 0.0,
       "sr_suite": 0.0,
-      "tasks_run": 4
+      "tasks_run": 4,
+      "tasks_nonzero": 0
      },
      "start": 0.0,
      "best": 0.0,

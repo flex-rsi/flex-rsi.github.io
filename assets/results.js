@@ -1,6 +1,6 @@
 // Results section, built entirely from data/results.json so that categories and tasks can grow
 // without changes here.
-//   Overview   coverage: how many models, tasks and runs, and which tasks each model was run on
+//   Overview   one leaderboard: each model's average rank over the tasks it was run on
 //   Category   one tab per task (no second row when there is only one)
 //   Task       every test metric, validation start and best, the rounds run, and the improvement curves
 // The current view is kept in the URL (#results/<category>/<task>) so it can be linked.
@@ -11,10 +11,6 @@
   const tabsEl = $(".board-tabs"), subEl = $(".board-subtabs");
   const titleEl = $(".board-title"), leadEl = $(".board-sub");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const cov = document.createElement("div");
-  cov.className = "cov";
-  cov.hidden = true;
-  $(".board-scroll").before(cov);
   const table = $("table.results"), fig = $(".curves-fig"), svg = $(".curves-plot"), legend = $(".legend"), noteEl = $(".board-note");
 
   // Every metric is shown on one 0-100 scale, to one decimal, without a % sign: scores and rates kept in 0-1 are
@@ -24,7 +20,7 @@
   const scale = (key) => (ON100.has(key) || key.startsWith("pts_") ? 1 : 100);
   const fmt = (key, v) => {
     if (v === null || v === undefined) return "–";
-    if (key === "tasks_run") return String(v);
+    if (key === "tasks_run" || key === "tasks_nonzero") return String(v);
     if (key === "avg_steps") return v.toFixed(2);
     return (scale(key) * v).toFixed(1);
   };
@@ -83,157 +79,46 @@
 
   // ---------- views ----------
 
-  // Overview: who has been measured on what. Counts up top, then one bar per model built from one
-  // segment per task it was run on, coloured by category; a segment opens that task's leaderboard.
-  // Category colours from the page's palette, no black: Klein blue and three lighter steps of it, then a
-  // warm sand (a taupe and a pale sand for categories still to come). Text is light on the two darkest.
-  const CAT_COLOR = [["#002fa7", "#f4f4f1"], ["#4567d8", "#f4f4f1"], ["#93a9ef", "#0b0d1a"], ["#cdd7f7", "#0b0d1a"],
-                     ["#ddd5c2", "#0b0d1a"], ["#a39d8c", "#0b0d1a"], ["#ecebe5", "#0b0d1a"]];
-  const catPair = (id) => CAT_COLOR[Math.max(0, cats.findIndex((c) => c.id === id)) % CAT_COLOR.length];
-  const catColor = (id) => catPair(id)[0];
-  // Rows wider than the chart move sideways on their own, back and forth and all together: one shared
-  // position f from 0 to 1, each row shifted by f times its own overflow; rows that fit stay still. The
-  // rail below shows f. Dragging the rail or the rows, clicking the rail or scrolling sideways moves them
-  // by hand, and they set off again a few seconds later; hovering the chart pauses them so a cell can be
-  // clicked. With reduced motion they only move by hand.
-  let covLoop = 0, covObs = [];
-  function covMotion() {
-    cancelAnimationFrame(covLoop);
-    covObs.forEach((o) => o.disconnect());
-    covObs = [];
-    const mid = cov.querySelector(".cov-mid"), lanes = mid.querySelector(".cov-lanes");
-    const rail = mid.querySelector(".cov-rail"), thumb = rail.firstElementChild;
-    const bars = [...lanes.querySelectorAll(".cov-bar")];
-    const SPEED = 55, REST = 1800, IDLE = 4000;   // px per second of the longest row; pause at each end; wait after a manual move
-    let over = [], longest = 0, f = 0, dir = 1, hold = performance.now() + 2400, hover = false, inView = true, last = 0;
-    const draw = () => {
-      bars.forEach((b, i) => (b.style.translate = over[i] ? `${(-f * over[i]).toFixed(1)}px 0` : ""));
-      rail.hidden = longest <= 1;
-      if (rail.hidden) return;
-      const w = Math.max(28, (rail.clientWidth * lanes.clientWidth) / (lanes.clientWidth + longest));
-      thumb.style.width = w + "px";
-      thumb.style.transform = `translateX(${(f * (rail.clientWidth - w)).toFixed(1)}px)`;
-    };
-    const measure = () => {
-      over = bars.map((b) => Math.max(0, b.scrollWidth - lanes.clientWidth));   // a bar is as wide as its cells
-      longest = Math.max(0, ...over);
-      draw();
-    };
-    const set = (v) => { f = Math.min(1, Math.max(0, v)); hold = performance.now() + IDLE; draw(); };
-    const step = (now) => {
-      if (!mid.isConnected || cov.hidden) return;
-      const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
-      last = now;
-      if (!reduced && inView && !hover && longest > 1 && now > hold) {
-        f += (dir * SPEED * dt) / longest;
-        if (f >= 1 || f <= 0) { f = Math.min(1, Math.max(0, f)); dir = -dir; hold = now + REST; }
-        draw();
-      }
-      covLoop = requestAnimationFrame(step);
-    };
-    // the rail: drag the thumb, or click the rail to centre the thumb there
-    const toX = (x) => { const room = rail.clientWidth - thumb.offsetWidth; set(room > 0 ? x / room : 0); };
-    let grab = null;
-    thumb.addEventListener("pointerdown", (e) => { grab = e.clientX - thumb.getBoundingClientRect().left; thumb.setPointerCapture(e.pointerId); e.preventDefault(); });
-    thumb.addEventListener("pointermove", (e) => { if (grab !== null) toX(e.clientX - rail.getBoundingClientRect().left - grab); });
-    thumb.addEventListener("pointerup", () => (grab = null));
-    rail.addEventListener("pointerdown", (e) => { if (e.target === rail) toX(e.clientX - rail.getBoundingClientRect().left - thumb.offsetWidth / 2); });
-    // the rows: drag sideways (a drag does not count as a click on a cell), or scroll sideways
-    let drag = null;
-    lanes.addEventListener("pointerdown", (e) => { if (longest > 1 && e.button === 0) drag = { x: e.clientX, f, moved: false, id: e.pointerId }; });
-    lanes.addEventListener("pointermove", (e) => {
-      if (!drag) return;
-      const dx = e.clientX - drag.x;
-      if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; lanes.setPointerCapture(drag.id); lanes.classList.add("dragging"); }
-      if (drag.moved) set(drag.f - dx / longest);
-    });
-    const endDrag = () => {
-      if (drag && drag.moved) lanes.addEventListener("click", (e) => { e.stopPropagation(); e.preventDefault(); }, { capture: true, once: true });
-      drag = null;
-      lanes.classList.remove("dragging");
-    };
-    lanes.addEventListener("pointerup", endDrag);
-    lanes.addEventListener("pointercancel", () => { drag = null; lanes.classList.remove("dragging"); });
-    lanes.addEventListener("wheel", (e) => {
-      const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.shiftKey ? e.deltaY : 0;
-      if (!d || longest <= 1) return;
-      e.preventDefault();
-      set(f + d / longest);
-    }, { passive: false });
-    lanes.addEventListener("keydown", (e) => {
-      const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-      if (k && longest > 1) { e.preventDefault(); set(f + (k * 130) / longest); }
-    });
-    mid.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hover = true; });
-    mid.addEventListener("pointerleave", () => { hover = false; hold = Math.max(hold, performance.now() + 1200); });
-    if ("ResizeObserver" in window) { const o = new ResizeObserver(measure); o.observe(lanes); covObs.push(o); }
-    if ("IntersectionObserver" in window) {
-      const o = new IntersectionObserver((es) => es.forEach((x) => (inView = x.isIntersecting)), { threshold: 0.2 });
-      o.observe(mid); covObs.push(o);
-    }
-    measure();
-    covLoop = requestAnimationFrame(step);
-  }
+  // Overview: one leaderboard over all tasks. Each task ranks its models on the hidden test split (equal
+  // scores share a rank); a model's average rank is the mean over the tasks it was run on, lower is better.
+  // RoboDojo and RoboCasa are one task each. A model run on fewer than MIN_TASKS tasks is listed after the
+  // others without a place, since a few tasks say little.
+  const MIN_TASKS = 5;
   function overview() {
     titleEl.textContent = "Overview";
-    leadEl.textContent = "Which frontier models have been run on which tasks so far. Standings are kept per task, so a model is only compared where it was measured: open a category for its rankings and improvement curves.";
+    leadEl.textContent = "Every model's average rank over the tasks it was run on: open a category for each task's scores and improvement curves.";
     subEl.hidden = true;
     const models = new Map();
     data.tasks.forEach((t) => t.rows.filter((r) => !r.extra).forEach((r) => {
-      const m = models.get(r.model) || { model: r.model, weights: r.weights, tasks: [] };
-      m.tasks.push(t);
+      const m = models.get(r.model) || { model: r.model, weights: r.weights, ranks: [] };
+      m.ranks.push(rankOf[t.id][r.model]);
       models.set(r.model, m);
     }));
-    const order = (t) => cats.findIndex((c) => c.id === t.category) * 100 + data.tasks.indexOf(t);
-    const rows = [...models.values()].map((m) => ({ ...m, tasks: m.tasks.sort((x, y) => order(x) - order(y)) }))
-      .sort((x, y) => y.tasks.length - x.tasks.length || x.model.localeCompare(y.model));
-    const std = (t) => t.rows.filter((r) => !r.extra);
-    const total = data.tasks.length, runs = data.tasks.reduce((n, t) => n + std(t).length, 0);
-    const rounds = data.tasks.reduce((n, t) => n + std(t).reduce((k, r) => k + (r.rounds || 0), 0), 0);
-    const stat = (n, label) => `<div class="cov-stat"><b data-n="${n}">0</b><span>${label}</span></div>`;
-    cov.innerHTML = `
-      <div class="cov-stats">${stat(rows.length, "frontier models")}${stat(total, "tasks")}${stat(cats.length, "categories")}${stat(runs, "model × task runs")}${stat(rounds, "total RSI rounds")}</div>
-      <div class="cov-head"><span>Tasks each model has been run on</span>
-        <ul class="cov-legend">${cats.map((c) => `<li><i style="background:${catColor(c.id)}"></i>${esc(c.name)}</li>`).join("")}</ul></div>
-      <div class="cov-chart">
-        <div class="cov-names">${rows.map((r, i) => `<div class="cov-model" style="--i:${i}">${modelMark(r.model)}<span class="model-name">${esc(r.model)}</span>${tag(r.weights)}</div>`).join("")}</div>
-        <div class="cov-mid"><div class="cov-lanes" tabindex="0" aria-label="Tasks per model; rows that do not fit move sideways">${rows.map((r, i) =>
-          `<div class="cov-lane" style="--i:${i}"><div class="cov-bar">${r.tasks.map((t) => {
-            const [bg, fg] = catPair(t.category);
-            return `<button type="button" class="cov-seg" data-cat="${t.category}" data-task="${t.id}" style="--c:${bg};--fg:${fg}" title="${esc(t.track)} · ${esc(r.model)} ranked ${rankOf[t.id][r.model]} of ${t.rows.length}"><span>${esc(t.track)}</span></button>`;
-          }).join("")}</div></div>`).join("")}</div>
-          <div class="cov-rail" hidden><span class="cov-thumb"></span></div></div>
-        <div class="cov-counts">${rows.map((r, i) => `<div class="cov-n" style="--i:${i}"><b>${r.tasks.length}</b>/${total}</div>`).join("")}</div>
-      </div>`;
-    cov.hidden = false;
-    covMotion();
-    $(".board-scroll").hidden = true;
+    const rows = [...models.values()].map((m) => ({ ...m, n: m.ranks.length,
+      avg: m.ranks.reduce((x, y) => x + y, 0) / m.ranks.length, firsts: m.ranks.filter((k) => k === 1).length }));
+    const ranked = rows.filter((m) => m.n >= MIN_TASKS).sort((x, y) => x.avg - y.avg || y.n - x.n);
+    const few = rows.filter((m) => m.n < MIN_TASKS).sort((x, y) => x.avg - y.avg || y.n - x.n);
+    const r2 = (x) => Math.round(100 * x);   // places follow the averages as shown, to two decimals
+    const place = ranked.map((m) => 1 + ranked.filter((q) => r2(q.avg) < r2(m.avg)).length);
+    const row = (m, p) => `<tr class="${p ? rankClass(p - 1) : "partial"}"><td>${rankBadge(p)}</td>${modelCell(m.model, m.weights)}<td class="strong">${m.avg.toFixed(2)}</td><td>${m.n}<span class="th-sub">of ${data.tasks.length}</span></td><td>${m.firsts}</td></tr>`;
+    table.innerHTML = `<thead><tr><th>#</th><th class="model">Model</th><th>Average rank<span class="th-sub">lower is better</span></th><th>Tasks<span class="th-sub">ranked on</span></th><th>First places</th></tr></thead><tbody>${ranked.map((m, i) => row(m, place[i])).join("")}${few.map((m) => row(m, null)).join("")}</tbody>`;
+    $(".board-scroll").hidden = false;
     fig.hidden = true;
-    noteEl.textContent = `Hover a segment for that model's rank on the task; click it to open the task. Updated ${data.updated}.`;
-    // replay the entrance: bars grow in turn, and the counts run up
-    cov.classList.remove("play"); void cov.offsetWidth; cov.classList.add("play");
-    const t0 = performance.now(), dur = reduced ? 0 : 900;
-    const nums = [...cov.querySelectorAll(".cov-stat b")];
-    const step = (now) => {
-      const k = dur ? Math.min(1, (now - t0) / dur) : 1, e = 1 - Math.pow(1 - k, 3);
-      nums.forEach((el) => (el.textContent = Math.round(e * +el.dataset.n)));
-      if (k < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
+    noteEl.innerHTML = `<span class="fn">Average rank: a model's rank on each task it was run on (equal scores share a rank), averaged over those tasks; RoboDojo and RoboCasa count as one task each. Models run on fewer than ${MIN_TASKS} tasks are listed last without a place.</span>Updated ${esc(data.updated)}.`;
   }
 
   function task(t) {
-    cov.hidden = true;
     $(".board-scroll").hidden = false;
     titleEl.textContent = t.track;
     leadEl.textContent = `${t.task}. Ranked by ${t.metrics[0].label} on the hidden test split.`;
     const ranks = ranksOf(t);
+    const ms = t.metrics.filter((m) => !m.hidden);   // hidden: kept in the data, not shown as a column
     const body = t.rows.map((r, i) => {
-      const values = t.metrics.map((m, j) => `<td${j === 0 ? ' class="strong"' : ""}>${fmt(m.key, r.test[m.key])}</td>`).join("");
+      const values = ms.map((m, j) => `<td${j === 0 ? ' class="strong"' : ""}>${fmt(m.key, r.test[m.key])}</td>`).join("");
       return `<tr data-i="${i}" class="${ranks[i] === null ? "" : rankClass(ranks[i] - 1)}"><td>${rankBadge(ranks[i])}</td>${modelCell(r.model, r.weights, r.mark)}${values}<td class="vchange">${change(t.primary, r)}</td><td class="rounds">${r.rounds ?? "–"}${r.ended ? `<span class="ended">${esc(ENDED[r.ended] || r.ended)}</span>` : ""}</td></tr>`;
     }).join("");
-    const metricHeads = t.metrics.map((m) => `<th>${esc(m.label)}</th>`).join("");
-    table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${t.metrics.length}">Hidden test metrics</th><th>Validation</th><th>Run depth</th></tr><tr><th>#</th><th class="model">Model</th>${metricHeads}<th>Start → best<span class="th-sub">${esc(t.metrics[0].label)}</span></th><th class="rounds">Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
+    const metricHeads = ms.map((m) => `<th>${esc(m.label)}</th>`).join("");
+    table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${ms.length}">Hidden test metrics</th><th>Validation</th><th>Run depth</th></tr><tr><th>#</th><th class="model">Model</th>${metricHeads}<th>Start → best<span class="th-sub">${esc(t.metrics[0].label)}</span></th><th class="rounds">Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
     drawCurves(t);
     noteEl.innerHTML = (t.footnotes || []).map((f) => `<span class="fn">${esc(f)}</span>`).join("") +
       "Validation: the run's starting score and its best score over the rounds, on the same 0–100 scale. Each line ends at the last round its run reached.";
@@ -338,7 +223,6 @@
 
   tabsEl.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(b.dataset.cat); });
   subEl.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(currentCat(), b.dataset.task); });
-  cov.addEventListener("click", (e) => { const b = e.target.closest(".cov-seg"); if (b) show(b.dataset.cat, b.dataset.task); });
   table.addEventListener("click", (e) => {
     const c = e.target.closest("td[data-cat]"), t = e.target.closest("th[data-task]");
     if (c) show(c.dataset.cat);

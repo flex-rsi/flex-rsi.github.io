@@ -239,3 +239,4 @@ table.results td.vchange .delta.flat { color: var(--ink-3); }
 .row-mark { margin-left: 2px; font-size: 0.8em; font-weight: 700; color: var(--accent-1); }
 table.results .rank-badge.na { color: var(--ink-3); border-color: var(--line); background: transparent; }
 .board-note .fn { display: block; margin-bottom: 6px; }
+
