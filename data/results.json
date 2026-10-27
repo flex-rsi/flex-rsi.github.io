@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "updated": "2026-10-26",
+ "updated": "2026-10-27",
  "categories": [
   {
    "id": "perception",
@@ -4590,7 +4590,7 @@
     }
    ],
    "footnotes": [
-    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 10; a longer run's last point is its final best. Per task, the model's latest run with a final test."
+    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test."
    ],
    "rows": [
     {
@@ -4667,7 +4667,7 @@
      "model": "GPT-6.1 Sol",
      "weights": "closed",
      "test": {
-      "pts_put-bottles-into-dustbin": 6.0,
+      "pts_put-bottles-into-dustbin": 0.0,
       "pts_arrange-largest-number": 21.0,
       "pts_fold-clothes": 12.0,
       "pts_insert-tubes": 4.0,
@@ -4677,13 +4677,13 @@
       "pts_play-xylophone": 80.0,
       "pts_push-t": 0.0,
       "pts_sort-nesting-dolls-by-size": 40.0,
-      "pts_suite": 30.2,
+      "pts_suite": 29.6,
       "tasks_run": 10
      },
      "start": 0.2,
-     "best": 38.8,
-     "gain_pct": 19300.0,
-     "rounds": 112,
+     "best": 38.6,
+     "gain_pct": 19200.0,
+     "rounds": 100,
      "ended": null,
      "curve": [
       0.2,
@@ -4696,7 +4696,7 @@
       36.6,
       36.6,
       38.6,
-      38.8
+      38.6
      ]
     },
     {
@@ -4900,6 +4900,33 @@
      ]
     },
     {
+     "model": "Gemini 3.8 Flash",
+     "weights": "closed",
+     "test": {
+      "pts_put-bottles-into-dustbin": 0.0,
+      "pts_suite": 0.0,
+      "tasks_run": 1
+     },
+     "start": 0.0,
+     "best": 0.5,
+     "gain_pct": null,
+     "rounds": 10,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    {
      "model": "MiniMax-M3",
      "weights": "open",
      "test": {
@@ -4933,33 +4960,6 @@
       0.0,
       0.0,
       0.0
-     ]
-    },
-    {
-     "model": "Gemini 3.8 Flash",
-     "weights": "closed",
-     "test": {
-      "pts_put-bottles-into-dustbin": 0.0,
-      "pts_suite": 0.0,
-      "tasks_run": 1
-     },
-     "start": 0.0,
-     "best": 0.5,
-     "gain_pct": null,
-     "rounds": 10,
-     "ended": null,
-     "curve": [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.5,
-      0.5,
-      0.5,
-      0.5,
-      0.5,
-      0.5,
-      0.5
      ]
     },
     {
@@ -5044,7 +5044,7 @@
     }
    ],
    "footnotes": [
-    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Curves stop at round 10; a longer run's last point is its final best. Per task, the model's latest run with a final test.",
+    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
     "\u2020 Muse Spark 1.3 through an internal endpoint, 5 rounds per task instead of 10; 5 of its 9 test evaluations ended in an error and show \u2013. Shown for comparison: it takes no rank and is not counted in the overview."
    ],
    "rows": [
@@ -5065,9 +5065,9 @@
       "tasks_run": 9
      },
      "start": 0.0444,
-     "best": 0.5556,
-     "gain_pct": 1151.4,
-     "rounds": 115,
+     "best": 0.5333,
+     "gain_pct": 1100.0,
+     "rounds": 90,
      "ended": null,
      "curve": [
       0.0444,
@@ -5080,7 +5080,7 @@
       0.4889,
       0.5111,
       0.5333,
-      0.5556
+      0.5333
      ]
     },
     {
@@ -5137,7 +5137,7 @@
      "start": 0.0,
      "best": 0.4,
      "gain_pct": null,
-     "rounds": 82,
+     "rounds": 81,
      "ended": null,
      "curve": [
       0.0,
@@ -5206,8 +5206,8 @@
      },
      "start": 0.0222,
      "best": 0.1111,
-     "gain_pct": 400.5,
-     "rounds": 125,
+     "gain_pct": 400.0,
+     "rounds": 90,
      "ended": null,
      "curve": [
       0.0222,
@@ -5277,7 +5277,7 @@
      "start": 0.0,
      "best": 0.0222,
      "gain_pct": null,
-     "rounds": 106,
+     "rounds": 90,
      "ended": null,
      "curve": [
       0.0,
@@ -5312,7 +5312,7 @@
      "start": 0.0,
      "best": 0.0333,
      "gain_pct": null,
-     "rounds": 101,
+     "rounds": 90,
      "ended": null,
      "curve": [
       0.0,
