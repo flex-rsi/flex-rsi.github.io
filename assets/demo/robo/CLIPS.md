@@ -53,3 +53,49 @@ Agentview left, 512×512, 8 s at 25 fps, posters at 7.5 s; the page crops them t
 At a glance tiles (`assets/reel/`, 480×360, 24 fps, 8 s): `robot-kettle` is the R2 kettle clip cropped
 to its view, `robot-mug` the R3 mug clip cropped to 384×288 at (128, 120), and `robot-hotdogs` the
 R1 episode from 45.9 s to its end at 6×, so both plates fill up.
+
+## More RoboDojo examples (2026-10-27)
+
+Head camera (`cam_head`), 640×480, 8 s at 25 fps, h264 crf 23; a clip shorter than 8 s after speed-up holds its last frame. Posters at 7.5 s, except the Muse R6 clip (6.5 s, where the arm does not cover the board) and the Gemini push-T R6 clip (7.92 s, after the arm leaves the block). Before is the run's earlier version on that episode (its posthoc test, or validation where noted), after is the final test of the run's final version unless noted. Where the two sides play at different speeds, each side carries its own `speed`.
+
+- Pick From Conveyor By Image, GPT-6.1 Sol, standard-5 (test)
+  - `sol-conveyor-r0-standard5-t00-11.2-2x.mp4`, R0 fail (0): source 0–11.2 s, 2×. The right arm knocks the basket away, and the left gripper closes beside the objects without lifting any of them.
+  - `sol-conveyor-r6-standard5-t2.4-18.4-2x.mp4`, R6 success (100): source 2.4–18.4 s, 2×. One arm lifts the basket and holds it over the conveyor while the other picks the object shown on the board and drops it in.
+- Play Tic-Tac-Toe, GPT-6 Astra, standard-5 (test)
+  - `astra-tictactoe-r1-standard5-t00-7.4.mp4`, R1 fail (10): source 0–7.4 s, real time. It sets one ring on the board and then stops, so the opponent never gets a turn.
+  - `astra-tictactoe-r8-standard5-t5.44-37.44-4x.mp4`, R8 success (100): source 5.44–37.44 s, 4×. It takes turns with the opponent arm and places all five of its rings until the board is full.
+- Play Tic-Tac-Toe, Muse Wonder 1.0, standard-5 (test)
+  - `muse-tictactoe-r1-standard5-t00-27.28-4x.mp4`, R1 partial (75): source 0–27.28 s, 4×. It drops its five rings one after another without pausing, so the opponent never places an X and the board is never filled.
+  - `muse-tictactoe-r6-standard5-t8.36-40.36-4x.mp4`, R6 success (100): source 8.36–40.36 s, 4×. After each ring both arms go back to their start pose, the opponent places an X, and play continues until the board is full.
+- Sort Nesting Dolls By Size, GPT-6.1 Sol, random-4 (test)
+  - `sol-dolls-r0-random4-t00-15.8-2x.mp4`, R0 fail (0): source 0–15.8 s, 2×. The arms sweep across the table and knock the dolls about; none of them end up in a row.
+  - `sol-dolls-r9-random4-t7.88-39.88-4x.mp4`, R9 success (100): source 7.88–39.88 s, 4×. It picks the dolls up one at a time and stands them in a straight row, smallest on the left.
+- Play Xylophone, DeepSeek-V4.1 Flash 1017, standard-6 (test)
+  - `deepseek-xylophone-r3-standard6-t1.1-9.1.mp4`, R3 fail (0): source 1.1–9.1 s, real time. The gripper misses the mallet and pokes at the keys with empty fingers.
+  - `deepseek-xylophone-r6-standard6-t3.8-11.8.mp4`, R6 success (100): source 3.8–11.8 s, real time. It picks up the mallet and strikes the keys one after another, from left to right.
+- Push T, Gemini 4 Argon, random-4 (test)
+  - `argon-pusht-r5-random4-t7.8-23.8-2x.mp4`, R5 fail (0): source 7.8–23.8 s, 2×. After a push near the back of the table the arm stalls, and the episode ends with the block beside the pad, turned away from it.
+  - `argon-pusht-r6-random4-t3.92-19.92-2x.mp4`, R6 success (100): source 3.92–19.92 s, 2×. It nudges the block in short pushes until it covers the gray pad exactly.
+- Fill Egg Holder, Claude Opus 5.5, standard-4 (validation, rounds 0 and 3)
+  - `opus-egg-r0-standard4-t0.44-16.44-2x.mp4`, R0 fail (0): source 0.44–16.44 s, 2×. The gripper pokes around in the basket and never lifts an egg.
+  - `opus-egg-r3-standard4-t00-28.04-4x.mp4`, R3 partial (90): source 0–28.04 s, 4×. It moves all four eggs into the holder, standing upright; the lid stays open, which costs the last 10 points.
+
+## More RoboCasa examples (2026-10-27)
+
+Four more models and tasks. Each pair is one test episode: before is the run's starting policy (its
+posthoc test of round 0, a failure) and after is the run's final policy on the final test (a success).
+512×512, 8 s at 25 fps, h264 crf 23, posters at 7.5 s; the page crops them to `view`. A source shorter
+than 8 s after the speed change is held on its last frame to 8 s.
+
+- Open Drawer, Claude Opus 5.5, L1S1-2000, agentview left (16 s at 2× → 8 s)
+  - `opus-drawer-r0-L1S1-t21.5-37.5-2x.mp4`, R0 fail: the gripper hovers by the drawer front and the drawer stays shut; up to the episode's end (37.5 s).
+  - `opus-drawer-r1-L1S1-t02.7-18.7-2x.mp4`, R1 success: the hand closes on the handle and pulls the drawer open; up to the episode's end (18.7 s).
+- Turn On Microwave, Qwen3.8-Flash-Next, L5S5-2004, agentview right (real time)
+  - `qwen-microwave-r0-L5S5-t00-08.mp4`, R0 fail: the arm reaches past the control panel into empty space (episode runs to its 22.5 s step limit).
+  - `qwen-microwave-r5-L5S5-t00-07.75.mp4`, R5 success: the base turns to the panel and the fingertip presses start; the whole episode (7.75 s), last frame held 0.25 s.
+- Turn On Sink Faucet, GLM-5.3 Flash, L3S3-2002, agentview left (played at 0.5×)
+  - `glm-faucet-r0-L3S3-t00-02.35-0.5x.mp4`, R0 fail: the arm does not move before the time limit ends the episode (2.35 s of video, 46 steps); held on its last frame.
+  - `glm-faucet-r10-L3S3-t00-03.75-0.5x.mp4`, R10 success: the hand takes the lever and lifts it; the whole episode (3.75 s → 7.5 s), last frame held 0.5 s.
+- Turn Off Stove, GPT-6 Astra, L2S2-2001, agentview left (16 s at 2× → 8 s)
+  - `astra-stove-r0-L2S2-t00-16-2x.mp4`, R0 fail: it turns the wrong knobs and two more burners light up.
+  - `astra-stove-r10-L2S2-t16.1-32.1-2x.mp4`, R10 success: it turns the rear center knob off; up to the episode's end (32.1 s). The episode ends on the step the knob reads off, so the burner's glow is still drawn in the last frame.

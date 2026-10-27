@@ -11,7 +11,8 @@
   const ABOUT = {
     "active-search": "The agent turns its head inside a 360° scene to find an object or the way to go, in as few actions as possible.",
     "visual-search": "Questions about small details in large, high-resolution images.",
-    "robot-control": "Robot manipulation in simulation: the agent rewrites the control policy between rounds, and each episode is replayed with an earlier and a later round's policy.",
+    "robodojo": "A dual-arm robot in simulation with the model as its policy: the agent rewrites the control policy between rounds, and each episode is replayed with an earlier and a later round's policy.",
+    "robocasa": "A mobile manipulator in a simulated kitchen with the model as its policy: the agent rewrites the control policy between rounds, and each episode is replayed with an earlier and a later round's policy.",
     "3d-tracking": "Segment every object in several views of a scene and keep each object's identity consistent across views.",
     "ego-exo-memory": "Memory questions about synchronized first-person (ego) and fixed-camera (exo) videos of cooking and bike repair.",
     "image-editing": "Edit a photo or painting to a written instruction, change only what it asks for, and keep everything else as it was.",
@@ -216,7 +217,8 @@
         r.querySelector(".rb-round").textContent = `Round ${rd.round.replace(/^R0*(?=\d)/, "")}`;
         r.querySelector(".rb-score").innerHTML = `<b class="${ok ? "ok" : "no"}">${rd.outcome}</b>${rd.score !== undefined ? `<span class="of">${rd.score}/100</span>` : ""}`;
         r.querySelector(".rb-sum").textContent = rd.summary;
-        r.querySelector(".rb-inset figcaption").textContent = `${c.focus} · ${zoom}×${c.speed ? ` · played ${c.speed}× speed` : ""}`;
+        const sp = rd.speed ?? c.speed;   // a side may play at its own speed
+        r.querySelector(".rb-inset figcaption").textContent = `${c.focus} · ${zoom}×${sp && sp !== 1 ? ` · played ${sp}× speed` : ""}`;
         const cam = r.querySelector(".rb-cam");
         cam.querySelector("video")?.remove();
         cam.insertAdjacentHTML("afterbegin", video(rd.video, rd.poster, ` aria-label="${esc(c.model)}, ${esc(c.task)}, ${esc(rd.round)}: ${esc(rd.outcome)}"`));
@@ -748,7 +750,7 @@
     }
   }
 
-  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robot-control": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit, "video-quality": videoQuality, "robolab": robotControl, "scene-from-photo": sceneViewer,
+  const RENDER = { "active-search": activeSearch, "visual-search": visualSearch, "robodojo": robotControl, "robocasa": robotControl, "3d-tracking": tracking, "ego-exo-memory": egoExo, "image-editing": imageEdit, "video-quality": videoQuality, "robolab": robotControl, "scene-from-photo": sceneViewer,
                    "arc-agi-2": arcPuzzles, "arc-agi-3": arcGames };
 
   function select(d, id) {
@@ -761,7 +763,7 @@
     $(".demo-title").textContent = p.name;
     $(".demo-sub").textContent = ABOUT[p.id] || "";
     const what = p.what || `Test ${p.metric} · start → final`;
-    if (p.id === "robot-control") $(".demo-score").innerHTML = `${p.comparisons.length} episodes<span class="what">RoboDojo · RoboCasa</span>`;
+    if (p.id === "robodojo" || p.id === "robocasa") $(".demo-score").innerHTML = `${p.comparisons.length} episodes<span class="what">${new Set(p.comparisons.map((c) => c.model)).size} models · ${new Set(p.comparisons.map((c) => c.task)).size} tasks</span>`;
     else $(".demo-score").innerHTML = `${esc(d.model)} <b>${fmtScore(p, p.before)}</b><span class="to">→</span><span class="after">${fmtScore(p, p.after)}</span><span class="what">${esc(what)}</span>`;
     RENDER[p.id](p);
     card.classList.remove("swap");
@@ -772,11 +774,12 @@
   fetch("data/demos.json", { cache: "no-cache" })
     .then((r) => r.json())
     .then((d) => {
-      const ORDER = ["robot-control", "robolab", "scene-from-photo", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2"];
+      const ORDER = ["robodojo", "robocasa", "robolab", "scene-from-photo", "active-search", "arc-agi-3", "visual-search", "video-quality", "ego-exo-memory", "3d-tracking", "image-editing", "arc-agi-2"];
       d.panels = d.panels.filter((p) => RENDER[p.id]).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
       tabsEl.innerHTML = d.panels.map((p) => `<button type="button" role="tab" data-id="${p.id}">${esc(p.name)}</button>`).join("");
       // the selected task is kept in the URL (demos.html#<task>), so the home page tiles can link straight to it
-      const fromHash = () => d.panels.find((p) => p.id === decodeURIComponent(location.hash.slice(1)))?.id;
+      // #robot-control, the tab before RoboDojo and RoboCasa had their own, opens RoboDojo
+      const fromHash = () => { const h = decodeURIComponent(location.hash.slice(1)); return d.panels.find((p) => p.id === (h === "robot-control" ? "robodojo" : h))?.id; };
       tabsEl.addEventListener("click", (ev) => {
         const b = ev.target.closest("button");
         if (!b || b.getAttribute("aria-selected") === "true") return;

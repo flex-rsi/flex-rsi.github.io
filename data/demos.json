@@ -371,8 +371,6 @@
    ]
   },
   {
-   "id": "robot-control",
-   "name": "Robot Control",
    "metric": "score",
    "before": 5.0,
    "after": 70.0,
@@ -382,6 +380,8 @@
    "clip_success": true,
    "video": "assets/demo/robo/opus-final.mp4",
    "poster": "assets/demo/robo/opus-final.jpg",
+   "id": "robodojo",
+   "name": "RoboDojo",
    "comparisons": [
     {
      "scene": "Upright bottle",
@@ -419,6 +419,114 @@
      "changed": "The earlier policy lost bottles near the far edge: its table mask stopped short, so far-away detections were dropped. Reading the failure logs, the agent extended the far-edge perception range, added a pull-back and retry when a grasp misses, and now picks nearby bottles first so the arm does not sweep through them."
     },
     {
+     "scene": "Conveyor and basket",
+     "benchmark": "RoboDojo",
+     "task": "Pick From Conveyor By Image",
+     "model": "GPT-6.1 Sol",
+     "case": "standard-5",
+     "speed": 2,
+     "focus": "The basket over the conveyor",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      240,
+      140,
+      320,
+      240
+     ],
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robo/sol-conveyor-r0-standard5-t00-11.2-2x.mp4",
+      "poster": "assets/demo/robo/sol-conveyor-r0-standard5-t00-11.2-2x.jpg",
+      "outcome": "Fail",
+      "summary": "The right arm knocks the basket away, and the left gripper closes beside the objects without lifting any of them.",
+      "score": 0
+     },
+     "after": {
+      "round": "R6",
+      "video": "assets/demo/robo/sol-conveyor-r6-standard5-t2.4-18.4-2x.mp4",
+      "poster": "assets/demo/robo/sol-conveyor-r6-standard5-t2.4-18.4-2x.jpg",
+      "outcome": "Success",
+      "summary": "One arm lifts the basket and holds it over the conveyor while the other picks the object shown on the board and drops it in.",
+      "score": 100
+     },
+     "changed": "The starting policy asked the model for every arm motion and its grasps closed on air. The agent calibrated the arms' joint kinematics, aligned the gripper with the wrist camera, opened it and descended 3 cm before closing, and carried objects along a lane it had measured as reachable. Its last change was to lift the basket into place first and only then pick."
+    },
+    {
+     "scene": "A full game",
+     "benchmark": "RoboDojo",
+     "task": "Play Tic-Tac-Toe",
+     "model": "GPT-6 Astra",
+     "case": "standard-5",
+     "focus": "The board",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      240,
+      170,
+      160,
+      120
+     ],
+     "before": {
+      "round": "R1",
+      "video": "assets/demo/robo/astra-tictactoe-r1-standard5-t00-7.4.mp4",
+      "poster": "assets/demo/robo/astra-tictactoe-r1-standard5-t00-7.4.jpg",
+      "outcome": "Fail",
+      "summary": "It sets one ring on the board, then its policy stops responding and the episode ends, so the opponent never gets a turn.",
+      "score": 10,
+      "speed": 1
+     },
+     "after": {
+      "round": "R8",
+      "video": "assets/demo/robo/astra-tictactoe-r8-standard5-t5.44-37.44-4x.mp4",
+      "poster": "assets/demo/robo/astra-tictactoe-r8-standard5-t5.44-37.44-4x.jpg",
+      "outcome": "Success",
+      "summary": "It takes turns with the opponent arm and places all five of its rings until the board is full.",
+      "score": 100,
+      "speed": 4
+     },
+     "changed": "Round by round the agent extended a calibrated, scripted pick-and-place from one ring to five, using the right arm for rings the left cannot reach. It then made the robot really alternate: after each ring both arms fold back so the opponent can move, and the camera checks which cells are taken before the next ring. For the far row it tilts the gripper forward and shifts the wrist to match, which fixed the last reach failures."
+    },
+    {
+     "scene": "Mallet and keys",
+     "benchmark": "RoboDojo",
+     "task": "Play Xylophone",
+     "model": "DeepSeek-V4.1 Flash 1017",
+     "case": "standard-6",
+     "focus": "The mallet and the keys",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      200,
+      130,
+      224,
+      168
+     ],
+     "before": {
+      "round": "R3",
+      "video": "assets/demo/robo/deepseek-xylophone-r3-standard6-t1.1-9.1.mp4",
+      "poster": "assets/demo/robo/deepseek-xylophone-r3-standard6-t1.1-9.1.jpg",
+      "outcome": "Fail",
+      "summary": "The gripper misses the mallet and pokes at the keys with empty fingers.",
+      "score": 0
+     },
+     "after": {
+      "round": "R6",
+      "video": "assets/demo/robo/deepseek-xylophone-r6-standard6-t3.8-11.8.mp4",
+      "poster": "assets/demo/robo/deepseek-xylophone-r6-standard6-t3.8-11.8.jpg",
+      "outcome": "Success",
+      "summary": "It picks up the mallet and strikes the keys one after another, from left to right.",
+      "score": 100
+     },
+     "changed": "The agent found the mallet head by its pink colour (the old mask latched onto the brown table) and grasps the handle from above, which made the pick reliable. It added a step that turns the tool so the far keys are reachable and hovers over each key with camera feedback. Each stroke now starts 12 mm early and sweeps a little along the row, which absorbs a positioning bias of about 2 cm."
+    },
+    {
      "scene": "Second digit",
      "benchmark": "RoboDojo",
      "task": "Arrange Largest Number",
@@ -450,6 +558,115 @@
       "summary": "The 6 goes into the second slot and the row reads 96410."
      },
      "changed": "R9 had added a two-arm relay to get around joint limits on cross-body moves, but the hand-off could leave a tile beside its slot. The agent lowered the staging release from 16 mm to 7 mm, and when the wrist reports the tile is missing, the arm now backs out of the camera's view, finds the tile again and retries."
+    },
+    {
+     "scene": "Block on the pad",
+     "benchmark": "RoboDojo",
+     "task": "Push T",
+     "model": "Gemini 4 Argon",
+     "case": "random-4",
+     "speed": 2,
+     "focus": "The T block and the gray pad",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      140,
+      230,
+      160,
+      120
+     ],
+     "before": {
+      "round": "R5",
+      "video": "assets/demo/robo/argon-pusht-r5-random4-t7.8-23.8-2x.mp4",
+      "poster": "assets/demo/robo/argon-pusht-r5-random4-t7.8-23.8-2x.jpg",
+      "outcome": "Fail",
+      "summary": "After a push near the back of the table the policy stops responding, and the episode ends with the block beside the pad, turned away from it.",
+      "score": 0
+     },
+     "after": {
+      "round": "R6",
+      "video": "assets/demo/robo/argon-pusht-r6-random4-t3.92-19.92-2x.mp4",
+      "poster": "assets/demo/robo/argon-pusht-r6-random4-t3.92-19.92-2x.jpg",
+      "outcome": "Success",
+      "summary": "It nudges the block in short pushes until it covers the gray pad exactly.",
+      "score": 100
+     },
+     "changed": "After pushes near the back of the table the arm lifted in steps too large for the simulator's motion limits, so moves were rejected and the run stalled. The agent shrank those lift and park steps, added a scripted lift if a move is still rejected, and kept the idle gripper closed so it cannot brush the block. It also bounded where the block and pad can be detected, so the tracker no longer jumps when an arm hides the block."
+    },
+    {
+     "scene": "Five dolls in a row",
+     "benchmark": "RoboDojo",
+     "task": "Sort Nesting Dolls By Size",
+     "model": "GPT-6.1 Sol",
+     "case": "random-4",
+     "focus": "The row of dolls",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      120,
+      190,
+      440,
+      330
+     ],
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robo/sol-dolls-r0-random4-t00-15.8-2x.mp4",
+      "poster": "assets/demo/robo/sol-dolls-r0-random4-t00-15.8-2x.jpg",
+      "outcome": "Fail",
+      "summary": "The arms sweep across the table and knock the dolls about; none of them end up in a row.",
+      "score": 0,
+      "speed": 2
+     },
+     "after": {
+      "round": "R9",
+      "video": "assets/demo/robo/sol-dolls-r9-random4-t7.88-39.88-4x.mp4",
+      "poster": "assets/demo/robo/sol-dolls-r9-random4-t7.88-39.88-4x.jpg",
+      "outcome": "Success",
+      "summary": "It picks the dolls up one at a time and stands them in a straight row, smallest on the left.",
+      "score": 100,
+      "speed": 4
+     },
+     "changed": "The model now only locates the dolls; scripted top-down grasps move them, lined up with calibrated head and wrist cameras, onto a row kept clear of the other objects. Motions give up when they stop making progress and recover by re-framing the camera. In the last round, when two dolls look close in size, the wrist camera measures them and swaps their order only when the measurement is confident."
+    },
+    {
+     "scene": "Waiting for the opponent",
+     "benchmark": "RoboDojo",
+     "task": "Play Tic-Tac-Toe",
+     "model": "Muse Wonder 1.0",
+     "case": "standard-5",
+     "speed": 4,
+     "focus": "The board",
+     "size": [
+      640,
+      480
+     ],
+     "region": [
+      240,
+      170,
+      160,
+      120
+     ],
+     "before": {
+      "round": "R1",
+      "video": "assets/demo/robo/muse-tictactoe-r1-standard5-t00-27.28-4x.mp4",
+      "poster": "assets/demo/robo/muse-tictactoe-r1-standard5-t00-27.28-4x.jpg",
+      "outcome": "Partial",
+      "summary": "It drops its five rings one after another without pausing, so the opponent never places an X and the board is never filled.",
+      "score": 75
+     },
+     "after": {
+      "round": "R6",
+      "video": "assets/demo/robo/muse-tictactoe-r6-standard5-t8.36-40.36-4x.mp4",
+      "poster": "assets/demo/robo/muse-tictactoe-r6-standard5-t8.36-40.36-4x.jpg",
+      "outcome": "Success",
+      "summary": "After each ring both arms go back to their start pose, the opponent places an X, and play continues until the board is full.",
+      "score": 100
+     },
+     "changed": "The agent found that the opponent arm only moves once the robot's arms are back at their starting pose. The new policy returns both arms home after every ring and waits until the camera sees a new X settle on the board. It also remembers every cell it has seen taken, so a cell hidden by the opponent's arm is not reused, and it waits for the last X before ending."
     },
     {
      "scene": "Third tube",
@@ -485,129 +702,49 @@
      "changed": "Grasp checks, a second camera look and new insertion angles all left the same tube catching the rack rim. The agent traced it to perspective: seen from the head camera the tube looks longer than it is, which moved the estimated grasp point up to 7 mm toward the cap. It now corrects for half of that apparent extra length."
     },
     {
-     "scene": "Cabinet door",
-     "benchmark": "RoboCasa",
-     "task": "Open Cabinet",
-     "model": "GPT-6 Astra",
-     "case": "L31S58-3002",
-     "speed": 2,
-     "focus": "The gripper at the handle",
+     "scene": "Eggs into the holder",
+     "benchmark": "RoboDojo",
+     "task": "Fill Egg Holder",
+     "model": "Claude Opus 5.5",
+     "case": "standard-4",
+     "focus": "The basket and the egg holder",
      "size": [
-      512,
-      512
+      640,
+      480
      ],
      "region": [
-      0,
-      0,
-      192,
-      144
+      70,
+      160,
+      288,
+      216
      ],
      "before": {
-      "round": "R4",
-      "video": "assets/demo/robo/astra-cabinet-r4-L31S58-t24-40-2x.mp4",
-      "poster": "assets/demo/robo/astra-cabinet-r4-L31S58-t24-40-2x.jpg",
+      "round": "R0",
+      "video": "assets/demo/robo/opus-egg-r0-standard4-t0.44-16.44-2x.mp4",
+      "poster": "assets/demo/robo/opus-egg-r0-standard4-t0.44-16.44-2x.jpg",
       "outcome": "Fail",
-      "summary": "The gripper keeps reaching for the handles without pulling; the door stays shut.",
-      "track": [
-       [
-        0,
-        173,
-        357
-       ],
-       [
-        1,
-        308,
-        317
-       ],
-       [
-        2,
-        323,
-        284
-       ],
-       [
-        3,
-        291,
-        264
-       ],
-       [
-        4,
-        273,
-        227
-       ],
-       [
-        5,
-        255,
-        231
-       ],
-       [
-        6,
-        243,
-        197
-       ],
-       [
-        7,
-        277,
-        231
-       ]
-      ]
+      "summary": "The gripper pokes around in the basket and never lifts an egg.",
+      "score": 0,
+      "speed": 2
      },
      "after": {
-      "round": "R7",
-      "video": "assets/demo/robo/astra-cabinet-r7-L31S58-t19-35-2x.mp4",
-      "poster": "assets/demo/robo/astra-cabinet-r7-L31S58-t19-35-2x.jpg",
-      "outcome": "Success",
-      "summary": "It hooks the handle and swings the door open.",
-      "track": [
-       [
-        0,
-        173,
-        351
-       ],
-       [
-        1,
-        315,
-        317
-       ],
-       [
-        2,
-        323,
-        304
-       ],
-       [
-        3,
-        291,
-        217
-       ],
-       [
-        4,
-        287,
-        227
-       ],
-       [
-        5,
-        355,
-        247
-       ],
-       [
-        6,
-        389,
-        213
-       ],
-       [
-        7,
-        437,
-        200
-       ]
-      ]
+      "round": "R3",
+      "video": "assets/demo/robo/opus-egg-r3-standard4-t00-28.04-4x.mp4",
+      "poster": "assets/demo/robo/opus-egg-r3-standard4-t00-28.04-4x.jpg",
+      "outcome": "Partial",
+      "summary": "It moves all four eggs into the holder, standing upright; the lid stays open, which costs the last 10 points.",
+      "score": 90,
+      "speed": 4
      },
-     "view": [
-      0,
-      64,
-      512,
-      384
-     ],
-     "changed": "The earlier policy kept reaching for the handles without ever getting a hold. The later one hooks the handle and keeps pulling as the door swings open."
-    },
+     "changed": "The agent replaced the model-driven starter with a scripted policy: the head camera finds the eggs and the holder's cells by colour, and arm kinematics it fitted from the simulator's logs plan straight top-down paths, avoiding the moves the simulator rejected. The last change was one number: releasing with the gripper pitched 7\u00b0 instead of 15\u00b0 keeps the eggs from tipping over after they land."
+    }
+   ]
+  },
+  {
+   "id": "robocasa",
+   "name": "RoboCasa",
+   "metric": "success",
+   "comparisons": [
     {
      "scene": "Kettle and burner",
      "benchmark": "RoboCasa",
@@ -753,6 +890,323 @@
       384
      ],
      "changed": "The starting policy asks the model for every next motion. The later one locates the food and the plates by stereo from two cameras, lets the model choose pick and place steps, and runs each step with closed-loop pose control; it notices when the arm stalls and tells the model when a target is out of reach."
+    },
+    {
+     "scene": "Microwave start button",
+     "benchmark": "RoboCasa",
+     "task": "Turn On Microwave",
+     "model": "Qwen3.8-Flash-Next",
+     "case": "L5S5-2004",
+     "focus": "The microwave's control panel",
+     "size": [
+      512,
+      512
+     ],
+     "region": [
+      208,
+      40,
+      192,
+      144
+     ],
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robo/qwen-microwave-r0-L5S5-t00-08.mp4",
+      "poster": "assets/demo/robo/qwen-microwave-r0-L5S5-t00-08.jpg",
+      "outcome": "Fail",
+      "summary": "The arm swings up past the control panel and pokes at the empty space beside it.",
+      "track": [
+       [
+        0,
+        300,
+        112
+       ],
+       [
+        2,
+        400,
+        100
+       ],
+       [
+        7.9,
+        410,
+        90
+       ]
+      ]
+     },
+     "after": {
+      "round": "R5",
+      "video": "assets/demo/robo/qwen-microwave-r5-L5S5-t00-07.75.mp4",
+      "poster": "assets/demo/robo/qwen-microwave-r5-L5S5-t00-07.75.jpg",
+      "outcome": "Success",
+      "summary": "The base turns to face the panel and the fingertip goes straight to the start button at its bottom."
+     },
+     "view": [
+      0,
+      0,
+      512,
+      384
+     ],
+     "changed": "The model now only points at the START button, in both agentview cameras and then in a zoomed crop, and the two points are triangulated into 3D; a scripted Cartesian servo brings the fingertip in front of the button, presses and backs off. A missed press is retried on a raster of 17 small offsets, with a slight base turn before each new look to break the model's steady pointing bias. Two rounds that had the model check its own point (r3, r4) lowered validation and were rejected."
+    },
+    {
+     "scene": "Faucet lever",
+     "benchmark": "RoboCasa",
+     "task": "Turn On Sink Faucet",
+     "model": "GLM-5.3 Flash",
+     "case": "L3S3-2002",
+     "speed": 0.5,
+     "focus": "The faucet and its lever",
+     "size": [
+      512,
+      512
+     ],
+     "region": [
+      254,
+      138,
+      192,
+      144
+     ],
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robo/glm-faucet-r0-L3S3-t00-02.35-0.5x.mp4",
+      "poster": "assets/demo/robo/glm-faucet-r0-L3S3-t00-02.35-0.5x.jpg",
+      "outcome": "Fail",
+      "summary": "The arm never moves: the starting policy is still waiting on the model when the episode's time limit runs out."
+     },
+     "after": {
+      "round": "R10",
+      "video": "assets/demo/robo/glm-faucet-r10-L3S3-t00-03.75-0.5x.mp4",
+      "poster": "assets/demo/robo/glm-faucet-r10-L3S3-t00-03.75-0.5x.jpg",
+      "outcome": "Success",
+      "summary": "It reaches over the basin, takes the lever and lifts it within four seconds."
+     },
+     "view": [
+      0,
+      64,
+      512,
+      384
+     ],
+     "changed": "Nine rounds of model-guided locating and visual servoing scored 0; the agent concluded from the camera images that the model could not give reliable metric positions. The final policy uses the sink's consistent position relative to the robot as a prior and tries several scripted lever motions with few or no model calls (the success came from a scooping motion), after fixing a torso-lift bug that had shifted every height constant."
+    },
+    {
+     "scene": "Cabinet door",
+     "benchmark": "RoboCasa",
+     "task": "Open Cabinet",
+     "model": "GPT-6 Astra",
+     "case": "L31S58-3002",
+     "speed": 2,
+     "focus": "The gripper at the handle",
+     "size": [
+      512,
+      512
+     ],
+     "region": [
+      0,
+      0,
+      192,
+      144
+     ],
+     "before": {
+      "round": "R4",
+      "video": "assets/demo/robo/astra-cabinet-r4-L31S58-t24-40-2x.mp4",
+      "poster": "assets/demo/robo/astra-cabinet-r4-L31S58-t24-40-2x.jpg",
+      "outcome": "Fail",
+      "summary": "The gripper keeps reaching for the handles without pulling; the door stays shut.",
+      "track": [
+       [
+        0,
+        173,
+        357
+       ],
+       [
+        1,
+        308,
+        317
+       ],
+       [
+        2,
+        323,
+        284
+       ],
+       [
+        3,
+        291,
+        264
+       ],
+       [
+        4,
+        273,
+        227
+       ],
+       [
+        5,
+        255,
+        231
+       ],
+       [
+        6,
+        243,
+        197
+       ],
+       [
+        7,
+        277,
+        231
+       ]
+      ]
+     },
+     "after": {
+      "round": "R7",
+      "video": "assets/demo/robo/astra-cabinet-r7-L31S58-t19-35-2x.mp4",
+      "poster": "assets/demo/robo/astra-cabinet-r7-L31S58-t19-35-2x.jpg",
+      "outcome": "Success",
+      "summary": "It hooks the handle and swings the door open.",
+      "track": [
+       [
+        0,
+        173,
+        351
+       ],
+       [
+        1,
+        315,
+        317
+       ],
+       [
+        2,
+        323,
+        304
+       ],
+       [
+        3,
+        291,
+        217
+       ],
+       [
+        4,
+        287,
+        227
+       ],
+       [
+        5,
+        355,
+        247
+       ],
+       [
+        6,
+        389,
+        213
+       ],
+       [
+        7,
+        437,
+        200
+       ]
+      ]
+     },
+     "view": [
+      0,
+      64,
+      512,
+      384
+     ],
+     "changed": "The earlier policy kept reaching for the handles without ever getting a hold. The later one hooks the handle and keeps pulling as the door swings open."
+    },
+    {
+     "scene": "Right drawer",
+     "benchmark": "RoboCasa",
+     "task": "Open Drawer",
+     "model": "Claude Opus 5.5",
+     "case": "L1S1-2000",
+     "speed": 2,
+     "focus": "The right drawer and its handle",
+     "size": [
+      512,
+      512
+     ],
+     "region": [
+      176,
+      240,
+      256,
+      192
+     ],
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robo/opus-drawer-r0-L1S1-t21.5-37.5-2x.mp4",
+      "poster": "assets/demo/robo/opus-drawer-r0-L1S1-t21.5-37.5-2x.jpg",
+      "outcome": "Fail",
+      "summary": "The gripper hovers at the side of the drawer front, never takes the handle, and the drawer stays shut."
+     },
+     "after": {
+      "round": "R1",
+      "video": "assets/demo/robo/opus-drawer-r1-L1S1-t02.7-18.7-2x.mp4",
+      "poster": "assets/demo/robo/opus-drawer-r1-L1S1-t02.7-18.7-2x.jpg",
+      "outcome": "Success",
+      "summary": "It drives up to the drawer, closes on the handle and pulls the drawer open."
+     },
+     "view": [
+      0,
+      128,
+      512,
+      384
+     ],
+     "changed": "The starting policy asks the model for every next motion. After one round the motion is scripted and the model only points at the drawer handle, first in the base camera and a zoomed crop, then again in the gripper camera once the hand stops in front of it. Points too close to the image edge are thrown away and the robot looks again from a lower pose; the grasp is checked and retried up to twice before the pull."
+    },
+    {
+     "scene": "Rear center burner",
+     "benchmark": "RoboCasa",
+     "task": "Turn Off Stove",
+     "model": "GPT-6 Astra",
+     "case": "L2S2-2001",
+     "speed": 2,
+     "focus": "The burners and their knobs",
+     "size": [
+      512,
+      512
+     ],
+     "region": [
+      106,
+      132,
+      288,
+      216
+     ],
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robo/astra-stove-r0-L2S2-t00-16-2x.mp4",
+      "poster": "assets/demo/robo/astra-stove-r0-L2S2-t00-16-2x.jpg",
+      "outcome": "Fail",
+      "summary": "Asked to turn the rear center burner off, it turns the wrong knobs: two more burners light up red.",
+      "track": [
+       [
+        0,
+        280,
+        300
+       ],
+       [
+        3,
+        240,
+        255
+       ],
+       [
+        7.9,
+        250,
+        250
+       ]
+      ]
+     },
+     "after": {
+      "round": "R10",
+      "video": "assets/demo/robo/astra-stove-r10-L2S2-t16.1-32.1-2x.mp4",
+      "poster": "assets/demo/robo/astra-stove-r10-L2S2-t16.1-32.1-2x.jpg",
+      "outcome": "Success",
+      "summary": "It grips only the rear center burner's knob and turns it; the episode ends as soon as the knob reads off, before the glow has faded."
+     },
+     "view": [
+      0,
+      64,
+      512,
+      384
+     ],
+     "changed": "The model is called once to locate the knob, and a scripted locate, approach, grasp and turn sequence follows, about seven model calls per episode. The hand keeps a downward grasp instead of the horizontal wrist poses that kept hitting joint limits, with occlusion-aware triangulation over time and enlarged knob crops so oven controls are not mistaken for burner knobs. In round 10 the model also tells top-mounted from front-panel knobs, and top-mounted ones are grasped centred from above and turned about the negative z axis."
     }
    ]
   },
