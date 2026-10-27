@@ -607,6 +607,152 @@
       384
      ],
      "changed": "The earlier policy kept reaching for the handles without ever getting a hold. The later one hooks the handle and keeps pulling as the door swings open."
+    },
+    {
+     "scene": "Kettle and burner",
+     "benchmark": "RoboCasa",
+     "task": "Kettle Boiling",
+     "model": "Claude Opus 5.5",
+     "case": "L2S2-2001",
+     "speed": 2,
+     "focus": "The kettle and the burner under it",
+     "size": [
+      512,
+      512
+     ],
+     "region": [
+      194,
+      198,
+      192,
+      144
+     ],
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robo/opus-kettle-r0-L2S2-t20.75-36.75-2x.mp4",
+      "poster": "assets/demo/robo/opus-kettle-r0-L2S2-t20.75-36.75-2x.jpg",
+      "outcome": "Fail",
+      "summary": "The kettle is already on a burner, but the arm wanders around the stove and the burner never comes on.",
+      "track": [
+       [
+        0,
+        260,
+        296
+       ],
+       [
+        1,
+        140,
+        262
+       ],
+       [
+        2,
+        220,
+        286
+       ],
+       [
+        3,
+        205,
+        280
+       ],
+       [
+        7.9,
+        205,
+        280
+       ]
+      ]
+     },
+     "after": {
+      "round": "R2",
+      "video": "assets/demo/robo/opus-kettle-r2-L2S2-t13.15-29.15-2x.mp4",
+      "poster": "assets/demo/robo/opus-kettle-r2-L2S2-t13.15-29.15-2x.jpg",
+      "outcome": "Success",
+      "summary": "It sets the kettle on the front burner, then turns that burner's knob; the ring under the kettle glows red."
+     },
+     "view": [
+      0,
+      64,
+      512,
+      384
+     ],
+     "changed": "The starting policy asks the model for every next arm and base motion. The later one asks the model only to point, in the camera images, at the kettle, a free burner and the knobs, lifts those points into 3D with the camera calibration, and scripts the rest: carry the kettle to the burner, then grip a knob and roll the wrist, trying the knobs nearest the kettle first, from above for a knob on top of the stove and level from the front for one on its face."
+    },
+    {
+     "scene": "Mug under the spout",
+     "benchmark": "RoboCasa",
+     "task": "Coffee Setup Mug",
+     "model": "GPT-6.1 Sol",
+     "case": "L1S1-2000",
+     "focus": "The mug and the dispenser",
+     "size": [
+      512,
+      512
+     ],
+     "region": [
+      240,
+      230,
+      192,
+      144
+     ],
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robo/sol-mug-r0-L1S1-t04-12.mp4",
+      "poster": "assets/demo/robo/sol-mug-r0-L1S1-t04-12.jpg",
+      "outcome": "Fail",
+      "summary": "The gripper comes down on the mug from the side and knocks it over; it never gets a hold."
+     },
+     "after": {
+      "round": "R3",
+      "video": "assets/demo/robo/sol-mug-r3-L1S1-t03.5-11.5.mp4",
+      "poster": "assets/demo/robo/sol-mug-r3-L1S1-t03.5-11.5.jpg",
+      "outcome": "Success",
+      "summary": "It picks the mug up and sets it upright on the drip tray, under the spout."
+     },
+     "view": [
+      0,
+      96,
+      512,
+      384
+     ],
+     "changed": "Two rounds of other grasps (straight down, from the side, by the handle) all failed on the dev episodes. The agent then located the mug's rim and handle in zoomed crops seen from two cameras, measured where the mug actually sat in the hand after the grasp, and placed it by that measured offset onto the drip tray's plane."
+    },
+    {
+     "scene": "Two plates",
+     "benchmark": "RoboCasa",
+     "task": "Portion Hot Dogs",
+     "model": "GPT-6 Astra",
+     "case": "L9S9-2004",
+     "speed": 4,
+     "focus": "The bowl and the two plates",
+     "size": [
+      512,
+      512
+     ],
+     "region": [
+      176,
+      186,
+      336,
+      252
+     ],
+     "before": {
+      "round": "R0",
+      "video": "assets/demo/robo/astra-hotdogs-r0-L9S9-t05.8-37.8-4x.mp4",
+      "poster": "assets/demo/robo/astra-hotdogs-r0-L9S9-t05.8-37.8-4x.jpg",
+      "outcome": "Fail",
+      "summary": "The arm pokes at the buns and sausages in the bowl and tips the bowl up; nothing reaches a plate."
+     },
+     "after": {
+      "round": "R1",
+      "video": "assets/demo/robo/astra-hotdogs-r1-L9S9-t61.9-93.9-4x.mp4",
+      "poster": "assets/demo/robo/astra-hotdogs-r1-L9S9-t61.9-93.9-4x.jpg",
+      "outcome": "Success",
+      "summary": "With a bun and a sausage already on the first plate, it carries the last sausage over to the second plate."
+     },
+     "view": [
+      0,
+      96,
+      512,
+      384
+     ],
+     "changed": "The starting policy asks the model for every next motion. The later one locates the food and the plates by stereo from two cameras, lets the model choose pick and place steps, and runs each step with closed-loop pose control; it notices when the arm stalls and tells the model when a target is out of reach."
     }
    ]
   },
@@ -780,7 +926,7 @@
       49,
       50
      ],
-     "reason": "The wheel is to the wearer's front-left. Ego view, 47–49 s: the detached black wheel sits in the lower-left part of the frame.",
+     "reason": "The wheel is to the wearer's front-left. Ego view, 47\u201349 s: the detached black wheel sits in the lower-left part of the frame.",
      "before_img": "assets/demo/egoexo/test-095-before.jpg",
      "after_img": "assets/demo/egoexo/test-095-after.jpg"
     },
@@ -909,7 +1055,7 @@
       28,
       43
      ],
-     "reason": "She first takes the cucumber at about 25–28 s, while standing at the black countertop next to the two-burner silver stove and facing the cabinets. That makes the answer B.",
+     "reason": "She first takes the cucumber at about 25\u201328 s, while standing at the black countertop next to the two-burner silver stove and facing the cabinets. That makes the answer B.",
      "before_img": "assets/demo/egoexo/test-064-before.jpg",
      "after_img": "assets/demo/egoexo/test-064-after.jpg"
     },
@@ -952,7 +1098,7 @@
       113,
       122
      ],
-     "reason": "During the pour (113–122 s), the person's right hand holds the seasoning container over the pink bowl. The white salt container sits on the counter to the left of the hands, between the dish rack and the cutting board.",
+     "reason": "During the pour (113\u2013122 s), the person's right hand holds the seasoning container over the pink bowl. The white salt container sits on the counter to the left of the hands, between the dish rack and the cutting board.",
      "before_img": "assets/demo/egoexo/test-056-before.jpg",
      "after_img": "assets/demo/egoexo/test-056-after.jpg"
     }
@@ -984,7 +1130,7 @@
     {
      "id": "A6-004",
      "family": "Local edit",
-     "kind": "Add object · exact count",
+     "kind": "Add object \u00b7 exact count",
      "about": "Add objects so that the scene ends up with an exact number of them.",
      "instruction": "Add one more bee-eater of the same species on the branch so there are three in total",
      "aspect": "772 / 960",
@@ -1000,7 +1146,7 @@
     {
      "id": "E2-003",
      "family": "Retouch & restore",
-     "kind": "Restoration · deblur",
+     "kind": "Restoration \u00b7 deblur",
      "about": "Repair a degraded photo without inventing new content.",
      "instruction": "This photo is out of focus; deblur it so the oat stalks and the clouds look sharp",
      "aspect": "960 / 715",
@@ -1016,7 +1162,7 @@
     {
      "id": "E2-006",
      "family": "Retouch & restore",
-     "kind": "Soft-effect removal · haze",
+     "kind": "Soft-effect removal \u00b7 haze",
      "about": "Remove a soft effect (haze, glare, reflection, shadow, smoke) and recover the scene behind it.",
      "instruction": "Remove the haze over the city so the sky is clear and the buildings look crisp with natural colors; keep the buildings unchanged",
      "aspect": "960 / 640",
@@ -1032,7 +1178,7 @@
     {
      "id": "E2-008",
      "family": "Retouch & restore",
-     "kind": "Soft-effect removal · glare",
+     "kind": "Soft-effect removal \u00b7 glare",
      "about": "Remove a soft effect (haze, glare, reflection, shadow, smoke) and recover the scene behind it.",
      "instruction": "Remove the star-burst flares and glare around the street lamps so they look like normal light sources; keep everything else unchanged",
      "aspect": "723 / 960",
@@ -1048,7 +1194,7 @@
     {
      "id": "E2-014",
      "family": "Retouch & restore",
-     "kind": "Soft-effect removal · shadow",
+     "kind": "Soft-effect removal \u00b7 shadow",
      "about": "Remove a soft effect (haze, glare, reflection, shadow, smoke) and recover the scene behind it.",
      "instruction": "Remove the large shadow cast on the brick wall; keep the brick pattern and the plants unchanged",
      "aspect": "640 / 960",
@@ -1861,7 +2007,7 @@
    "id": "robolab",
    "name": "RoboLab",
    "metric": "score",
-   "what": "Dev score · start → final",
+   "what": "Dev score \u00b7 start \u2192 final",
    "before": 33.33,
    "after": 85.42,
    "comparisons": [
@@ -2058,7 +2204,7 @@
    "metric": "scene score",
    "before": 7.1,
    "after": 66.5,
-   "what": "Test score · start → final",
+   "what": "Test score \u00b7 start \u2192 final",
    "changed": "The starting solution returns an empty room box. In round 1 it estimates the camera and the room and stands a box template in for each piece of furniture; later rounds generate each piece's shape with Hunyuan3D and place it in the estimated camera frame. On the 60 test photos (222 annotated pieces) the final version gives 198 pieces a mesh, and 110 (50%) pass on both shape and placement (input-view IoU at least 0.5 and realness at least 0.5); round 1 had 173 and 56.",
    "data": "The starter, round 1 and round 4 (final) solutions rerun on dev photos, each in its own estimated camera frame with the photo projected through that camera; geometry as the evaluator renders it, meshes simplified. Ground truth is the dev annotation's furniture (3D-FRONT).",
    "versions": [
@@ -2072,7 +2218,7 @@
     ],
     [
      "r4",
-     "Round 4 · final"
+     "Round 4 \u00b7 final"
     ],
     [
      "gt",
