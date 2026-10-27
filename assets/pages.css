@@ -98,13 +98,17 @@
 .aff-kicker { margin: 0 0 14px; }
 .aff-band .kicker::before { content: none; counter-increment: none; }
 .aff-marquee { overflow: hidden; padding: 24px 0; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+/* the logos fade in at the right edge and out at the left; the rules above and below stay whole */
+.aff-window { --fade: 72px; overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent); }
 .aff-track { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; width: max-content;
   animation: aff-scroll 60s linear infinite; }
 .aff-track li { flex: none; margin-right: 64px; }   /* a margin, not a gap, so one copy is exactly a third */
 .aff-marquee:hover .aff-track { animation-play-state: paused; }
 @keyframes aff-scroll { to { transform: translateX(-33.3333%); } }
 @media (prefers-reduced-motion: reduce) {
-  .aff-marquee { overflow-x: auto; }
+  .aff-window { overflow-x: auto; }
   .aff-track { animation: none; }
 }
-@media (max-width: 560px) { .aff-band { margin-top: 72px; } .aff-track li { margin-right: 44px; } }
+@media (max-width: 560px) { .aff-band { margin-top: 72px; } .aff-track li { margin-right: 44px; } .aff-window { --fade: 36px; } }
