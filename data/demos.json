@@ -2081,139 +2081,6 @@
    ],
    "scenes": [
     {
-     "id": "d011",
-     "photo": "assets/demo/harmony/d011.jpg",
-     "aspect": 1.3388429752066116,
-     "target": 3.236,
-     "note": "Ground truth has 4 pieces: two armchairs, a coffee table and a three-seat sofa. The final version rebuilds 5: the sofa, coffee table, chair and armchair are generated meshes, and one more table is still a template (60 faces) with no counterpart in the annotation.",
-     "versions": {
-      "r0": {
-       "glb": "assets/demo/harmony/d011-r0.glb",
-       "hfov": 60.00000051112913,
-       "faces": 12,
-       "faces_in": 12,
-       "objects": [
-        {
-         "name": "floor",
-         "faces_in": 2
-        },
-        {
-         "name": "ceiling",
-         "faces_in": 2
-        },
-        {
-         "name": "wall_left",
-         "faces_in": 2
-        },
-        {
-         "name": "wall_right",
-         "faces_in": 2
-        },
-        {
-         "name": "wall_back",
-         "faces_in": 2
-        },
-        {
-         "name": "wall_front",
-         "faces_in": 2
-        }
-       ]
-      },
-      "r1": {
-       "glb": "assets/demo/harmony/d011-r1.glb",
-       "hfov": 61.33567610410726,
-       "faces": 27900,
-       "faces_in": 110852,
-       "objects": [
-        {
-         "name": "wall_room",
-         "faces_in": 110432
-        },
-        {
-         "name": "sofa_00",
-         "faces_in": 108
-        },
-        {
-         "name": "coffee_table_01",
-         "faces_in": 72
-        },
-        {
-         "name": "chair_02",
-         "faces_in": 72
-        },
-        {
-         "name": "armchair_03",
-         "faces_in": 108
-        },
-        {
-         "name": "table_04",
-         "faces_in": 60
-        }
-       ]
-      },
-      "r4": {
-       "glb": "assets/demo/harmony/d011-r4.glb",
-       "hfov": 61.33567610410726,
-       "faces": 91620,
-       "faces_in": 321873,
-       "objects": [
-        {
-         "name": "wall_room",
-         "faces_in": 110432
-        },
-        {
-         "name": "sofa_00",
-         "faces_in": 30979
-        },
-        {
-         "name": "coffee_table_01",
-         "faces_in": 63311
-        },
-        {
-         "name": "chair_02",
-         "faces_in": 60221
-        },
-        {
-         "name": "armchair_03",
-         "faces_in": 56870
-        },
-        {
-         "name": "table_04",
-         "faces_in": 60
-        }
-       ]
-      },
-      "gt": {
-       "glb": "assets/demo/harmony/d011-gt.glb",
-       "hfov": 58.042546449405194,
-       "faces": 58006,
-       "faces_in": 214621,
-       "objects": [
-        {
-         "name": "room",
-         "faces_in": 99630
-        },
-        {
-         "name": "armchair_00",
-         "faces_in": 12803
-        },
-        {
-         "name": "Coffee Table_01",
-         "faces_in": 37018
-        },
-        {
-         "name": "armchair_02",
-         "faces_in": 31467
-        },
-        {
-         "name": "Three-Seat / Multi-seat Sofa_03",
-         "faces_in": 33703
-        }
-       ]
-      }
-     }
-    },
-    {
      "id": "d015",
      "photo": "assets/demo/harmony/d015.jpg",
      "aspect": 1.3388429752066116,
@@ -2494,6 +2361,139 @@
         {
          "name": "Sideboard / Side Cabinet / Console Table_06",
          "faces_in": 12570
+        }
+       ]
+      }
+     }
+    },
+    {
+     "id": "d011",
+     "photo": "assets/demo/harmony/d011.jpg",
+     "aspect": 1.3388429752066116,
+     "target": 3.236,
+     "note": "Ground truth has 4 pieces: two armchairs, a coffee table and a three-seat sofa. The final version rebuilds 5: the sofa, coffee table, chair and armchair are generated meshes, and one more table is still a template (60 faces) with no counterpart in the annotation.",
+     "versions": {
+      "r0": {
+       "glb": "assets/demo/harmony/d011-r0.glb",
+       "hfov": 60.00000051112913,
+       "faces": 12,
+       "faces_in": 12,
+       "objects": [
+        {
+         "name": "floor",
+         "faces_in": 2
+        },
+        {
+         "name": "ceiling",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_left",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_right",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_back",
+         "faces_in": 2
+        },
+        {
+         "name": "wall_front",
+         "faces_in": 2
+        }
+       ]
+      },
+      "r1": {
+       "glb": "assets/demo/harmony/d011-r1.glb",
+       "hfov": 61.33567610410726,
+       "faces": 27900,
+       "faces_in": 110852,
+       "objects": [
+        {
+         "name": "wall_room",
+         "faces_in": 110432
+        },
+        {
+         "name": "sofa_00",
+         "faces_in": 108
+        },
+        {
+         "name": "coffee_table_01",
+         "faces_in": 72
+        },
+        {
+         "name": "chair_02",
+         "faces_in": 72
+        },
+        {
+         "name": "armchair_03",
+         "faces_in": 108
+        },
+        {
+         "name": "table_04",
+         "faces_in": 60
+        }
+       ]
+      },
+      "r4": {
+       "glb": "assets/demo/harmony/d011-r4.glb",
+       "hfov": 61.33567610410726,
+       "faces": 91620,
+       "faces_in": 321873,
+       "objects": [
+        {
+         "name": "wall_room",
+         "faces_in": 110432
+        },
+        {
+         "name": "sofa_00",
+         "faces_in": 30979
+        },
+        {
+         "name": "coffee_table_01",
+         "faces_in": 63311
+        },
+        {
+         "name": "chair_02",
+         "faces_in": 60221
+        },
+        {
+         "name": "armchair_03",
+         "faces_in": 56870
+        },
+        {
+         "name": "table_04",
+         "faces_in": 60
+        }
+       ]
+      },
+      "gt": {
+       "glb": "assets/demo/harmony/d011-gt.glb",
+       "hfov": 58.042546449405194,
+       "faces": 58006,
+       "faces_in": 214621,
+       "objects": [
+        {
+         "name": "room",
+         "faces_in": 99630
+        },
+        {
+         "name": "armchair_00",
+         "faces_in": 12803
+        },
+        {
+         "name": "Coffee Table_01",
+         "faces_in": 37018
+        },
+        {
+         "name": "armchair_02",
+         "faces_in": 31467
+        },
+        {
+         "name": "Three-Seat / Multi-seat Sofa_03",
+         "faces_in": 33703
         }
        ]
       }
