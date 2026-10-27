@@ -4142,6 +4142,38 @@
    ],
    "rows": [
     {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "dynamic_success_rate": 0.4583,
+      "base_success_rate": 0.5833,
+      "dsr_starter": 0.2917
+     },
+     "start": 0.3125,
+     "best": 0.5,
+     "gain_pct": 60.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.3125,
+      0.3125,
+      0.4375,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    {
      "model": "Qwen3.8-Flash-Next",
      "weights": "open",
      "test": {
