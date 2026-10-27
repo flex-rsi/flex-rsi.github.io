@@ -15,13 +15,15 @@
 
   // Every metric is shown on one 0-100 scale, to one decimal, without a % sign: scores and rates kept in 0-1 are
   // multiplied by 100; RoboDojo points (pts_*), RoboLab scores and ARC-AGI-3 RHAE are already 0-100. Counts stay
-  // counts (tasks run; average steps to two decimals).
+  // counts (tasks run; average steps to two decimals). Speedups are ratios, shown as such (2.13×).
   const ON100 = new Set(["rhae", "rhae_starter", "robolab_score", "robolab_starter", "score"]);
-  const scale = (key) => (ON100.has(key) || key.startsWith("pts_") ? 1 : 100);
+  const TIMES = new Set(["speedup"]);
+  const scale = (key) => (ON100.has(key) || TIMES.has(key) || key.startsWith("pts_") ? 1 : 100);
   const fmt = (key, v) => {
     if (v === null || v === undefined) return "–";
     if (key === "tasks_run" || key === "tasks_nonzero") return String(v);
     if (key === "avg_steps") return v.toFixed(2);
+    if (TIMES.has(key)) return `${v.toFixed(2)}×`;
     return (scale(key) * v).toFixed(1);
   };
   // validation change in the same units: start → best (+delta)
@@ -29,8 +31,8 @@
     if (r.best === null || r.best === undefined) return "–";
     const v = (x) => fmt(key, x);
     if (r.start === null || r.start === undefined) return `<span class="to">best</span> <b>${v(r.best)}</b>`;
-    const d = Math.round(10 * scale(key) * (r.best - r.start)) / 10;
-    return `${v(r.start)} <span class="to">→</span> <b>${v(r.best)}</b><span class="delta${d > 0 ? "" : " flat"}">${d > 0 ? "+" : d < 0 ? "−" : "±"}${Math.abs(d).toFixed(1)}</span>`;
+    const p = TIMES.has(key) ? 2 : 1, d = Math.round(10 ** p * scale(key) * (r.best - r.start)) / 10 ** p;
+    return `${v(r.start)} <span class="to">→</span> <b>${v(r.best)}</b><span class="delta${d > 0 ? "" : " flat"}">${d > 0 ? "+" : d < 0 ? "−" : "±"}${Math.abs(d).toFixed(p)}</span>`;
   };
   const ENDED = { max_rounds: "round limit", budget_wall: "time budget", budget_usd: "cost budget", budget_gpu: "GPU budget",
                   budget_tokens: "token budget", val_calls: "validation budget", idle: "no further progress" };
@@ -121,7 +123,9 @@
     table.innerHTML = `<thead><tr class="table-band"><th colspan="2" class="band-l">Methods</th><th colspan="${ms.length}">Hidden test metrics</th><th>Validation</th><th>Run depth</th></tr><tr><th>#</th><th class="model">Model</th>${metricHeads}<th>Start → best<span class="th-sub">${esc(t.metrics[0].label)}</span></th><th class="rounds">Rounds<span class="th-sub">ended by</span></th></tr></thead><tbody>${body}</tbody>`;
     drawCurves(t);
     noteEl.innerHTML = (t.footnotes || []).map((f) => `<span class="fn">${esc(f)}</span>`).join("") +
-      "Validation: the run's starting score and its best score over the rounds, on the same 0–100 scale. Each line ends at the last round its run reached.";
+      (TIMES.has(t.primary) ? "Validation: the run's starting speedup and its best speedup over the rounds."
+                            : "Validation: the run's starting score and its best score over the rounds, on the same 0–100 scale.") +
+      " Each line ends at the last round its run reached.";
   }
 
   // ---------- curves ----------
@@ -173,7 +177,8 @@
     let g = "";
     for (let j = 0; j <= Math.round((hi - lo) / step); j++) {
       const v = lo + j * step;
-      const y = T + (1 - (v - lo) / (hi - lo)) * (H - T - B), lab = Math.abs(v - Math.round(v)) < 1e-6 ? v.toFixed(0) : v.toFixed(1);
+      const y = T + (1 - (v - lo) / (hi - lo)) * (H - T - B),
+            lab = (Math.abs(v - Math.round(v)) < 1e-6 ? v.toFixed(0) : v.toFixed(1)) + (TIMES.has(t.primary) ? "×" : "");
       g += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y}" y2="${y}"/><text class="ax" x="${L - 8}" y="${y + 4}" text-anchor="end">${lab}</text>`;
     }
     for (let x = 0; x <= maxX; x += maxX > 10 ? 5 : 2) g += `<text class="ax" x="${X(x)}" y="${H - 10}" text-anchor="middle">${x}</text>`;

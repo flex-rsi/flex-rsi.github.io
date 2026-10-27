@@ -26,6 +26,11 @@
    "id": "creation",
    "name": "Creation",
    "about": "Making and editing content to instructions."
+  },
+  {
+   "id": "infra",
+   "name": "Infra",
+   "about": "Making the systems that run models faster without changing what they compute."
   }
  ],
  "tasks": [
@@ -4133,9 +4138,73 @@
     }
    ],
    "footnotes": [
-    "One run per model: seed 0 of three."
+    "One run per model: seed 0."
    ],
    "rows": [
+    {
+     "model": "Qwen3.8-Flash-Next",
+     "weights": "open",
+     "test": {
+      "dynamic_success_rate": 0.4583,
+      "base_success_rate": 0.625,
+      "dsr_starter": 0.3333
+     },
+     "start": 0.3125,
+     "best": 0.375,
+     "gain_pct": 20.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.3125,
+      0.3125,
+      0.3125,
+      0.3125,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "dynamic_success_rate": 0.4167,
+      "base_success_rate": 0.4583,
+      "dsr_starter": 0.2917
+     },
+     "start": 0.3125,
+     "best": 0.375,
+     "gain_pct": 20.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.3125,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375,
+      0.375
+     ]
+    },
     {
      "model": "Gemma-4-31B-it",
      "weights": "open",
@@ -4251,9 +4320,40 @@
     }
    ],
    "footnotes": [
-    "One run per model: seed 0 of three."
+    "One run per model: seed 0."
    ],
    "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "success_rate": 0.6333,
+      "sr_starter": 0.5333
+     },
+     "start": 0.5,
+     "best": 0.75,
+     "gain_pct": 50.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.65,
+      0.65,
+      0.65,
+      0.65,
+      0.65,
+      0.7,
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      0.75
+     ]
+    },
     {
      "model": "Gemma-4-31B-it",
      "weights": "open",
@@ -4287,6 +4387,68 @@
     },
     {
      "model": "Qwen3.6-35B-A3B",
+     "weights": "open",
+     "test": {
+      "success_rate": 0.5333,
+      "sr_starter": 0.5333
+     },
+     "start": 0.5,
+     "best": 0.5,
+     "gain_pct": 0.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "success_rate": 0.5333,
+      "sr_starter": 0.5333
+     },
+     "start": 0.5,
+     "best": 0.6,
+     "gain_pct": 20.0,
+     "rounds": 15,
+     "ended": "max_rounds",
+     "curve": [
+      0.5,
+      0.55,
+      0.55,
+      0.55,
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.6
+     ]
+    },
+    {
+     "model": "Qwen3.8-Flash-Next",
      "weights": "open",
      "test": {
       "success_rate": 0.5333,
@@ -4529,6 +4691,111 @@
       0.6911,
       0.8086,
       0.8195
+     ]
+    }
+   ]
+  },
+  {
+   "id": "vae-decode",
+   "category": "infra",
+   "track": "VAE Decode",
+   "task": "Make a video model's decoder faster without changing its output: one window of MiniMax H3's 2.4B-parameter ViT VAE decoder (7 latent frames, 544\u00d7960) on one H200, every output checked against the reference within its rounding tolerance; scored by speedup over the eager PyTorch starter on unseen windows",
+   "primary": "speedup",
+   "metrics": [
+    {
+     "key": "speedup",
+     "label": "Speedup"
+    }
+   ],
+   "footnotes": [
+    "Speedup: 2 to the power of the task's score, the mean over repetitions of 0.75 \u00d7 log2(starter latency / solution latency) at 544\u00d7960 plus 0.25 \u00d7 the same at 480\u00d7832; the starter is 1.00\u00d7. One run per model, seed 0."
+   ],
+   "rows": [
+    {
+     "model": "Claude Opus 5.5",
+     "weights": "closed",
+     "test": {
+      "speedup": 2.1295
+     },
+     "start": 0.9969,
+     "best": 2.1362,
+     "gain_pct": 114.3,
+     "rounds": 41,
+     "ended": "idle",
+     "curve": [
+      0.9969,
+      0.9969,
+      2.0331,
+      2.0913,
+      2.0913,
+      2.0913,
+      2.0913,
+      2.0913,
+      2.1259,
+      2.1259,
+      2.1259,
+      2.1259,
+      2.1259,
+      2.1259,
+      2.1259,
+      2.1259,
+      2.1259,
+      2.1259,
+      2.1259,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361,
+      2.1361
+     ]
+    },
+    {
+     "model": "GPT-6 Astra",
+     "weights": "closed",
+     "test": {
+      "speedup": 1.9635
+     },
+     "start": 1.0007,
+     "best": 1.9494,
+     "gain_pct": 94.8,
+     "rounds": 16,
+     "ended": "budget_wall",
+     "curve": [
+      1.0007,
+      1.0926,
+      1.2549,
+      1.3169,
+      1.5112,
+      1.5907,
+      1.6518,
+      1.7046,
+      1.7046,
+      1.7837,
+      1.8429,
+      1.8429,
+      1.9494,
+      1.9494,
+      1.9494,
+      1.9494,
+      1.9494
      ]
     }
    ]
