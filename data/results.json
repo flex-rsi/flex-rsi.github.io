@@ -4870,7 +4870,8 @@
     }
    ],
    "footnotes": [
-    "Speedup: 2 to the power of the task's score, the mean over repetitions of 0.75 \u00d7 log2(starter latency / solution latency) at 544\u00d7960 plus 0.25 \u00d7 the same at 480\u00d7832; the starter is 1.00\u00d7. One run per model, seed 0."
+    "Speedup: 2 to the power of the task's score, the mean over repetitions of 0.75 \u00d7 log2(starter latency / solution latency) at 544\u00d7960 plus 0.25 \u00d7 the same at 480\u00d7832; the starter is 1.00\u00d7. One run per model, seed 0.",
+    "Curves stop at round 20; a longer run's last point is its final best."
    ],
    "rows": [
     {
@@ -4904,27 +4905,6 @@
       2.1259,
       2.1259,
       2.1259,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
-      2.1361,
       2.1361,
       2.1361
      ]
