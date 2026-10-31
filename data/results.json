@@ -5440,20 +5440,15 @@
     },
     {
      "key": "tasks_nonzero",
-     "label": "Tasks > 0 (of 9)"
+     "label": "Tasks > 0 (of 8)"
     },
     {
      "key": "tasks_run",
-     "label": "Tasks (of 9)"
+     "label": "Tasks (of 8)"
     },
     {
      "key": "sr_coffee-setup-mug",
      "label": "Coffee mug",
-     "hidden": true
-    },
-    {
-     "key": "sr_heat-kebab-sandwich",
-     "label": "Kebab sandwich",
      "hidden": true
     },
     {
@@ -5493,8 +5488,9 @@
     }
    ],
    "footnotes": [
-    "Suite: the mean success rate over all 9 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
-    "Tasks > 0: how many of the 9 tasks the model scored above 0 on test (success rate > 0). Per-task scores are kept in data/results.json.",
+    "Suite: the mean success rate over the 8 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
+    "Heat kebab sandwich, a ninth RoboCasa task, is left out of the suite: no model reached a success on it in validation or test (every model 0). Its runs are kept in the run records.",
+    "Tasks > 0: how many of the 8 tasks the model scored above 0 on test (success rate > 0). Per-task scores are kept in data/results.json.",
     "\u2020 Muse Spark 1.3 through an internal endpoint. Shown for comparison: it takes no rank and is not counted in the overview."
    ],
    "rows": [
@@ -5503,7 +5499,6 @@
      "weights": "closed",
      "test": {
       "sr_coffee-setup-mug": 0.0,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.4,
       "sr_open-cabinet": 0.6,
       "sr_open-drawer": 1.0,
@@ -5511,27 +5506,27 @@
       "sr_turn-off-stove": 0.2,
       "sr_turn-on-microwave": 1.0,
       "sr_turn-on-sink-faucet": 0.8,
-      "sr_suite": 0.5111,
-      "tasks_run": 9,
+      "sr_suite": 0.575,
+      "tasks_run": 8,
       "tasks_nonzero": 7
      },
-     "start": 0.0444,
-     "best": 0.5333,
+     "start": 0.05,
+     "best": 0.6,
      "gain_pct": 1100.0,
-     "rounds": 90,
+     "rounds": 80,
      "ended": null,
      "curve": [
-      0.0444,
-      0.2444,
-      0.3556,
-      0.3778,
-      0.4444,
-      0.4667,
-      0.4889,
-      0.4889,
-      0.5111,
-      0.5333,
-      0.5333
+      0.05,
+      0.275,
+      0.4001,
+      0.425,
+      0.5,
+      0.525,
+      0.55,
+      0.55,
+      0.575,
+      0.6,
+      0.6
      ]
     },
     {
@@ -5539,7 +5534,6 @@
      "weights": "closed",
      "test": {
       "sr_coffee-setup-mug": 0.0,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.2,
       "sr_open-cabinet": 0.6,
       "sr_open-drawer": 0.8,
@@ -5547,27 +5541,27 @@
       "sr_turn-off-stove": 0.2,
       "sr_turn-on-microwave": 0.8,
       "sr_turn-on-sink-faucet": 0.4,
-      "sr_suite": 0.3556,
-      "tasks_run": 9,
+      "sr_suite": 0.4,
+      "tasks_run": 8,
       "tasks_nonzero": 7
      },
-     "start": 0.0222,
-     "best": 0.5111,
+     "start": 0.025,
+     "best": 0.575,
      "gain_pct": 2202.3,
-     "rounds": 85,
+     "rounds": 75,
      "ended": null,
      "curve": [
-      0.0222,
-      0.0667,
-      0.2444,
-      0.3333,
-      0.4222,
-      0.4444,
-      0.4889,
-      0.4889,
-      0.4889,
-      0.5111,
-      0.5111
+      0.025,
+      0.075,
+      0.275,
+      0.375,
+      0.475,
+      0.5,
+      0.55,
+      0.55,
+      0.55,
+      0.575,
+      0.575
      ]
     },
     {
@@ -5575,7 +5569,6 @@
      "weights": "closed",
      "test": {
       "sr_coffee-setup-mug": 0.6,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.2,
       "sr_open-cabinet": 0.0,
       "sr_open-drawer": 0.8,
@@ -5583,27 +5576,27 @@
       "sr_turn-off-stove": 0.4,
       "sr_turn-on-microwave": 0.8,
       "sr_turn-on-sink-faucet": 0.0,
-      "sr_suite": 0.3333,
-      "tasks_run": 9,
+      "sr_suite": 0.375,
+      "tasks_run": 8,
       "tasks_nonzero": 6
      },
      "start": 0.0,
-     "best": 0.4222,
+     "best": 0.475,
      "gain_pct": null,
-     "rounds": 84,
+     "rounds": 74,
      "ended": null,
      "curve": [
       0.0,
-      0.2,
-      0.2667,
-      0.2667,
-      0.2889,
-      0.3111,
-      0.3111,
-      0.3778,
-      0.3778,
-      0.3778,
-      0.4222
+      0.225,
+      0.3,
+      0.3,
+      0.325,
+      0.35,
+      0.35,
+      0.425,
+      0.425,
+      0.425,
+      0.475
      ]
     },
     {
@@ -5611,7 +5604,6 @@
      "weights": "closed",
      "test": {
       "sr_coffee-setup-mug": 0.4,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.0,
       "sr_open-cabinet": 0.2,
       "sr_open-drawer": 0.8,
@@ -5619,27 +5611,27 @@
       "sr_turn-off-stove": 0.4,
       "sr_turn-on-microwave": 0.6,
       "sr_turn-on-sink-faucet": 0.2,
-      "sr_suite": 0.2889,
-      "tasks_run": 9,
+      "sr_suite": 0.325,
+      "tasks_run": 8,
       "tasks_nonzero": 6
      },
      "start": 0.0,
-     "best": 0.4,
+     "best": 0.45,
      "gain_pct": null,
-     "rounds": 81,
+     "rounds": 71,
      "ended": null,
      "curve": [
       0.0,
-      0.2444,
-      0.2889,
-      0.3111,
-      0.3111,
-      0.3111,
-      0.3333,
-      0.3778,
-      0.4,
-      0.4,
-      0.4
+      0.275,
+      0.325,
+      0.35,
+      0.35,
+      0.35,
+      0.375,
+      0.425,
+      0.45,
+      0.45,
+      0.45
      ]
     },
     {
@@ -5647,7 +5639,6 @@
      "weights": "open",
      "test": {
       "sr_coffee-setup-mug": 0.0,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.0,
       "sr_open-cabinet": 0.0,
       "sr_open-drawer": 0.0,
@@ -5655,14 +5646,14 @@
       "sr_turn-off-stove": 0.0,
       "sr_turn-on-microwave": 0.0,
       "sr_turn-on-sink-faucet": 0.6,
-      "sr_suite": 0.0667,
-      "tasks_run": 9,
+      "sr_suite": 0.075,
+      "tasks_run": 8,
       "tasks_nonzero": 1
      },
      "start": 0.0,
-     "best": 0.0667,
+     "best": 0.075,
      "gain_pct": null,
-     "rounds": 90,
+     "rounds": 80,
      "ended": null,
      "curve": [
       0.0,
@@ -5675,7 +5666,7 @@
       0.0,
       0.0,
       0.0,
-      0.0667
+      0.075
      ]
     },
     {
@@ -5683,7 +5674,6 @@
      "weights": "open",
      "test": {
       "sr_coffee-setup-mug": 0.0,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.0,
       "sr_open-cabinet": 0.0,
       "sr_open-drawer": 0.0,
@@ -5691,27 +5681,27 @@
       "sr_turn-off-stove": 0.0,
       "sr_turn-on-microwave": 0.2,
       "sr_turn-on-sink-faucet": 0.2,
-      "sr_suite": 0.0444,
-      "tasks_run": 9,
+      "sr_suite": 0.05,
+      "tasks_run": 8,
       "tasks_nonzero": 2
      },
-     "start": 0.0222,
-     "best": 0.1111,
+     "start": 0.025,
+     "best": 0.125,
      "gain_pct": 400.0,
-     "rounds": 90,
+     "rounds": 80,
      "ended": null,
      "curve": [
-      0.0222,
-      0.0222,
-      0.0667,
-      0.0889,
-      0.0889,
-      0.1111,
-      0.1111,
-      0.1111,
-      0.1111,
-      0.1111,
-      0.1111
+      0.025,
+      0.025,
+      0.075,
+      0.1,
+      0.1,
+      0.125,
+      0.125,
+      0.125,
+      0.125,
+      0.125,
+      0.125
      ]
     },
     {
@@ -5719,7 +5709,6 @@
      "weights": "open",
      "test": {
       "sr_coffee-setup-mug": 0.0,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.0,
       "sr_open-cabinet": 0.0,
       "sr_open-drawer": 0.0,
@@ -5727,27 +5716,27 @@
       "sr_turn-off-stove": 0.0,
       "sr_turn-on-microwave": 0.2,
       "sr_turn-on-sink-faucet": 0.0,
-      "sr_suite": 0.0222,
-      "tasks_run": 9,
+      "sr_suite": 0.025,
+      "tasks_run": 8,
       "tasks_nonzero": 1
      },
      "start": 0.0,
-     "best": 0.0111,
+     "best": 0.0125,
      "gain_pct": null,
-     "rounds": 86,
+     "rounds": 78,
      "ended": null,
      "curve": [
       0.0,
       0.0,
-      0.0111,
-      0.0111,
-      0.0111,
-      0.0111,
-      0.0111,
-      0.0111,
-      0.0111,
-      0.0111,
-      0.0111
+      0.0125,
+      0.0125,
+      0.0125,
+      0.0125,
+      0.0125,
+      0.0125,
+      0.0125,
+      0.0125,
+      0.0125
      ]
     },
     {
@@ -5755,7 +5744,6 @@
      "weights": "open",
      "test": {
       "sr_coffee-setup-mug": 0.0,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.0,
       "sr_open-cabinet": 0.0,
       "sr_open-drawer": 0.0,
@@ -5764,13 +5752,13 @@
       "sr_turn-on-microwave": 0.0,
       "sr_turn-on-sink-faucet": 0.0,
       "sr_suite": 0.0,
-      "tasks_run": 9,
+      "tasks_run": 8,
       "tasks_nonzero": 0
      },
      "start": 0.0,
-     "best": 0.0222,
+     "best": 0.025,
      "gain_pct": null,
-     "rounds": 90,
+     "rounds": 80,
      "ended": null,
      "curve": [
       0.0,
@@ -5782,8 +5770,8 @@
       0.0,
       0.0,
       0.0,
-      0.0111,
-      0.0222
+      0.0125,
+      0.025
      ]
     },
     {
@@ -5791,7 +5779,6 @@
      "weights": "open",
      "test": {
       "sr_coffee-setup-mug": 0.0,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.0,
       "sr_open-cabinet": 0.0,
       "sr_open-drawer": 0.0,
@@ -5800,13 +5787,13 @@
       "sr_turn-on-microwave": 0.0,
       "sr_turn-on-sink-faucet": 0.0,
       "sr_suite": 0.0,
-      "tasks_run": 9,
+      "tasks_run": 8,
       "tasks_nonzero": 0
      },
      "start": 0.0,
-     "best": 0.0333,
+     "best": 0.0375,
      "gain_pct": null,
-     "rounds": 90,
+     "rounds": 80,
      "ended": null,
      "curve": [
       0.0,
@@ -5814,12 +5801,12 @@
       0.0,
       0.0,
       0.0,
-      0.0111,
-      0.0111,
-      0.0222,
-      0.0222,
-      0.0222,
-      0.0333
+      0.0125,
+      0.0125,
+      0.025,
+      0.025,
+      0.025,
+      0.0375
      ]
     },
     {
@@ -5827,7 +5814,6 @@
      "weights": "closed",
      "test": {
       "sr_coffee-setup-mug": 0.0,
-      "sr_heat-kebab-sandwich": 0.0,
       "sr_kettle-boiling": 0.0,
       "sr_open-cabinet": 0.0,
       "sr_open-drawer": 0.0,
@@ -5836,26 +5822,26 @@
       "sr_turn-on-microwave": 0.0,
       "sr_turn-on-sink-faucet": 0.0,
       "sr_suite": 0.0,
-      "tasks_run": 9,
+      "tasks_run": 8,
       "tasks_nonzero": 0
      },
-     "start": 0.0222,
-     "best": 0.0444,
+     "start": 0.025,
+     "best": 0.05,
      "gain_pct": 100.0,
-     "rounds": 90,
+     "rounds": 80,
      "ended": null,
      "curve": [
-      0.0222,
-      0.0222,
-      0.0444,
-      0.0444,
-      0.0444,
-      0.0444,
-      0.0444,
-      0.0444,
-      0.0444,
-      0.0444,
-      0.0444
+      0.025,
+      0.025,
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.05
      ],
      "mark": "\u2020",
      "extra": true
