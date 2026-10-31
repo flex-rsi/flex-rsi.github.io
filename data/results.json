@@ -5093,37 +5093,37 @@
      "model": "GPT-6.1 Sol",
      "weights": "closed",
      "test": {
-      "pts_put-bottles-into-dustbin": 0.0,
-      "pts_arrange-largest-number": 21.0,
-      "pts_fold-clothes": 12.0,
-      "pts_insert-tubes": 4.0,
+      "pts_put-bottles-into-dustbin": 14.0,
+      "pts_arrange-largest-number": 11.0,
+      "pts_fold-clothes": 36.0,
+      "pts_insert-tubes": 80.0,
       "pts_fill-egg-holder": 4.0,
       "pts_pick-from-conveyor-by-image": 60.0,
-      "pts_play-tic-tac-toe": 75.0,
+      "pts_play-tic-tac-toe": 90.0,
       "pts_play-xylophone": 80.0,
       "pts_push-t": 0.0,
       "pts_sort-nesting-dolls-by-size": 40.0,
-      "pts_suite": 29.6,
+      "pts_suite": 41.5,
       "tasks_run": 10,
-      "tasks_nonzero": 8
+      "tasks_nonzero": 9
      },
      "start": 0.2,
-     "best": 38.6,
-     "gain_pct": 19200.0,
+     "best": 50.5,
+     "gain_pct": 25150.0,
      "rounds": 100,
      "ended": null,
      "curve": [
       0.2,
-      4.5,
-      18.9,
-      24.2,
-      30.2,
-      30.6,
-      32.6,
-      36.6,
-      36.6,
-      38.6,
-      38.6
+      5.8,
+      15.9,
+      20.3,
+      33.5,
+      34.9,
+      39.3,
+      46.9,
+      47.2,
+      50.5,
+      50.5
      ]
     },
     {
@@ -5807,6 +5807,41 @@
       0.025,
       0.025,
       0.0375
+     ]
+    },
+    {
+     "model": "DeepSeek-V4.1 Flash 1017",
+     "weights": "open",
+     "test": {
+      "sr_coffee-setup-mug": 0.0,
+      "sr_kettle-boiling": 0.0,
+      "sr_open-cabinet": 0.0,
+      "sr_open-drawer": 0.0,
+      "sr_portion-hot-dogs": 0.0,
+      "sr_turn-off-stove": 0.0,
+      "sr_turn-on-microwave": 0.0,
+      "sr_turn-on-sink-faucet": 0.0,
+      "sr_suite": 0.0,
+      "tasks_run": 8,
+      "tasks_nonzero": 0
+     },
+     "start": 0.0,
+     "best": 0.125,
+     "gain_pct": null,
+     "rounds": 80,
+     "ended": null,
+     "curve": [
+      0.0,
+      0.0,
+      0.025,
+      0.025,
+      0.075,
+      0.075,
+      0.075,
+      0.1,
+      0.1,
+      0.1,
+      0.125
      ]
     },
     {
