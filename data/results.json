@@ -5014,6 +5014,7 @@
    ],
    "footnotes": [
     "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
+    "Listed: models with a run on every task. Gemini 4 Argon is shown with 8 of the 10 tasks while its last two runs finish; models that were run on only some of the tasks (GLM-5.3 Flash, Gemma-4-31B-it, Gemini 3.8 Flash, Qwen3.8-27B) are not listed.",
     "Tasks > 0: how many of the 10 tasks the model scored above 0 on test (score > 0). Per-task scores are kept in data/results.json."
    ],
    "rows": [
@@ -5275,92 +5276,6 @@
      ]
     },
     {
-     "model": "GLM-5.3 Flash",
-     "weights": "open",
-     "test": {
-      "pts_put-bottles-into-dustbin": 2.0,
-      "pts_play-tic-tac-toe": 0.0,
-      "pts_push-t": 0.0,
-      "pts_suite": 0.2,
-      "tasks_run": 3,
-      "tasks_nonzero": 1
-     },
-     "start": 0.0,
-     "best": 0.0,
-     "gain_pct": null,
-     "rounds": 30,
-     "ended": null,
-     "curve": [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
-     ]
-    },
-    {
-     "model": "Gemma-4-31B-it",
-     "weights": "open",
-     "test": {
-      "pts_put-bottles-into-dustbin": 2.0,
-      "pts_suite": 0.2,
-      "tasks_run": 1,
-      "tasks_nonzero": 1
-     },
-     "start": 0.0,
-     "best": 0.0,
-     "gain_pct": null,
-     "rounds": 10,
-     "ended": null,
-     "curve": [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
-     ]
-    },
-    {
-     "model": "Gemini 3.8 Flash",
-     "weights": "closed",
-     "test": {
-      "pts_put-bottles-into-dustbin": 0.0,
-      "pts_suite": 0.0,
-      "tasks_run": 1,
-      "tasks_nonzero": 0
-     },
-     "start": 0.0,
-     "best": 0.5,
-     "gain_pct": null,
-     "rounds": 10,
-     "ended": null,
-     "curve": [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.5,
-      0.5,
-      0.5,
-      0.5,
-      0.5,
-      0.5,
-      0.5
-     ]
-    },
-    {
      "model": "MiniMax-M3",
      "weights": "open",
      "test": {
@@ -5382,34 +5297,6 @@
      "best": 0.0,
      "gain_pct": null,
      "rounds": 100,
-     "ended": null,
-     "curve": [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
-     ]
-    },
-    {
-     "model": "Qwen3.8-27B",
-     "weights": "open",
-     "test": {
-      "pts_put-bottles-into-dustbin": 0.0,
-      "pts_suite": 0.0,
-      "tasks_run": 1,
-      "tasks_nonzero": 0
-     },
-     "start": 0.0,
-     "best": 0.0,
-     "gain_pct": null,
-     "rounds": 10,
      "ended": null,
      "curve": [
       0.0,
