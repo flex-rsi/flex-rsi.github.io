@@ -5014,7 +5014,7 @@
    ],
    "footnotes": [
     "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
-    "Listed: models with a run on every task. Gemini 4 Argon is shown with 8 of the 10 tasks while its last two runs finish; models that were run on only some of the tasks (GLM-5.3 Flash, Gemma-4-31B-it, Gemini 3.8 Flash, Qwen3.8-27B) are not listed.",
+    "Listed: models with a run on every task; models that were run on only some of the tasks (GLM-5.3 Flash, Gemma-4-31B-it, Gemini 3.8 Flash, Qwen3.8-27B) are not listed.",
     "Tasks > 0: how many of the 10 tasks the model scored above 0 on test (score > 0). Per-task scores are kept in data/results.json."
    ],
    "rows": [
@@ -5063,31 +5063,33 @@
       "pts_arrange-largest-number": 71.0,
       "pts_fold-clothes": 44.0,
       "pts_insert-tubes": 100.0,
+      "pts_fill-egg-holder": 23.0,
       "pts_pick-from-conveyor-by-image": 0.0,
       "pts_play-tic-tac-toe": 100.0,
       "pts_play-xylophone": 20.0,
       "pts_push-t": 40.0,
-      "pts_suite": 44.5,
-      "tasks_run": 8,
-      "tasks_nonzero": 7
+      "pts_sort-nesting-dolls-by-size": 0.0,
+      "pts_suite": 46.8,
+      "tasks_run": 10,
+      "tasks_nonzero": 8
      },
      "start": 0.9,
-     "best": 44.9,
-     "gain_pct": 4888.9,
-     "rounds": 70,
+     "best": 47.7,
+     "gain_pct": 5200.0,
+     "rounds": 90,
      "ended": null,
      "curve": [
       0.9,
       3.7,
-      20.7,
-      38.6,
-      38.9,
-      40.9,
-      42.9,
-      42.9,
-      42.9,
-      42.9,
-      44.9
+      21.9,
+      39.8,
+      41.0,
+      43.0,
+      45.4,
+      45.4,
+      45.4,
+      45.4,
+      47.7
      ]
     },
     {
