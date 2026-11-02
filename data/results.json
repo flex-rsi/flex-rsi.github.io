@@ -4758,7 +4758,7 @@
    "track": "Text-to-Image",
    "task": "Text-to-image on 200 original Chinese and English prompts over six categories, in two tracks: the generator fixed to Qwen-Image-2.1 (Qwen2.5-VL-7B allowed as a helper), or any open-weight model or workflow; scored by constraint completion times image quality (C \u00d7 (0.5 + 0.5 Q)) from a frozen vision judge on 80 unseen test prompts",
    "footnotes": [
-    "Score: the mean of the two tracks' test scores; validation start, best and curve are averaged the same way and rounds are summed over the tracks. Starter: the mean of the two tracks' starting test scores.",
+    "Score: the mean of the two tracks' test scores; validation start, best and curve are averaged the same way, and rounds are per track. Starter: the mean of the two tracks' starting test scores.",
     "Pre-release experiment version of the task; one run per model and track: seed 20261018, effort medium, at most 25 rounds."
    ],
    "primary": "overall_mean",
@@ -4775,7 +4775,7 @@
      "start": 0.9405,
      "best": 0.9545,
      "gain_pct": 1.5,
-     "rounds": 50,
+     "rounds": 25,
      "ended": "max_rounds",
      "curve": [
       0.9405,
@@ -4818,7 +4818,7 @@
      "start": 0.9405,
      "best": 0.9495,
      "gain_pct": 1.0,
-     "rounds": 50,
+     "rounds": 25,
      "ended": "max_rounds",
      "curve": [
       0.9405,
