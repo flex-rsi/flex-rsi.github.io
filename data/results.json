@@ -798,6 +798,33 @@
       0.7625,
       0.7625
      ]
+    },
+    {
+     "model": "Muse Wonder 1.0",
+     "weights": "closed",
+     "test": {
+      "accuracy": 0.5643,
+      "acc_vstar": 0.5571,
+      "acc_hrbench8k": 0.5714
+     },
+     "start": 0.5375,
+     "best": 0.85,
+     "gain_pct": 58.1,
+     "rounds": 10,
+     "ended": "max_rounds",
+     "curve": [
+      0.5375,
+      0.725,
+      0.85,
+      0.85,
+      0.85,
+      0.85,
+      0.85,
+      0.85,
+      0.85,
+      0.85,
+      0.85
+     ]
     }
    ]
   },
