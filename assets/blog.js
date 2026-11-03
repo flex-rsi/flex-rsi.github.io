@@ -70,7 +70,7 @@
   // best minus worst model, at the start and at the best validation score reached
   const APART = {
     "Visual Search": [31.3, 22.5], "Video Quality": [23.5, 16.7], "Ego-Exo Memory": [27.5, 25.0], "Kinematics": [14.2, 33.1],
-    "Mass": [6.0, 6.7], "ARC-AGI-1": [31.2, 32.5], "ARC-AGI-2": [38.8, 40.0], "RoboDojo": [0.9, 68.9],
+    "Mass": [6.0, 5.8], "ARC-AGI-1": [31.2, 32.5], "ARC-AGI-2": [38.8, 40.0], "RoboDojo": [0.9, 68.9],
     "Active Search": [30.8, 34.4], "RoboLab": [29.2, 62.5], "Image Editing": [4.6, 13.9], "Multi-turn Editing": [0.4, 2.3],
     "Video Generation": [1.0, 20.2], "3D Tracking": [0.0, 55.6], "Scene from Photo": [0.0, 50.6], "Scene from Video": [0.0, 38.8],
     "RoboCasa": [5.0, 58.8], "LIBERO-MAX": [0.0, 18.8], "LIBERO-PRO": [0.0, 25.0], "ARC-AGI-3": [39.0, 49.3],
@@ -82,7 +82,7 @@
   // best closed-source minus best open-weight test score; strict = checked by a simulator, an exact match or physics
   const GAP = [["RoboCasa", 50.0, "strict"], ["ARC-AGI-2", 49.2, "strict"], ["ARC-AGI-3", 43.3, "strict"], ["RoboLab", 40.3, "strict"],
                ["RoboDojo", 37.3, "strict"], ["Scene from Video", 36.4, "strict"], ["Scene from Photo", 26.5, "strict"],
-               ["LIBERO-PRO", 10.0, "except"], ["Image Editing", 4.2, "judge"], ["Video Generation", 2.5, "judge"],
+               ["LIBERO-PRO", 10.0, "except"], ["ARC-AGI-1", 8.8, "strict"], ["Image Editing", 4.2, "judge"], ["Video Generation", 2.5, "judge"],
                ["Multi-turn Editing", 1.0, "judge"], ["Mass", 0.8, "judge"], ["Video Quality", 0.1, "judge"], ["LIBERO-MAX", 0.0, "except"]];
   const PAIRS = [
     ["RoboCasa · Open Drawer", "DeepSeek-V4.1 Flash", 0.0, 40.0], ["RoboCasa · Turn On Sink Faucet", "Qwen3.8-Flash-Next", 0.0, 20.0],
