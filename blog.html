@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="assets/theme.css?v=20261024a">
   <link rel="stylesheet" href="assets/palette.css?v=20261024a">
   <link rel="stylesheet" href="assets/pages.css?v=20261103a">
-  <link rel="stylesheet" href="assets/blog.css?v=20261103a">
+  <link rel="stylesheet" href="assets/blog.css?v=20261103b">
 </head>
 <body class="v-e blog">
   <div class="ambient" aria-hidden="true">
@@ -40,6 +40,26 @@
     </nav>
     <span class="read-progress" aria-hidden="true"></span>
   </header>
+
+  <div class="post-layout">
+  <aside class="toc" aria-label="Contents">
+    <p class="toc-head">Contents</p>
+    <ol class="toc-list">
+      <li><a href="#tldr">In short</a></li>
+      <li><a href="#setup">The setup</a></li>
+      <li><a href="#board">Who does best</a></li>
+      <li class="toc-group">Findings</li>
+      <li><a href="#open-ended"><i>01</i>Open-ended tasks</a></li>
+      <li><a href="#feedback"><i>02</i>Granularity of feedback</a></li>
+      <li><a href="#strict"><i>03</i>Strict checks</a></li>
+      <li><a href="#harness"><i>04</i>Editing the harness</a></li>
+      <li class="toc-group">More</li>
+      <li><a href="#rounds">Rounds and cost</a></li>
+      <li><a href="#examples">Before and after</a></li>
+      <li><a href="#closing">Takeaways</a></li>
+      <li><a href="#citation">Citation</a></li>
+    </ol>
+  </aside>
 
   <main id="top" class="post">
 
@@ -101,7 +121,7 @@
       </div>
       <figure class="fig reveal" id="fig-board">
         <div class="fig-stage" data-anim="board" role="img" aria-label="Bar chart of the score of the 12 models run on at least five tasks, from Claude Opus 5.5 at 91.6 to MiniMax-M3 at 12.8."></div>
-        <figcaption><b>Score of every model run on at least five tasks</b> (100 = beats every other model on every task). Open-weight models in amber. <a href="leaderboard.html">Full leaderboard &#8594;</a></figcaption>
+        <figcaption><b>Score of every model run on at least five tasks</b> (100 = beats every other model on every task), in each provider's colour; open-weight models are tagged. <a href="leaderboard.html">Full leaderboard &#8594;</a></figcaption>
       </figure>
       <div class="stat-row reveal">
         <div class="stat"><b data-to="150">0</b><span>of 177 runs raise their validation score</span></div>
@@ -279,6 +299,7 @@
     </section>
 
   </main>
+  </div>
 
   <footer class="footer">
     <p>Flex-RSI · 2026</p>
@@ -287,6 +308,6 @@
   </footer>
 
   <script src="assets/main.js?v=20261024a" defer></script>
-  <script src="assets/blog.js?v=20261103a" defer></script>
+  <script src="assets/blog.js?v=20261103b" defer></script>
 </body>
 </html>

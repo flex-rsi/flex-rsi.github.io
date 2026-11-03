@@ -38,6 +38,11 @@
   };
   const LOGOS = [[/claude|opus|sonnet/i, "claude"], [/qwen/i, "qwen"], [/gemini/i, "gemini"], [/gemma/i, "gemma"],
                  [/gpt/i, "gpt"], [/minimax/i, "minimax"], [/glm/i, "glm"], [/deepseek/i, "deepseek"]];
+  // provider colours of the report's figures; a second model of the same provider takes a lighter shade
+  const BRAND = [[/claude|opus|sonnet/i, "#D97757"], [/gemini/i, "#3A7BEA"], [/gemma/i, "#5B8DEF"], [/gpt/i, "#2F3542"],
+                 [/qwen/i, "#7A63D8"], [/deepseek/i, "#4D6BFE"], [/glm/i, "#2B3A8C"], [/minimax/i, "#E2367B"]];
+  const SHADE = { "GPT-6 Astra": "#14A07E", "Claude Sonnet 5.5": "#E3A07F", "Gemini 3.8 Flash": "#7FA9F2", "Qwen3.8-27B": "#A797E6" };
+  const brand = (name) => SHADE[name] || (BRAND.find(([re]) => re.test(name)) || [0, C.accent])[1];
   const logo = (name) => { const h = LOGOS.find(([re]) => re.test(name)); return h ? `assets/model-logos/${h[1]}.svg` : null; };
 
   // ---------------------------------------------------------------- data (from the report)
@@ -200,13 +205,13 @@
     const img4 = S("image", { href: "assets/blog/d027-r4.jpg", x: sx, y: ty, width: tw, height: th, preserveAspectRatio: "xMidYMid meet", opacity: 0 }, c);
     S("rect", { x: sx, y: ty, width: tw, height: th, fill: "none", stroke: C.ink, "stroke-width": 1.5 }, c);
 
-    const N = 8, R0 = 0.6, RD = 2.5, dur = R0 + N * RD + 2.6;
+    const N = 8, R0 = 0.5, RD = 1.6, F = RD / 2.5, dur = R0 + N * RD + 2.6;   // phases are timed on a 2.5 s round, scaled by F
     const at = (el, i, u) => { const p = pathEls[i].getPointAtLength(lens[i] * u); el.setAttribute("x", p.x - 5); el.setAttribute("y", p.y - 5); };
     const EDITS = (k) => (k % 4 === 0 ? [3, 5] : [[0, 1], [2, 4], [1, 0]][k % 3]);   // every four rounds the improver reviews itself
 
     function render(t) {
       const k = Math.min(N, Math.floor((t - R0) / RD) + 1);          // current round (1..N), 0 before the first
-      const u = t - R0 - (k - 1) * RD;                               // time within the round
+      const u = (t - R0 - (k - 1) * RD) / F;                         // time within the round, on the 2.5 s scale
       const done = t >= R0 + N * RD;
       roundNum.textContent = Math.max(0, k);
       // executor and improver activity
@@ -252,8 +257,8 @@
       marks[0].m.setAttribute("x", X(0) - 5); marks[0].m.setAttribute("y", Y(RUN[0]) - 5); marks[0].m.setAttribute("opacity", 1);
       for (let r = 1; r <= N; r++) {
         const tr = R0 + (r - 1) * RD;                                // start of round r
-        const h = done ? 1 : out3(seg(t, tr + 1.2, tr + 1.55));      // horizontal run to round r
-        const v = done ? 1 : out3(seg(t, tr + 1.55, tr + 1.95));     // rise if kept
+        const h = done ? 1 : out3(seg(t, tr + 1.2 * F, tr + 1.55 * F));      // horizontal run to round r
+        const v = done ? 1 : out3(seg(t, tr + 1.55 * F, tr + 1.95 * F));     // rise if kept
         if (h <= 0) { marks[r].m.setAttribute("opacity", 0); continue; }
         const x = lerp(X(r - 1), X(r), h);
         dpath += ` H${x}`;
@@ -268,7 +273,7 @@
       step.setAttribute("d", dpath);
       big.textContent = fmt(cur);
       // the reconstruction of the current solution
-      const r1 = done ? 1 : seg(t, R0 + 1.55, R0 + 1.95), r4 = done ? 1 : seg(t, R0 + 3 * RD + 1.55, R0 + 3 * RD + 1.95);
+      const r1 = done ? 1 : seg(t, R0 + 1.55 * F, R0 + 1.95 * F), r4 = done ? 1 : seg(t, R0 + 3 * RD + 1.55 * F, R0 + 3 * RD + 1.95 * F);
       img1.setAttribute("opacity", r1 * (1 - r4));
       img4.setAttribute("opacity", r4);
       empty.setAttribute("opacity", 1 - r1);
@@ -367,11 +372,15 @@
       const y = top + i * rowH;
       const lg = logo(name);
       if (lg) S("image", { href: lg, x: 14, y: y + 7, width: 16, height: 16 }, svg);
-      T(svg, 38, y + 20, name, { "font-size": narrow ? 12 : 13.5, "font-weight": i < 1 ? 700 : 500 });
-      const bar = S("rect", { x: x0, y: y + 6, height: rowH - 12, width: 0, fill: open ? C.open : C.accent }, svg);
+      const nm = T(svg, 38, y + 20, name, { "font-size": narrow ? 12 : 13.5, "font-weight": i < 1 ? 700 : 500 });
+      if (open && !narrow) { const tg = T(svg, 0, y + 19, "OPEN", { class: "mono", "font-size": 9.5, fill: C.muted, "letter-spacing": "0.06em" }); tg.dataset.after = "1"; tg._nm = nm; }
+      const bar = S("rect", { x: x0, y: y + 6, height: rowH - 12, width: 0, fill: brand(name) }, svg);
       const val = T(svg, x0, y + 20, "", { class: "mono", "font-size": 12, "font-weight": 600 });
       return { bar, val, v, i };
     });
+    requestAnimationFrame(() => svg.querySelectorAll("[data-after]").forEach((tg) => {   // the OPEN tag sits after the name
+      try { tg.setAttribute("x", 38 + tg._nm.getComputedTextLength() + 8); } catch { tg.remove(); }
+    }));
     const dur = 0.3 + BOARD.length * 0.07 + 1.1;
     return { dur, render(t) {
       for (const r of rows) {
@@ -632,69 +641,74 @@
 
   // ================================================================ physics check: objects dropped into a simulator (illustration)
   ANIMS.topple = (stage, W) => {
-    const height = Math.min(Math.max(W * 0.6, 260), 380);
+    // two scenes stacked; every object that falls over has a free stretch of floor on the side it falls to
+    const SH = 178, height = 2 * SH + 6, iw = W - 32, room = Math.min(SH - 64, iw * 0.2);
     const svg = S("svg", { viewBox: `0 0 ${W} ${height}`, width: W, height }, stage);
-    const pw = W / 2, floorY = height - 58, room = height - 100;
-    // objects: x share, width share, height share, kind
-    const OBJ = [[.02, .14, .30, "box"], [.22, .20, .20, "table"], [.50, .05, .52, "lamp"], [.64, .13, .34, "chair"], [.84, .14, .22, "box"]];
-    // per object: null = stays put; otherwise the pose error (dy, share of the room; < 0 floats, > 0 sinks into the
-    // floor), the angle it tips to and how far it slides once the simulation starts
+    // objects: x share, width share (of the scene's width), height share (of the room height), kind
+    const OBJ = [[.00, .10, .52, "box"], [.25, .16, .35, "table"], [.58, .03, .87, "lamp"], [.83, .11, .60, "chair"]];
+    // per object: null = stays put; otherwise how high it floats (share of the room), the angle it tips to and how
+    // far it slides once the simulation starts
     const scenes = [
-      { title: "CLAUDE OPUS 5.5", stat: W < 560 ? "70.7% stable" : "70.7% of objects stay stable",
-        beh: [null, null, { dy: -.10, rot: 90, slide: 0 }, null, null] },
-      { title: W < 560 ? "OPEN-WEIGHT" : "OPEN-WEIGHT MODELS", stat: W < 560 ? "0% stable" : "0% of objects stay stable",
-        beh: [{ dy: -.16, rot: 0, slide: -12 }, { dy: .05, rot: -90, slide: 0 }, { dy: -.08, rot: 90, slide: 0 },
-              { dy: -.22, rot: 90, slide: 6 }, { dy: .06, rot: -90, slide: -4 }] },
+      { title: "Claude Opus 5.5", stat: "70.7% of objects stay stable", beh: [null, null, { dy: -.12, rot: 90, slide: 0 }, null] },
+      { title: "Open-weight models", stat: "0% of objects stay stable",
+        beh: [{ dy: -.30, rot: 90, slide: 0 }, { dy: -.18, rot: 90, slide: 0 }, { dy: -.10, rot: 90, slide: 0 }, { dy: -.45, rot: 0, slide: 14 }] },
     ];
-    const parts = [], stats = [];
+    const parts = [], stats = [], col = C.area.Reconstruction;
     scenes.forEach((sc, si) => {
-      const ox = si * pw, g = S("g", {}, svg);
-      if (si) S("line", { x1: ox, x2: ox, y1: 0, y2: height, stroke: C.ink, "stroke-width": 1.5 }, g);
-      T(g, ox + 16, 26, sc.title, { "font-size": 12, "font-weight": 800, "letter-spacing": "0.02em" });
-      stats.push(T(g, ox + 16, 44, sc.stat, { class: "mono", "font-size": 11.5, fill: si ? C.muted : C.accent, opacity: 0 }));
-      S("line", { x1: ox + 12, x2: ox + pw - 12, y1: floorY, y2: floorY, stroke: C.ink, "stroke-width": 2 }, g);
-      for (let x = ox + 18; x < ox + pw - 12; x += 12) S("line", { x1: x, x2: x - 7, y1: floorY + 1, y2: floorY + 8, stroke: C.faint, "stroke-width": 1 }, g);
-      const iw = pw - 32, col = C.area.Reconstruction;
+      const oy = si * SH, floorY = oy + SH - 24;
+      const cp = S("clipPath", { id: `scene${si}` }, S("defs", {}, svg));
+      S("rect", { x: 0, y: oy + 1, width: W, height: SH - 2 }, cp);
+      if (si) S("line", { x1: 0, x2: W, y1: oy, y2: oy, stroke: C.ink, "stroke-width": 1.5 }, svg);
+      T(svg, 16, oy + 24, sc.title.toUpperCase(), { "font-size": 12, "font-weight": 800, "letter-spacing": "0.02em" });
+      stats.push(T(svg, W - 16, oy + 24, sc.stat, { class: "mono", "font-size": 11.5, "text-anchor": "end", fill: si ? C.muted : C.accent, opacity: 0 }));
+      const g = S("g", { "clip-path": `url(#scene${si})` }, svg);
+      S("line", { x1: 12, x2: W - 12, y1: floorY, y2: floorY, stroke: C.ink, "stroke-width": 2 }, g);
+      for (let x = 18; x < W - 12; x += 12) S("line", { x1: x, x2: x - 7, y1: floorY + 1, y2: floorY + 8, stroke: C.faint, "stroke-width": 1 }, g);
       OBJ.forEach(([xs, ws, hs, kind], oi) => {
-        const w = ws * iw, h = hs * room, x = ox + 16 + xs * iw, b = sc.beh[oi];
+        const w = ws * iw, h = hs * room, x = 16 + xs * iw, b = sc.beh[oi];
         const og = S("g", {}, g);
         if (kind === "box") S("rect", { x: 0, y: -h, width: w, height: h, fill: col }, og);
         if (kind === "table") { S("rect", { x: 0, y: -h, width: w, height: h * .22, fill: col }, og); S("rect", { x: 3, y: -h, width: 5, height: h, fill: col }, og); S("rect", { x: w - 8, y: -h, width: 5, height: h, fill: col }, og); }
-        if (kind === "lamp") { S("rect", { x: w * .35, y: -h, width: w * .3, height: h, fill: col }, og); S("path", { d: `M${-w * .4},${-h * .74} L${w * 1.4},${-h * .74} L${w * 1.1},${-h} L${-w * .1},${-h} z`, fill: col }, og); S("rect", { x: -w * .2, y: -5, width: w * 1.4, height: 5, fill: col }, og); }
-        if (kind === "chair") { S("rect", { x: 0, y: -h * .5, width: w, height: h * .14, fill: col }, og); S("rect", { x: w - 7, y: -h, width: 7, height: h, fill: col }, og); S("rect", { x: 2, y: -h * .5, width: 5, height: h * .5, fill: col }, og); }
+        if (kind === "lamp") { S("rect", { x: w * .3, y: -h, width: w * .4, height: h, fill: col }, og); S("path", { d: `M${-w * .4},${-h * .76} L${w * 1.4},${-h * .76} L${w * 1.1},${-h} L${-w * .1},${-h} z`, fill: col }, og); S("rect", { x: -w * .3, y: -4, width: w * 1.6, height: 4, fill: col }, og); }
+        if (kind === "chair") { S("rect", { x: 0, y: -h * .5, width: w, height: h * .14, fill: col }, og); S("rect", { x: w - 6, y: -h, width: 6, height: h, fill: col }, og); S("rect", { x: 2, y: -h * .5, width: 5, height: h * .5, fill: col }, og); }
         const mark = T(g, x + w / 2, floorY - h - 10, b ? "×" : "✓", { "font-size": 15, "font-weight": 800, "text-anchor": "middle", fill: b ? C.muted : C.accent, opacity: 0 });
-        parts.push({ og, x, w, h, b, oi, mark, room });
+        const ext = kind === "lamp" ? [-.4 * w, 1.4 * w] : [0, w];   // horizontal extent of the drawing
+        parts.push({ og, x, w, h, b, oi, mark, ext, floorY });
       });
     });
-    const go = T(svg, W / 2, height - 20, "▶ SIMULATE", { class: "mono", "font-size": 11.5, "text-anchor": "middle", "letter-spacing": "0.1em" });
     const dur = 4.2;
     return { dur, render(t) {
-      go.setAttribute("opacity", t < 1.0 ? seg(t, 0.3, 0.6) : 1 - seg(t, 1.0, 1.4));
-      stats.forEach((st) => st.setAttribute("opacity", seg(t, 3.2, 3.6)));
+      stats.forEach((st) => st.setAttribute("opacity", seg(t, 3.1, 3.5)));
       for (const p of parts) {
-        const a = seg(t, 0.05 + p.oi * 0.06, 0.35 + p.oi * 0.06), s0 = 1.2 + p.oi * 0.06;
-        let y = floorY, rot = 0, dx = 0, fade = 0;
+        const a = seg(t, 0.05 + p.oi * 0.06, 0.35 + p.oi * 0.06), s0 = 1.0 + p.oi * 0.08;
+        let y = p.floorY, rot = 0, dx = 0, fade = 0;
         if (p.b) {
           const f = seg(t, s0, s0 + 0.45);
-          y = floorY + p.b.dy * p.room * (1 - f * f);          // fall onto the floor, or get pushed out of it
+          y = p.floorY + p.b.dy * room * (1 - f * f);               // fall onto the floor
           const tip = out3(seg(t, s0 + 0.4, s0 + 1.2));
-          rot = p.b.rot * tip; dx = p.b.slide * tip; fade = tip;
+          rot = p.b.rot * tip; dx = p.b.slide * tip; fade = Math.max(tip, f);
         }
-        const pivot = rot > 0 ? p.w : 0;
+        const pivot = rot > 0 ? p.ext[1] : p.ext[0];
+        // lowest point of the rotated drawing, so that nothing passes through the floor
+        const a0 = rot * Math.PI / 180, cs = Math.cos(a0), sn = Math.sin(a0);
+        let low = -Infinity;
+        for (const cx of p.ext) for (const cy of [-p.h, 0]) low = Math.max(low, (cx - pivot) * sn + cy * cs);
+        if (low > 0) y -= low;
         p.og.setAttribute("transform", `translate(${p.x + dx},${y}) rotate(${rot} ${pivot} 0)`);
         p.og.setAttribute("opacity", a * (1 - 0.4 * fade));
+        const lying = Math.abs(rot) > 45;
         p.mark.setAttribute("opacity", seg(t, 2.8, 3.1));
-        p.mark.setAttribute("x", p.x + dx + p.w / 2);
-        if (p.b) p.mark.setAttribute("y", floorY - (Math.abs(p.b.rot) > 45 ? p.w : p.h) - 10);
+        p.mark.setAttribute("x", p.x + dx + (lying ? p.ext[1] + p.h / 2 : p.w / 2));
+        p.mark.setAttribute("y", p.floorY - (lying ? p.w : p.h) - 10);
       }
     } };
   };
 
   // physics component of Scene from Video, as HTML bars next to the illustration
   ANIMS.physics = (stage) => {
-    const D = [["Claude Opus 5.5", 70.7, C.accent], ["GPT-6 Astra", 37.7, C.accent], ["Qwen3.8-Flash-Next", 0, C.open],
-               ["Qwen3.8-27B", 0, C.open], ["MiniMax-M3", 0, C.open], ["Gemma-4-31B-it", 0, C.open]];
-    const rows = D.map(([n, v, c], i) => {
+    const D = [["Claude Opus 5.5", 70.7], ["GPT-6 Astra", 37.7], ["Qwen3.8-Flash-Next", 0], ["Qwen3.8-27B", 0], ["MiniMax-M3", 0], ["Gemma-4-31B-it", 0]];
+    const rows = D.map(([n, v], i) => {
+      const c = brand(n);
       const r = H("div", "mb-row", stage, `<span>${n}</span><span class="mb-track"><span class="mb-fill"></span></span><span class="mb-val"></span>`);
       const fill = r.querySelector(".mb-fill"), val = r.querySelector(".mb-val");
       fill.style.setProperty("--c", c); fill.style.transition = "none";
@@ -720,7 +734,7 @@
     const kx = narrow ? 14 : x0;
     S("circle", { cx: kx + 6, cy: 13, r: 5.5, fill: "#fff", stroke: C.muted, "stroke-width": 1.6 }, svg);
     T(svg, kx + 16, 17, "frozen", { class: "sm" });
-    S("circle", { cx: kx + 76, cy: 13, r: 6, fill: C.accent }, svg);
+    S("circle", { cx: kx + 76, cy: 13, r: 6, fill: C.muted }, svg);
     T(svg, kx + 86, 17, "self-improving harness", { class: "sm" });
     T(svg, W - 12, 17, "Δ test", { class: "sm", "text-anchor": "end" });
     for (const v of [0, 25, 50, 75, 100]) {
@@ -737,10 +751,11 @@
         const cy = y + rowH / 2, lg = logo(model);
         if (lg) S("image", { href: lg, x: 14, y: cy - 8, width: 16, height: 16 }, svg);
         T(svg, 36, cy + 4.5, model, { "font-size": narrow ? 12 : 13 });
-        const line = S("line", { x1: X(a), x2: X(a), y1: cy, y2: cy, stroke: C.accent, "stroke-width": 2.5, opacity: .45 }, svg);
-        const f = S("circle", { cx: X(a), cy, r: 6, fill: "#fff", stroke: C.muted, "stroke-width": 1.6, opacity: 0 }, svg);
-        const s = S("circle", { cx: X(a), cy, r: 6.5, fill: C.accent, opacity: 0 }, svg);
-        const d = T(svg, W - 12, cy + 4.5, "", { class: "mono", "font-size": 12.5, "font-weight": 700, "text-anchor": "end", fill: b > a ? C.accent : C.muted });
+        const col = brand(model);
+        const line = S("line", { x1: X(a), x2: X(a), y1: cy, y2: cy, stroke: col, "stroke-width": 2.5, opacity: .45 }, svg);
+        const f = S("circle", { cx: X(a), cy, r: 6, fill: "#fff", stroke: col, "stroke-width": 1.6, opacity: 0 }, svg);
+        const s = S("circle", { cx: X(a), cy, r: 6.5, fill: col, opacity: 0 }, svg);
+        const d = T(svg, W - 12, cy + 4.5, "", { class: "mono", "font-size": 12.5, "font-weight": 700, "text-anchor": "end", fill: b > a ? C.ink : C.muted });
         rows.push({ a, b, line, f, s, d, i: i++ });
         y += rowH;
       }
@@ -899,6 +914,17 @@
     }), { threshold: 0.6 });
     stats.forEach((el) => io3.observe(el));
   }
+
+  // contents: mark the section being read
+  const tocLinks = [...document.querySelectorAll(".toc-list a")];
+  const tocSecs = tocLinks.map((a) => document.querySelector(a.getAttribute("href")));
+  const onToc = () => {
+    let k = 0;
+    tocSecs.forEach((sec, i) => { if (sec && sec.getBoundingClientRect().top < innerHeight * 0.35) k = i; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) k = tocLinks.length - 1;
+    tocLinks.forEach((a, i) => a.classList.toggle("active", i === k && scrollY > 200));
+  };
+  if (tocLinks.length) { onToc(); addEventListener("scroll", onToc, { passive: true }); }
 
   // reading progress under the nav
   const bar = document.querySelector(".read-progress");
