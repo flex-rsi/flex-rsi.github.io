@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="assets/style.css?v=20261024a">
   <link rel="stylesheet" href="assets/theme.css?v=20261024a">
   <link rel="stylesheet" href="assets/palette.css?v=20261024a">
-  <link rel="stylesheet" href="assets/pages.css?v=20261103a">
+  <link rel="stylesheet" href="assets/pages.css?v=20261103b">
   <link rel="stylesheet" href="assets/blog.css?v=20261103f">
 </head>
 <body class="v-e blog">
@@ -93,6 +93,10 @@
     <!-- ============================================================ setup -->
     <section class="post-sec" id="setup">
       <div class="sec-head reveal"><p class="kicker">Setup</p><h2>How a run works</h2></div>
+      <figure class="fig reveal" id="fig-loop">
+        <div class="fig-stage" data-anim="loop" data-loop="1" role="img" aria-label="Animation of one run: in each round the executor edits the solution, the validation gate keeps or reverts it, and the improver edits the harness. The validation score of a real run of Claude Opus 5.5 on Scene from Photo rises from 7.7 to 67.8 over the rounds, while the reconstructed room goes from an empty box to template furniture to generated furniture."></div>
+        <figcaption><b>Figure 1. One run, round by round.</b> Left: the executor submits a candidate, the validation gate (VAL) keeps or reverts it, and the improver edits the harness, whose files and version are listed in the middle. Right: the validation score and the reconstruction of a real run, Claude Opus 5.5 on Scene from Photo, in which the score rises from 7.7 to 67.8.</figcaption>
+      </figure>
       <div class="prose reveal">
         <p>Every model receives the same task, the same starting point and the same budget, so that differences in the final score can be attributed to the model alone.</p>
         <ul class="facts">
@@ -101,7 +105,7 @@
           <li><b>Data.</b> Three disjoint splits. The labelled <b>development</b> split is the agent's to experiment on; the hidden <b>validation</b> split decides which candidates are accepted; the hidden <b>test</b> split scores the final solution once, after the run.</li>
           <li><b>Budget.</b> On a given task, all models share the same limits on wall-clock time, GPU hours, tokens and rounds.</li>
         </ul>
-        <p>A run proceeds in rounds, and each round has the three stages shown in Figure 1:</p>
+        <p>A run proceeds in rounds, and each round has the three stages shown in Figure 1 above:</p>
         <ol class="steps">
           <li><b>Executor.</b> Starting from the accepted solution, the executor modifies the code, runs experiments and evaluates them on the development split. The solution it submits is the round's <em>candidate</em>.</li>
           <li><b>Validation gate.</b> The candidate is scored on the validation split and kept only if it improves on the accepted solution; otherwise it is reverted. The acceptance rule is itself part of the harness.</li>
@@ -110,10 +114,6 @@
         <p>The third stage is what makes the improvement <em>recursive</em>: the agent changes not only its solution but also the process that produces the next one.</p>
       </div>
 
-      <figure class="fig reveal" id="fig-loop">
-        <div class="fig-stage" data-anim="loop" data-loop="1" role="img" aria-label="Animation of one run: in each round the executor edits the solution, the validation gate keeps or reverts it, and the improver edits the harness. The validation score of a real run of Claude Opus 5.5 on Scene from Photo rises from 7.7 to 67.8 over the rounds, while the reconstructed room goes from an empty box to template furniture to generated furniture."></div>
-        <figcaption><b>Figure 1. One run, round by round.</b> Left: the executor submits a candidate, the validation gate (VAL) keeps or reverts it, and the improver edits the harness, whose files and version are listed in the middle. Right: the validation score and the reconstruction of a real run, Claude Opus 5.5 on Scene from Photo, in which the score rises from 7.7 to 67.8.</figcaption>
-      </figure>
     </section>
 
     <!-- ============================================================ leaderboard -->

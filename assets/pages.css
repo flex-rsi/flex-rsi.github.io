@@ -52,6 +52,7 @@
   font-size: 20px; font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase;
 }
 .pg-n { font: 500 12px var(--mono); letter-spacing: 0.06em; color: var(--accent-1); }
+.pg-note { margin-left: 2px; font: 500 11px var(--mono); letter-spacing: 0.06em; text-transform: none; color: var(--ink-3); }
 /* organizers: photo, name, role and interests; the whole card links to their homepage */
 .org-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
 .org {
