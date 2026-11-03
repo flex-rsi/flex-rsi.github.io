@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog · Flex-RSI</title>
+  <meta name="description" content="Can a frontier agent improve the way it works? What 18 models did when they could rewrite their own harness on 24 vision and robotics tasks.">
+  <meta property="og:title" content="Can an agent improve the way it works? · Flex-RSI">
+  <meta property="og:description" content="What 18 frontier models did when they could rewrite their own harness on 24 vision and robotics tasks.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f4f4f1">
+  <link rel="icon" href="assets/favicon.svg?v=20261012a" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=20261024a">
+  <link rel="stylesheet" href="assets/theme.css?v=20261024a">
+  <link rel="stylesheet" href="assets/palette.css?v=20261024a">
+  <link rel="stylesheet" href="assets/pages.css?v=20261103a">
+  <link rel="stylesheet" href="assets/blog.css?v=20261103a">
+</head>
+<body class="v-e blog">
+  <div class="ambient" aria-hidden="true">
+    <span class="bands"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="./" aria-label="Flex-RSI home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" fill="#002fa7"/><rect x="9" y="41" width="14" height="14" fill="#f4f4f1" fill-opacity=".32"/><rect x="20" y="25" width="19" height="19" fill="#f4f4f1" fill-opacity=".62"/><rect x="35" y="9" width="20" height="20" fill="#f4f4f1"/></svg>
+      <span>Flex-RSI</span>
+    </a>
+    <nav class="nav-links" aria-label="Pages">
+      <a href="./">Home</a>
+      <a href="blog.html" aria-current="page">Blog</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="demos.html">Demos</a>
+      <a href="people.html">People</a>
+      <a href="contribute.html">Contribute</a>
+    </nav>
+    <span class="read-progress" aria-hidden="true"></span>
+  </header>
+
+  <main id="top" class="post">
+
+    <!-- ============================================================ hero -->
+    <header class="post-hero">
+      <p class="post-kicker reveal"><span>Tech report</span><span>November 2026</span><span>Flex-RSI Team</span></p>
+      <h1 class="post-title reveal">Can an agent improve <em>the way it works?</em></h1>
+      <p class="post-lede reveal">Agents are usually tested inside a fixed harness: the prompts, tools and control loop are set by someone else, and only the answer is scored. In Flex-RSI, the agent may rewrite that harness as it goes. We gave 18 frontier models the same starting harness, a fixed budget and 24 vision and robotics tasks, and watched what they built.</p>
+      <div class="post-links reveal">
+        <a class="pill pill-solid" href="#" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z M14 3v5h5"/></svg>Report <span class="soon">soon</span></a>
+        <a class="pill pill-glass" href="leaderboard.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Leaderboard</a>
+        <a class="pill pill-glass" href="demos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Demos</a>
+      </div>
+
+      <figure class="fig fig-wide reveal" id="fig-loop">
+        <div class="fig-stage" data-anim="loop" data-loop="1" role="img" aria-label="Animation of one run: in each round the executor edits the solution, the validation gate keeps or reverts it, and the improver edits the harness. The validation score of a real run of Claude Opus 5.5 on Scene from Photo rises from 7.7 to 67.8 over the rounds, while the reconstructed room goes from an empty box to template furniture to generated furniture."></div>
+        <figcaption><b>One run, round by round.</b> The executor edits the solution and tests it on data it can see; the candidate is kept only if it also scores higher on held-out validation data. The improver then edits the harness: the executor's prompts, tools and workflow, and its own code. Scores and reconstructions are from a real run of Claude Opus 5.5 on Scene from Photo.</figcaption>
+      </figure>
+    </header>
+
+    <!-- ============================================================ tl;dr -->
+    <section class="post-sec" id="tldr">
+      <div class="tldr reveal">
+        <p class="tldr-head">In short</p>
+        <ol class="tldr-list">
+          <li><a href="#open-ended"><span class="tl-n">01</span><b>Open-ended tasks leave more room.</b> Where the agent builds its own solution, self-improvement adds the most and the models pull apart; where the solution is one answer, they end about as far apart as they began.</a></li>
+          <li><a href="#feedback"><span class="tl-n">02</span><b>The granularity of feedback matters.</b> With a score on a scale, open-weight models improve too; with only success or failure, they barely move while closed models still climb.</a></li>
+          <li><a href="#strict"><span class="tl-n">03</span><b>Strict checks are the hardest.</b> Outputs that look right often fail checks of physical stability or exact correctness, and that is where open-weight models fall furthest behind.</a></li>
+          <li><a href="#harness"><span class="tl-n">04</span><b>Editing the harness helps.</b> Letting the improver edit the harness raises the test score in six of seven pairs of otherwise identical runs.</a></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================ setup -->
+    <section class="post-sec" id="setup">
+      <div class="sec-head reveal"><p class="kicker">The setup</p><h2>Same start, same budget, different agents</h2></div>
+      <div class="prose reveal">
+        <p>Each task gives the agent a starter solution, compute, a budget and three disjoint data splits. The <b>development</b> split, with labels, is the agent's to experiment on. The <b>validation</b> split is hidden and decides which candidates are kept. The <b>test</b> split is hidden too and is used once, after the run, to score the final solution.</p>
+        <p>The harness has two parts that take turns. The <b>executor</b> works on the solution: it edits code, runs experiments and evaluates on the development split. The <b>improver</b> reads the round's transcript and scores and edits the harness itself, including the executor's prompts, tools and workflow, its own prompts, and the rule that decides when a candidate is good enough. Every run of every model starts from the same general-purpose harness, and on a given task every model has the same limits on time, GPU hours, tokens and rounds.</p>
+      </div>
+
+      <figure class="fig reveal" id="fig-tasks">
+        <div class="fig-toolbar" role="tablist" aria-label="Group the tasks">
+          <span class="tb-label">Group by</span>
+          <button type="button" role="tab" data-group="area" aria-selected="true">Area</button>
+          <button type="button" role="tab" data-group="kind" aria-selected="false">What the agent produces</button>
+          <button type="button" role="tab" data-group="score" aria-selected="false">How it is scored</button>
+        </div>
+        <div class="fig-stage tasks-stage"></div>
+        <figcaption><b>The 20 main tasks</b> (each evaluated with at least six models), grouped three ways. The last two groupings are the axes along which the findings fall. Four more tasks, Embodied-SWE, Spatial-VSI, Text-to-Image and VAE Decode, have two models each so far. RoboDojo and RoboCasa are suites of 10 and 8 robot tasks.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ============================================================ leaderboard -->
+    <section class="post-sec" id="board">
+      <div class="sec-head reveal"><p class="kicker">Who does best</p><h2>Claude Opus 5.5 and Gemini 4 Argon lead</h2></div>
+      <div class="prose reveal">
+        <p>Metrics differ across tasks, so we compare models by rank: on each task a model scores the share of the other models it beats, from 0 (last) to 100 (first). A model's score is the mean over the five areas. Claude Opus 5.5 is first with 91.6; it ran on all 20 tasks and has the best test score on 11. Gemini 4 Argon follows with 89.0 over its nine tasks. The best open-weight model, Qwen3.8-Flash-Next, places fifth.</p>
+      </div>
+      <figure class="fig reveal" id="fig-board">
+        <div class="fig-stage" data-anim="board" role="img" aria-label="Bar chart of the score of the 12 models run on at least five tasks, from Claude Opus 5.5 at 91.6 to MiniMax-M3 at 12.8."></div>
+        <figcaption><b>Score of every model run on at least five tasks</b> (100 = beats every other model on every task). Open-weight models in amber. <a href="leaderboard.html">Full leaderboard &#8594;</a></figcaption>
+      </figure>
+      <div class="stat-row reveal">
+        <div class="stat"><b data-to="150">0</b><span>of 177 runs raise their validation score</span></div>
+        <div class="stat"><b data-to="10.4" data-dec="1">0</b><span>points median gain</span></div>
+        <div class="stat"><b data-to="94" data-suffix="%">0</b><span>of closed-model runs improve</span></div>
+        <div class="stat"><b data-to="76" data-suffix="%">0</b><span>of open-weight runs improve</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ finding 1 -->
+    <section class="post-sec" id="open-ended">
+      <div class="sec-head reveal"><p class="kicker">Finding 01</p><h2>Open-ended tasks leave more room</h2></div>
+      <div class="prose reveal">
+        <p>On seven tasks the solution is a single answer to each question, and the starter gets it by passing the question to the model. These starters score high from the start (78.2 at the median) and depend on the model, so the models are already 27.5 points apart before round one. They end 25.0 points apart: about where they began.</p>
+        <p>On the other thirteen, the agent has to <em>build</em> the solution: a program, a robot policy, a processing pipeline. Every model starts from the same program, so they start level, and then they separate. On the nine of these scored on a scale, the models are 0.9 points apart at the start and 38.8 at the end.</p>
+      </div>
+      <figure class="fig fig-split reveal" id="fig-apart">
+        <div class="fig-stage" data-anim="apart" role="img" aria-label="Scatter plot: each dot is a task, placed by the gap between the best and worst model before (horizontal) and after (vertical) self-improvement. Tasks where the agent builds the solution rise far above the diagonal; single-answer tasks stay near it."></div>
+        <div class="fig-side">
+          <p class="side-kicker">Where models pull apart</p>
+          <p>Each dot is a task. It starts on the diagonal, where the gap between the best and the worst model is the same after the run as before it, and rises by how much further apart the models end up.</p>
+          <p class="key"><i class="k-dot k-build"></i>The agent builds the solution</p>
+          <p class="key"><i class="k-dot k-answer"></i>The solution is a single answer</p>
+          <button class="replay" type="button" data-replay="apart">Replay</button>
+        </div>
+      </figure>
+      <figure class="fig reveal" id="fig-gains">
+        <div class="fig-stage" data-anim="gains" role="img" aria-label="For each task, the median validation score of the starter and the median best validation score reached. The largest gains are on 3D Tracking, RoboLab, Active Search and Scene from Photo; the smallest on ARC-AGI-1, ARC-AGI-2 and ARC-AGI-3."></div>
+        <figcaption><b>Where self-improvement helps.</b> Median validation score of the starter (open circle) and median best validation score reached during the run (filled), over the models run on each task. On 3D Tracking the median goes from 19.4 to 62.2; on ARC-AGI-2 it does not move. Two tasks break the pattern: ARC-AGI-3 and Scene from Video start low and still barely improve.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ============================================================ finding 2 -->
+    <section class="post-sec" id="feedback">
+      <div class="sec-head reveal"><p class="kicker">Finding 02</p><h2>The granularity of feedback matters</h2></div>
+      <div class="prose reveal">
+        <p>A candidate is kept only if it raises the validation score. When the evaluator scores each episode on a scale, a change that improves <em>part</em> of an episode, a better grasp or a closer approach, is rewarded. When it records only success or failure, a change is rewarded only once it turns a failed episode into a successful one. Everything before that looks like zero.</p>
+      </div>
+      <figure class="fig reveal" id="fig-ladder">
+        <div class="fig-stage" data-anim="ladder" role="img" aria-label="Illustration: the same sequence of five candidate policies, each getting a little further through a three-stage task. Scored on a scale, each candidate raises the score and is kept. Scored only as success or failure, every candidate scores zero until the last one succeeds."></div>
+        <figcaption><b>The same five candidates, two evaluators</b> (illustration). Each candidate gets a little further through a reach, grasp and place task. On a scale every step forward is kept; with success or failure only, the run sees nothing until the last one.</figcaption>
+      </figure>
+      <div class="prose reveal">
+        <p>Closed models can cross that gap; open-weight models mostly cannot. On RoboCasa, whose evaluator records only success, the median open-weight run gains 5.6 points and the median closed run 51.2. On 3D Tracking and Active Search, scored on a scale, open-weight runs gain about as much as closed ones.</p>
+      </div>
+      <figure class="fig reveal" id="fig-feedback">
+        <div class="fig-stage" data-anim="feedback" role="img" aria-label="Bar chart of the median validation gain on tasks where the agent builds the solution. Scored on a scale: closed-source 28.4 points, open-weight 9.9. Success or failure only: closed-source 16.9, open-weight 1.6."></div>
+        <figcaption><b>Median gain on the tasks where the agent builds the solution</b>, by how the evaluator scores an episode: median over each task's runs, then median over tasks.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ============================================================ finding 3 -->
+    <section class="post-sec" id="strict">
+      <div class="sec-head reveal"><p class="kicker">Finding 03</p><h2>Looking right is not being right</h2></div>
+      <div class="prose reveal">
+        <p>The gap between the best closed and the best open-weight model is largest where the evaluator accepts an output only if it passes a strict check: the robot task succeeds in simulation, the output grid is exactly right, the level is cleared, the reconstructed scene is physically and geometrically consistent. It is smallest where a judge or a tolerance does the scoring.</p>
+      </div>
+      <figure class="fig reveal" id="fig-gap">
+        <div class="fig-stage" data-anim="gap" role="img" aria-label="Bar chart of the test score of the best closed-source model minus that of the best open-weight model on each task. The largest gaps are on RoboCasa (50.0), ARC-AGI-2 (49.2), ARC-AGI-3 (43.3), RoboLab (40.3), RoboDojo (37.3) and Scene from Video (36.4); the smallest on Video Quality (0.1), Mass (0.8) and Multi-turn Editing (1.0)."></div>
+        <figcaption><b>Best closed-source minus best open-weight test score.</b> Dark: tasks checked strictly, by a simulator, an exact match or a physics test. Light: tasks scored by a judge or with a tolerance. The two LIBERO tasks are the exception among the robot tasks.</figcaption>
+      </figure>
+      <figure class="fig fig-split reveal" id="fig-topple">
+        <div class="fig-stage" data-anim="topple" role="img" aria-label="Illustration of the physics check on Scene from Video: the reconstructed objects are dropped into a simulator. For the open-weight models no object remains stable; for Claude Opus 5.5, 70.7 percent do."></div>
+        <div class="fig-side">
+          <p class="side-kicker">Scene from Video · physics check</p>
+          <p>The evaluator drops every reconstructed object into a simulator and counts the ones that stay put.</p>
+          <div class="mini-bars" data-anim="physics"></div>
+          <p class="muted-note">On Scene from Photo the pattern repeats: open-weight renderings resemble the photo (appearance up to 81.8), but the furniture is not recovered as complete, correctly placed objects (objects at most 16.5, against 62.5 for both closed models).</p>
+          <button class="replay" type="button" data-replay="topple">Replay</button>
+        </div>
+      </figure>
+    </section>
+
+    <!-- ============================================================ finding 4 -->
+    <section class="post-sec" id="harness">
+      <div class="sec-head reveal"><p class="kicker">Finding 04</p><h2>Does editing the harness help?</h2></div>
+      <div class="prose reveal">
+        <p>To isolate the improver, we ran pairs of runs that are identical (task version, budget, protocol and seed) except for one thing: in one, the improver never runs and the starting harness stays frozen, so only the executor works on the solution. The test score with the improver is higher in six of the seven pairs, by 2.0 to 40.0 points. In the seventh, Claude Opus 5.5 reaches 80.0 both ways.</p>
+        <p>The difference is largest where the unchanged harness makes little progress. DeepSeek-V4.1 Flash stays at 0.0 on Open Drawer without the improver and reaches 40.0 with it; Qwen3.8-Flash-Next goes from 21.0 to 59.3 on Active Search.</p>
+      </div>
+      <figure class="fig reveal" id="fig-pairs">
+        <div class="fig-stage" data-anim="pairs" role="img" aria-label="Slope chart of seven pairs of runs, test score with the frozen harness on the left and with the self-improving harness on the right. Six of seven lines rise."></div>
+        <figcaption><b>Frozen versus self-improving harness</b>, test score of the final solution. The robot tasks are single RoboCasa tasks with 5 episodes per split.</figcaption>
+      </figure>
+      <div class="prose reveal">
+        <p>Can a weaker model borrow a stronger model's harness? Only partly. DeepSeek-V4.1 Flash, started from Gemini 4 Argon's final executor on Open Drawer, reaches 20.0 if the executor stays frozen and 60.0 if Argon's final improver keeps editing it, against 40.0 when it improves its own harness from scratch. On Turn On Sink Faucet, Qwen3.8-Flash-Next with Claude Opus 5.5's harness reaches 0.0 either way. A borrowed harness helped on one of two tasks, and only when the improver came with the executor.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ rounds and cost -->
+    <section class="post-sec" id="rounds">
+      <div class="sec-head reveal"><p class="kicker">When and at what cost</p><h2>Gains come early; tokens do not buy them</h2></div>
+      <div class="prose reveal">
+        <p>Most of the gain arrives in the first few rounds: the median improving run reaches 90% of its gain by round 3 in Perception and Reasoning and by round 4 in Creation. Action and Reconstruction, the two areas with the weakest starters, take until rounds 6 and 8. There the agent first has to build something that works before it can refine it.</p>
+      </div>
+      <figure class="fig reveal" id="fig-rounds">
+        <div class="fig-stage" data-anim="rounds" role="img" aria-label="Line chart of the median share of each run's validation gain reached by each round, one line per area. Perception, Reasoning and Creation reach 90 percent by rounds 3 to 4; Action by round 6 and Reconstruction by round 8."></div>
+        <figcaption><b>Share of the run's validation gain reached by each round</b>, median over the improving runs of each area; the band is the middle half. Runs that stop early keep their final value.</figcaption>
+      </figure>
+      <div class="stat-row reveal">
+        <div class="stat"><b data-to="49.7" data-dec="1" data-suffix="M">0</b><span>median tokens per run</span></div>
+        <div class="stat"><b data-to="-0.05" data-dec="2">0</b><span>rank correlation of token use and score</span></div>
+        <div class="stat"><b>0.35–0.61×</b><span>the median model's tokens, used by Opus, Sol and Astra</span></div>
+        <div class="stat"><b data-to="1.66" data-dec="2" data-suffix="×">0</b><span>the median model's tokens, used by Gemini 4 Argon</span></div>
+      </div>
+      <div class="prose reveal">
+        <p>Spending more does not buy a higher score. The three top closed models besides Argon use 0.35 to 0.61 times the median model's tokens on the same task; five of the six open-weight models use at least the median and score below 50.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ examples -->
+    <section class="post-sec" id="examples">
+      <div class="sec-head reveal"><p class="kicker">What changes</p><h2>Before and after self-improvement</h2></div>
+      <div class="prose reveal">
+        <p>The same episode, played by an early solution and by a later one from the same run. More on the <a href="demos.html">demos page</a>.</p>
+      </div>
+      <div class="ba-grid reveal">
+        <figure class="ba">
+          <div class="ba-pair">
+            <div class="ba-cell"><video src="assets/demo/robo/opus-kettle-r0-L2S2-t20.75-36.75-2x.mp4" poster="assets/demo/robo/opus-kettle-r0-L2S2-t20.75-36.75-2x.jpg" muted loop playsinline preload="none"></video><span class="ba-tag fail">Round 0 · Fail</span></div>
+            <div class="ba-cell"><video src="assets/demo/robo/opus-kettle-r2-L2S2-t13.15-29.15-2x.mp4" poster="assets/demo/robo/opus-kettle-r2-L2S2-t13.15-29.15-2x.jpg" muted loop playsinline preload="none"></video><span class="ba-tag ok">Round 2 · Success</span></div>
+          </div>
+          <figcaption><b>RoboCasa · Kettle Boiling</b> · Claude Opus 5.5. The starter wanders around the stove and the burner never comes on; by round 2 it sets the kettle on the front burner and turns that burner's knob.</figcaption>
+        </figure>
+        <figure class="ba">
+          <div class="ba-pair">
+            <div class="ba-cell"><video src="assets/demo/robo/qwen-microwave-r0-L5S5-t00-08.mp4" poster="assets/demo/robo/qwen-microwave-r0-L5S5-t00-08.jpg" muted loop playsinline preload="none"></video><span class="ba-tag fail">Round 0 · Fail</span></div>
+            <div class="ba-cell"><video src="assets/demo/robo/qwen-microwave-r5-L5S5-t00-07.75.mp4" poster="assets/demo/robo/qwen-microwave-r5-L5S5-t00-07.75.jpg" muted loop playsinline preload="none"></video><span class="ba-tag ok">Round 5 · Success</span></div>
+          </div>
+          <figcaption><b>RoboCasa · Turn On Microwave</b> · Qwen3.8-Flash-Next. An open-weight model: the arm first pokes at the empty space beside the panel; by round 5 the base turns to face it and the fingertip goes straight to the start button.</figcaption>
+        </figure>
+        <figure class="ba">
+          <div class="ba-pair">
+            <div class="ba-cell"><video src="assets/demo/robo/sol-conveyor-r0-standard5-t00-11.2-2x.mp4" poster="assets/demo/robo/sol-conveyor-r0-standard5-t00-11.2-2x.jpg" muted loop playsinline preload="none"></video><span class="ba-tag fail">Round 0 · Fail</span></div>
+            <div class="ba-cell"><video src="assets/demo/robo/sol-conveyor-r6-standard5-t2.4-18.4-2x.mp4" poster="assets/demo/robo/sol-conveyor-r6-standard5-t2.4-18.4-2x.jpg" muted loop playsinline preload="none"></video><span class="ba-tag ok">Round 6 · Success</span></div>
+          </div>
+          <figcaption><b>RoboDojo · Pick From Conveyor By Image</b> · GPT-6.1 Sol. The starter knocks the basket away; by round 6 one arm holds the basket over the conveyor while the other picks the object shown on the board.</figcaption>
+        </figure>
+        <figure class="ba">
+          <div class="ba-pair">
+            <div class="ba-cell"><video src="assets/demo/robolab/stack3-before.mp4" poster="assets/demo/robolab/stack3-before.jpg" muted loop playsinline preload="none"></video><span class="ba-tag fail">Round 0 · Fail</span></div>
+            <div class="ba-cell"><video src="assets/demo/robolab/stack3-after.mp4" poster="assets/demo/robolab/stack3-after.jpg" muted loop playsinline preload="none"></video><span class="ba-tag ok">Round 7 · Success</span></div>
+          </div>
+          <figcaption><b>RoboLab · Stack three cubes</b> · Claude Opus 5.5. The starter knocks the pair over going for the third cube; the solution of round 7 stacks all three.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================ closing -->
+    <section class="post-sec" id="closing">
+      <div class="sec-head reveal"><p class="kicker">Takeaways</p><h2>What this means</h2></div>
+      <div class="prose reveal">
+        <p>Self-improvement is not one number. It depends on what the task leaves the agent to build, on how finely the evaluator reports progress, and on how strictly the output is checked. On tasks with a single answer, the starter already does most of the work, and the ranking mostly reflects the base model. On tasks where the agent builds the solution, models that start from the same program end far apart, and the harness the agent writes for itself is part of why.</p>
+        <p>Flex-RSI is an evolving benchmark. The leaderboard is updated as new runs finish, and new tasks, evaluators and results are welcome.</p>
+      </div>
+      <div class="post-links reveal">
+        <a class="pill pill-solid" href="leaderboard.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Leaderboard</a>
+        <a class="pill pill-glass" href="demos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Demos</a>
+        <a class="pill pill-glass" href="contribute.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Contribute a task</a>
+      </div>
+    </section>
+
+    <section class="post-sec" id="citation">
+      <div class="sec-head reveal"><p class="kicker">Citation</p><h2>BibTeX</h2></div>
+      <div class="glass card cite reveal">
+        <button class="copy" type="button" data-copy="#bibtex" aria-label="Copy BibTeX">Copy</button>
+<pre id="bibtex"><code>@misc{flexrsi2026,
+  title  = {Flex-RSI: Benchmarking Recursive Self-Improvement
+            of Frontier Agents},
+  author = {Flex-RSI Team},
+  year   = {2026},
+  note   = {Project page: https://flex-rsi.github.io}
+}</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Flex-RSI · 2026</p>
+    <p class="muted">An evolving benchmark initiative. Contributions of tasks, baselines, evaluators, and reproducible results are welcome.</p>
+    <p class="contact">Contact: <a href="mailto:jingdongz95@gmail.com">jingdongz95@gmail.com</a> · <a href="mailto:jionghaow99@gmail.com">jionghaow99@gmail.com</a> · <a href="mailto:yuhuaijin36@gmail.com">yuhuaijin36@gmail.com</a></p>
+  </footer>
+
+  <script src="assets/main.js?v=20261024a" defer></script>
+  <script src="assets/blog.js?v=20261103a" defer></script>
+</body>
+</html>

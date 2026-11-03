@@ -9,6 +9,10 @@
   .nav-links a { padding: 5px 9px; font-size: 11px; white-space: nowrap; }
   .hero { padding-top: 124px; }
 }
+@media (max-width: 440px) {
+  .nav-links { gap: 0; }
+  .nav-links a { padding: 5px 6px; font-size: 10.5px; letter-spacing: 0; }
+}
 
 /* the first section of a page clears the fixed nav */
 .section.page-top { padding-top: 124px; }

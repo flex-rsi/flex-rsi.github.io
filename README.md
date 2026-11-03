@@ -6,13 +6,16 @@ served at https://flex-rsi.github.io.
 Plain static site, no build step:
 
 - `index.html`: home (hero, the "At a glance" band of demo tiles, overview numbers, tracks, citation)
+- `blog.html`: the tech report as a blog post (findings, animated figures, before/after clips)
 - `leaderboard.html`, `demos.html`, `people.html`, `contribute.html`: one page each; the nav and footer are
-  repeated in every page, so a change to either goes into all five
+  repeated in every page, so a change to either goes into all six
 - `assets/style.css`: layout, components and motion
 - `assets/theme.css`: the Swiss Grid look (hard rules, heavy type)
 - `assets/palette.css`: the colours (E3 Klein Blue)
 - `assets/pages.css`: the page links in the nav, and what only one page has (home numbers, people, the call)
 - `assets/main.js`: scroll reveal, nav, hero chart, copy button
+- `assets/blog.js`, `assets/blog.css`, `assets/blog/`: the blog's figures, each an SVG drawn at the width of its
+  container and animated as a function of time; `blog.html?t=2.5` draws every figure at t = 2.5 s and stops
 - `assets/home.js`: the home page's track index, numbers and track tasks, from `data/results.json`
 - `assets/results.js`, `assets/results.css`: the leaderboard (tabs, overview, tables, curves); `#results/<category>/<task>` links a view
 - `data/results.json`: the results, generated from the benchmark's run records
