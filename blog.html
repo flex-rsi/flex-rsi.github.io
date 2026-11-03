@@ -45,7 +45,7 @@
   <aside class="toc" aria-label="Contents">
     <p class="toc-head">Contents</p>
     <ol class="toc-list">
-      <li><a href="#tldr">In short</a></li>
+      <li><a href="#tldr">TL;DR</a></li>
       <li><a href="#setup">How a run works</a></li>
       <li><a href="#board">Overall results</a></li>
       <li class="toc-group">Findings</li>
@@ -79,7 +79,7 @@
     <!-- ============================================================ tl;dr -->
     <section class="post-sec" id="tldr">
       <div class="tldr reveal">
-        <p class="tldr-head">In short</p>
+        <p class="tldr-head">TL;DR</p>
         <p class="tldr-lead"><b>Self-improvement usually works.</b> 150 of 177 runs finish with a higher validation score than they started with, and the median gain is 10.4 points. How much a run gains, however, depends on the task and on the model in four consistent ways.</p>
         <ol class="tldr-list">
           <li><a href="#open-ended"><span class="tl-n">1</span><span><b>Building a program leaves more room than answering directly.</b> On <em>answer tasks</em>, the model answers each question itself; the starter already scores high, and the models end about as far apart as they began (27.5 &#8594; 25.0 points). On <em>build tasks</em>, the agent writes a program or robot policy that produces the output; the models start from the same program, 0.9 points apart, and finish 38.8 points apart.</span></a></li>
@@ -96,7 +96,7 @@
       <div class="prose reveal">
         <p>Every model receives the same task, the same starting point and the same budget, so that differences in the final score can be attributed to the model alone.</p>
         <ul class="facts">
-          <li><b>Tasks.</b> 24 tasks in five areas: Perception, Reasoning, Action (robotics), Reconstruction and Creation. Each of the 20 main tasks has been run with at least six models.</li>
+          <li><b>Tasks.</b> 24 tasks in five areas: Perception, Reasoning, Action (robotics), Reconstruction and Creation. Each of the 20 main tasks has been run with at least six models (Figure 3).</li>
           <li><b>Starting point.</b> A starter solution and a general-purpose harness, identical for every model.</li>
           <li><b>Data.</b> Three disjoint splits. The labelled <b>development</b> split is the agent's to experiment on; the hidden <b>validation</b> split decides which candidates are accepted; the hidden <b>test</b> split scores the final solution once, after the run.</li>
           <li><b>Budget.</b> On a given task, all models share the same limits on wall-clock time, GPU hours, tokens and rounds.</li>
@@ -114,17 +114,6 @@
         <div class="fig-stage" data-anim="loop" data-loop="1" role="img" aria-label="Animation of one run: in each round the executor edits the solution, the validation gate keeps or reverts it, and the improver edits the harness. The validation score of a real run of Claude Opus 5.5 on Scene from Photo rises from 7.7 to 67.8 over the rounds, while the reconstructed room goes from an empty box to template furniture to generated furniture."></div>
         <figcaption><b>Figure 1. One run, round by round.</b> Left: the executor submits a candidate, the validation gate (VAL) keeps or reverts it, and the improver edits the harness, whose files and version are listed in the middle. Right: the validation score and the reconstruction of a real run, Claude Opus 5.5 on Scene from Photo, in which the score rises from 7.7 to 67.8.</figcaption>
       </figure>
-
-      <figure class="fig reveal" id="fig-tasks">
-        <div class="fig-toolbar" role="tablist" aria-label="Group the tasks">
-          <span class="tb-label">Group by</span>
-          <button type="button" role="tab" data-group="area" aria-selected="true">Area</button>
-          <button type="button" role="tab" data-group="kind" aria-selected="false">What the agent produces</button>
-          <button type="button" role="tab" data-group="score" aria-selected="false">How it is scored</button>
-        </div>
-        <div class="fig-stage tasks-stage"></div>
-        <figcaption><b>Figure 2. The 20 main tasks, grouped three ways.</b> The last two groupings (answer versus build tasks, and dense versus sparse feedback) underlie Findings 1 and 2. Four further tasks (Embodied-SWE, Spatial-VSI, Text-to-Image and VAE Decode) have two models each so far. RoboDojo and RoboCasa are suites of 10 and 8 robot tasks.</figcaption>
-      </figure>
     </section>
 
     <!-- ============================================================ leaderboard -->
@@ -136,8 +125,11 @@
       </div>
       <figure class="fig reveal" id="fig-board">
         <div class="fig-stage" data-anim="board" role="img" aria-label="Bar chart of the score of the 12 models run on at least five tasks, from Claude Opus 5.5 at 91.6 to MiniMax-M3 at 12.8."></div>
-        <figcaption><b>Figure 3. Score of every model run on at least five tasks</b> (100 = beats every other model on every task), in each provider's colour. Open-weight models are tagged. <a href="leaderboard.html">Full leaderboard &#8594;</a></figcaption>
+        <figcaption><b>Figure 2. Score of every model run on at least five tasks</b> (100 = beats every other model on every task), in each provider's colour. Open-weight models are tagged. <a href="leaderboard.html">Full leaderboard &#8594;</a></figcaption>
       </figure>
+      <div class="prose reveal">
+        <p>The ranking compares final scores; the improvement within each run is a separate question. Most runs improve on their starter, closed models more reliably than open-weight ones:</p>
+      </div>
       <div class="stat-row reveal">
         <div class="stat"><b data-to="150">0</b><span>of 177 runs raise their validation score</span></div>
         <div class="stat"><b data-to="10.4" data-dec="1">0</b><span>points median gain</span></div>
@@ -156,7 +148,19 @@
           <li><b>Answer tasks</b> (7 tasks). The solution gives a single answer to each question, and the starter obtains it by passing the question to the model (on Kinematics and Mass, to a fixed open-weight model). These starters already score 78.2 at the median, and because their score depends on the model, the models are 27.5 points apart before the first round.</li>
           <li><b>Build tasks</b> (13 tasks). The agent has to build the solution itself: a program, a robot policy or a processing pipeline that produces the output. Every model starts from the same program, so on the nine build tasks with a graded score the models start only 0.9 points apart.</li>
         </ul>
-        <p>On answer tasks, the starter already does most of the work, and the final ranking largely reflects the base model. On build tasks, the final ranking reflects what each model builds during the run.</p>
+      </div>
+      <figure class="fig reveal" id="fig-tasks">
+        <div class="fig-toolbar" role="tablist" aria-label="Group the tasks">
+          <span class="tb-label">Group by</span>
+          <button type="button" role="tab" data-group="area" aria-selected="true">Area</button>
+          <button type="button" role="tab" data-group="kind" aria-selected="false">What the agent produces</button>
+          <button type="button" role="tab" data-group="score" aria-selected="false">How it is scored</button>
+        </div>
+        <div class="fig-stage tasks-stage"></div>
+        <figcaption><b>Figure 3. The 20 main tasks, grouped three ways.</b> By what the agent produces, they divide into answer and build tasks (this finding); by how they are scored, build tasks divide further into dense and sparse feedback (Finding 2). Four further tasks (Embodied-SWE, Spatial-VSI, Text-to-Image and VAE Decode) have two models each so far. RoboDojo and RoboCasa are suites of 10 and 8 robot tasks.</figcaption>
+      </figure>
+      <div class="prose reveal">
+        <p>On answer tasks, the starter already does most of the work, and the final ranking largely reflects the base model. On build tasks, the final ranking reflects what each model builds during the run. Figure 4 shows this task by task: answer tasks stay close to the diagonal, whereas build tasks rise well above it.</p>
       </div>
       <figure class="fig fig-split reveal" id="fig-apart">
         <div class="fig-stage" data-anim="apart" role="img" aria-label="Scatter plot: each dot is a task, placed by the gap between the best and worst model before (horizontal) and after (vertical) self-improvement. Build tasks rise far above the diagonal; answer tasks stay near it."></div>
@@ -168,6 +172,9 @@
           <button class="replay" type="button" data-replay="apart">Replay</button>
         </div>
       </figure>
+      <div class="prose reveal">
+        <p>The gains themselves follow the same division (Figure 5). The four largest median gains, of about 30 to 43 points on 3D Tracking, RoboLab, Scene from Photo and Active Search, are all on build tasks, whereas no answer task gains more than 16 points at the median.</p>
+      </div>
       <figure class="fig reveal" id="fig-gains">
         <div class="fig-stage" data-anim="gains" role="img" aria-label="For each task, the median validation score of the starter and the median best validation score reached. The largest gains are on 3D Tracking, RoboLab, Active Search and Scene from Photo; the smallest on ARC-AGI-1, ARC-AGI-2 and ARC-AGI-3."></div>
         <figcaption><b>Figure 5. The largest gains are on build tasks.</b> Median validation score of the starter (open circle) and median best score reached during the run (filled), over the models run on each task. On 3D Tracking the median rises from 19.4 to 62.2; on ARC-AGI-2 it does not move. Two build tasks are exceptions: ARC-AGI-3 and Scene from Video start low and still barely improve.</figcaption>
@@ -179,7 +186,7 @@
       <div class="sec-head reveal"><p class="kicker">Finding 2</p><h2>Open-weight models improve under dense feedback but stall under sparse feedback</h2></div>
       <p class="takeaway reveal">On build tasks, open-weight runs gain 9.9 points under dense feedback but <b>only 1.6 points under sparse feedback</b>. Closed models still gain 16.9 points under sparse feedback.</p>
       <div class="prose reveal">
-        <p>We further divide the 13 build tasks by the feedback their evaluator provides.</p>
+        <p>We further divide the 13 build tasks by the feedback their evaluator provides (Figure 3, grouped by how it is scored).</p>
         <ul class="facts">
           <li><b>Dense feedback</b> (9 tasks). The evaluator assigns each episode a graded score, so partial progress, such as a better grasp or a closer approach, is reflected in the score.</li>
           <li><b>Sparse feedback</b> (4 tasks). The evaluator records only whether the episode or level succeeded, so partial progress scores zero.</li>
