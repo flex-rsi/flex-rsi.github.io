@@ -288,13 +288,13 @@
   const GROUPINGS = {
     area: ["Perception", "Reasoning", "Action", "Reconstruction", "Creation"].map((a) => ({ key: a, title: a, sub: "", test: (n) => AREA_OF[n] === a })),
     kind: [
-      { key: "answer", title: "A single answer", sub: "the starter passes each question to the model", test: (n) => KIND_OF[n] === "answer" },
-      { key: "build", title: "The agent builds it", sub: "a program, a robot policy or a pipeline", test: (n) => KIND_OF[n] !== "answer" },
+      { key: "answer", title: "Answer tasks", sub: "the model answers each question directly", test: (n) => KIND_OF[n] === "answer" },
+      { key: "build", title: "Build tasks", sub: "the agent builds a program, a robot policy or a pipeline", test: (n) => KIND_OF[n] !== "answer" },
     ],
     score: [
-      { key: "answer", title: "A single answer", sub: "", test: (n) => KIND_OF[n] === "answer" },
-      { key: "scale", title: "Built · scored on a scale", sub: "", test: (n) => KIND_OF[n] === "scale" },
-      { key: "binary", title: "Built · success or failure only", sub: "", test: (n) => KIND_OF[n] === "binary" },
+      { key: "answer", title: "Answer tasks", sub: "", test: (n) => KIND_OF[n] === "answer" },
+      { key: "scale", title: "Build tasks · dense feedback", sub: "", test: (n) => KIND_OF[n] === "scale" },
+      { key: "binary", title: "Build tasks · sparse feedback", sub: "", test: (n) => KIND_OF[n] === "binary" },
     ],
   };
   function tasksGrid(stage) {
@@ -445,8 +445,10 @@
   // ================================================================ starter vs best, grouped by what the agent produces
   ANIMS.gains = (stage, W) => {
     const narrow = W < 560, lab = narrow ? 118 : 168, gw = 52, rowH = 25, headH = 34;
-    const groups = [["The solution is a single answer", "answer"], ["The agent builds it · scored on a scale", "scale"],
-                    ["The agent builds it · success or failure only", "binary"]];
+    const groups = narrow
+      ? [["Answer tasks", "answer"], ["Build tasks · dense feedback", "scale"], ["Build tasks · sparse feedback", "binary"]]
+      : [["Answer tasks · the model answers directly", "answer"], ["Build tasks · dense feedback (graded score)", "scale"],
+         ["Build tasks · sparse feedback (success or failure)", "binary"]];
     const items = [];
     for (const [title, k] of groups) {
       items.push({ head: title });
@@ -503,8 +505,8 @@
     const svg = S("svg", { viewBox: `0 0 ${W} ${height}`, width: W, height }, stage);
     const P = [0.24, 0.42, 0.6, 0.8, 1.0];
     const lanes = [
-      { title: "Scored on a scale", sub: "every step forward counts", score: (p) => Math.round(p * 100) },
-      { title: "Success or failure only", sub: "only a full success counts", score: (p) => (p >= 1 ? 100 : 0) },
+      { title: "Dense feedback", sub: "graded score: every step forward counts", score: (p) => Math.round(p * 100) },
+      { title: "Sparse feedback", sub: "success or failure: only a full success counts", score: (p) => (p >= 1 ? 100 : 0) },
     ];
     const lw = narrow ? 0 : 200, cw = narrow ? W - 28 : 230;
     const tx0 = narrow ? 18 : lw + 10, tx1 = narrow ? W - 18 : W - cw - 34;
@@ -582,12 +584,12 @@
     const kx = nb ? L : R - 250, ky = nb ? 24 : 6;
     S("rect", { x: kx, y: ky, width: 12, height: 12, fill: C.accent }, svg); T(svg, kx + 18, ky + 10, "closed-source", { class: "sm" });
     S("rect", { x: kx + 120, y: ky, width: 12, height: 12, fill: C.open }, svg); T(svg, kx + 138, ky + 10, "open-weight", { class: "sm" });
-    const G = [["Scored on a scale", "9 tasks", 28.4, 9.9], ["Success or failure only", "4 tasks", 16.9, 1.6]];
+    const G = [["Dense feedback", nb ? "graded · 9 tasks" : "graded score · 9 tasks", 28.4, 9.9], ["Sparse feedback", nb ? "pass/fail · 4 tasks" : "success or failure · 4 tasks", 16.9, 1.6]];
     const gw = (R - L) / 2, bw = Math.min(84, gw / 3.6);
     const bars = [];
     G.forEach(([name, n, cv, ov], gi) => {
       const cx = L + gw * gi + gw / 2;
-      T(svg, cx, B + 22, name, { "font-size": 13.5, "font-weight": 700, "text-anchor": "middle" });
+      T(svg, cx, B + 22, gw < 115 ? name.split(" ")[0] : name, { "font-size": 13.5, "font-weight": 700, "text-anchor": "middle" });
       T(svg, cx, B + 40, n, { class: "sm", "text-anchor": "middle" });
       [[cv, C.accent, -1], [ov, C.open, 1]].forEach(([v, col, side], j) => {
         const x = cx + side * (bw / 2 + 6) - bw / 2;
