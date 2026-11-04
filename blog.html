@@ -100,7 +100,7 @@
       <div class="prose reveal">
         <p>Every model receives the same task, the same starting point and the same budget, so that differences in the final score can be attributed to the model alone.</p>
         <ul class="facts">
-          <li><b>Tasks.</b> 24 tasks in five areas: Perception, Reasoning, Action (robotics), Reconstruction and Creation. Each of the 20 main tasks has been run with at least six models (Figure 3).</li>
+          <li><b>Tasks.</b> 24 tasks in six areas: Perception, Reasoning, Action (robotics), Reconstruction, Creation and Infra. Each of the 20 main tasks has been run with at least six models (Figure 3).</li>
           <li><b>Starting point.</b> A starter solution and a general-purpose harness, identical for every model.</li>
           <li><b>Data.</b> Three disjoint splits. The labelled <b>development</b> split is the agent's to experiment on; the hidden <b>validation</b> split decides which candidates are accepted; the hidden <b>test</b> split scores the final solution once, after the run.</li>
           <li><b>Budget.</b> On a given task, all models share the same limits on wall-clock time, GPU hours, tokens and rounds.</li>
@@ -121,7 +121,7 @@
       <div class="sec-head reveal"><p class="kicker">Overall results</p><h2>Claude Opus 5.5 ranks first, Gemini 4 Argon second</h2></div>
       <p class="takeaway reveal"><b>Claude Opus 5.5 is first with 91.6</b> and has the best test score on 11 of its 20 tasks. Gemini 4 Argon follows with 89.0. The best open-weight model, Qwen3.8-Flash-Next, places fifth.</p>
       <div class="prose reveal">
-        <p>Each task has its own metric, so we compare models by rank. On each task, a model scores the share of the other models it beats, from 0 (last) to 100 (first), and its overall score is the mean over the five areas. Gemini 4 Argon has run on nine tasks so far.</p>
+        <p>Each task has its own metric, so we compare models by rank. On each task, a model scores the share of the other models it beats, from 0 (last) to 100 (first), and its overall score is the mean over the five areas that the 20 main tasks cover (Infra has a single task so far). Gemini 4 Argon has run on nine tasks so far.</p>
       </div>
       <figure class="fig reveal" id="fig-board">
         <div class="fig-stage" data-anim="board" role="img" aria-label="Bar chart of the score of the 12 models run on at least five tasks, from Claude Opus 5.5 at 91.6 to MiniMax-M3 at 12.8."></div>
