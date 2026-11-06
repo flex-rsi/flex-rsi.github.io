@@ -335,6 +335,7 @@
           <li><b>How strictly the output is checked.</b> An output that looks right does not suffice where a simulator, an exact match or a physics test decides.</li>
         </ul>
         <p>Across these tasks, the harness that the agent writes for itself is part of why models end up where they do.</p>
+        <p><b>A note on scope.</b> What we measure is mostly harness-level self-improvement. The evaluated model's weights never change, and on most tasks no model is trained at all; on some, the solution may train or fine-tune a helper model on the development split. Flex-RSI therefore does not measure a model that modifies its own parameters; extending it to weight-level self-improvement is left to future work.</p>
       </div>
       <div class="welcome reveal">
         <p><b>We welcome more contributions!</b> Flex-RSI is an evolving benchmark, and the leaderboard is updated as new runs finish. New tasks, evaluators, baselines and reproducible results are all welcome; the <a href="contribute.html">contribution guide</a> describes how to add them.</p>
