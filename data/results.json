@@ -832,7 +832,7 @@
    "id": "active-search",
    "category": "action",
    "track": "Active Search",
-   "task": "Active visual search in 360\u00b0 scenes (H*Bench)",
+   "task": "Active visual search in 360° scenes (H*Bench)",
    "primary": "spl",
    "metrics": [
     {
@@ -3169,7 +3169,7 @@
     }
    ],
    "footnotes": [
-    "\u2020 GPT-6 Astra at effort ultra, its highest reasoning effort, with a 3500 s model-call timeout. Every other row uses the standard effort medium. Shown for comparison: it takes no rank and is not counted in the overview."
+    "† GPT-6 Astra at effort ultra, its highest reasoning effort, with a 3500 s model-call timeout. Every other row uses the standard effort medium. Shown for comparison: it takes no rank and is not counted in the overview."
    ],
    "rows": [
     {
@@ -3236,7 +3236,7 @@
       0.6309,
       0.6309
      ],
-     "mark": "\u2020",
+     "mark": "†",
      "extra": true
     },
     {
@@ -3427,7 +3427,7 @@
     }
    ],
    "footnotes": [
-    "\u2020 GPT-6 Astra at effort ultra, its highest reasoning effort, with a 3500 s model-call timeout. Every other row uses the standard effort medium. Shown for comparison: it takes no rank and is not counted in the overview."
+    "† GPT-6 Astra at effort ultra, its highest reasoning effort, with a 3500 s model-call timeout. Every other row uses the standard effort medium. Shown for comparison: it takes no rank and is not counted in the overview."
    ],
    "rows": [
     {
@@ -3494,7 +3494,7 @@
       0.4784,
       0.4784
      ],
-     "mark": "\u2020",
+     "mark": "†",
      "extra": true
     },
     {
@@ -4783,7 +4783,7 @@
    "id": "t2i",
    "category": "creation",
    "track": "Text-to-Image",
-   "task": "Text-to-image on 200 original Chinese and English prompts over six categories, in two tracks: the generator fixed to Qwen-Image-2.1 (Qwen2.5-VL-7B allowed as a helper), or any open-weight model or workflow; scored by constraint completion times image quality (C \u00d7 (0.5 + 0.5 Q)) from a frozen vision judge on 80 unseen test prompts",
+   "task": "Text-to-image on 200 original Chinese and English prompts over six categories, in two tracks: the generator fixed to Qwen-Image-2.1 (Qwen2.5-VL-7B allowed as a helper), or any open-weight model or workflow; scored by constraint completion times image quality (C × (0.5 + 0.5 Q)) from a frozen vision judge on 80 unseen test prompts",
    "footnotes": [
     "Score: the mean of the two tracks' test scores; validation start, best and curve are averaged the same way, and rounds are per track. Starter: the mean of the two tracks' starting test scores.",
     "Pre-release experiment version of the task; one run per model and track: seed 20261018, effort medium, at most 25 rounds."
@@ -4900,7 +4900,7 @@
    "id": "vae-decode",
    "category": "infra",
    "track": "VAE Decode",
-   "task": "Make a video model's decoder faster without changing its output: one window of MiniMax H3's 2.4B-parameter ViT VAE decoder (7 latent frames, 544\u00d7960) on one H200, every output checked against the reference within its rounding tolerance; scored by speedup over the eager PyTorch starter on unseen windows",
+   "task": "Make a video model's decoder faster without changing its output: one window of MiniMax H3's 2.4B-parameter ViT VAE decoder (7 latent frames, 544×960) on one H200, every output checked against the reference within its rounding tolerance; scored by speedup over the eager PyTorch starter on unseen windows",
    "primary": "speedup",
    "metrics": [
     {
@@ -4908,8 +4908,10 @@
      "label": "Speedup"
     }
    ],
+   "starter_value": 0.0,
    "footnotes": [
-    "Speedup: 2 to the power of the task's score, the mean over repetitions of 0.75 \u00d7 log2(starter latency / solution latency) at 544\u00d7960 plus 0.25 \u00d7 the same at 480\u00d7832; the starter is 1.00\u00d7. One run per model, seed 0.",
+    "Speedup: 2 to the power of the task's score, the mean over repetitions of 0.75 × log2(starter latency / solution latency) at 544×960 plus 0.25 × the same at 480×832; the starter is 1.00×. One run per model, seed 0.",
+    "Claude Sonnet 5.5: the validation run of the starter failed (evaluator error), so its curve starts at the starter's 1.00×.",
     "Curves stop at round 20; a longer run's last point is its final best."
    ],
    "rows": [
@@ -4949,6 +4951,72 @@
      ]
     },
     {
+     "model": "Claude Sonnet 5.5",
+     "weights": "closed",
+     "test": {
+      "speedup": 2.0924
+     },
+     "start": 1.0,
+     "best": 2.0762,
+     "gain_pct": 107.6,
+     "rounds": 29,
+     "ended": "idle",
+     "curve": [
+      1.0,
+      1.9586,
+      2.0327,
+      2.0327,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761,
+      2.0761
+     ]
+    },
+    {
+     "model": "GPT-6.1 Sol",
+     "weights": "closed",
+     "test": {
+      "speedup": 2.0099
+     },
+     "start": 0.9996,
+     "best": 2.0161,
+     "gain_pct": 101.7,
+     "rounds": 16,
+     "ended": "budget_wall",
+     "curve": [
+      0.9997,
+      1.1446,
+      1.2595,
+      1.3499,
+      1.5594,
+      1.6585,
+      1.7275,
+      1.7901,
+      1.8603,
+      1.926,
+      1.926,
+      1.926,
+      1.926,
+      1.926,
+      2.0161,
+      2.0161,
+      2.0161
+     ]
+    },
+    {
      "model": "GPT-6 Astra",
      "weights": "closed",
      "test": {
@@ -4985,7 +5053,7 @@
    "id": "robodojo",
    "category": "action",
    "track": "RoboDojo",
-   "task": "A dual-arm ARX X5 robot with the model as its policy, across the RoboDojo tasks (score 0\u2013100 per task)",
+   "task": "A dual-arm ARX X5 robot with the model as its policy, across the RoboDojo tasks (score 0–100 per task)",
    "primary": "pts_suite",
    "metrics": [
     {
@@ -5052,7 +5120,7 @@
     }
    ],
    "footnotes": [
-    "Suite: the mean score 0\u2013100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
+    "Suite: the mean score 0–100 over all 10 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
     "Listed: models with a run on every task; models that were run on only some of the tasks (GLM-5.3 Flash, Gemma-4-31B-it, Gemini 3.8 Flash, Qwen3.8-27B) are not listed.",
     "Tasks > 0: how many of the 10 tasks the model scored above 0 on test (score > 0). Per-task scores are kept in data/results.json."
    ],
@@ -5419,7 +5487,7 @@
     "Suite: the mean success rate over the 8 tasks, a task the model was not run on counting as 0; validation start, best and curve are averaged the same way, and rounds are summed over the tasks. Every run counts up to round 10: rounds, the validation curve and best are taken through round 10, and a run that went past round 10 is scored on test with the version it had after round 10. Per task, the model's latest run with a final test.",
     "Heat kebab sandwich, a ninth RoboCasa task, is left out of the suite: no model reached a success on it in validation or test (every model 0). Its runs are kept in the run records.",
     "Tasks > 0: how many of the 8 tasks the model scored above 0 on test (success rate > 0). Per-task scores are kept in data/results.json.",
-    "\u2020 Muse Spark 1.3 through an internal endpoint. Shown for comparison: it takes no rank and is not counted in the overview."
+    "† Muse Spark 1.3 through an internal endpoint. Shown for comparison: it takes no rank and is not counted in the overview."
    ],
    "rows": [
     {
@@ -5806,7 +5874,7 @@
       0.05,
       0.05
      ],
-     "mark": "\u2020",
+     "mark": "†",
      "extra": true
     }
    ]
